@@ -2,9 +2,9 @@
 (function (service) {
 
 	var serviceIntent = service.getIntent(),
-	statusBarMessage = serviceIntent.hasExtra('message') ? serviceIntent.getStringExtra('message') : '',
+	//statusBarMessage = serviceIntent.hasExtra('message') ? serviceIntent.getStringExtra('message') : '',
 	message = serviceIntent.hasExtra('message') ? serviceIntent.getStringExtra('message') : '',
-	msgdata = serviceIntent.hasExtra('message') ? JSON.parse(serviceIntent.getStringExtra('data')) : {},
+	msgdata = serviceIntent.hasExtra('data') ? JSON.parse(serviceIntent.getStringExtra('data')) : {},
 	notificationId = (function () {
 		// android notifications ids are int32
 		// java int32 max value is 2.147.483.647, so we cannot use javascript millis timpestamp

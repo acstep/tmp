@@ -110,6 +110,16 @@ function feedWindow() {
 		cneter:{x:'50%',y:'50%'}, height: '20dp', width: '20dp'
 	});
 	
+	
+	
+	eventImg.addEventListener('click',function(e)
+	{
+		NotifyWindow = require('notifyWindows');
+		new NotifyWindow().open();  
+
+	});	
+	
+	
 	var eventnumText = Ti.UI.createLabel({
 		font:{fontSize:'12sp',fontFamily:'Marker Felt'},
 		text: '0',

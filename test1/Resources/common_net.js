@@ -269,3 +269,35 @@ function querycomment(eventid, starttime, callbackf){
     xhr.send(); 
 	
 };
+
+
+function querynotify( starttime, limitcount, callbackf){
+    id = Ti.App.Properties.getString('userid','');
+    token = Ti.App.Properties.getString('token','');
+
+    url = 'http://54.254.208.12/api/querynotify?' + 'id=' + id + '&token=' + token + '&starttime=' + starttime + '&limitcount=' + limitcount ;
+
+	
+	Ti.API.info('url : ' + url);
+	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.data);
+    	}
+    	else{
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'network error');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
+
+
