@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<string name="welcome">Welcome to %s!</string>
+	<string name="category">應用分類</string>
+	<string name="club">社團活動</string>
+	<string name="sale">特價優惠</string>
+	<string name="needhelp">協助幫忙</string>
+	<string name="dating">聯誼</string>
+	<string name="news">周邊新聞</string>
+	<string name="sortorder">排序方式</string>
+	<string name="postnew">張貼文章</string>
+	<string name="postnewsevent">發布新聞</string>
+	<string name="addphoto">增加照片</string>
+	<string name="addnewscontent">您想發布的新聞內容... \n\n\n\n\n\n</string>
+	<string name="changemap">按下面的地圖來更改新聞位置...</string>
+	<string name="dragmarker">拖拉標記到您想要發布的位置</string>
+	<string name="pullreflash">下拉以重新整理...</string>
+	<string name="releasereflash">釋放以重新整理...</string>
+	<string name="loading">   載入更多訊息...</string>
+	<string name="chooseimage">選擇照片來源...</string>
+	<string name="camera">照相機</string>
+	<string name="photogaooery">相片簿</string>
+	<string name="cancel">取消</string>
+	<string name="done">確認</string>
+	<string name="cropimage">裁切與選擇照片區域</string>
+	<string name="uploadimage">正在上傳您的圖片...</string>
+	<string name="km">公里</string>
+	<string name="m">公尺</string>
+	<string name="beforesec">秒以前</string>
+	<string name="beforemin">分鐘以前</string>
+	<string name="beforehour">小時以前</string>
+	<string name="beforeday">天以前</string>
+	<string name="back">返回</string>
+	<string name="requestnextrow">載入更多的留言...</string>
+	<string name="send">發布</string>
+	<string name="comment">留言</string>
+	<string name="uhavecomment">您有一則新的留言.</string>
+	<string name="userreply"> 回覆了您的訊息.</string>
+</resources>

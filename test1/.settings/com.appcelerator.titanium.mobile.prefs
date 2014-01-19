@@ -1,0 +1,9 @@
+android/ATTR_PROJECT_NAME=test1
+android/abi=armeabi-v7a
+android/distribute_path=E\:\\titanproj\\test1
+android/keystore_alias=server
+android/keystore_password=qqqqqqqq
+android/keystore_path=E\:\\titanproj\\test1\\keystore
+android/recent_output=E\:\\titanproj\\test1
+android/sdk_version=Android 4.3
+eclipse.preferences.version=1

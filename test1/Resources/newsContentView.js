@@ -1,0 +1,7 @@
+
+
+function drawNewsContnet(view,data){
+	
+	
+	
+}

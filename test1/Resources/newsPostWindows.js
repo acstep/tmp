@@ -1,0 +1,458 @@
+//News Post Window Component Constructor
+Ti.include("common_net.js");
+
+
+
+function NewsPostWindow() {
+	//load component dependencies
+	var self = Ti.UI.createWindow({
+		backgroundColor:'#ffffff',
+		navBarHidden:true,
+
+	});
+	
+	
+	
+	var backgroundView = Ti.UI.createView({
+		width:'100%',
+		height:'100%',
+		layout:'vertical',
+		top: 0,
+		left: 0
+	});
+	
+	var forwardView = Ti.UI.createView({
+		width:'100%',
+		height:'100%',
+		visible:false,     
+		backgroundColor:'#333333',
+		opacity:0.5,
+		top: 0,
+		left: 0,
+		layout:'vertical',
+	});
+	
+	var loginIndicator = Ti.UI.createActivityIndicator({
+		  font: {fontFamily:'Helvetica Neue', fontSize:14, fontWeight:'bold'},
+		  style:Titanium.UI.ActivityIndicatorStyle.BIG,
+	      top: '40%',
+	});
+	var ind=Titanium.UI.createProgressBar({
+	        width:'90%',
+	        min:0,
+	        max:100,
+	        value:0,
+	        height:'50dp',
+	        color:'#ffffff',
+	        message:L('uploadimage'),
+	        font:{fontSize:14, fontWeight:'bold'},
+	        
+	        top:'50dp' 
+	});
+
+	forwardView.add(loginIndicator);
+	forwardView.add(ind);
+	loginIndicator.show();
+
+	////  title  //////
+	
+	var titleView = Ti.UI.createView({
+		backgroundColor:'#3498db',
+		width:'100%',
+		height:'50dp',
+		top:'0dp',
+
+	});
+	
+	var selectPosText = Ti.UI.createLabel({
+		font:{fontSize:'20sp',fontFamily:'Marker Felt', fontWeight:'bold'},
+		text: L('postnewsevent'),
+		color:'#ffffff',
+		top:'10dp',
+		left:'10dp',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+	});
+	
+	var doneButton = Titanium.UI.createButton({
+	    title: L('done'),
+	    top: '10dp',
+	    bottom:'10dp',
+	    height: '30dp',
+	    right:'10dp',
+	    color:'#666666',
+	    backgroundColor:'#f1c40f',
+	    borderRadius:10,
+	});
+	
+	
+	var uploadimg = [];
+	var totalUploadImg = 0;
+	var currentUploadImg = 0;
+	
+	
+	
+	doneButton.addEventListener('click',function(e)
+	{
+	    totalUploadImg = imageList.length;
+	    currentUploadImg = 0;
+		forwardView.visible = true; 
+		if(totalUploadImg == 0){
+			postNewsEvent();
+		}
+		else{
+			uploadImage();
+		};
+		
+		
+
+	});	
+	
+	titleView.add(selectPosText);
+    titleView.add(doneButton);
+	
+	//////  content  /////////////////
+	var contentScrollView = Ti.UI.createScrollView({
+	    contentHeight: 'auto',
+	    layout: 'vertical',
+	    backgroundColor:'#eeeeee',
+        width:'100%'
+	});
+	
+	
+	///////  image  scroll///////////////////
+	var imageList = [];
+	
+	
+	var imageScrollView = Ti.UI.createScrollView({
+	    contentWidth: 'auto',
+	    contentHeight:'160dp',
+	    layout: 'horizontal',
+	    backgroundColor:'#ffffff',
+        height:'160dp'
+	});
+	
+	//////   camera  /////////////
+	
+	
+	var cameraViewImageView = Ti.UI.createView({
+		backgroundColor:'#dddddd',
+		width:'100dp',
+		height:'100dp',
+		top:'30dp',
+		left:'10dp',
+		layout:'vertical',
+		borderRadius:15,
+		
+	});
+	
+	var addImg = Titanium.UI.createImageView({
+		image:'add.png',
+		height: '30dp', width: '30dp', top:'20dp'
+	});
+	
+	var addPhoeoText = Ti.UI.createLabel({
+		font:{fontSize:'16sp',fontFamily:'Marker Felt'},
+		text: L('addphoto'),
+		color:'#666666',
+		top:'15dp',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+	});
+	
+	
+	/////////////   select image from camera or gallary ///////////////////
+	var dialog = Titanium.UI.createOptionDialog({
+    //title of dialog
+	    title: L('chooseimage'),
+	    //options
+	    options: [L('camera'),L('photogaooery'), L('cancel')],
+	    //index of cancel button
+	    cancel:2
+	});
+	 
+	//add event listener
+	dialog.addEventListener('click', function(e) {
+	    //if first option was selected
+	    if(e.index == 0)
+	    {
+	        //then we are getting image from camera
+	        Titanium.Media.showCamera({
+	            //we got something
+	            success:function(event)
+	            {
+	                //getting media
+	                var image = event.media;
+	                 
+	                //checking if it is photo
+	                if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO)
+	                {
+	                    //we may create image view with contents from image variable
+	                    //or simply save path to image
+	                    imageList.push(image);
+	                    var addSelectImg = Titanium.UI.createImageView({
+							image:image,
+							width:'100dp',
+							height:'100dp',
+							top:'30dp',
+							left:'10dp',
+							borderRadius:15
+						});
+						imageScrollView.contentWidth = ((imageList.length+1)*110 + 20)*(Titanium.Platform.displayCaps.dpi / 160);
+						imageScrollView.add(addSelectImg);
+	                }
+	            },
+	            cancel:function()
+	            {
+	                //do somehting if user cancels operation
+	            },
+	            error:function(error)
+	            {
+	                //error happend, create alert
+	                var a = Titanium.UI.createAlertDialog({title:'Camera'});
+	                //set message
+	                if (error.code == Titanium.Media.NO_CAMERA)
+	                {
+	                    a.setMessage('Device does not have camera');
+	                }
+	                else
+	                {
+	                    a.setMessage('Unexpected error: ' + error.code);
+	                }
+	 
+	                // show alert
+	                a.show();
+	            },
+	            allowImageEditing:true,
+	            saveToPhotoGallery:true
+	        });
+	    }
+	    else if(e.index == 1)
+	    {
+	        //obtain an image from the gallery
+	        Titanium.Media.openPhotoGallery({
+	            success:function(event)
+	            {
+	                //getting media
+	                var image = event.media;
+	                // set image view
+	                 
+	                //checking if it is photo
+	                if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO)
+	                {
+	                    //we may create image view with contents from image variable
+	                    //or simply save path to image
+	                    imageList.push(image);
+	                    var addSelectImg = Titanium.UI.createImageView({
+							image:image,
+							width:'100dp',
+							height:'100dp',
+							top:'30dp',
+							left:'10dp',
+							borderRadius:15
+						});
+						imageScrollView.contentWidth = ((imageList.length+1)*110 + 20)*(Titanium.Platform.displayCaps.dpi / 160);
+						imageScrollView.add(addSelectImg);
+	                }  
+	            },
+	            cancel:function()
+	            {
+	                //user cancelled the action fron within
+	                //the photo gallery
+	            }
+	        });
+	    }
+	    else
+	    {
+	        //cancel was tapped
+	        //user opted not to choose a photo
+	    }
+	});
+
+    cameraViewImageView.addEventListener('click',function(e)
+	{
+		dialog.show();
+	});	
+	
+	
+	cameraViewImageView.add(addImg);
+	cameraViewImageView.add(addPhoeoText);
+	
+	imageScrollView.add(cameraViewImageView);
+
+    contentScrollView.add(imageScrollView);
+
+    ///////    description and map /////////////
+    var desTextArea = Ti.UI.createTextArea({
+	    font: {fontSize:'20sp'},
+	    color:'#333333',
+	    textAlign: 'left',
+	    hintText:L('addnewscontent'),
+	    top: '10dp',
+	    width: '90%', 
+	    height : 'auto',
+	    left: '5%',
+
+	});
+
+    
+
+	contentScrollView.add(desTextArea);
+     
+    
+
+    ////////////   map  //////////////
+    
+    var mapHintText = Ti.UI.createLabel({
+		font:{fontSize:'20sp',fontFamily:'Marker Felt'},
+		text: L('changemap'),
+		color:'#2c3e50',
+		top:'50dp',
+		left: '5%',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
+	}); 
+	
+	contentScrollView.add(mapHintText);
+    
+    var mapImg = Titanium.UI.createImageView({
+		
+		height: '200dp', width: '90%', top:'20dp',bottom:'30dp'
+	});
+	
+	var mapwidth = Titanium.Platform.displayCaps.platformWidth * 0.9;
+	var mapheight =  200 * (Titanium.Platform.displayCaps.dpi / 160);
+	var latitude = 0;
+	var longitude = 0;
+	
+
+	latitude = Ti.App.Properties.getString('latitude',latitude);
+	longitude = Ti.App.Properties.getString('longitude',longitude);
+	Ti.App.Properties.setString('userchooselatitude',latitude);
+	Ti.App.Properties.setString('userchooselongitude',longitude);
+	url = "http://maps.googleapis.com/maps/api/staticmap?center=" +latitude +',' +longitude 
+	    + "&zoom=16&size=" + mapwidth/2 +'x' + mapheight/2 +'&markers=color:red%7C'+ latitude
+	    +',' + longitude +'&sensor=false';
+	Ti.API.info('url : ' + url);
+	mapImg.image = url; 
+        
+	
+	mapImg.addEventListener('click',function(e)
+	{
+	     mapWindow = require('mapWindows');
+	     var map = new mapWindow();
+	     map.latitude = latitude;
+	     map.longitude = longitude;
+	     map.image = mapImg;
+		 map.anno.latitude = latitude; 
+		 map.anno.longitude = longitude; 
+		 map.map.region =  {latitude:latitude, longitude:longitude,
+	            latitudeDelta:0.01, longitudeDelta:0.01};
+	     map.open();         
+	});	
+    
+    contentScrollView.add(mapImg);
+    	
+    backgroundView.add(titleView);
+    backgroundView.add(contentScrollView);
+     
+	self.add(backgroundView);
+	self.add(forwardView);
+	
+	
+	function uploadImage(){
+		var data_to_send = { 
+            "file": imageList[currentUploadImg], 
+            "id": Ti.App.Properties.getString('userid',''),
+            'token':Ti.App.Properties.getString('token','') 
+        };
+		xhr = Titanium.Network.createHTTPClient();
+        xhr.open("POST","http://54.254.208.12/api/uploadimg");
+        xhr.send(data_to_send); 
+        xhr.onload = function(e) {
+        	currentUploadImg = currentUploadImg + 1;
+            var result =  JSON.parse(this.responseText);
+            if(result.result == 'ok'){
+            	Ti.API.info('result.filename: ' + result.filename);
+            	uploadimg.push(result.filename);
+            	
+			}
+			if(currentUploadImg == (totalUploadImg)){
+				
+				ind.value = 100;
+				//  finish image upload, post event to server
+				postNewsEvent();
+			}
+			else{
+				uploadImage();
+			}
+        };
+        xhr.onerror = function(e){
+        	var alertDlg = Titanium.UI.createAlertDialog({
+				title:'Error !',
+				message:'Server Error. Please try again.'
+			});
+			alertDlg.show();
+			Ti.API.info('Upload image fail.');
+			forwardView.visible = false;
+        	
+        };
+		xhr.onsendstream = function(e) {
+			ind.value = (100/totalUploadImg)*currentUploadImg + (e.progress*100)/totalUploadImg ;
+			
+			Ti.API.info('upload - PROGRESS: ' + e.progress);
+		};
+	}
+	
+	function newsPostCallback(result, resultmsg){
+		if(result == true){
+			Ti.API.info('Post News Event success.');
+			forwardView.visible = false;
+			Ti.App.fireEvent('getnewfeed');
+     
+			self.close();
+
+		}
+		else{
+			var alertDlg = Titanium.UI.createAlertDialog({
+				title:'Error !',
+				message:resultmsg
+			});
+			forwardView.visible = false;
+			alertDlg.show();
+			Ti.API.info('Post event false.');
+			
+			
+		}
+	};
+	
+	function postNewsEvent(){
+		currentdate = new Date(); 
+		extime = parseInt(currentdate.getTime()/1000)+Ti.App.Properties.getInt('defaultexpiretime',0);
+		
+		var data = {
+			'name': Ti.App.Properties.getString('username'),
+			'photos':uploadimg,
+			'des':desTextArea.value,
+			'pos':[parseFloat(Ti.App.Properties.getString('userchooselongitude',0)),parseFloat(Ti.App.Properties.getString('userchooselatitude',0))],
+			'title':'',
+			'extime':extime,
+			'headphoto':Ti.App.Properties.getString('headfile','')
+		};
+	    
+	    datastring = JSON.stringify(data);
+	    Ti.API.info('datastring : ' + datastring);
+		creatnewsevent(datastring ,newsPostCallback);
+	}
+	
+	var firstTimeBlur = false;
+	self.addEventListener('postlayout',function(e){
+		if(firstTimeBlur == false){
+			firstTimeBlur = true;
+			desTextArea.blur();
+		} 
+		
+	});
+	
+	return self;
+}
+
+//make constructor function the public component interface
+module.exports = NewsPostWindow;
