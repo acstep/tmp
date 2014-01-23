@@ -33,7 +33,11 @@
 	<string name="back">返回</string>
 	<string name="requestnextrow">載入更多的留言...</string>
 	<string name="send">發布</string>
+	<string name="notify">通知</string>
 	<string name="comment">留言</string>
 	<string name="uhavecomment">您有一則新的留言.</string>
 	<string name="userreply"> 回覆了您的訊息.</string>
+	<string name="chatroom">聊天室</string>
+	<string name="talk">聊天</string>
+	<string name="uhavetalk">您有一個新的訊息.</string>
 </resources>

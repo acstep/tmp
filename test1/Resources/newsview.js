@@ -116,7 +116,7 @@ function drawNewsEvent(view, data, lon, lat){
 
 		left:'10dp',
 		backgroundColor:'#2ecc71',
-		borderRadius:15,
+		borderRadius:10,
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
 	});
 	
@@ -127,7 +127,7 @@ function drawNewsEvent(view, data, lon, lat){
 
 		left:'20dp',
 		backgroundColor:'#3498db',
-		borderRadius:15,
+		borderRadius:10,
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
 	});
 	
@@ -153,11 +153,10 @@ function drawNewsEvent(view, data, lon, lat){
 	    top:'0dp'
 	});
 	
-	
-	
+
 	var desText = Ti.UI.createLabel({
 		font:{fontSize:'18sp',fontFamily:'Marker Felt'},
-		text: data['des'],
+		text: getStringlimit(data['des'],200,250),
 		color:'#666666',
 		top:'10dp',
 		left:'10dp',right:'10dp', height: Ti.UI.SIZE,
@@ -174,13 +173,7 @@ function drawNewsEvent(view, data, lon, lat){
 	});
 	
 
-	if(data['des'].length > 200){
-
-		desText.horizontalWrap= false;
-		desText.wordWrap= false;
-		desText.ellipsize= true;
-		
-	}
+	
 	middleView.add(desText);
 	
 	if(data['photos'].length > 0){
@@ -535,6 +528,22 @@ function drawNewsContnet(contentView,data){
 		left:'20dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
 	});
+	nameText.ownerid = data['ownerid'];
+	
+	nameText.addEventListener('click',function(e) {
+		//  enter talk window
+	    Ti.API.info('postView click.');
+        TalkWindow = require('talkWindows');
+        tmpRoomData = {
+            'roomid':'',
+            'memberid':[],
+            'lasttime':parseInt(new Date().getTime()/1000),
+            'host':'',
+            'lastmsg':'',
+            'memdata':[]  
+        };
+        new TalkWindow(Ti.App.Properties.getString('userid',''), e.source.ownerid,tmpRoomData).open(); 
+	});
 	
 	
 	eventtime = new Date(data['lastupdate']);
@@ -573,13 +582,13 @@ function drawNewsContnet(contentView,data){
 	
 	
 	contentView.add(imageScrollView);
-	contentView.add(createHSepLine('90%','20dp','20dp','5%'));
+	contentView.add(createHSepLine('90%','20dp','0dp'));
 	contentView.add(topView);
-	contentView.add(createHSepLine('90%','20dp','20dp','5%'));
+	contentView.add(createHSepLine('90%','20dp','0dp'));
 	contentView.add(desView);
-	contentView.add(createHSepLine('90%','20dp','20dp','5%'));
+	contentView.add(createHSepLine('90%','20dp','0dp'));
 	contentView.add(mapView);
-	contentView.add(createHSepLine('90%','20dp','20dp','5%'));
+	contentView.add(createHSepLine('90%','20dp','0dp'));
 }
 
 

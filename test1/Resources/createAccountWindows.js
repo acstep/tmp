@@ -313,15 +313,16 @@ function createAccountWindow() {
 		dialog.show();
 	});
 	
-	Ti.App.addEventListener('headphotodone',function(e) {
-    	Ti.API.info('receive event headphotodone ');
+	var getheadphoto = function(e) {
+		i.API.info('receive event headphotodone ');
         var f = Titanium.Filesystem.getFile(Titanium.Filesystem.externalStorageDirectory,'head.jpg');
         if (f.exists()) {
 	        headPhotoImg.image =  f.read();
 	        headPhotoImg.visible = true;
 	    }
-        
-	});
+	};
+	
+	Ti.App.addEventListener('headphotodone',getheadphoto);
 	
 	
 	//////////////  profile data  //////////////////////////
@@ -466,6 +467,12 @@ function createAccountWindow() {
 			passwdVField.blur();
 		} 
 		
+	});
+	
+	self.addEventListener('android:back', function(e) {
+	    Ti.App.removeEventListener('headphotodone',getheadphoto);
+	    Ti.API.info('remove listener');
+	    self.close();
 	});
 
 	return self;

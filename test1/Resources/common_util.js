@@ -30,12 +30,22 @@ function GetDistance(lat1, lon1, lat2, lon2, unit) {
 	    return dist;
 };
 
-function createHSepLine(width, top){
-	var SepView = Ti.UI.createView({
-	    backgroundColor: '#bbbbbb',
-	    width:width, height: '1dp',
-	    top:top
-	});
+function createHSepLine(width, top, bottom){
+	if (top == '0dp'){
+		var SepView = Ti.UI.createView({
+		    backgroundColor: '#bbbbbb',
+		    width:width, height: '1dp',
+		    bottom:bottom
+		});
+	}
+	else{
+		var SepView = Ti.UI.createView({
+		    backgroundColor: '#bbbbbb',
+		    width:width, height: '1dp',
+		    top:top
+		});
+	}
+	
 	return SepView;
 	
 }
@@ -47,4 +57,40 @@ function createVSepLine(height, top,bottom,left){
 	    top:top,bottom:bottom,left:left
 	});
 	return SepView;
+}
+
+function getStringlimit(orgstring,start,end){
+	if(orgstring.length < start){
+		return orgstring;
+	}
+	stringindex = -1;
+	desString = '';
+    firstSpaceIndex = orgstring.indexOf(" ",start);
+    firstlinebreakIndex = orgstring.indexOf("\n",start);
+    firstdotIndex = orgstring.indexOf(".",start);
+    firstcommaIndex = orgstring.indexOf(",",start);
+    if(firstSpaceIndex > 0 && firstSpaceIndex < end){
+    	stringindex = firstSpaceIndex;
+    }
+    else if(firstlinebreakIndex > 0 && firstlinebreakIndex < end){
+    	stringindex = firstlinebreakIndex;
+    }
+    else if(firstdotIndex > 0 && firstdotIndex < end){
+    	stringindex = firstdotIndex;
+    }
+    else if(firstcommaIndex > 0 && firstcommaIndex < end){
+    	stringindex = firstcommaIndex;
+    }
+    
+   
+    
+    if(stringindex != -1 && stringindex<end){
+    	desString = orgstring.substring(0,stringindex);
+    	desString = desString + '...';
+    }
+    else{
+    	desString = orgstring.substring(0,start);
+    	desString = desString + '...';
+    }
+    return desString;
 }

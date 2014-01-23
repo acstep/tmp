@@ -91,35 +91,43 @@ function feedWindow() {
 		width:'50%',
 		height:'50dp',
 		top:'0dp',
-
+        layout: 'horizontal',
 		center:{x:'50%',y:'50%'}
+	});
+	
+	var homeView = Ti.UI.createView({
+		width:'33%',height:'50dp',	top:'0dp',
 	});
 	
 	var homeImg = Titanium.UI.createImageView({
 		image:'home.png',
-		top: '15dp', left:'10%', height: '20dp', width: '20dp'
+		height: '20dp', width: '20dp'
 	});
-	
-	homeImg.addEventListener('click',function(e)
+    homeView.add(homeImg);
+
+	homeView.addEventListener('click',function(e)
 	{
 		getNewFeed();
  	});	
 	
+	var eventView = Ti.UI.createView({
+		width:'33%',height:'50dp',	top:'0dp',
+	});
 	var eventImg = Titanium.UI.createImageView({
 		image:'event.png',
 		cneter:{x:'50%',y:'50%'}, height: '20dp', width: '20dp'
 	});
-	
-	
-	
-	eventImg.addEventListener('click',function(e)
+    eventView.add(eventImg);
+	eventView.addEventListener('click',function(e)
 	{
+		eventnumText.text =  0  ;
+		Ti.App.Properties.setInt('notifynum',0);
+        eventnumText.visible = false;
 		NotifyWindow = require('notifyWindows');
 		new NotifyWindow().open();  
 
 	});	
-	
-	
+
 	var eventnumText = Ti.UI.createLabel({
 		font:{fontSize:'12sp',fontFamily:'Marker Felt'},
 		text: '0',
@@ -129,19 +137,46 @@ function feedWindow() {
   		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
   		visible:false
 	});
+	eventView.add(eventnumText);
 	
-	
+	var talkView = Ti.UI.createView({
+		width:'33%',height:'50dp',	top:'0dp',
+	});
 	var talkImg = Titanium.UI.createImageView({
 		image:'talk.png',
-		top: '15dp', right:'10%', height: '20dp', width: '20dp'
+		height: '20dp', width: '20dp'
 	});
 	
-	titleCenterView.add(homeImg);
-	titleCenterView.add(eventImg);
-	titleCenterView.add(talkImg);
+	var talknumText = Ti.UI.createLabel({
+		font:{fontSize:'12sp',fontFamily:'Marker Felt'},
+		text: '0',
+		color:'#ffffff',
+		backgroundColor:'#e74c3c',
+		borderRadius:20,
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+  		visible:false
+	});
+
+	talkView.addEventListener('click',function(e)
+	{
+        talknumText.text =  0  ;
+        talknumText.visible = false;
+        Ti.App.Properties.setInt('talknum',0);
+		chatroomWindow = require('chatroomWindows');
+		new chatroomWindow().open();  
+
+	});	
+	
+	talkView.add(talkImg);
+	talkView.add(talknumText);
+	
+	
+	titleCenterView.add(homeView);
+	titleCenterView.add(eventView);
+	titleCenterView.add(talkView);
 	
 	//   notify number ///
-	titleCenterView.add(eventnumText);
+	
 	
 	titleView.add(listappImg);
 	titleView.add(titleCenterView);
@@ -243,7 +278,6 @@ function feedWindow() {
 		text: L('pullreflash'),
 		color:'#333333',
 		top:'15dp',
-
   		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
 	});
 	
@@ -313,7 +347,7 @@ function feedWindow() {
 	var headimage = Ti.App.Properties.getString('headfile','');
 
 	
-	if(headimage == undefined || headimage == ''){
+	if(headimage == ''){
 		headImg.image = 'headphoto.png';
 	}
 	else{
@@ -420,9 +454,11 @@ function feedWindow() {
 	var nexttime = parseInt(currentdate.getTime()/1000);
 	var firstFeed = true;
 	//////////////////   Draw feeds  /////////////////////////
+	var feeditem = [];
 	var drawFunction = {	    
 	    	'1000':drawNewsEvent
 	};
+	
 	
 	function parseFeed(result, feedData){
 		
@@ -440,11 +476,15 @@ function feedWindow() {
 				
 			}
 			if(feedData.length > 0){	
+				if(firstFeed == true){
+					feeditem.length = 0;
+				}	
 				for(var i = 0 ; i <= feedData.length -1; i++) {
-					
+					feeditem.push(feedData[i]);
 				    //drawFunction[feedData[i].category.toString()](feedData[i]);
 				    drawFunction['1000'](feedScrollView, feedData[i],longitude,latitude);
 				}   
+				Ti.App.Properties.setString('feed',JSON.stringify({'data':feeditem}));
 				
 			}
 			forwardView.visible = false;
@@ -455,7 +495,18 @@ function feedWindow() {
 			firstFeed = false;	
 		}
 		else{
-			
+			if(feedData == 'network error' && firstFeed == true){
+				firstFeed = false;
+				feeditems = JSON.parse(Ti.App.Properties.getString('feed',{'data':[]}));
+				for(var i = 0 ; i <= feeditems.data.length -1; i++) {
+					feeditem.push(feedData[i]);
+					latitude = parseFloat(Ti.App.Properties.getString('latitude',0));
+					longitude = parseFloat(Ti.App.Properties.getString('longitude',0));
+				    //drawFunction[feedData[i].category.toString()](feedData[i]);
+				    drawFunction['1000'](feedScrollView, feeditems.data[i],longitude,latitude);
+				}   
+				nexttime = feeditems.data[(feeditems.data.length -1)]['lastupdate'];
+			}
 			forwardView.visible = false;
 			firstFeed = false;	
 			getNextFeedHintView.visible = false;
@@ -489,7 +540,6 @@ function feedWindow() {
 					category = Ti.App.Properties.getList('category','none');
 					limitcount = parseInt(Ti.App.Properties.getString('limitcount',5));
 					queryevent([longitude,latitude], distance, category, limitcount, nexttime, parseFeed);
-			        return;
 			    }
 		        else{
 		        	currentdate = new Date(); 
@@ -548,7 +598,10 @@ function feedWindow() {
         getNewFeed();
 	});
 	
-	
+	Ti.App.addEventListener('closrchatroom',function(e) {
+    	talknumText.text =  0  ;
+        talknumText.visible = false;
+	});
 	
 	
     ///////////////   scroll  update and next logic ////////////////////
@@ -710,16 +763,43 @@ function feedWindow() {
 			Ti.API.info('******* error, ' + ev.error);
 		},
 		callback: function (data) {
+			
 			// when a gcm notification is received WHEN the app IS IN FOREGROUND
 			tmpdata = JSON.parse(data.data);
 			if(tmpdata.type == 'comment'){
-			 	eventnumText.text =  parseInt(eventnumText.text) + 1  ;
+				var notifynum = Ti.App.Properties.getInt('notifynum',0);
+				notifynum = notifynum + 1;
+				Ti.App.Properties.setInt('notifynum',notifynum);
+				
+			 	eventnumText.text =  notifynum  ;
 			 	eventnumText.left = eventImg.rect.x + eventImg.rect.width - 5;
 			 	eventnumText.top = eventImg.rect.y-5 ;
 			 	eventnumText.width = '20dp';
 			 	eventnumText.height = '20dp';
 			 	eventnumText.visible = true;
 			 	
+			}
+			if(tmpdata.type == 'talk'){
+				talkingRoomID = Ti.App.Properties.getString('TalkRoomID','');
+				if(talkingRoomID == tmpdata.roomid){
+					Ti.App.fireEvent('updattalk',tmpdata);
+					return;
+				}
+				
+				var talknum = Ti.App.Properties.getInt('talknum',0);
+				talknum = talknum + 1;
+				Ti.App.Properties.setInt('talknum',talknum);
+				
+			 	eventnumText.text =  talknum  ;
+			 	Ti.App.Properties.setString('talknum',talknum);
+				talknumText.text =  parseInt(talknumText.text) + 1  ;
+			 	talknumText.left = talkImg.rect.x + talkImg.rect.width - 5;
+			 	talknumText.top = talkImg.rect.y-5 ;
+			 	talknumText.width = '20dp';
+			 	talknumText.height = '20dp';
+			 	talknumText.visible = true;
+			 	
+			 	Ti.App.fireEvent('updatechatroom',tmpdata);
 			}
 		},
 		unregister: function (ev) {
@@ -728,11 +808,41 @@ function feedWindow() {
 		},
 		data: function (data) {
 			
+			
 			tmpdata = JSON.parse(data.msg);
+
 			if(tmpdata.type == 'comment'){
-				FeedContentWindow = require('feedContentWindows');
-				new FeedContentWindow(tmpdata.eventid, true).open(); 
+				var notifynum = Ti.App.Properties.getInt('notifynum',0);
+			 	eventnumText.text =  notifynum  ;
+			 	eventnumText.left = eventImg.rect.x + eventImg.rect.width - 5;
+			 	eventnumText.top = eventImg.rect.y-5 ;
+			 	eventnumText.width = '20dp';
+			 	eventnumText.height = '20dp';
+			 	eventnumText.visible = true;
+			 	
 			}
+			
+			if(tmpdata.type == 'talk'){
+				
+				talkingRoomID = Ti.App.Properties.getString('TalkRoomID','');
+				
+				if(talkingRoomID == tmpdata.roomid){
+					Ti.App.fireEvent('updattalk',tmpdata);
+					return;
+				}
+				var talknum = Ti.App.Properties.getInt('talknum',0);
+				
+				talknumText.text =  talknum  ;
+			 	talknumText.left = talkImg.rect.x + talkImg.rect.width - 5;
+			 	talknumText.top = talkImg.rect.y-5 ;
+			 	talknumText.width = '20dp';
+			 	talknumText.height = '20dp';
+			 	talknumText.visible = true;
+			 	
+			 	Ti.App.fireEvent('updatechatroom',tmpdata);
+			}
+			
+			
 			// if we're here is because user has clicked on the notification
 			// and we set extras in the intent 
 			// and the app WAS RUNNING (=> RESUMED)
@@ -740,6 +850,8 @@ function feedWindow() {
 			Ti.API.info('******* data (resumed) ' + JSON.stringify(data));
 		}
 	});
+    
+    Ti.App.Properties.setString('TalkRoomID',''); 
     
 	return self;
 }

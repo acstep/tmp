@@ -113,8 +113,13 @@ function feedContentWindow(eventid, fullcontent) {
 			
 			drawFeedContentFunction[data['category'].toString()](contentView,data);
 			self.add(contentView);
+			if(inputParentView.inputView != undefined){
+				inputParentView.remove(inputView);
+			} 
 			querycomment(eventid, 0, parseComment);
 			inputParentView.add(inputView);
+	
+			
 		}
 	}
    
@@ -139,7 +144,11 @@ function feedContentWindow(eventid, fullcontent) {
 
 	requestNextView.addEventListener('click',function(e)
 	{
+		if(inputParentView.inputView != undefined){
+			inputParentView.remove(inputView);
+		} 
 		querycomment(eventid, lastCommentTime, parseComment);
+
 	});	
 	
 	var inputParentView = Ti.UI.createView({
@@ -245,6 +254,8 @@ function feedContentWindow(eventid, fullcontent) {
 				top:'55dp',left:'70dp',right:'10dp',
 		  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 			});
+			
+			
 
 
 			lastCommentTime = data[i]['time'];
@@ -252,14 +263,15 @@ function feedContentWindow(eventid, fullcontent) {
 			tmpContentView.add(nameText);
 			tmpContentView.add(timeText);
 			tmpContentView.add(desText);
-			
+
 			commentTableView.add(tmpContentView);
+			
 		} 
 	
 		if(totalComment == true){
 			commentTableView.add(requestNextView);
 		}
-	
+	    inputParentView.add(inputView);
 	};
 	
 	
@@ -325,16 +337,9 @@ function feedContentWindow(eventid, fullcontent) {
     	commentevt(eventid, datastring, sendCommentCB);
 	});
 	
-	var firstTimeBlur = false;
-	self.addEventListener('postlayout',function(e){
-		if(firstTimeBlur == false){
-			firstTimeBlur = true;
-			contentScrollView.scrollTo(0,0);
-			commentTextArea.blur();
-		} 
-		
-	});
 	
+			
+
 	inputView.add(commentTextArea);
 	inputView.add(sendCommentButton);
 	
@@ -348,9 +353,10 @@ function feedContentWindow(eventid, fullcontent) {
 		queryeventbyid(eventid, parseEvent);
 	}
 	else{
+		if(inputParentView.inputView != undefined){
+			inputParentView.remove(inputView);
+		} 
 		querycomment(eventid, 0, parseComment);
-
-		inputParentView.add(inputView);
 	}
 	
 	

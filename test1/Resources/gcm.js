@@ -3,7 +3,7 @@
 
 	var serviceIntent = service.getIntent(),
 	//statusBarMessage = serviceIntent.hasExtra('message') ? serviceIntent.getStringExtra('message') : '',
-	message = serviceIntent.hasExtra('message') ? serviceIntent.getStringExtra('message') : '',
+	
 	msgdata = serviceIntent.hasExtra('data') ? JSON.parse(serviceIntent.getStringExtra('data')) : {},
 	notificationId = (function () {
 		// android notifications ids are int32
@@ -47,7 +47,7 @@
 	});
 	launcherIntent.addCategory(Ti.Android.CATEGORY_LAUNCHER);
 	launcherIntent.putExtra("ntfId", ntfId);
-	launcherIntent.putExtra("message", message);
+
 	launcherIntent.putExtra("msgdata", serviceIntent.getStringExtra('data'));
 
 	// increase notification id
@@ -64,8 +64,35 @@
 		case 'comment':
 		  	titlestr = L('uhavecomment');
 		  	messagestr = msgdata.name + L('userreply');
+		  	var notifynum = Ti.App.Properties.getInt('notifynum',0);
+			notifynum = notifynum + 1;
+			Ti.App.Properties.setInt('notifynum',notifynum);
+			
 		    break;
+        case 'talk':
+            var talkingRoomID = Ti.App.Properties.getString('TalkRoomID','');
+			if(talkingRoomID != msgdata.roomid){
+				var talknum = Ti.App.Properties.getInt('talknum',0);
+				talknum = talknum + 1;
+				Ti.App.Properties.setInt('talknum',talknum);
+			}
 
+            var roominfo = JSON.parse(Ti.App.Properties.getString('roominfo','{}'));
+			if(typeof(roominfo[msgdata.roomid] )== 'undefined'){
+				currentdate = new Date(); 
+				starttime = parseInt(currentdate.getTime()/1000);
+				roominfo[msgdata.roomid] = {'number':1,'time':starttime};
+				Ti.API.info(' roominfo bbb' + JSON.stringify(roominfo));
+			}
+			else{
+				roominfo[msgdata.roomid]['number'] = roominfo[msgdata.roomid]['number'] + 1;
+				Ti.API.info(' roominfo aaa' + JSON.stringify(roominfo));
+			}
+			Ti.App.Properties.setString('roominfo',JSON.stringify(roominfo));
+			
+		  	titlestr = L('uhavetalk');
+		  	messagestr = msgdata.name + ' : ' + msgdata.content.string;
+		    break;
 		default:
 		    titlestr = L('uhavecomment');
 		    messagestr = msgdata.name + L('userreply');

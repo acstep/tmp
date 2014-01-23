@@ -300,4 +300,125 @@ function querynotify( starttime, limitcount, callbackf){
 	
 };
 
+function createchatroom( id, toid, check, callbackf){
+    id = Ti.App.Properties.getString('userid','');
+    token = Ti.App.Properties.getString('token','');
+    
+    url = 'http://54.254.208.12/api/createchatroom?' + 'id=' + id + '&token=' + token+'&toid=' +toid +'&check=' +check;
+
+	
+	Ti.API.info('url : ' + url);
+	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.data);
+    	}
+    	else{
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'network error');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
+
+
+
+function querychatroom( starttime, limitcount,onlytime ,callbackf){
+    id = Ti.App.Properties.getString('userid','');
+    token = Ti.App.Properties.getString('token','');
+    lasttimeString = '';
+    if(onlytime == true){
+    	lasttimeString = '&onlyupdate=0';
+    }
+    url = 'http://54.254.208.12/api/querychatroom?' + 'id=' + id + '&token=' + token + '&starttime=' + starttime + '&limitcount=' + limitcount +lasttimeString;
+
+	
+	Ti.API.info('url : ' + url);
+	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.data);
+    	}
+    	else{
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'network error');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
+
+function sendmsg( roomid, msgdata ,callbackf){
+    id = Ti.App.Properties.getString('userid','');
+    token = Ti.App.Properties.getString('token','');
+    
+    url = 'http://54.254.208.12/api/sendmsg?' + 'id=' + id + '&token=' + token + '&roomid=' + roomid+ '&msgdata=' + msgdata ;
+
+	
+	Ti.API.info('url : ' + url);
+	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.data);
+    	}
+    	else{
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'network error');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
+
+
+function querymsg( roomid, starttime, limitcount ,callbackf){
+    id = Ti.App.Properties.getString('userid','');
+    token = Ti.App.Properties.getString('token','');
+    
+    url = 'http://54.254.208.12/api/querymsg?' + 'id=' + id + '&token=' + token + '&roomid=' + roomid+ '&starttime=' + starttime + '&limitcount=' + limitcount ;
+
+	
+	Ti.API.info('url : ' + url);
+	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.data);
+    	}
+    	else{
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'network error');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
 

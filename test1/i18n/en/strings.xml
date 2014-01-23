@@ -33,7 +33,11 @@
 	<string name="back">Back</string>
 	<string name="requestnextrow">Read more comments...</string>
 	<string name="send">Send</string>
+	<string name="notify">Notify</string>
 	<string name="comment">Your Comment</string>
 	<string name="uhavecomment">You have a new comment.</string>
 	<string name="userreply"> comment on your post.</string>
+	<string name="chatroom">Chat Rooms</string>
+	<string name="talk">Talk</string>
+	<string name="uhavetalk">You have a new message.</string>
 </resources>
