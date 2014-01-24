@@ -1,7 +1,6 @@
 //feed content Window Component Constructor
 Ti.include("common_net.js");
 Ti.include("common_util.js");
-Ti.include("newsContentView.js");
 Ti.include("newsview.js");
 
 function feedContentWindow(eventid, fullcontent) {
@@ -358,12 +357,7 @@ function feedContentWindow(eventid, fullcontent) {
 		} 
 		querycomment(eventid, 0, parseComment);
 	}
-	
-	
-	
-	
-	
-	
+
 	return self;
 }
 

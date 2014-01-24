@@ -14,7 +14,7 @@ function chatroomWindow() {
 	var self = Ti.UI.createWindow({
 		backgroundColor:'#dddddd',
 		navBarHidden:true,
-        layout: 'vertical'
+       
  	});
  	
 
@@ -93,7 +93,7 @@ function chatroomWindow() {
     	}	
     	for(var i = 0 ; i <= chatroomData.length -1; i++){
     		var chatroomRow = Ti.UI.createTableViewRow({
-		        selectedBackgroundColor:'#3f9ddd',
+		        backgroundSelectedColor:'#3f9ddd',
 		        backgroundColor:'#ffffff'
 		        
 		    });
@@ -256,7 +256,7 @@ function chatroomWindow() {
     });
     
     var chatroomLoadingRow = Ti.UI.createTableViewRow({
-        selectedBackgroundColor:'#3f9ddd',
+        backgroundSelectedColor:'#3f9ddd',
         backgroundColor:'#ffffff'
         
     });
@@ -361,7 +361,7 @@ function chatroomWindow() {
 	self.addEventListener('android:back', function(e) {
 	    Ti.App.removeEventListener('updatechatroom', getupdatechatroom);
 	    Ti.API.info('remove listener');
-	    Ti.App.fireEvent('closrchatroom',tmpdata);
+	    Ti.App.fireEvent('closechatroom');
 	    self.close();
 	});
 

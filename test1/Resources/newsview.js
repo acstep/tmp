@@ -165,15 +165,7 @@ function drawNewsEvent(view, data, lon, lat){
   		name:'destext',
   		
 	});
-	desText.eventid = data['eventid'];
-	desText.addEventListener('click',function(e) {
-        
-		FeedContentWindow = require('feedContentWindows');
-		new FeedContentWindow(this.eventid, true).open();   
-	});
-	
 
-	
 	middleView.add(desText);
 	
 	if(data['photos'].length > 0){
@@ -206,11 +198,7 @@ function drawNewsEvent(view, data, lon, lat){
 				this.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
 				newsImage.visible = true;
 				newsImage.eventid = data['eventid'];
-				newsImage.addEventListener('click',function(e) {
-			        Ti.API.info('postView click.');
-			        FeedContentWindow = require('feedContentWindows');
-			  		new FeedContentWindow(this.eventid, true).open(); 
-				});
+				
 			}
 
 		});
@@ -277,6 +265,7 @@ function drawNewsEvent(view, data, lon, lat){
 	}
 	
 	bottomLikeView.addEventListener('click',function(e) {
+		e.cancelBubble = true;
         if(e.source.name == 'img' || e.source.name == 'text'){
         	likeevent(e.source.getParent().eventid , e.source.getParent().getParent(), likeCB);
         }
@@ -336,6 +325,7 @@ function drawNewsEvent(view, data, lon, lat){
 	commentText.eventid = data['eventid'];
 	
 	bottomCommentView.addEventListener('click',function(e) {
+		e.cancelBubble = true;
         if(e.source.name == 'img' || e.source.name == 'text'){
         	Ti.API.info('postView click.');
 	        FeedContentWindow = require('feedContentWindows');

@@ -9,7 +9,7 @@ function notifyWindow() {
 	var self = Ti.UI.createWindow({
 		backgroundColor:'#dddddd',
 		navBarHidden:true,
-        layout: 'vertical'
+        
  	});
  	
 
@@ -83,12 +83,12 @@ function notifyWindow() {
     	
     	notifyLoading = false;
     	if(notifyRowstatus == 'loading'){
-    		notifyTableView.deleteRow(notifyRow);
+    		notifyDataItems.pop(notifyDataItems.length-1);
     		notifyRowstatus = 'none';
     	}	
     	for(var i = 0 ; i <= notifyData.length -1; i++){
     		var notifyRow = Ti.UI.createTableViewRow({
-		        selectedBackgroundColor:'#3f9ddd',
+		        backgroundSelectedColor:'#3f9ddd',
 		        backgroundColor:'#ffffff'
 		        
 		    });
@@ -111,7 +111,7 @@ function notifyWindow() {
 					itemView.add(headPhotoImg);
 					
 					var contentView = Titanium.UI.createView({
-						left:'80dp',backgroundColor:'#transparent',
+						left:'80dp',backgroundColor:'transparent',
 						height: Ti.UI.SIZE,top:'10dp',bottom:'10dp',
 						layout: 'vertical'
 					});
@@ -130,7 +130,7 @@ function notifyWindow() {
 					contentView.add(contentText);
 					
 					var timeView = Titanium.UI.createView({
-						left:'10dp',backgroundColor:'#transparent',
+						left:'10dp',backgroundColor:'transparent',
 						height: Ti.UI.SIZE,
 						layout: 'horizontal'
 					});
@@ -193,7 +193,7 @@ function notifyWindow() {
     });
     
     var notifyRow = Ti.UI.createTableViewRow({
-        selectedBackgroundColor:'#3f9ddd',
+        backgroundSelectedColor:'#3f9ddd',
         backgroundColor:'#ffffff'
         
     });
@@ -223,7 +223,8 @@ function notifyWindow() {
 				notifyLoading =  true;
 			    
 				notifyRowstatus = 'loading';
-				notifyTableView.appendRow(notifyRow);
+				notifyDataItems.push(notifyRow);
+				notifyTableView.data = notifyDataItems;
 				querynotify( starttime, 10, parseNotify);
 					
 			}    

@@ -188,7 +188,8 @@ function feedWindow() {
 		backgroundColor:'#dddddd',
 		width:'100%',
 		height:'100%',
-		top:'0dp'
+		top:'0dp',
+		layout:'vertical'
 	});
 	
 	/////////  feed  control  ///////////////////
@@ -197,7 +198,6 @@ function feedWindow() {
 		width:'100%',
 		height:'50dp',
 		top:'0dp',
-		zIndex: 1,
 		layout: 'horizontal',
 	});
 	
@@ -258,55 +258,29 @@ function feedWindow() {
 	feedControlView.add(postView);
 	
 	/////////////   scroll feed  ////////////////////////////
-    var feedScrollView = Ti.UI.createScrollView({
-	    top:'0dp',
-	    left:'0dp',
-	    contentHeight: 'auto',
+	var feedtableItems = [];
+	var feedTableView = Ti.UI.createTableView({
+		showVerticalScrollIndicator:false,
+        backgroundSelectedColor:'#dddddd',
+        top:'0dp',
+	    left:'0dp',bottom:'0dp',
 	    layout: 'vertical',
 	    backgroundColor:'#dddddd',
-	    zIndex: 0
-
-	});
+        separatorColor:'#dddddd',
+		data:feedtableItems
+    });
+	
 	
 	var getNewFeedHintView = Ti.UI.createView({
 		height:'0dp',
 		top:'50dp',
 	});
 	
-	var scrollHintText = Ti.UI.createLabel({
-		font:{fontSize:'14sp',fontFamily:'Marker Felt'},
-		text: L('pullreflash'),
-		color:'#333333',
-		top:'15dp',
-  		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
-	});
-	
-
-	getNewFeedHintView.add(scrollHintText);
-	
-	var getNextFeedHintView = Ti.UI.createView({
-		backgroundColor:'#dddddd',
-		width:Ti.UI.SIZE,
-		height:'50dp',
-		top:'50dp',
-		layout: 'horizontal',
-		visible: false
-
-	});
-	
-	var loginIndicator = Ti.UI.createActivityIndicator({
-		  font: {fontFamily:'Helvetica Neue', fontSize:16, fontWeight:'bold'},
-	      message: L('loading'),
-	});
-	
-	getNextFeedHintView.add(loginIndicator);
-	loginIndicator.show();
 	
 	
-	feedScrollView.add(getNewFeedHintView);
-	
-	feedView.add(feedScrollView);
 	feedView.add(feedControlView);
+	feedView.add(feedTableView);
+	
 	backgroundView.add(feedView);
 	
 	
@@ -383,7 +357,7 @@ function feedWindow() {
 	var cateDate = [];
 	for(var i = 0 ; i <= categoryMenu.length -1; i++) {
 		var row = Titanium.UI.createTableViewRow({
-
+            showVerticalScrollIndicator:false,
 			backgroundColor:'transparent',
 			width:'90%',
 			height:'50dp',
@@ -461,62 +435,163 @@ function feedWindow() {
 	
 	
 	function parseFeed(result, feedData){
-		
+		feedLoading = false;
+		try{
+			feedRowstatus = 'none';
+			feedtableItems.pop(feedtableItems.length-1);
+			if(feedtableItems.indexOf(refleshRow) == 0){
+				feedtableItems.shift(0);
+			}
+		}
+		catch(err){
+			
+		}
+
 		if(result == true){
 			
 			Ti.API.info(feedData);
 			feedData = sortByKeyUp(feedData, 'lastupdate');
-			feedScrollView.remove(getNextFeedHintView);
-			if(firstFeed == true){
-				feedScrollView.visible = false;
-				feedScrollView.removeAllChildren();
-	            getNewFeedHintView.height = '0dp';
-	            scrollHintText.text = L('pullreflash');
-				feedScrollView.add(getNewFeedHintView);
-				
-			}
+
 			if(feedData.length > 0){	
 				if(firstFeed == true){
 					feeditem.length = 0;
 				}	
 				for(var i = 0 ; i <= feedData.length -1; i++) {
 					feeditem.push(feedData[i]);
+					var feedRow = Ti.UI.createTableViewRow({
+				        backgroundSelectedColor:'#dddddd',
+				        backgroundColor:'#dddddd'
+				        
+				    });
 				    //drawFunction[feedData[i].category.toString()](feedData[i]);
-				    drawFunction['1000'](feedScrollView, feedData[i],longitude,latitude);
+				    drawFunction['1000'](feedRow, feedData[i],longitude,latitude);
+				    feedRow.eventid = feedData[i]['eventid']; 
+				    feedtableItems.push(feedRow);
 				}   
+				feedTableView.data = feedtableItems;
 				Ti.App.Properties.setString('feed',JSON.stringify({'data':feeditem}));
 				
 			}
 			forwardView.visible = false;
-			feedScrollView.visible = true;
-			getNextFeedHintView.visible = false;
-			feedScrollView.add(getNextFeedHintView);
 			nexttime = feedData[(feedData.length -1)]['lastupdate'];
 			firstFeed = false;	
 		}
 		else{
+			forwardView.visible = false;
 			if(feedData == 'network error' && firstFeed == true){
 				firstFeed = false;
-				feeditems = JSON.parse(Ti.App.Properties.getString('feed',{'data':[]}));
-				for(var i = 0 ; i <= feeditems.data.length -1; i++) {
-					feeditem.push(feedData[i]);
+				oldfeeditems = JSON.parse(Ti.App.Properties.getString('feed',{'data':[]}));
+				for(var i = 0 ; i <= oldfeeditems.data.length -1; i++) {
+					
 					latitude = parseFloat(Ti.App.Properties.getString('latitude',0));
 					longitude = parseFloat(Ti.App.Properties.getString('longitude',0));
 				    //drawFunction[feedData[i].category.toString()](feedData[i]);
-				    drawFunction['1000'](feedScrollView, feeditems.data[i],longitude,latitude);
+				    var feedRow = Ti.UI.createTableViewRow({
+				        backgroundSelectedColor:'#dddddd',
+				        backgroundColor:'#dddddd'
+				        
+				    });
+				    drawFunction['1000'](feedRow, oldfeeditems.data[i],longitude,latitude);
+				    feedRow.eventid = oldfeeditems.data[i]['eventid'];
+				    feedtableItems.push(feedRow);
 				}   
-				nexttime = feeditems.data[(feeditems.data.length -1)]['lastupdate'];
+				feedTableView.data = feedtableItems;
+				nexttime = oldfeeditems.data[(oldfeeditems.data.length -1)]['lastupdate'];
 			}
 			forwardView.visible = false;
 			firstFeed = false;	
-			getNextFeedHintView.visible = false;
-			feedScrollView.add(getNextFeedHintView);
 		}
+		feedtableItems.unshift(refleshRow);
+		feedTableView.data = feedtableItems;
 	}
 	
+	feedTableView.addEventListener('click', function(e){
+    	FeedContentWindow = require('feedContentWindows');
+		new FeedContentWindow(e.row.eventid, true).open(); 
+    });
+    
+    var loadRow = Ti.UI.createTableViewRow({
+        backgroundSelectedColor:'#dddddd',
+        backgroundColor:'#dddddd'
+        
+    });
+    var itemView = Titanium.UI.createView({
+		backgroundColor:'transparent',
+		width:Ti.UI.SIZE ,height: Ti.UI.SIZE,width: Ti.UI.SIZE,top:'10dp',bottom:'10dp'
+	});
+	var loginIndicator = Ti.UI.createActivityIndicator({
+		  font: {fontFamily:'Helvetica Neue', fontSize:18, fontWeight:'bold'},
+		  style:Titanium.UI.ActivityIndicatorStyle.DARK,
+		  message: L('loading')
+	});
+
+	itemView.add(loginIndicator);
+	loginIndicator.show();
+	loadRow.add(itemView);
+	
+	
+	var refleshRow = Ti.UI.createTableViewRow({
+        backgroundSelectedColor:'#dddddd',
+        backgroundColor:'#dddddd',
+        hieght:'1dp'
+    });
+	
+	var feedRowstatus = 'none';
+    var feedLoading = false;
+    var reachTop = false;
+    
+    feedTableView.addEventListener('scroll', function(e)
+	{
+
+		if((e.firstVisibleItem + e.visibleItemCount) == feedtableItems.length){
+			if(feedLoading == false){
+				feedLoading =  true;
+			    
+				feedRowstatus = 'loading';
+				feedtableItems.push(loadRow);
+				feedTableView.data = feedtableItems;
+				getNextFeed();
+					
+			}    
+		}
+		if(e.firstVisibleItem == 0){
+
+			reachTop = true;
+		}
+		else{
+
+			startRec = false;
+			reachTop = false;
+		}
+		
+	});
+	
+	var startScrollY = 0;
+    var startRec = false; 
+	feedTableView.addEventListener('touchstart', function(e)
+	{
+		if(reachTop == true){
+			startRec = true;
+			startScrollY = e.y;
+		}
+	});
+	
+	feedTableView.addEventListener('touchend', function(e)
+	{
+		if(reachTop == true && startRec == true){
+			if(e.y - startScrollY > 0){
+				reachTop = true;
+				startRec = false; 
+				getNewFeed();
+			}
+
+		}
+		Ti.API.info('tttt : ' + e.x + '  ' + e.y);
+	});
 	
 	function getNewFeed(){
 		Ti.API.info('getNewFeed ');
+		feedtableItems = [];
 		forwardView.visible = true;
 		currentdate = new Date(); 
 		nexttime = parseInt(currentdate.getTime()/1000);
@@ -559,31 +634,7 @@ function feedWindow() {
 			
 			queryevent([longitude,latitude], distance, category, limitcount, nexttime, parseFeed);
 		}
-		//Titanium.Geolocation.getCurrentPosition(function(e){
-		//    if(e.error){
-		//        Ti.API.error(e.error);
-		//        currentdate = new Date(); 
-		//        nexttime = parseInt(currentdate.getTime()/1000);
-		//        latitude = Ti.App.Properties.getString('latitude',latitude);
-		//		longitude = Ti.App.Properties.getString('longitude',longitude);
-		//		distance = Ti.App.Properties.getString('distance',feedDistance);
-		//		category = Ti.App.Properties.getString('category','none');
-		//		limitcount = Ti.App.Properties.getString('limitcount',5);
-		//		queryevent([longitude,latitude], distance, category, limitcount, nexttime, parseFeed);
-		//        return;
-		//    }
-	    //    else{
-	    //    	currentdate = new Date(); 
-		//		nexttime = parseInt(currentdate.getTime()/1000);
-	    //    	latitude = e.coords.latitude;
-		//		longitude = e.coords.longitude;
-		//		Ti.App.Properties.setString('latitude',latitude);
-		//		Ti.App.Properties.setString('longitude',longitude);
-		//		distance = Ti.App.Properties.getString('distance',feedDistance);
-		//		category = Ti.App.Properties.getString('category','none');
-		//		limitcount = Ti.App.Properties.getString('limitcount',5);
-		//		queryevent([longitude,latitude], distance, category, limitcount, nexttime, parseFeed);
-	    //    }
+		
             
 	};
 
@@ -598,7 +649,7 @@ function feedWindow() {
         getNewFeed();
 	});
 	
-	Ti.App.addEventListener('closrchatroom',function(e) {
+	Ti.App.addEventListener('closechatroom',function(e) {
     	talknumText.text =  0  ;
         talknumText.visible = false;
 	});
@@ -606,73 +657,7 @@ function feedWindow() {
 	
     ///////////////   scroll  update and next logic ////////////////////
 
-	var scrolling = false;
-	var scrollTimes = 0;
-	var scrollLastTimes = 0;
-	var flashNewFeed = false;
-	var flashNextFeed = false;
-	var oldY = 0;
-	feedScrollView.addEventListener('scroll',function(e) {
-        Ti.API.info('tpye x y : ' + e.type + '  x:' + e.x + '   y:' +e.y);
-        if(scrolling == true){
-        	if(e.y == 0){
-        		scrollLastTimes = 0;
-        		getNewFeedHintView.height = '50dp';
-        		scrollTimes = scrollTimes + 1;
-        		
-        		if(scrollTimes > 30){
-        			flashNewFeed = true;
-        			flashNextFeed == false;
-        			scrollHintText.text = L('releasereflash');
-        		}
-        	}
-        	else{
-        		scrollTimes = 0;
-        		Ti.API.info('old y : ' + oldY);
-        		if(e.y == oldY){
-        			scrollLastTimes = scrollLastTimes + 1;
-        			if(scrollLastTimes > 2){
-        				getNextFeedHintView.visible = true;
-	        			scrollLastTimes = 0;
-	        			Ti.API.info('getNextFeed ');
-	        			flashNewFeed = false;
-	        			flashNextFeed = true;
-	        		}
-        		}
-        		else{
-        			oldY = e.y;
-        			scrollLastTimes = 0;
-        		}
-        	}
-        }
-
-	});
-	
-	feedScrollView.addEventListener('touchstart',function(e) {
-        Ti.API.info('touchstart');
-        scrolling = true;
-	});
-	
-	
-	feedScrollView.addEventListener('touchend',function(e) {
-        Ti.API.info('touchend');
-        scrolling = false;
-        if(flashNewFeed == true){
-        	flashNewFeed = false;
-        	scrollTimes = 0;
-        	firstFeed == true;
-        	
-        	getNewFeed();
-        }
-        if(flashNextFeed == true){
-        	
-        	flashNextFeed = false;
-        	scrollLastTimes = 0;
-        	getNextFeed();
-        }
-
-	});
-	
+		
 	
 	
     getNewFeed();
@@ -733,8 +718,16 @@ function feedWindow() {
 		
 		tmpdata = JSON.parse(pendingData.msg);
 		if(tmpdata.type == 'comment'){
+			var notifynum = Ti.App.Properties.getInt('notifynum',0);
+			notifynum = notifynum + 1;
+			Ti.App.Properties.setInt('notifynum',notifynum);
 			FeedContentWindow = require('feedContentWindows');
 			new FeedContentWindow(tmpdata.eventid, true).open(); 
+		}
+		if(tmpdata.type == 'talk'){
+			var talknum = Ti.App.Properties.getInt('talknum',0);
+			talknum = talknum + 1;
+			Ti.App.Properties.setInt('talknum',talknum);
 		}
 		Ti.API.info('******* data (started) ' + JSON.stringify(pendingData));
 	}
@@ -852,6 +845,7 @@ function feedWindow() {
 	});
     
     Ti.App.Properties.setString('TalkRoomID',''); 
+    
     
 	return self;
 }

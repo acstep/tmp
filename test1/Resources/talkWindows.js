@@ -8,13 +8,14 @@ function talkWindow(id, toid,roomdata) {
 
     
     var messageLock = true; 
+    var lastMsgTime = 0;
     var msgItems = []; 
  
 	//load component dependencies
 	var self = Ti.UI.createWindow({
 		backgroundColor:'#dddddd',
 		navBarHidden:true,
-        layout: 'vertical'
+    
  	});
  	
 
@@ -229,6 +230,44 @@ function talkWindow(id, toid,roomdata) {
 	self.add(backgroundView);
 	self.add(forwardView);
 	
+	
+	var loadmoreRow = Ti.UI.createTableViewRow({
+        selectedBackgroundColor:'#3f9ddd',
+        backgroundColor:'transparent'
+        
+    });
+    var itemView = Titanium.UI.createView({
+		backgroundColor:'transparent',
+		width:Ti.UI.SIZE ,height: Ti.UI.SIZE,width: Ti.UI.SIZE,top:'10dp',bottom:'10dp'
+	});
+	
+	var loadmoreText = Ti.UI.createLabel({
+			font:{fontSize:'16sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+			text: L('loading'),
+			color:'#888888',
+			backgroundColor:'transparent'
+		});
+		
+	var loginIndicator = Ti.UI.createActivityIndicator({
+		  font: {fontFamily:'Helvetica Neue', fontSize:18, fontWeight:'bold'},
+		  style:Titanium.UI.ActivityIndicatorStyle.DARK,
+		  message: L('loading'),visible:false
+	});
+
+	itemView.add(loginIndicator);
+	itemView.add(loadmoreText);
+	
+	loadmoreRow.add(itemView);
+	
+	var needScroolEnd = true;
+	loadmoreRow.addEventListener('click',function(e){
+		loadmoreText.visible = false;
+		needScroolEnd = false;
+		loginIndicator.show();
+		querymsg( roomdata['roomid'], lastMsgTime, 10 ,parseMsg);
+	});	
+	
+	
 	headimage = {};
 	
 	function parseHeadPhoto(data){
@@ -301,20 +340,45 @@ function talkWindow(id, toid,roomdata) {
 	}
 	
 	function parseMsg(result, data){
-		
-		for(var i = 0 ; i <= data.length -1; i++){
+		if(result == true){
+			if(talkDataItems[0] == loadmoreRow){
+				loadmoreText.visible = true;
+				loginIndicator.hide();
+				talkDataItems.shift(loadmoreRow);
+				talkTableView.data = talkDataItems;
+			}
 			
-			tmpRow = crateTextRow(data[i]['owner'], data[i]['data']['string']);
+			talkTableView.data = talkDataItems;
+			for(var i = 0 ; i <= data.length -1; i++){
+				
+				tmpRow = crateTextRow(data[i]['owner'], data[i]['data']['string']);
+				
+				
+				talkDataItems.unshift(tmpRow);
+				lastMsgTime = data[i]['time'];
+			}
+			talkDataItems.unshift(loadmoreRow);
+	
+			talkTableView.data = talkDataItems;
+			if(needScroolEnd == true){
+				talkTableView.scrollToIndex(talkDataItems.length-1);
+			}
 			
-			
-			talkDataItems.unshift(tmpRow);
 			
 		}
-		talkTableView.data = talkDataItems;
-		talkTableView.scrollToIndex(talkDataItems.length-1);
+		else{
+			var alertCreateAccountDlg = Titanium.UI.createAlertDialog({
+				title:'Error !',
+				message:data
+			});
+			alertCreateAccountDlg.show();
+			
+		}
 		messageLock = false;
 		
 	}
+	
+	
 	
 	
 	function checkchatroom(result, data){
