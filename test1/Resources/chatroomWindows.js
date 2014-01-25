@@ -61,7 +61,10 @@ function chatroomWindow() {
 	});
 	
 	backImg.addEventListener('click',function(e){
-		self.close();
+		Ti.App.removeEventListener('updatechatroom', getupdatechatroom);
+	    Ti.API.info('remove listener');
+	    Ti.App.fireEvent('closechatroom');
+	    self.close();
 	});	
 	
 	var chatroomTitleText = Ti.UI.createLabel({
@@ -91,7 +94,7 @@ function chatroomWindow() {
     		chatroomTableView.deleteRow(chatroomLoadingRow);
     		chatroomRowstatus = 'none';
     	}	
-    	for(var i = 0 ; i <= chatroomData.length -1; i++){
+    	for(var i = 0 ; i < chatroomData.length ; i++){
     		var chatroomRow = Ti.UI.createTableViewRow({
 		        backgroundSelectedColor:'#3f9ddd',
 		        backgroundColor:'#ffffff'
@@ -211,7 +214,8 @@ function chatroomWindow() {
 				
 			});
 			newMsgView.add(newMsgText);
-			
+			var roominfo = JSON.parse(Ti.App.Properties.getString('roominfo','{}'));
+			Ti.API.info(' roominfo' + Ti.App.Properties.getString('roominfo','{}'));
 			if(typeof(roominfo[chatroomData[i]['roomid']]) != 'undefined'){
 				Ti.API.info(' roominfo exist' + JSON.stringify(roominfo[chatroomData[i]['roomid']] ));
 				newMsgView.visible = true;
@@ -223,6 +227,7 @@ function chatroomWindow() {
 			chatroomRow.add(newMsgView);
 		    
 		    chatroomRow.roomid = chatroomData[i]['roomid'];
+		    Ti.API.info(' chatroomRow.roomid ' +i + ':' + chatroomData[i]['roomid']);
 		    chatroomRow.roomdata = chatroomData[i];
 		    chatroomRow.newMsgView = newMsgView;
 		    chatroomRow.newMsgText = newMsgText;
@@ -243,9 +248,9 @@ function chatroomWindow() {
 
 		e.row.newMsgView.visible = false;
 		e.row.newMsgText.text = 0;
+		var roominfo = JSON.parse(Ti.App.Properties.getString('roominfo','{}'));
 		if(typeof(roominfo[e.row.roomid]) != 'undefined'){
-			Ti.API.info(' delete ' + e.row.roomid);
-			delete roominfo[e.row.roomid] ;
+		    delete roominfo[e.row.roomid] ;
 			Ti.App.Properties.setString('roominfo',JSON.stringify(roominfo));
 			Ti.API.info(' roominfo delete result ' + JSON.stringify(roominfo));
 		}
@@ -299,6 +304,7 @@ function chatroomWindow() {
     var starttime = 0;
 	function requestChatroom(){
 		forwardView.visible = true;
+		chatroomDataItems = [];
 		currentdate = new Date(); 
 		starttime = parseInt(currentdate.getTime()/1000);
 		querychatroom( starttime, 10, false,parseChatroom);
@@ -315,42 +321,23 @@ function chatroomWindow() {
 			return;
 		}
 
-		if(chatroomLock == true){
-			//  chatroom did not startup we just update data in flash
-			var roominfo = JSON.parse(Ti.App.Properties.getString('roominfo','{}'));
-			if(typeof(roominfo[e.roomid ] )== 'undefined'){
-				currentdate = new Date(); 
-				starttime = parseInt(currentdate.getTime()/1000);
-				roominfo[e.roomid] = {'number':1,'time':starttime};
-				Ti.API.info(' roominfo bbb' + JSON.stringify(roominfo));
-			}
-			else{
-				roominfo[e.roomid]['number'] = roominfo[e.roomid]['number'] + 1;
-				Ti.API.info(' roominfo aaa' + JSON.stringify(roominfo));
-			}
-			Ti.App.Properties.setString('roominfo',JSON.stringify(roominfo));
-		}
 		if(chatroomLock == false){
+			var getRoom = false;
 			var roominfo = JSON.parse(Ti.App.Properties.getString('roominfo','{}'));
+			Ti.API.info(' chatroomDataItems.length :' + chatroomDataItems.length);
+			Ti.API.info(' e.roomid :' + e.roomid);
+			
 			for(var i=0 ; i<chatroomDataItems.length ; i++){
 				
 				if(e.roomid == chatroomDataItems[i].roomid){
-					
+					getRoom = true;
+					Ti.API.info(' chatroomDataItems[i].roomid :'+ i+ ' : ' + chatroomDataItems[i].roomid);
 					chatroomDataItems[i].newMsgView.visible = true;
-					chatroomDataItems[i].newMsgText.text = parseInt(chatroomDataItems[i].newMsgText.text) + 1;
-					if(typeof(roominfo[e.roomid]) == 'undefined'){
-						currentdate = new Date(); 
-						starttime = parseInt(currentdate.getTime()/1000);
-						roominfo[e.roomid] = {'number':1,'time':starttime};
-						Ti.API.info(' roominfo ccc' + JSON.stringify(roominfo));
-						Ti.App.Properties.setString('roominfo',JSON.stringify(roominfo));
-					}
-					else{
-						roominfo[e.roomid]['number'] = roominfo[e.roomid]['number'] + 1;
-						Ti.App.Properties.setString('roominfo',JSON.stringify(roominfo));
-						Ti.API.info(' roominfo ddd' + JSON.stringify(roominfo));
-					}
+					chatroomDataItems[i].newMsgText.text = roominfo[e.roomid]['number'];
 				}
+			}
+			if(getRoom == false){
+				requestChatroom();
 			}
 		}
 	};
@@ -369,6 +356,8 @@ function chatroomWindow() {
 	self.add(forwardView);
 	
 	requestChatroom();
+	
+	
 	
 	return self;
 }

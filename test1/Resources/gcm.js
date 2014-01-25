@@ -71,25 +71,27 @@
 		    break;
         case 'talk':
             var talkingRoomID = Ti.App.Properties.getString('TalkRoomID','');
-			if(talkingRoomID != msgdata.roomid){
+            var userid = Ti.App.Properties.getString('userid','');
+			if(talkingRoomID != msgdata.roomid && msgdata.owner != userid){
 				var talknum = Ti.App.Properties.getInt('talknum',0);
 				talknum = talknum + 1;
 				Ti.App.Properties.setInt('talknum',talknum);
-			}
-
-            var roominfo = JSON.parse(Ti.App.Properties.getString('roominfo','{}'));
-			if(typeof(roominfo[msgdata.roomid] )== 'undefined'){
-				currentdate = new Date(); 
-				starttime = parseInt(currentdate.getTime()/1000);
-				roominfo[msgdata.roomid] = {'number':1,'time':starttime};
-				Ti.API.info(' roominfo bbb' + JSON.stringify(roominfo));
-			}
-			else{
-				roominfo[msgdata.roomid]['number'] = roominfo[msgdata.roomid]['number'] + 1;
-				Ti.API.info(' roominfo aaa' + JSON.stringify(roominfo));
-			}
-			Ti.App.Properties.setString('roominfo',JSON.stringify(roominfo));
 			
+
+	            var roominfo = JSON.parse(Ti.App.Properties.getString('roominfo','{}'));
+				if(typeof(roominfo[msgdata.roomid] )== 'undefined'){
+					currentdate = new Date(); 
+					starttime = parseInt(currentdate.getTime()/1000);
+					roominfo[msgdata.roomid] = {'number':1,'time':starttime};
+					Ti.API.info(' roominfo bbb' + JSON.stringify(roominfo));
+				}
+				else{
+					if(msgdata.owner != userid)
+						roominfo[msgdata.roomid]['number'] = roominfo[msgdata.roomid]['number'] + 1;
+					Ti.API.info(' roominfo aaa' + JSON.stringify(roominfo));
+				}
+				Ti.App.Properties.setString('roominfo',JSON.stringify(roominfo));
+			}
 		  	titlestr = L('uhavetalk');
 		  	messagestr = msgdata.name + ' : ' + msgdata.content.string;
 		    break;

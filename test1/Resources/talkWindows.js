@@ -202,10 +202,15 @@ function talkWindow(id, toid,roomdata) {
 				
 			}
 			else{
-                
+                // we have create a new room. send msg now.
 				roomdata = data;
 				Ti.App.Properties.setString('TalkRoomID',roomdata['roomid']);
 				parseHeadPhoto(data);
+				tmpRow = crateTextRow(id, msgTextArea.value);
+		    	talkDataItems.push(tmpRow);
+		    	talkTableView.data = talkDataItems;
+		    	talkTableView.scrollToIndex(talkDataItems.length-1);
+		    	msgTextArea.value = '';
 				sendmsg(roomdata['roomid'] , needSendMsg, sendMsgCB);
 			}
 			
@@ -381,7 +386,7 @@ function talkWindow(id, toid,roomdata) {
 	
 	
 	
-	function checkchatroom(result, data){
+	function checkchatroomCB(result, data){
 		if(result == true){
 			
 			if(data['roomid'] == '0'){
@@ -433,7 +438,7 @@ function talkWindow(id, toid,roomdata) {
 	if(roomdata['roomid'] == ''){
 		messageLock = false;
 		forwardView.visible = true;
-		createchatroom(id, toid, 'true', checkchatroom);
+		createchatroom(id, toid, 'true', checkchatroomCB);
 	}
 	else{
 		currentdate = new Date(); 
@@ -451,6 +456,18 @@ function talkWindow(id, toid,roomdata) {
 	   
 	    self.close();
 	});
+	
+	self.addEventListener('open', function(ev) {
+        self.activity.addEventListener('resume', function(e) {
+        	if(roomdata['roomid'] != ''){
+        		currentdate = new Date(); 
+				starttime = parseInt(currentdate.getTime()/1000);
+				talkDataItems = [];
+				querymsg( roomdata['roomid'], starttime, 10 ,parseMsg);
+        	}
+            
+        });
+    });
 	
 	return self;
 }

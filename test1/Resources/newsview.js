@@ -363,47 +363,32 @@ function drawNewsEvent(view, data, lon, lat){
 function drawNewsContnet(contentView,data){
 	
 	Ti.API.info('enter drawNewsContnet.');
-	
-	//////////////////   image list /////////////////////////
 	var imageList = data['photos'];
-
-	var imageScrollView = Ti.UI.createScrollView({
-	    contentWidth: (imageList.length*140 + 20)*(Titanium.Platform.displayCaps.dpi / 160),
-	    contentHeight:'160dp',
-	    layout: 'horizontal',
-	    backgroundColor:'#ffffff',
-        height:'160dp'
-	});
-	
- 
-	for(var i=0; i<imageList.length; i++){
-		var imageContentView = Titanium.UI.createView({
+	//////////////////   image list /////////////////////////
+	if(imageList.length == 1){
+		var imageScrollView = Titanium.UI.createView({
 		  	backgroundColor: '#ffffff',
 		    top: '15dp', 
 		    borderRadius:15,
-		    width:'130dp',height:'130dp',left:'10dp',
+		    width:'90%',height:'200dp',left:'5%',
 		    name:'imagecontentview'
 		});  
-		Ti.API.info('image file : ',('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[0]).replace('.jpg','-m.jpg'));
 		var newsImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
 		    visible : false,
 		    name:'image'
 		});
-	    newsImage.index = i;
 		newsImage.addEventListener('load', function()
 		{
-			
-
 			imgwidth = this.size.width;
 			imgheight = this.size.height;
 			if(imgwidth < imgheight){
-				ratio = (130 / parseFloat(imgwidth));
+				ratio = ((Ti.Platform.displayCaps.platformWidth *0.90)  / parseFloat(imgwidth));
 				this.width = (imgwidth * ratio) ;
 				this.height = (imgheight * ratio) ;
 			}
 			else{
-				ratio = (130 / parseFloat(imgheight));
+				ratio = (200 / parseFloat(imgheight));
 				this.width = (imgwidth * ratio) ;
 				this.height = (imgheight * ratio) ;
 			}
@@ -415,15 +400,75 @@ function drawNewsContnet(contentView,data){
 			});
 
 		});
-		
 		newsImage.addEventListener('click', function(){
 			NewsImageListWindow = require('imagelistWindows');
-			new NewsImageListWindow(imageList,this.index).open(); 
+			new NewsImageListWindow(imageList,0).open(); 
 		});
-		newsImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[i]).replace('.jpg','-m.jpg');
-		imageContentView.add(newsImage);
+		imageScrollView.add(newsImage);
+		newsImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[0]).replace('.jpg','-m.jpg');
+		
+	}
+	else{
+		
 	
-		imageScrollView.add(imageContentView);
+		var imageScrollView = Ti.UI.createScrollView({
+		    contentWidth: (imageList.length*140 + 20)*(Titanium.Platform.displayCaps.dpi / 160),
+		    contentHeight:'160dp',
+		    layout: 'horizontal',
+		    backgroundColor:'#ffffff',
+	        height:'160dp'
+		});
+		
+	 
+		for(var i=0; i<imageList.length; i++){
+			var imageContentView = Titanium.UI.createView({
+			  	backgroundColor: '#ffffff',
+			    top: '15dp', 
+			    borderRadius:15,
+			    width:'130dp',height:'130dp',left:'10dp',
+			    name:'imagecontentview'
+			});  
+			Ti.API.info('image file : ',('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[0]).replace('.jpg','-m.jpg'));
+			var newsImage = Titanium.UI.createImageView({
+			    backgroundColor: '#ffffff',
+			    visible : false,
+			    name:'image'
+			});
+		    newsImage.index = i;
+			newsImage.addEventListener('load', function()
+			{
+				
+	
+				imgwidth = this.size.width;
+				imgheight = this.size.height;
+				if(imgwidth < imgheight){
+					ratio = (130 / parseFloat(imgwidth));
+					this.width = (imgwidth * ratio) ;
+					this.height = (imgheight * ratio) ;
+				}
+				else{
+					ratio = (130 / parseFloat(imgheight));
+					this.width = (imgwidth * ratio) ;
+					this.height = (imgheight * ratio) ;
+				}
+	
+				this.visible = true;
+				this.addEventListener('click',function(e) {
+			        Ti.API.info('photo view click.');
+			        
+				});
+	
+			});
+			
+			newsImage.addEventListener('click', function(){
+				NewsImageListWindow = require('imagelistWindows');
+				new NewsImageListWindow(imageList,this.index).open(); 
+			});
+			newsImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[i]).replace('.jpg','-m.jpg');
+			imageContentView.add(newsImage);
+		
+			imageScrollView.add(imageContentView);
+		}	
 	}
 	
 	////////////////  description ////////////////////////////////////////////

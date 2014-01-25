@@ -718,16 +718,12 @@ function feedWindow() {
 		
 		tmpdata = JSON.parse(pendingData.msg);
 		if(tmpdata.type == 'comment'){
-			var notifynum = Ti.App.Properties.getInt('notifynum',0);
-			notifynum = notifynum + 1;
-			Ti.App.Properties.setInt('notifynum',notifynum);
+			
 			FeedContentWindow = require('feedContentWindows');
 			new FeedContentWindow(tmpdata.eventid, true).open(); 
 		}
 		if(tmpdata.type == 'talk'){
-			var talknum = Ti.App.Properties.getInt('talknum',0);
-			talknum = talknum + 1;
-			Ti.App.Properties.setInt('talknum',talknum);
+			
 		}
 		Ti.API.info('******* data (started) ' + JSON.stringify(pendingData));
 	}
@@ -774,25 +770,42 @@ function feedWindow() {
 			}
 			if(tmpdata.type == 'talk'){
 				talkingRoomID = Ti.App.Properties.getString('TalkRoomID','');
+				var userid = Ti.App.Properties.getString('userid','');
 				if(talkingRoomID == tmpdata.roomid){
 					Ti.App.fireEvent('updattalk',tmpdata);
 					return;
 				}
+				if(tmpdata.owner != userid){
+					var roominfo = JSON.parse(Ti.App.Properties.getString('roominfo','{}'));
+					if(typeof(roominfo[tmpdata.roomid] )== 'undefined'){
+						currentdate = new Date(); 
+						starttime = parseInt(currentdate.getTime()/1000);
+						roominfo[tmpdata.roomid] = {'number':1,'time':starttime};
+						Ti.API.info(' roominfo bbb' + JSON.stringify(roominfo));
+					}
+					else{
+						if(tmpdata.owner != userid)
+							roominfo[tmpdata.roomid]['number'] = roominfo[tmpdata.roomid]['number'] + 1;
+						Ti.API.info(' roominfo aaa' + JSON.stringify(roominfo));
+					}
+					Ti.App.Properties.setString('roominfo',JSON.stringify(roominfo));
+					
+					var talknum = Ti.App.Properties.getInt('talknum',0);
+					talknum = talknum + 1;
+					Ti.App.Properties.setInt('talknum',talknum);
+					
+				 	eventnumText.text =  talknum  ;
+				 	Ti.App.Properties.setString('talknum',talknum);
+					talknumText.text =  parseInt(talknumText.text) + 1  ;
+				 	talknumText.left = talkImg.rect.x + talkImg.rect.width - 5;
+				 	talknumText.top = talkImg.rect.y-5 ;
+				 	talknumText.width = '20dp';
+				 	talknumText.height = '20dp';
+				 	talknumText.visible = true;
+				 	
+				 	Ti.App.fireEvent('updatechatroom',tmpdata);
+				}
 				
-				var talknum = Ti.App.Properties.getInt('talknum',0);
-				talknum = talknum + 1;
-				Ti.App.Properties.setInt('talknum',talknum);
-				
-			 	eventnumText.text =  talknum  ;
-			 	Ti.App.Properties.setString('talknum',talknum);
-				talknumText.text =  parseInt(talknumText.text) + 1  ;
-			 	talknumText.left = talkImg.rect.x + talkImg.rect.width - 5;
-			 	talknumText.top = talkImg.rect.y-5 ;
-			 	talknumText.width = '20dp';
-			 	talknumText.height = '20dp';
-			 	talknumText.visible = true;
-			 	
-			 	Ti.App.fireEvent('updatechatroom',tmpdata);
 			}
 		},
 		unregister: function (ev) {
@@ -800,8 +813,7 @@ function feedWindow() {
 			Ti.API.info('******* unregister, ' + ev.deviceToken);
 		},
 		data: function (data) {
-			
-			
+
 			tmpdata = JSON.parse(data.msg);
 
 			if(tmpdata.type == 'comment'){
@@ -818,11 +830,12 @@ function feedWindow() {
 			if(tmpdata.type == 'talk'){
 				
 				talkingRoomID = Ti.App.Properties.getString('TalkRoomID','');
-				
+
 				if(talkingRoomID == tmpdata.roomid){
 					Ti.App.fireEvent('updattalk',tmpdata);
 					return;
 				}
+				
 				var talknum = Ti.App.Properties.getInt('talknum',0);
 				
 				talknumText.text =  talknum  ;
@@ -843,9 +856,56 @@ function feedWindow() {
 			Ti.API.info('******* data (resumed) ' + JSON.stringify(data));
 		}
 	});
+	
+    setTimeout(function(){
+	    var notifynum = Ti.App.Properties.getInt('notifynum',0);
+	    if(notifynum > 0){
+	    	eventnumText.text =  notifynum  ;
+		 	eventnumText.left = eventImg.rect.x + eventImg.rect.width - 5;
+		 	eventnumText.top = eventImg.rect.y-5 ;
+		 	eventnumText.width = '20dp';
+		 	eventnumText.height = '20dp';
+		 	eventnumText.visible = true;
+	    }
+	 	
+	 	
+	 	var talknum = Ti.App.Properties.getInt('talknum',0);
+		if(talknum > 0){
+			talknumText.text =  talknum  ;
+		 	talknumText.left = talkImg.rect.x + talkImg.rect.width - 5;
+		 	talknumText.top = talkImg.rect.y-5 ;
+		 	talknumText.width = '20dp';
+		 	talknumText.height = '20dp';
+		 	talknumText.visible = true;
+		}
+		
+	}, 5000);
     
-    Ti.App.Properties.setString('TalkRoomID',''); 
-    
+    self.addEventListener('open', function(ev) {
+        self.activity.addEventListener('resume', function(e) {
+            var notifynum = Ti.App.Properties.getInt('notifynum',0);
+		    if(notifynum > 0){
+		    	eventnumText.text =  notifynum  ;
+			 	eventnumText.left = eventImg.rect.x + eventImg.rect.width - 5;
+			 	eventnumText.top = eventImg.rect.y-5 ;
+			 	eventnumText.width = '20dp';
+			 	eventnumText.height = '20dp';
+			 	eventnumText.visible = true;
+		    }
+		 	
+		 	
+		 	var talknum = Ti.App.Properties.getInt('talknum',0);
+			if(talknum > 0){
+				talknumText.text =  talknum  ;
+			 	talknumText.left = talkImg.rect.x + talkImg.rect.width - 5;
+			 	talknumText.top = talkImg.rect.y-5 ;
+			 	talknumText.width = '20dp';
+			 	talknumText.height = '20dp';
+			 	talknumText.visible = true;
+			}
+        });
+    });
+	
     
 	return self;
 }
