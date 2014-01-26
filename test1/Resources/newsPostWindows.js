@@ -65,13 +65,28 @@ function NewsPostWindow() {
 	});
 	
 	var selectPosText = Ti.UI.createLabel({
-		font:{fontSize:'20sp',fontFamily:'Marker Felt', fontWeight:'bold'},
+		font:{fontSize:'24sp',fontFamily:'Marker Felt', fontWeight:'bold'},
 		text: L('postnewsevent'),
 		color:'#ffffff',
 		top:'10dp',
-		left:'10dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
+	
+	
+	
+	
+	var uploadimg = [];
+	var totalUploadImg = 0;
+	var currentUploadImg = 0;
+	
+	var backImg = Titanium.UI.createImageView({
+		image:'backward.png',
+		top: '10dp', left:'15dp', height: '30dp', width: '30dp'
+	});
+	
+	backImg.addEventListener('click',function(e){
+		self.close();
+	});	
 	
 	var doneButton = Titanium.UI.createButton({
 	    title: L('done'),
@@ -84,13 +99,6 @@ function NewsPostWindow() {
 	    borderRadius:10,
 	});
 	
-	
-	var uploadimg = [];
-	var totalUploadImg = 0;
-	var currentUploadImg = 0;
-	
-	
-	
 	doneButton.addEventListener('click',function(e)
 	{
 	    totalUploadImg = imageList.length;
@@ -102,12 +110,10 @@ function NewsPostWindow() {
 		else{
 			uploadImage();
 		};
-		
-		
-
 	});	
 	
 	titleView.add(selectPosText);
+    titleView.add(backImg);
     titleView.add(doneButton);
 	
 	//////  content  /////////////////
@@ -293,11 +299,8 @@ function NewsPostWindow() {
 
 	});
 
-    
-
 	contentScrollView.add(desTextArea);
      
-    
 
     ////////////   map  //////////////
     
@@ -316,39 +319,64 @@ function NewsPostWindow() {
 		
 		height: '200dp', width: '90%', top:'20dp',bottom:'30dp'
 	});
-	
-	var mapwidth = Titanium.Platform.displayCaps.platformWidth * 0.9;
-	var mapheight =  200 * (Titanium.Platform.displayCaps.dpi / 160);
+
 	var latitude = 0;
 	var longitude = 0;
-	
 
 	latitude = Ti.App.Properties.getString('latitude',latitude);
 	longitude = Ti.App.Properties.getString('longitude',longitude);
 	Ti.App.Properties.setString('userchooselatitude',latitude);
 	Ti.App.Properties.setString('userchooselongitude',longitude);
-	url = "http://maps.googleapis.com/maps/api/staticmap?center=" +latitude +',' +longitude 
-	    + "&zoom=16&size=" + mapwidth/2 +'x' + mapheight/2 +'&markers=color:red%7C'+ latitude
-	    +',' + longitude +'&sensor=false';
-	Ti.API.info('url : ' + url);
-	mapImg.image = url; 
-        
+	//url = "http://maps.googleapis.com/maps/api/staticmap?center=" +latitude +',' +longitude 
+	//    + "&zoom=16&size=" + mapwidth/2 +'x' + mapheight/2 +'&markers=color:red%7C'+ latitude
+	//    +',' + longitude +'&sensor=false';
+	//Ti.API.info('url : ' + url);
+	//mapImg.image = url; 
 	
-	mapImg.addEventListener('click',function(e)
+	var mapParentView = Titanium.UI.createView({
+		
+		height: '200dp', width: '90%', top:'20dp',bottom:'30dp',backgroundColor:'#transparent'
+	});
+	
+    var Map = require('ti.map');    
+	var posAnno = Map.createAnnotation({
+	    latitude:latitude,
+	    longitude:longitude,
+	    pincolor:Map.ANNOTATION_RED,
+	    myid:1 
+	});
+	
+	var mapview = Map.createView({
+	    mapType: Map.NORMAL_TYPE,
+	    region: {latitude:latitude, longitude:longitude, latitudeDelta:0.005, longitudeDelta:0.005},
+	    userLocation:false,
+	    enableZoomControls:false,
+	    annotations:[posAnno],
+	    height: '100%', width: '100%', top:'0dp',left:'0dp'
+	});
+	
+	var mapforgroundView = Titanium.UI.createImageView({
+		height: '100%', width: '100%', top:'0dp',left:'0dp',backgroundColor:'transparent',
+	});
+	
+	mapforgroundView.addEventListener('click',function(e)
 	{
 	     mapWindow = require('mapWindows');
 	     var map = new mapWindow();
 	     map.latitude = latitude;
 	     map.longitude = longitude;
-	     map.image = mapImg;
+	     map.orgmapview = mapview;
+	     map.orgAnnotation = posAnno;
 		 map.anno.latitude = latitude; 
 		 map.anno.longitude = longitude; 
-		 map.map.region =  {latitude:latitude, longitude:longitude,
-	            latitudeDelta:0.01, longitudeDelta:0.01};
+		 map.map.region =  {latitude:latitude, longitude:longitude, latitudeDelta:0.005, longitudeDelta:0.005};
 	     map.open();         
 	});	
-    
-    contentScrollView.add(mapImg);
+	
+	mapParentView.add(mapview);
+	mapParentView.add(mapforgroundView);
+    contentScrollView.add(mapParentView);
+
     	
     backgroundView.add(titleView);
     backgroundView.add(contentScrollView);

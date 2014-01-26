@@ -73,9 +73,7 @@ function mapWindow() {
     
     var mapview = Map.createView({
 	    mapType: Map.NORMAL_TYPE,
-	    region: {latitude:self.latitude, longitude:self.longitude,
-	            latitudeDelta:0.01, longitudeDelta:0.01},
-	    regionFit:true,
+	    region: {latitude:self.latitude, longitude:self.longitude, latitudeDelta:0.005, longitudeDelta:0.005},
 	    userLocation:true,
 	    annotations:[posAnno],
 	    width:'100%',
@@ -84,30 +82,27 @@ function mapWindow() {
 	self.map = mapview;
 	self.anno = posAnno;
 	
-	var mapwidth = Titanium.Platform.displayCaps.platformWidth * 0.9;
-	var mapheight =  200 * (Titanium.Platform.displayCaps.dpi / 160);
 	
 	mapview.addEventListener('pinchangedragstate',function(e)
 	{
 		
-	    url = "http://maps.googleapis.com/maps/api/staticmap?center=" +e.annotation.latitude +',' +e.annotation.longitude 
-        	    + "&zoom=16&size=" + mapwidth/2 +'x' + mapheight/2 +'&markers=color:red%7C'+ e.annotation.latitude
-        	    +',' + e.annotation.longitude +'&sensor=false';
-    	Ti.API.info('url : ' + url);
+	    self.orgAnnotation.latitude = e.annotation.latitude;
+		self.orgAnnotation.longitude = e.annotation.longitude;
+    	self.orgmapview.region = {latitude:e.annotation.latitude, longitude:e.annotation.longitude, latitudeDelta:0.005, longitudeDelta:0.005};
         Ti.App.Properties.setString('userchooselatitude',e.annotation.latitude);
 		Ti.App.Properties.setString('userchooselongitude',e.annotation.longitude);
-    	self.image.image = url;   
 	});	
 	
-	mapview.addEventListener('click',function(e)
+	mapview.addEventListener('longclick',function(e)
 	{
-	    url = "http://maps.googleapis.com/maps/api/staticmap?center=" +e.annotation.latitude +',' +e.annotation.longitude 
-        	    + "&zoom=16&size=" + mapwidth/2 +'x' + mapheight/2 +'&markers=color:red%7C'+ e.annotation.latitude
-        	    +',' + e.annotation.longitude +'&sensor=false';
-    	Ti.API.info('url : ' + url);
-        //Ti.App.Properties.setString('latitude',e.annotation.latitude);
-		//Ti.App.Properties.setString('longitude',e.annotation.longitude);
-    	self.image.image = url;   
+		Ti.API.info('longclick : ' + e.latitude + '  ' + e.longitude); 
+		posAnno.latitude = e.latitude;
+		posAnno.longitude = e.longitude;
+	    self.orgAnnotation.latitude = e.latitude;
+		self.orgAnnotation.longitude = e.longitude;
+    	self.orgmapview.region = {latitude:e.latitude, longitude:e.longitude, latitudeDelta:0.005, longitudeDelta:0.005};
+        Ti.App.Properties.setString('userchooselatitude',e.latitude);
+		Ti.App.Properties.setString('userchooselongitude',e.longitude);
 	});	
 	
     mapContentView.add(mapview);

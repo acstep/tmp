@@ -500,27 +500,49 @@ function drawNewsContnet(contentView,data){
 	    top:'20dp',left:'5%'
 	});
 	
-	var mapImg = Titanium.UI.createImageView({
+	var mapParentView = Titanium.UI.createView({
+		height: '200dp', width: '100%',backgroundColor:'#transparent'
 		
-		height: '200dp', width: '100%'
 	});
+	
 	latitude = data['loc']['coordinates'][1];
 	longitude = data['loc']['coordinates'][0];
-	var mapwidth = Titanium.Platform.displayCaps.platformWidth * 0.9;
-	var mapheight =  200 * (Titanium.Platform.displayCaps.dpi / 160);
-	url = "http://maps.googleapis.com/maps/api/staticmap?center=" +latitude +',' +longitude 
-	    + "&zoom=17&size=" + mapwidth +'x' + mapheight +'&markers=color:red%7C'+ latitude
-	    +',' + longitude +'&sensor=false';
-	    
-	mapImg.image = url;     
-	mapImg.addEventListener('click', function(){
-		var intent = Ti.Android.createIntent({
-                action : Ti.Android.ACTION_VIEW,
-                data : 'geo:' + latitude +',' + longitude + '?q=' + latitude +',' + longitude
-            });
-            Ti.Android.currentActivity.startActivity(intent);	
+	
+    var Map = require('ti.map');    
+	var posAnno = Map.createAnnotation({
+	    latitude:latitude,
+	    longitude:longitude,
+	    pincolor:Map.ANNOTATION_RED,
+	    myid:1 
 	});
-	mapView.add(mapImg);
+	
+	var mapview = Map.createView({
+	    mapType: Map.NORMAL_TYPE,
+	    region: {latitude:latitude, longitude:longitude, latitudeDelta:0.005, longitudeDelta:0.005},
+	    userLocation:false,
+	    enableZoomControls:false,
+	    annotations:[posAnno],
+	    height: '100%', width: '100%', top:'0dp',left:'0dp'
+	});
+	
+	var mapforgroundView = Titanium.UI.createImageView({
+		height: '100%', width: '100%', top:'0dp',left:'0dp',backgroundColor:'transparent',
+	});
+	
+	mapforgroundView.addEventListener('click',function(e)
+	{
+	     var intent = Ti.Android.createIntent({
+            action : Ti.Android.ACTION_VIEW,
+            data : 'geo:' + latitude +',' + longitude + '?q=' + latitude +',' + longitude
+        });
+        Ti.Android.currentActivity.startActivity(intent);	
+	});	
+	
+	mapParentView.add(mapview);
+	mapParentView.add(mapforgroundView);
+	
+
+	mapView.add(mapParentView);
 	
 	
 	//////////////////////   head photo  /////////////////////////////
