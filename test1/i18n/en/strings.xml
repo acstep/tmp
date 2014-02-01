@@ -9,6 +9,7 @@
 	<string name="news">News</string>
 	<string name="sortorder">Sorting</string>
 	<string name="postnew">Post</string>
+	<string name="choosecategory">Choose a Category</string>
 	<string name="postnewsevent">Post News Event</string>
 	<string name="addphoto">Add Photo</string>
 	<string name="addnewscontent">Add News Content Here... \n\n\n\n\n\n</string>
@@ -40,4 +41,9 @@
 	<string name="chatroom">Chat Rooms</string>
 	<string name="talk">Talk</string>
 	<string name="uhavetalk">You have a new message.</string>
+	<string name="activitytitle">Activity Title</string>
+	<string name="groupname">Group Name</string>
+	<string name="starttime">Start Time</string>
+	<string name="addactivitycontent">Add Activity Content Here... \n\n\n\n\n\n</string>
+	
 </resources>

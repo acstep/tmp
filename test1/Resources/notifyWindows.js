@@ -60,7 +60,7 @@ function notifyWindow() {
 	});	
 	
 	var notifyTitleText = Ti.UI.createLabel({
-		font:{fontSize:'24sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+		font:{fontSize:'24sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 		text: L('notify'),
 		color:'#ffffff'
 	});
@@ -116,14 +116,14 @@ function notifyWindow() {
 						layout: 'vertical'
 					});
 					var mdgTitleText = Ti.UI.createLabel({
-						font:{fontSize:'16sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+						font:{fontSize:'16sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 						text: notifyData[i]['name'] + L('userreply'),
 						color:'#888888',left:'10dp',right:'10dp'
 					});
 					contentView.add(mdgTitleText);
 					
 					var contentText = Ti.UI.createLabel({
-						font:{fontSize:'16sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+						font:{fontSize:'16sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 						text: getStringlimit(notifyData[i]['content'],20,50) ,
 						color:'#333333',left:'10dp',right:'10dp'
 					});
@@ -154,7 +154,7 @@ function notifyWindow() {
 						timeString = parseInt(difftime/86400) + ' ' + L('beforeday');
 					}
 					var timeText = Ti.UI.createLabel({
-						font:{fontSize:'14sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+						font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 						text: timeString,
 						color:'#aaaaaa',left:'10dp'
 					});

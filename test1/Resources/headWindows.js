@@ -78,7 +78,7 @@ function HeadWindow(cropimage) {
 	});
 	
 	var cropText = Ti.UI.createLabel({
-		font:{fontSize:'14sp',fontFamily:'Marker Felt', fontWeight:'bold'},
+		font:{fontSize:'14sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 		text: L('cropimage'),
 		color:'#ffffff',
 
@@ -196,7 +196,7 @@ function HeadWindow(cropimage) {
 	    height:'60dp',
 	    width:'90%',
 	    color:'#dddddd',
-	    font:{fontSize:'18sp',fontFamily:'Marker Felt', fontWeight:'bold'}
+	    font:{fontSize:'18sp',fontFamily:'Helvetica Neue', fontWeight:'bold'}
 
 	});
 	

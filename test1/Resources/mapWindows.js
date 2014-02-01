@@ -17,7 +17,7 @@ function mapWindow() {
 
 	});
  	var selectPosText = Ti.UI.createLabel({
-		font:{fontSize:'20sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'20sp',fontFamily:'Helvetica Neue'},
 		text: L('dragmarker'),
 		color:'#555555',
 		top:'10dp',

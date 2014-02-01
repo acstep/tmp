@@ -59,7 +59,7 @@ function feedContentWindow(eventid, fullcontent) {
 	});	
 	
 	var categoryText = Ti.UI.createLabel({
-		font:{fontSize:'24sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+		font:{fontSize:'24sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 		text: L('news'),
 		color:'#ffffff'
 	});
@@ -134,7 +134,7 @@ function feedContentWindow(eventid, fullcontent) {
 		top:'0dp', left:'0dp',height:'60dp'
 	});
 	var requestNextText = Ti.UI.createLabel({
-		font:{fontSize:'20sp',fontFamily:'Marker Felt', fontWeight:'bold'},
+		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 		text: L('requestnextrow'),
 		color:'#bbbbbb'
 
@@ -212,7 +212,7 @@ function feedContentWindow(eventid, fullcontent) {
 			
 				
 	        var nameText = Ti.UI.createLabel({
-				font:{fontSize:'14sp',fontFamily:'Marker Felt'},
+				font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
 				text: data[i]['name'],
 				color:'#3498db',
 				top:'12dp',left:'70dp',right:'10dp',
@@ -239,7 +239,7 @@ function feedContentWindow(eventid, fullcontent) {
 			}
 			
 			var timeText = Ti.UI.createLabel({
-				font:{fontSize:'12sp',fontFamily:'Marker Felt'},
+				font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
 				text: timeString,
 				color:'#aaaaaa',
 				top:'35dp',left:'70dp',right:'10dp',
@@ -247,7 +247,7 @@ function feedContentWindow(eventid, fullcontent) {
 			});
 		
 			var desText = Ti.UI.createLabel({
-				font:{fontSize:'18sp',fontFamily:'Marker Felt'},
+				font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
 				text: data[i]['content'],
 				color:'#333333',
 				top:'55dp',left:'70dp',right:'10dp',

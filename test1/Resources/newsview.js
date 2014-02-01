@@ -25,7 +25,7 @@ function drawNewsEvent(view, data, lon, lat){
 	var topView = Ti.UI.createView({
 	    backgroundColor: 'white',
 
-	    layout: 'horizontal',
+	    
 	    width:'100%', height: '80dp',
 	    top:'0dp'
 	});
@@ -46,16 +46,15 @@ function drawNewsEvent(view, data, lon, lat){
 	
 	var topinfoView = Ti.UI.createView({
 	    backgroundColor: '#ffffff',
-
 	    layout: 'vertical',
-	    width:'auto', height: '80dp',
-	    top:'0dp'
+	    height: '80dp',
+	    top:'0dp',left:'80dp',right:'70dp'
 	});
 	
 	
 	
 	var nameText = Ti.UI.createLabel({
-		font:{fontSize:'16sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 		text: data['name'],
 		color:'#333333',
 		top:'10dp',
@@ -82,7 +81,7 @@ function drawNewsEvent(view, data, lon, lat){
 	}
 	
 	var timeText = Ti.UI.createLabel({
-		font:{fontSize:'12sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
 		text: timeString,
 		color:'#aaaaaa',
 		top:'1dp',
@@ -110,7 +109,7 @@ function drawNewsEvent(view, data, lon, lat){
 	});
 	
 	var categoryText = Ti.UI.createLabel({
-		font:{fontSize:'12sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
 		text:  '   ' + L('news') +'   ',
 		color:'#ffffff',
 
@@ -121,7 +120,7 @@ function drawNewsEvent(view, data, lon, lat){
 	});
 	
 	var distanceText = Ti.UI.createLabel({
-		font:{fontSize:'12sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
 		text: feedDistanceStr,
 		color:'#ffffff',
 
@@ -139,8 +138,15 @@ function drawNewsEvent(view, data, lon, lat){
 	
 	topinfoView.add(topCategoryDistanceView);
 	
+	var categoryImg = Titanium.UI.createImageView({
+        image:'news.png',
+		height: '30dp', width: '30dp', top:'20dp', right:'20dp'
+	});
+	
+	
 	topView.add(headPhotoImg);
 	topView.add(topinfoView);
+	topView.add(categoryImg);
 	
 	feedView.add(topView);
 	
@@ -155,8 +161,8 @@ function drawNewsEvent(view, data, lon, lat){
 	
 
 	var desText = Ti.UI.createLabel({
-		font:{fontSize:'18sp',fontFamily:'Marker Felt'},
-		text: getStringlimit(data['des'],200,250),
+		font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
+		text: getStringlimit(data['des'],100,150),
 		color:'#666666',
 		top:'10dp',
 		left:'10dp',right:'10dp', height: Ti.UI.SIZE,
@@ -183,28 +189,37 @@ function drawNewsEvent(view, data, lon, lat){
 		});
 		
 		  
-		newsImage.addEventListener('load', function()
+		newsImage.addEventListener('load', function(e)
 		{
 			platheight = Ti.Platform.displayCaps.platformHeight,
 			platwidth = Ti.Platform.displayCaps.platformWidth *0.90;
 
-			imgwidth = this.size.width;
-			imgheight = this.size.height;
-			if(imgwidth < platwidth){
+			imgwidth = e.source.size.width;
+			imgheight = e.source.size.height;
+			
+			Ti.API.info('platheight ' + platheight);
+			Ti.API.info('platwidth ' + platwidth);
+			Ti.API.info('imgwidth ' + imgwidth);
+			Ti.API.info('imgheight ' + imgheight);
+			
+			if(imgwidth != 0 && imgwidth < platwidth){
 		
 				ratio = (platwidth / parseFloat(imgwidth));
 		
-				this.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
-				this.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
-				newsImage.visible = true;
-				newsImage.eventid = data['eventid'];
+				e.source.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+				e.source.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+				Ti.API.info('this.width ' + e.source.width);
+				Ti.API.info('this.height ' + e.source.height);
+				e.source.visible = true;
+				e.source.eventid = data['eventid'];
 				
 			}
 
 		});
-		newsImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + data['photos'][0]).replace('.jpg','-m.jpg');
+		
 		imageContentView.add(newsImage);
 		middleView.add(imageContentView);
+		newsImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + data['photos'][0]).replace('.jpg','-m.jpg');
 
 	}
 
@@ -248,7 +263,7 @@ function drawNewsEvent(view, data, lon, lat){
 	likeImg.eventid = data['eventid'];
 	
 	var likeText = Ti.UI.createLabel({
-		font:{fontSize:'18sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
 		text: data['like'] ,
 		color:'#666666',
   		left:'15dp',
@@ -317,7 +332,7 @@ function drawNewsEvent(view, data, lon, lat){
 		data['comment'] = 0;
 	}
 	var commentText = Ti.UI.createLabel({
-		font:{fontSize:'18sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
 		text: data['comment'],
 		color:'#666666',
   		left:'15dp'
@@ -369,8 +384,8 @@ function drawNewsContnet(contentView,data){
 		var imageScrollView = Titanium.UI.createView({
 		  	backgroundColor: '#ffffff',
 		    top: '15dp', 
-		    borderRadius:15,
-		    width:'90%',height:'200dp',left:'5%',
+		   
+		    width:'100%',height:'200dp',
 		    name:'imagecontentview'
 		});  
 		var newsImage = Titanium.UI.createImageView({
@@ -380,25 +395,21 @@ function drawNewsContnet(contentView,data){
 		});
 		newsImage.addEventListener('load', function()
 		{
+			
+			platheight = Ti.Platform.displayCaps.platformHeight,
+			platwidth = Ti.Platform.displayCaps.platformWidth ;
+
 			imgwidth = this.size.width;
 			imgheight = this.size.height;
-			if(imgwidth < imgheight){
-				ratio = ((Ti.Platform.displayCaps.platformWidth *0.90)  / parseFloat(imgwidth));
-				this.width = (imgwidth * ratio) ;
-				this.height = (imgheight * ratio) ;
-			}
-			else{
-				ratio = (200 / parseFloat(imgheight));
-				this.width = (imgwidth * ratio) ;
-				this.height = (imgheight * ratio) ;
-			}
+			if(imgwidth < platwidth){
+		
+				ratio = (platwidth / parseFloat(imgwidth));
+		
+				this.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+				this.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+				newsImage.visible = true;
 
-			this.visible = true;
-			this.addEventListener('click',function(e) {
-		        Ti.API.info('photo view click.');
-		        
-			});
-
+			}
 		});
 		newsImage.addEventListener('click', function(){
 			NewsImageListWindow = require('imagelistWindows');
@@ -481,7 +492,7 @@ function drawNewsContnet(contentView,data){
 	
 	
 	var desText = Ti.UI.createLabel({
-		font:{fontSize:'18sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
 		text: data['des'],
 		color:'#333333',
 		top:'10dp',
@@ -578,7 +589,7 @@ function drawNewsContnet(contentView,data){
 	
 	
 	var nameText = Ti.UI.createLabel({
-		font:{fontSize:'20sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+		font:{fontSize:'20sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 		text: data['name'],
 		color:'#3498db',
 		top:'12dp',
@@ -621,7 +632,7 @@ function drawNewsContnet(contentView,data){
 	}
 	
 	var timeText = Ti.UI.createLabel({
-		font:{fontSize:'20sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'20sp',fontFamily:'Helvetica Neue'},
 		text: timeString,
 		color:'#aaaaaa',
 		top:'5dp',

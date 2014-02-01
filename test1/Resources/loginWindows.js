@@ -41,7 +41,7 @@ function LoginWindow() {
 		hintText:'Email',
 		width:'80%',
 		top:'35%',
-		font:{fontSize:'20sp',fontFamily:'Marker Felt', fontWeight:'bold'},
+		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 		color:'#888',
 		textAlign:'left',
 		borderColor:'#bbb',
@@ -52,7 +52,7 @@ function LoginWindow() {
 		editable: true,
 		hintText:'Password',
 		width:'80%',
-		font:{fontSize:'20sp',fontFamily:'Marker Felt', fontWeight:'bold'},
+		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 		color:'#888',
 		textAlign:'left',
 		borderColor:'#bbb',
@@ -68,7 +68,7 @@ function LoginWindow() {
 	    color:'#ffffff',
 	    backgroundColor:'#F7AC43',
 	    borderRadius:10,
-	    font:{fontSize:'22sp',fontFamily:'Marker Felt', fontWeight:'bold'},
+	    font:{fontSize:'22sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 
 	});
 	
@@ -79,7 +79,7 @@ function LoginWindow() {
 	    color:'#ffffff',
 	    backgroundColor:'#F7AC43',
 	    borderRadius:10,
-	    font:{fontSize:'22sp',fontFamily:'Marker Felt', fontWeight:'bold'},
+	    font:{fontSize:'22sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 
 	});
 	

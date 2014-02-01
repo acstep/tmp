@@ -2,6 +2,7 @@
 Ti.include("common_net.js");
 Ti.include("common_util.js");
 Ti.include("newsview.js");
+Ti.include("activityview.js");
 
 function feedWindow() {
 	//load component dependencies
@@ -107,6 +108,7 @@ function feedWindow() {
 
 	homeView.addEventListener('click',function(e)
 	{
+		Ti.API.info('homeView getnewfeed'); 
 		getNewFeed();
  	});	
 	
@@ -129,7 +131,7 @@ function feedWindow() {
 	});	
 
 	var eventnumText = Ti.UI.createLabel({
-		font:{fontSize:'12sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
 		text: '0',
 		color:'#ffffff',
 		backgroundColor:'#e74c3c',
@@ -148,7 +150,7 @@ function feedWindow() {
 	});
 	
 	var talknumText = Ti.UI.createLabel({
-		font:{fontSize:'12sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
 		text: '0',
 		color:'#ffffff',
 		backgroundColor:'#e74c3c',
@@ -214,7 +216,7 @@ function feedWindow() {
 		top: '15dp', left:'15%', height: '20dp', width: '20dp'
 	});
 	var sortText = Ti.UI.createLabel({
-		font:{fontSize:'16sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('sortorder'),
 		color:'#333333',
 		top:'13dp',
@@ -222,6 +224,10 @@ function feedWindow() {
 	});
 	sortView.add(sortImg);
 	sortView.add(sortText);
+	
+	sortView.addEventListener('click',function(e) {
+	    Ti.API.info('sortView click.');
+	});
 	
 	var conSeperateView = Ti.UI.createView({
 		backgroundColor:'#cccccc',
@@ -243,13 +249,43 @@ function feedWindow() {
 		top: '15dp', left:'15%', height: '20dp', width: '20dp'
 	});
 	var postText = Ti.UI.createLabel({
-		font:{fontSize:'16sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('postnew'),
 		color:'#333333',
 		top:'13dp',
   		left:'5%'
 	});
 	postView.add(postImg);
+	
+	var postDialog = Titanium.UI.createOptionDialog({
+    //title of dialog
+	    title: L('choosecategory'),
+	    //options
+	    options: [L('club'),L('sale'), L('needhelp'), L('dating'), L('news')],
+	    //index of cancel button
+	});
+	
+	postDialog.addEventListener('click', function(e) {
+		Ti.API.info('postView click.');
+		switch(e.index){
+			case 0:
+			    ActivityPostWindow = require('activityPostWindows');
+				new ActivityPostWindow().open(); 
+				break;
+			default:
+				NewsPostWindow = require('newsPostWindows');
+		        NewsPostWindow.parentGetNewFeed = getNewFeed;
+				new NewsPostWindow().open(); 	
+		}
+        
+	});
+	
+	postView.addEventListener('click',function(e)
+	{
+		postDialog.show();
+	});	
+	
+	
 	
 	postView.add(postText);
 	
@@ -284,21 +320,9 @@ function feedWindow() {
 	backgroundView.add(feedView);
 	
 	
-	sortView.addEventListener('click',function(e) {
-
-	    Ti.API.info('sortView click.');
-       
 	
-	});
 	
-	postView.addEventListener('click',function(e) {
-
-	    Ti.API.info('postView click.');
-        NewsPostWindow = require('newsPostWindows');
-        NewsPostWindow.parentGetNewFeed = getNewFeed;
-		new NewsPostWindow().open(); 
 	
-	});
 	
 	
 	///////   menu  ///////////////
@@ -329,7 +353,7 @@ function feedWindow() {
 	}
 	
 	var categoryText = Ti.UI.createLabel({
-		font:{fontSize:'18sp',fontFamily:'Marker Felt', fontWeight:'bold'},
+		font:{fontSize:'18sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 		text: L('category'),
 		color:'#666666',
 		left:'5%',
@@ -373,7 +397,7 @@ function feedWindow() {
 		});
 		
 		var groupText = Ti.UI.createLabel({
-			font:{fontSize:'16sp',fontFamily:'Marker Felt', fontWeight:'bold'},
+			font:{fontSize:'16sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 			text: L(categoryMenu[i].title),
 			backgroundColor:'transparent',
 			color:'#777777',
@@ -430,7 +454,8 @@ function feedWindow() {
 	//////////////////   Draw feeds  /////////////////////////
 	var feeditem = [];
 	var drawFunction = {	    
-	    	'1000':drawNewsEvent
+	    	'1000':drawNewsEvent,
+	    	'1001':drawActivityEvent
 	};
 	
 	
@@ -464,9 +489,15 @@ function feedWindow() {
 				        
 				    });
 				    //drawFunction[feedData[i].category.toString()](feedData[i]);
-				    drawFunction['1000'](feedRow, feedData[i],longitude,latitude);
-				    feedRow.eventid = feedData[i]['eventid']; 
-				    feedtableItems.push(feedRow);
+				    try{
+				    	drawFunction[feedData[i]['category']](feedRow, feedData[i],longitude,latitude);
+					    feedRow.eventid = feedData[i]['eventid']; 
+					    feedtableItems.push(feedRow);
+				    }
+				    catch(e){
+				    	
+				    }
+				    
 				}   
 				feedTableView.data = feedtableItems;
 				Ti.App.Properties.setString('feed',JSON.stringify({'data':feeditem}));
@@ -580,8 +611,9 @@ function feedWindow() {
 	{
 		if(reachTop == true && startRec == true){
 			if(e.y - startScrollY > 0){
-				reachTop = true;
+				reachTop = false;
 				startRec = false; 
+				Ti.API.info('tableview getnewfeed');
 				getNewFeed();
 			}
 
@@ -880,6 +912,30 @@ function feedWindow() {
 		}
 		
 	}, 5000);
+	
+	setTimeout(function(){
+	    var notifynum = Ti.App.Properties.getInt('notifynum',0);
+	    if(notifynum > 0){
+	    	eventnumText.text =  notifynum  ;
+		 	eventnumText.left = eventImg.rect.x + eventImg.rect.width - 5;
+		 	eventnumText.top = eventImg.rect.y-5 ;
+		 	eventnumText.width = '20dp';
+		 	eventnumText.height = '20dp';
+		 	eventnumText.visible = true;
+	    }
+	 	
+	 	
+	 	var talknum = Ti.App.Properties.getInt('talknum',0);
+		if(talknum > 0){
+			talknumText.text =  talknum  ;
+		 	talknumText.left = talkImg.rect.x + talkImg.rect.width - 5;
+		 	talknumText.top = talkImg.rect.y-5 ;
+		 	talknumText.width = '20dp';
+		 	talknumText.height = '20dp';
+		 	talknumText.visible = true;
+		}
+		
+	}, 2000);
     
     self.addEventListener('open', function(ev) {
         self.activity.addEventListener('resume', function(e) {

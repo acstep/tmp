@@ -93,10 +93,10 @@ function updateaccount(data, callbackf){
 	
 };
 
-function creatnewsevent(data, callbackf){
+function createvent(data, callbackf){
 	id = Ti.App.Properties.getString('userid','');
     token = Ti.App.Properties.getString('token','');
-	url = 'http://54.254.208.12/api/creatnewsevent?' + 'id=' + id + '&token=' + token + '&data=' + data;
+	url = 'http://54.254.208.12/api/createvent?' + 'id=' + id + '&token=' + token + '&data=' + data;
 	Ti.API.info('url : ' + url);
 	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {

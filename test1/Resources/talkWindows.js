@@ -69,7 +69,7 @@ function talkWindow(id, toid,roomdata) {
 	});	
 	
 	var talkTitleText = Ti.UI.createLabel({
-		font:{fontSize:'24sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+		font:{fontSize:'24sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 		color:'#ffffff'
 		
 	});
@@ -122,10 +122,10 @@ function talkWindow(id, toid,roomdata) {
 	var msgTextArea = Ti.UI.createTextArea({
 	    color: '#888',
 	    font: {fontSize:20, fontWeight:'bold'},
-	    textAlign: 'left',backgroundColor:'#ffffff',
+	    textAlign: 'left',backgroundColor:'#aaaaaa',
 	    hintText:L('comment'),
 		top: '10dp',
-	    width: '70%', left:'2%',height:Titanium.UI.SIZE,
+	    width: '70%', left:'2%',height:Titanium.UI.SIZE,borderWidth:'1dp',borderColor:'#999999'
 	});
 	
 	var sendMsgButton = Titanium.UI.createButton({
@@ -184,7 +184,7 @@ function talkWindow(id, toid,roomdata) {
 			createchatroom(id, toid, 'false', reSendMsg);
 		}	
 	    else{
-	    	tmpRow = crateTextRow(id, msgTextArea.value);
+	    	tmpRow = createTextRow(id, msgTextArea.value);
 	    	talkDataItems.push(tmpRow);
 	    	talkTableView.data = talkDataItems;
 	    	talkTableView.scrollToIndex(talkDataItems.length-1);
@@ -206,7 +206,7 @@ function talkWindow(id, toid,roomdata) {
 				roomdata = data;
 				Ti.App.Properties.setString('TalkRoomID',roomdata['roomid']);
 				parseHeadPhoto(data);
-				tmpRow = crateTextRow(id, msgTextArea.value);
+				tmpRow = createTextRow(id, msgTextArea.value);
 		    	talkDataItems.push(tmpRow);
 		    	talkTableView.data = talkDataItems;
 		    	talkTableView.scrollToIndex(talkDataItems.length-1);
@@ -247,7 +247,7 @@ function talkWindow(id, toid,roomdata) {
 	});
 	
 	var loadmoreText = Ti.UI.createLabel({
-			font:{fontSize:'16sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+			font:{fontSize:'16sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 			text: L('loading'),
 			color:'#888888',
 			backgroundColor:'transparent'
@@ -281,7 +281,7 @@ function talkWindow(id, toid,roomdata) {
 		}
 	}
 	
-	function crateTextRow(ownerid, textstring){
+	function createTextRow(ownerid, textstring){
 		
 		var msgRow = Ti.UI.createTableViewRow({
 	        backgroundSelectedColor:'#eeeeee',
@@ -297,7 +297,7 @@ function talkWindow(id, toid,roomdata) {
 			borderRadius:20,top:'10dp',bottom:'10dp'
 		});
 	    var msgText = Ti.UI.createLabel({
-			font:{fontSize:'16sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+			font:{fontSize:'16sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 			text: textstring,
 			color:'#888888',left:'10dp',top:'10dp',right:'10dp',bottom:'10dp',
 			backgroundColor:'#ffffff'
@@ -356,7 +356,7 @@ function talkWindow(id, toid,roomdata) {
 			talkTableView.data = talkDataItems;
 			for(var i = 0 ; i <= data.length -1; i++){
 				
-				tmpRow = crateTextRow(data[i]['owner'], data[i]['data']['string']);
+				tmpRow = createTextRow(data[i]['owner'], data[i]['data']['string']);
 				
 				
 				talkDataItems.unshift(tmpRow);
@@ -367,6 +367,10 @@ function talkWindow(id, toid,roomdata) {
 			talkTableView.data = talkDataItems;
 			if(needScroolEnd == true){
 				talkTableView.scrollToIndex(talkDataItems.length-1);
+			}
+			else{
+				Ti.API.info('scroll to : '+(talkDataItems.length-data.length));
+				
 			}
 			
 			
@@ -420,7 +424,7 @@ function talkWindow(id, toid,roomdata) {
 	var getgcm = function(e) {
 		if(e.owner == id || e.roomid != roomdata['roomid'] || messageLock == true)
 			return;
-	    tmpRow = crateTextRow(e.owner, e.content.string);
+	    tmpRow = createTextRow(e.owner, e.content.string);
     	talkDataItems.push(tmpRow);
     	talkTableView.data = talkDataItems;
     	talkTableView.scrollToIndex(talkDataItems.length-1);
@@ -441,12 +445,11 @@ function talkWindow(id, toid,roomdata) {
 		createchatroom(id, toid, 'true', checkchatroomCB);
 	}
 	else{
-		currentdate = new Date(); 
-		starttime = parseInt(currentdate.getTime()/1000);
-		Ti.API.info('roomid : ' + roomdata['roomid']);
+		
 		Ti.App.Properties.setString('TalkRoomID',roomdata['roomid']);
 		parseHeadPhoto(roomdata);
-		querymsg( roomdata['roomid'], starttime, 10 ,parseMsg);
+		Ti.API.info('first');
+		
 	}
 	
 	self.addEventListener('android:back', function(e) {
@@ -460,6 +463,7 @@ function talkWindow(id, toid,roomdata) {
 	self.addEventListener('open', function(ev) {
         self.activity.addEventListener('resume', function(e) {
         	if(roomdata['roomid'] != ''){
+        		Ti.API.info('resume and query msg');
         		currentdate = new Date(); 
 				starttime = parseInt(currentdate.getTime()/1000);
 				talkDataItems = [];

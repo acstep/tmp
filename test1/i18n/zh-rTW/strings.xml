@@ -9,10 +9,11 @@
 	<string name="news">周邊新聞</string>
 	<string name="sortorder">排序方式</string>
 	<string name="postnew">張貼文章</string>
+	<string name="choosecategory">選擇類別</string>
 	<string name="postnewsevent">發布新聞</string>
 	<string name="addphoto">增加照片</string>
 	<string name="addnewscontent">您想發布的新聞內容... \n\n\n\n\n\n</string>
-	<string name="changemap">按下面的地圖來更改新聞位置...</string>
+	<string name="changemap">按下面的地圖來更改位置...</string>
 	<string name="dragmarker">拖拉標記到您想要發布的位置</string>
 	<string name="pullreflash">下拉以重新整理...</string>
 	<string name="releasereflash">釋放以重新整理...</string>
@@ -40,4 +41,8 @@
 	<string name="chatroom">聊天室</string>
 	<string name="talk">聊天</string>
 	<string name="uhavetalk">您有一個新的訊息.</string>
+	<string name="activitytitle">活動名稱</string>
+	<string name="groupname">團體名稱</string>
+	<string name="starttime">開始時間</string>
+	<string name="addactivitycontent">您想發布的活動內容... \n\n\n\n\n\n</string>
 </resources>

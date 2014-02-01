@@ -65,8 +65,8 @@ function NewsPostWindow() {
 	});
 	
 	var selectPosText = Ti.UI.createLabel({
-		font:{fontSize:'24sp',fontFamily:'Marker Felt', fontWeight:'bold'},
-		text: L('postnewsevent'),
+		font:{fontSize:'24sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
+		text: L('send')+L('news'),
 		color:'#ffffff',
 		top:'10dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
@@ -157,7 +157,7 @@ function NewsPostWindow() {
 	});
 	
 	var addPhoeoText = Ti.UI.createLabel({
-		font:{fontSize:'16sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('addphoto'),
 		color:'#666666',
 		top:'15dp',
@@ -292,11 +292,13 @@ function NewsPostWindow() {
 	    color:'#333333',
 	    textAlign: 'left',
 	    hintText:L('addnewscontent'),
-	    top: '10dp',
+	    top: '30dp',
 	    width: '90%', 
 	    height : 'auto',
 	    left: '5%',
-
+        backgroundColor:'#ffffff',
+	    borderColor:'#666666',
+	    borderWidth:'1dp',borderRadius:10,
 	});
 
 	contentScrollView.add(desTextArea);
@@ -305,7 +307,7 @@ function NewsPostWindow() {
     ////////////   map  //////////////
     
     var mapHintText = Ti.UI.createLabel({
-		font:{fontSize:'20sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'20sp',fontFamily:'Helvetica Neue'},
 		text: L('changemap'),
 		color:'#2c3e50',
 		top:'50dp',
@@ -462,12 +464,13 @@ function NewsPostWindow() {
 			'pos':[parseFloat(Ti.App.Properties.getString('userchooselongitude',0)),parseFloat(Ti.App.Properties.getString('userchooselatitude',0))],
 			'title':'',
 			'extime':extime,
+			'category':1001,
 			'headphoto':Ti.App.Properties.getString('headfile','')
 		};
 	    
 	    datastring = JSON.stringify(data);
 	    Ti.API.info('datastring : ' + datastring);
-		creatnewsevent(datastring ,newsPostCallback);
+		createvent(datastring ,newsPostCallback);
 	}
 	
 	var firstTimeBlur = false;

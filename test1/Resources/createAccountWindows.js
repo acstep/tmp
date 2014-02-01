@@ -44,7 +44,7 @@ function createAccountWindow() {
 	});
 	
 	var titleText = Ti.UI.createLabel({
-		font:{fontSize:'20sp',fontFamily:'Marker Felt', fontWeight:'bold'},
+		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 		text: 'Sign Up',
 		color:'#ffffff',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
@@ -177,7 +177,7 @@ function createAccountWindow() {
 	});
 	
 	var addPhoeoText = Ti.UI.createLabel({
-		font:{fontSize:'12sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
 		text: 'Add Photo',
 		color:'#555555',
 		top:'65dp',
@@ -335,7 +335,7 @@ function createAccountWindow() {
 	});
 	
 	var nameText = Ti.UI.createLabel({
-		font:{fontSize:'16sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: 'Name',
 		color:'#333333',
 		top:'10dp',
@@ -347,7 +347,7 @@ function createAccountWindow() {
 		width:'100%',
 		left:'0dp',
 		top:'5dp',
-		font:{fontSize:'14sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
 		color:'#888',
 		textAlign:'left',
 		borderColor:'#cccccc',
@@ -359,7 +359,7 @@ function createAccountWindow() {
 	
 	
 	var emailText = Ti.UI.createLabel({
-		font:{fontSize:'16sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: 'Email',
 		color:'#333333',
 		top:'10dp',
@@ -371,7 +371,7 @@ function createAccountWindow() {
 		width:'100%',
 		left:'0dp',
 		top:'5dp',
-		font:{fontSize:'14sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
 		color:'#888',
 		textAlign:'left',
 		borderColor:'#cccccc',
@@ -381,7 +381,7 @@ function createAccountWindow() {
 	});
     
 	var passwdText = Ti.UI.createLabel({
-		font:{fontSize:'16sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: 'Password',
 		color:'#333333',
 		top:'10dp',
@@ -393,7 +393,7 @@ function createAccountWindow() {
 		width:'100%',
 		left:'0dp',
 		top:'5dp',
-		font:{fontSize:'14sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
 		color:'#888',
 		textAlign:'left',
 		borderColor:'#cccccc',
@@ -404,7 +404,7 @@ function createAccountWindow() {
 	});
 	
 	var passwdVText = Ti.UI.createLabel({
-		font:{fontSize:'16sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: 'Password Verify',
 		color:'#333333',
 		top:'10dp',
@@ -416,7 +416,7 @@ function createAccountWindow() {
 		width:'100%',
 		left:'0dp',
 		top:'5dp',
-		font:{fontSize:'14sp',fontFamily:'Marker Felt'},
+		font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
 		color:'#888',
 		textAlign:'left',
 		borderColor:'#cccccc',
