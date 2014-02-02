@@ -44,5 +44,6 @@
 	<string name="activitytitle">活動名稱</string>
 	<string name="groupname">團體名稱</string>
 	<string name="starttime">開始時間</string>
+	<string name="endtime">結束時間</string>
 	<string name="addactivitycontent">您想發布的活動內容... \n\n\n\n\n\n</string>
 </resources>

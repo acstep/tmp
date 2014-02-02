@@ -2,6 +2,7 @@
 Ti.include("common_net.js");
 Ti.include("common_util.js");
 Ti.include("newsview.js");
+Ti.include("activityview.js");
 
 function feedContentWindow(eventid, fullcontent) {
 	//load component dependencies
@@ -58,9 +59,11 @@ function feedContentWindow(eventid, fullcontent) {
 		self.close();
 	});	
 	
+	
+	
 	var categoryText = Ti.UI.createLabel({
 		font:{fontSize:'24sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
-		text: L('news'),
+		text: '',
 		color:'#ffffff'
 	});
 	titleView.add(categoryText);
@@ -84,8 +87,15 @@ function feedContentWindow(eventid, fullcontent) {
     
     /////////////  event info ////////////////////////
     var drawFeedContentFunction = {	    
-	    	'1000':drawNewsContnet
+	    	'1000':drawNewsContnet,
+	    	'1001':drawActivityContnet
 	};
+    
+    
+    var titleString = {
+    	'1000':'news',
+    	'1001':'club'
+    };
     
     var contentView = Ti.UI.createView({
 		backgroundColor:'#ffffff',
@@ -109,7 +119,7 @@ function feedContentWindow(eventid, fullcontent) {
 		}
 		else{
 			Ti.API.info('drawFeedContentFunction.');
-			
+			categoryText.text = L(titleString[data['category'].toString()]);
 			drawFeedContentFunction[data['category'].toString()](contentView,data);
 			self.add(contentView);
 			if(inputParentView.inputView != undefined){

@@ -826,9 +826,8 @@ function feedWindow() {
 					talknum = talknum + 1;
 					Ti.App.Properties.setInt('talknum',talknum);
 					
-				 	eventnumText.text =  talknum  ;
-				 	Ti.App.Properties.setString('talknum',talknum);
-					talknumText.text =  parseInt(talknumText.text) + 1  ;
+
+					talknumText.text =  talknum ;
 				 	talknumText.left = talkImg.rect.x + talkImg.rect.width - 5;
 				 	talknumText.top = talkImg.rect.y-5 ;
 				 	talknumText.width = '20dp';
@@ -935,7 +934,7 @@ function feedWindow() {
 		 	talknumText.visible = true;
 		}
 		
-	}, 2000);
+	}, 1000);
     
     self.addEventListener('open', function(ev) {
         self.activity.addEventListener('resume', function(e) {

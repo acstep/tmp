@@ -168,14 +168,14 @@ function drawActivityEvent(view, data, lon, lat){
 	    
 	    var titlenameImg = Titanium.UI.createImageView({
 	        image:'titlename.png',
-			height: Ti.UI.SIZE, width: '20dp', left:'20dp'
+			height: '15dp', width: '15dp', left:'20dp',top:'5dp'
 		});
 		
 		var titlenameText = Ti.UI.createLabel({
 			font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
 			text: data['title'],
 			color:'#333333',
-			left:'50dp', right:'10dp',height: Ti.UI.SIZE,
+			left:'45dp', right:'10dp',height: Ti.UI.SIZE,
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});
 		
@@ -194,14 +194,14 @@ function drawActivityEvent(view, data, lon, lat){
 	    
 	    var groupNameImg = Titanium.UI.createImageView({
 	        image:'groupname.png',
-			height: Ti.UI.SIZE, width: '20dp', left:'20dp'
+			height: '15dp', width: '15dp', left:'20dp',top:'5dp'
 		});
 		
 		var groupNameText = Ti.UI.createLabel({
 			font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
 			text: data['pdata']['gname'],
 			color:'#3498db',
-			left:'50dp', right:'10dp', height: Ti.UI.SIZE,
+			left:'45dp', right:'10dp', height: Ti.UI.SIZE,
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});
 		
@@ -209,6 +209,37 @@ function drawActivityEvent(view, data, lon, lat){
 	    groupNameView.add(groupNameText);
 	
 	    middleView.add(groupNameView);
+	};
+	
+	if(data['pdata'] != undefined && data['pdata']['starttime'] != undefined && data['pdata']['starttime'] != ''){
+		var startTimeView = Ti.UI.createView({
+		    backgroundColor: '#ffffff',
+		    width:'100%', height: Ti.UI.SIZE,
+		    top:'0dp'
+		});
+	    
+	    var startTimeImg = Titanium.UI.createImageView({
+	        image:'sorttime.png',
+			height: '15dp', width: '15dp', left:'20dp',top:'5dp'
+		});
+		
+		startTime = new Date(data['pdata']['starttime']*1000);
+		var minutes = startTime.getMinutes();
+		if(minutes < 10){
+			minutes = '0'+minutes;
+		}
+		var startTimeText = Ti.UI.createLabel({
+			font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
+			text: startTime.getFullYear()+'/'+(startTime.getMonth()+1)+'/'+startTime.getDate()+'  '+startTime.getHours()+':'+minutes,
+			color:'#34495e',
+			left:'45dp', right:'10dp', height: Ti.UI.SIZE,
+	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+		});
+		
+	    startTimeView.add(startTimeImg);
+	    startTimeView.add(startTimeText);
+	
+	    middleView.add(startTimeView);
 	};
     
 
@@ -234,14 +265,14 @@ function drawActivityEvent(view, data, lon, lat){
 		    name:'imagecontentview'
 		});  
 		Ti.API.info('image file : ',('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + data['photos'][0]).replace('.jpg','-m.jpg'));
-		var newsImage = Titanium.UI.createImageView({
+		var activityImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
 		    visible : false,
 		    name:'image'
 		});
 		
 		  
-		newsImage.addEventListener('load', function(e)
+		activityImage.addEventListener('load', function(e)
 		{
 			platheight = Ti.Platform.displayCaps.platformHeight,
 			platwidth = Ti.Platform.displayCaps.platformWidth *0.90;
@@ -269,9 +300,9 @@ function drawActivityEvent(view, data, lon, lat){
 
 		});
 		
-		imageContentView.add(newsImage);
+		imageContentView.add(activityImage);
 		middleView.add(imageContentView);
-		newsImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + data['photos'][0]).replace('.jpg','-m.jpg');
+		activityImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + data['photos'][0]).replace('.jpg','-m.jpg');
 
 	}
 
@@ -422,12 +453,47 @@ function drawActivityEvent(view, data, lon, lat){
 	    backgroundColor: '#ffffff',
 	    width:'auto', height: '40dp',
 	    top:'0dp',
-	    
+	    name:'calendarParent'
 	});
+	
+	
 	
 	var calendarImg = Titanium.UI.createImageView({
 		image:'addcalender.png',
-		height: '23dp', width: '23dp'
+		height: '23dp', width: '23dp',
+		name:'calendarimg'
+	});
+	calendarImg.data = data;
+	bottomCalendarView.data = data;
+	bottomCalendarView.imageobj = calendarImg;
+	bottomCalendarView.addEventListener('click',function(e) {
+		e.cancelBubble = true;
+		if(e.source.data['pdata']['starttime'] == undefined){
+			return;
+		}
+
+		var CALENDAR_TO_USE = 3;
+		var calendar = Ti.Android.Calendar.getCalendarById(CALENDAR_TO_USE);
+		
+		// Create the event
+		var eventBegins = new Date(e.source.data['pdata']['starttime']*1000);
+		var eventEnds = new Date(e.source.data['pdata']['starttime']*1000+3600*1000);
+		var details = {
+		    title: e.source.data['title'],
+		    description: e.source.data['des'],
+		    begin: eventBegins,
+		    end: eventEnds
+		};
+		if(e.source.name == 'calendarimg'){
+			e.source.image = 'addcalenderdone.png';
+		}
+		else{
+			e.source.imageobj.image = 'addcalenderdone.png';
+		}
+		
+		var event = calendar.createEvent(details);
+		
+		
 	});
 	
 	bottomCalendarView.add(calendarImg);
@@ -452,7 +518,7 @@ function drawActivityEvent(view, data, lon, lat){
 
 function drawActivityContnet(contentView,data){
 	
-	Ti.API.info('enter drawNewsContnet.');
+	Ti.API.info('enter drawActivityContnet.');
 	var imageList = data['photos'];
 	//////////////////   image list /////////////////////////
 	if(imageList.length == 1){
@@ -463,12 +529,12 @@ function drawActivityContnet(contentView,data){
 		    width:'100%',height:'200dp',
 		    name:'imagecontentview'
 		});  
-		var newsImage = Titanium.UI.createImageView({
+		var topImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
 		    visible : false,
 		    name:'image'
 		});
-		newsImage.addEventListener('load', function()
+		topImage.addEventListener('load', function()
 		{
 			
 			platheight = Ti.Platform.displayCaps.platformHeight,
@@ -482,16 +548,16 @@ function drawActivityContnet(contentView,data){
 		
 				this.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
 				this.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
-				newsImage.visible = true;
+				topImage.visible = true;
 
 			}
 		});
-		newsImage.addEventListener('click', function(){
-			NewsImageListWindow = require('imagelistWindows');
-			new NewsImageListWindow(imageList,0).open(); 
+		topImage.addEventListener('click', function(){
+			topImageListWindow = require('imagelistWindows');
+			new topImageListWindow(imageList,0).open(); 
 		});
-		imageScrollView.add(newsImage);
-		newsImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[0]).replace('.jpg','-m.jpg');
+		imageScrollView.add(topImage);
+		topImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[0]).replace('.jpg','-m.jpg');
 		
 	}
 	else{
@@ -515,13 +581,13 @@ function drawActivityContnet(contentView,data){
 			    name:'imagecontentview'
 			});  
 			Ti.API.info('image file : ',('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[0]).replace('.jpg','-m.jpg'));
-			var newsImage = Titanium.UI.createImageView({
+			var topImage = Titanium.UI.createImageView({
 			    backgroundColor: '#ffffff',
 			    visible : false,
 			    name:'image'
 			});
-		    newsImage.index = i;
-			newsImage.addEventListener('load', function()
+		    topImage.index = i;
+			topImage.addEventListener('load', function()
 			{
 				
 	
@@ -546,17 +612,118 @@ function drawActivityContnet(contentView,data){
 	
 			});
 			
-			newsImage.addEventListener('click', function(){
-				NewsImageListWindow = require('imagelistWindows');
-				new NewsImageListWindow(imageList,this.index).open(); 
+			topImage.addEventListener('click', function(){
+				topImageListWindow = require('imagelistWindows');
+				new topImageListWindow(imageList,this.index).open(); 
 			});
-			newsImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[i]).replace('.jpg','-m.jpg');
-			imageContentView.add(newsImage);
+			topImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[i]).replace('.jpg','-m.jpg');
+			imageContentView.add(topImage);
 		
 			imageScrollView.add(imageContentView);
 		}	
 	}
 	
+	////////////////  start end time ///////////////////////////////////////
+	var eventTimeView = Ti.UI.createView({
+	    backgroundColor: '#ffffff',
+	    height: Ti.UI.SIZE,
+	    layout: 'vertical',
+	    top:'0dp',left:'5%',right:'5%',
+	    
+	});
+	if(data['pdata'] != undefined && data['pdata']['starttime'] != undefined && data['pdata']['starttime'] != ''){
+		startTime = new Date(data['pdata']['starttime']*1000);
+        var startTimeView = Ti.UI.createView({
+			backgroundColor:'#ffffff',
+			width:'100%',
+			height:Ti.UI.SIZE,
+			top:'10dp',
+		});
+		
+		var starttimeText = Ti.UI.createLabel({
+			font:{fontSize:'20sp'},
+			text: L('starttime') + ':',
+			color:'#3498db',
+			top:'10dp', left:'10dp',
+	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+		});
+		
+		var sDateText = Ti.UI.createLabel({
+			font:{fontSize:'20sp'},
+			text: startTime.getFullYear()+'/'+(startTime.getMonth()+1)+'/'+startTime.getDate(),
+			color:'#666666',
+			top:'10dp', left:'130dp',
+	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+		});
+		
+		
+		
+		var minutes = startTime.getMinutes();
+		if(minutes < 10){
+			minutes = '0'+minutes;
+		}
+		var sTimeText = Ti.UI.createLabel({
+			font:{fontSize:'20sp'},
+			text: startTime.getHours()+':'+minutes,
+			color:'#666666',
+			top:'10dp', right:'20dp',
+	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+		});
+		
+		
+		
+	    startTimeView.add(starttimeText);
+		startTimeView.add(sDateText);
+		startTimeView.add(sTimeText);
+		eventTimeView.add(startTimeView);
+	}	
+	
+	if(data['pdata'] != undefined && data['pdata']['endtime'] != undefined && data['pdata']['endtime'] != ''){
+		Ti.API.info('we have endtime.');
+        endTime = new Date(data['pdata']['endtime']*1000);
+		var endTimeView = Ti.UI.createView({
+			backgroundColor:'#ffffff',
+			width:'100%',
+			height:Ti.UI.SIZE,
+			top:'10dp',
+			
+		});
+		
+		var endtimeText = Ti.UI.createLabel({
+			font:{fontSize:'20sp'},
+			text: L('endtime') + ':',
+			color:'#3498db',
+			top:'10dp', left:'10dp',
+	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+		});
+		
+		var eDateText = Ti.UI.createLabel({
+			font:{fontSize:'20sp'},
+			text: endTime.getFullYear()+'/'+(endTime.getMonth()+1)+'/'+endTime.getDate(),
+			color:'#666666',
+			top:'10dp', left:'130dp',
+	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+		});
+		
+		
+		
+		var minutes = endTime.getMinutes();
+		if(minutes < 10){
+			minutes = '0'+minutes;
+		}
+		var eTimeText = Ti.UI.createLabel({
+			font:{fontSize:'20sp'},
+			text: endTime.getHours()+':'+minutes,
+			color:'#666666',
+			top:'10dp', right:'20dp',
+	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+		});
+	
+		endTimeView.add(endtimeText);
+		endTimeView.add(eDateText);
+		endTimeView.add(eTimeText);
+		eventTimeView.add(endTimeView);
+	}
 	////////////////  description ////////////////////////////////////////////
 	var desView = Ti.UI.createView({
 	    backgroundColor: '#ffffff',
@@ -655,7 +822,6 @@ function drawActivityContnet(contentView,data){
 	
 	var topinfoView = Ti.UI.createView({
 	    backgroundColor: 'white',
-
 	    layout: 'vertical',
 	    width:'auto', height: '80dp',
 	    top:'0dp'
@@ -727,6 +893,8 @@ function drawActivityContnet(contentView,data){
 	contentView.add(imageScrollView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
 	contentView.add(topView);
+	contentView.add(createHSepLine('90%','20dp','0dp'));
+	contentView.add(eventTimeView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
 	contentView.add(desView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
