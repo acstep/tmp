@@ -1,5 +1,5 @@
 //Map Window Component Constructor
-
+Ti.include("common_util.js");
 
 function mapWindow() {
 	//load component dependencies

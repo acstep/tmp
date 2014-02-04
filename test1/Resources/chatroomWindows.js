@@ -11,49 +11,10 @@ function chatroomWindow() {
 	
     var chatroomLock = true;
 	
-	var self = Ti.UI.createWindow({
-		backgroundColor:'#dddddd',
-		navBarHidden:true,
-       
- 	});
- 	
-
- 	var backgroundView = Ti.UI.createView({
-		width:'100%',
-		layout:'vertical',
-		top: 0,
-		left: 0,
-		backgroundColor:'#dddddd',
-	});
-	
-	var forwardView = Ti.UI.createView({
-		width:'100%',
-		height:'100%',
-		visible:false,
-		backgroundColor:'#333333',
-		opacity:0.5,
-		top: 0,
-		left: 0
-	});
-	
-	var loginIndicator = Ti.UI.createActivityIndicator({
-		  font: {fontFamily:'Helvetica Neue', fontSize:14, fontWeight:'bold'},
-		  style:Titanium.UI.ActivityIndicatorStyle.BIG,
-	
-	});
-	
-	forwardView.add(loginIndicator);
-	loginIndicator.show();
-	
-	////  title  //////
-	
-	var titleView = Ti.UI.createView({
-		backgroundColor:'#3498db',
-		width:'100%',
-		height:'50dp',
-		top:'0dp'
-
-	});
+    var self = createNormalWin(true);
+	var backgroundView = self.backgroundView;
+	var forwardView = self.forwardView;
+	var titleView = self.titleView;
 	
 	var backImg = Titanium.UI.createImageView({
 		image:'backward.png',
@@ -75,7 +36,7 @@ function chatroomWindow() {
 	
 	titleView.add(backImg);
 	titleView.add(chatroomTitleText);
-	backgroundView.add(titleView);
+
 	
 	//////////////   middle   table view  //////////////////////
 	var chatroomDataItems = [];
@@ -237,11 +198,7 @@ function chatroomWindow() {
     	chatroomTableView.data = chatroomDataItems;
 	    chatroomLock = false;
     	
-		//var alertCreateAccountDlg = Titanium.UI.createAlertDialog({
-		//		title:'Error !',
-		//		message:JSON.stringify(notifydData)
-		//	});
-		//	alertCreateAccountDlg.show();
+		
 	}	
 	
     chatroomTableView.addEventListener('click', function(e){
@@ -352,12 +309,9 @@ function chatroomWindow() {
 	    self.close();
 	});
 
-	self.add(backgroundView);
-	self.add(forwardView);
 	
 	requestChatroom();
-	
-	
+
 	
 	return self;
 }

@@ -12,50 +12,17 @@ function talkWindow(id, toid,roomdata) {
     var msgItems = []; 
  
 	//load component dependencies
-	var self = Ti.UI.createWindow({
-		backgroundColor:'#dddddd',
-		navBarHidden:true,
-    
- 	});
- 	
-
- 	var backgroundView = Ti.UI.createView({
-		width:'100%',
-		top: '0dp',
-		left: '0dp',
-		bottom:'0dp',
-		backgroundColor:'#dddddd',
-	});
 	
-	var forwardView = Ti.UI.createView({
-		width:'100%',
-		height:'100%',
-		visible:false,
-		backgroundColor:'#333333',
-		opacity:0.5,
-		top: 0,
-		left: 0
-	});
+	var self = createNormalWin(true);
+	var backgroundView = self.backgroundView;
+	var forwardView = self.forwardView;
+	var titleView = self.titleView;
 	
-	var loginIndicator = Ti.UI.createActivityIndicator({
-		  font: {fontFamily:'Helvetica Neue', fontSize:14, fontWeight:'bold'},
-		  style:Titanium.UI.ActivityIndicatorStyle.BIG,
-	
-	});
-	
-	forwardView.add(loginIndicator);
-	loginIndicator.show();
+	backgroundView.layout = 'composite';
 	
 	////  title  //////
 	
-	var titleView = Ti.UI.createView({
-		backgroundColor:'#3498db',
-		width:'100%',
-		height:'50dp',
-		top:'0dp'
-
-	});
-	
+		
 	var backImg = Titanium.UI.createImageView({
 		image:'backward.png',
 		top: '10dp', left:'15dp', height: '30dp', width: '30dp'
@@ -76,7 +43,7 @@ function talkWindow(id, toid,roomdata) {
 	
 	titleView.add(backImg);
 	titleView.add(talkTitleText);
-	backgroundView.add(titleView);
+	
 	
 	///////////////   talk content //////////////////
 	var middleView = Ti.UI.createView({
@@ -149,12 +116,7 @@ function talkWindow(id, toid,roomdata) {
 	function sendMsgCB(result, data){
 		
 		if(result == false){
-			var alertCreateAccountDlg = Titanium.UI.createAlertDialog({
-				title:'Error !',
-				message:data
-			});
-			
-			alertCreateAccountDlg.show();
+			showAlert('Error !', data); 
 		}
 		else{
 			
@@ -216,11 +178,7 @@ function talkWindow(id, toid,roomdata) {
 			
 		}
 		else{
-			var alertCreateAccountDlg = Titanium.UI.createAlertDialog({
-				title:'Error !',
-				message:data
-			});
-			alertCreateAccountDlg.show();
+			showAlert('Error !', data); 
 		}
 	}
 			
@@ -232,8 +190,6 @@ function talkWindow(id, toid,roomdata) {
 	backgroundView.add(middleView);
 	backgroundView.add(bottomView);
 
-	self.add(backgroundView);
-	self.add(forwardView);
 	
 	
 	var loadmoreRow = Ti.UI.createTableViewRow({
@@ -372,16 +328,10 @@ function talkWindow(id, toid,roomdata) {
 				Ti.API.info('scroll to : '+(talkDataItems.length-data.length));
 				
 			}
-			
-			
 		}
 		else{
-			var alertCreateAccountDlg = Titanium.UI.createAlertDialog({
-				title:'Error !',
-				message:data
-			});
-			alertCreateAccountDlg.show();
 			
+			showAlert('Error !', data); 
 		}
 		messageLock = false;
 		
@@ -408,12 +358,7 @@ function talkWindow(id, toid,roomdata) {
 			
 		}
 		else{
-			var alertCreateAccountDlg = Titanium.UI.createAlertDialog({
-				title:'Error !',
-				message:data
-			});
-			alertCreateAccountDlg.show();
-			
+			showAlert('Error !', data); 
 		}
 		forwardView.visible = false;
 		

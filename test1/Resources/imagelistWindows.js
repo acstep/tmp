@@ -1,5 +1,5 @@
 //feed content Window Component Constructor
-
+Ti.include("common_util.js");
 var toast = Ti.UI.createNotification({
     message:'',
     duration: Ti.UI.NOTIFICATION_DURATION_LONG

@@ -24,14 +24,11 @@ function drawActivityEvent(view, data, lon, lat){
 	/////////  top  photo  time  name ////////////////////
 	var topView = Ti.UI.createView({
 	    backgroundColor: 'white',
-
-	    
 	    width:'100%', height: '80dp',
 	    top:'0dp'
 	});
 	
-	
-	
+
 	var headPhotoImg = Titanium.UI.createImageView({
         borderRadius:15,
 		height: '60dp', width: '60dp', top:'10dp', left:'10dp'
@@ -643,7 +640,7 @@ function drawActivityContnet(contentView,data){
 		var starttimeText = Ti.UI.createLabel({
 			font:{fontSize:'20sp'},
 			text: L('starttime') + ':',
-			color:'#3498db',
+			color:'#f1c40f',
 			top:'10dp', left:'10dp',
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});
@@ -692,7 +689,7 @@ function drawActivityContnet(contentView,data){
 		var endtimeText = Ti.UI.createLabel({
 			font:{fontSize:'20sp'},
 			text: L('endtime') + ':',
-			color:'#3498db',
+			color:'#f1c40f',
 			top:'10dp', left:'10dp',
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});
@@ -799,10 +796,10 @@ function drawActivityContnet(contentView,data){
 	
 	
 	//////////////////////   head photo  /////////////////////////////
-	var topView = Ti.UI.createView({
+	var ownerView = Ti.UI.createView({
 	    backgroundColor: 'white',
 	    layout: 'horizontal',
-	    width:'100%', height: '80dp',
+	    width:'90%', height: '80dp',
 	    top:'10dp',left:'5%'
 	});
 	
@@ -832,7 +829,7 @@ function drawActivityContnet(contentView,data){
 	var nameText = Ti.UI.createLabel({
 		font:{fontSize:'20sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 		text: data['name'],
-		color:'#3498db',
+		color:'#4aa3df',
 		top:'12dp',
 		left:'20dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
@@ -881,18 +878,55 @@ function drawActivityContnet(contentView,data){
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
 	});
 
-    
-	
 	topinfoView.add(nameText);
 	topinfoView.add(timeText);
 	
-	topView.add(headPhotoImg);
-	topView.add(topinfoView);
+	ownerView.add(headPhotoImg);
+	ownerView.add(topinfoView);
 	
-	
-	contentView.add(imageScrollView);
-	contentView.add(createHSepLine('90%','20dp','0dp'));
-	contentView.add(topView);
+	////////////  title and group name //////////////////
+	var titleGroupNameView = Ti.UI.createView({
+	    backgroundColor: 'white',
+	    layout: 'vertical',
+	    width:'90%', height: Ti.UI.SIZE,
+	    top:'10dp',left:'5%'
+	});
+	if(data['title'] != undefined && data['title'] != ''){
+		var titleText = Ti.UI.createLabel({
+			font:{fontSize:'24sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
+			text: data['title'],
+			color:'#000000',
+			top:'10dp',
+	  		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
+		});
+		titleGroupNameView.add(titleText);
+		titleGroupNameView.exist = true;
+	}
+	if(data['pdata']['gname'] != undefined && data['pdata']['gname'] != ''){
+		var nameText = Ti.UI.createLabel({
+			font:{fontSize:'20sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
+			text: data['pdata']['gname'],
+			color:'#3498db',
+			top:'10dp',
+			left:'0dp',
+	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
+		});
+		titleGroupNameView.add(nameText);
+		titleGroupNameView.exist = true;
+	}
+
+    
+    if(imageList.length != 0){
+    	contentView.add(imageScrollView);
+    	contentView.add(createHSepLine('90%','20dp','0dp'));
+    }
+    
+    if(titleGroupNameView.exist == true){
+    	contentView.add(titleGroupNameView);
+    	contentView.add(createHSepLine('90%','20dp','0dp'));
+    }
+
+	contentView.add(ownerView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
 	contentView.add(eventTimeView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));

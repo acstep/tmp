@@ -1,4 +1,73 @@
 
+
+function createNormalWin(title){
+	var self = Ti.UI.createWindow({
+		backgroundColor:'#ffffff',
+		navBarHidden:true,
+
+	});
+	
+	var backgroundView = Ti.UI.createView({
+		width:'100%',
+		height:'100%',
+		layout:'vertical',
+		top: 0,
+		left: 0,
+		zIndex:10,
+		backgroundColor:'#dddddd',
+	});
+	
+	var forwardView = Ti.UI.createView({
+		width:'100%',
+		height:'100%',
+		visible:false,
+		backgroundColor:'#333333',
+		opacity:0.5,
+		top: 0,
+		left: 0,
+		zIndex:15
+	});
+	
+	var loginIndicator = Ti.UI.createActivityIndicator({
+		  font: {fontFamily:'Helvetica Neue', fontSize:14, fontWeight:'bold'},
+		  style:Titanium.UI.ActivityIndicatorStyle.BIG,
+	
+	});
+	
+	forwardView.add(loginIndicator);
+	loginIndicator.show();
+	
+	////  title  //////
+	if(title == true){
+		var titleView = Ti.UI.createView({
+			backgroundColor:'#3498db',
+			width:'100%',
+			height:'50dp',
+			top:'0dp',
+	
+		});
+		backgroundView.add(titleView);
+		self.titleView = titleView;
+	}
+
+	self.add(backgroundView);
+	self.add(forwardView);
+	
+	self.backgroundView = backgroundView;
+	self.forwardView = forwardView;
+	
+	return self;
+}
+
+
+function showAlert(title, message){
+	var alertDlg = Titanium.UI.createAlertDialog({
+		title:title,
+		message:message
+	});
+	alertDlg.show();
+}
+
 function sortByKeyUp(array, key) {
     return array.sort(function(a, b) {
         var x = a[key]; var y = b[key];

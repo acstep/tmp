@@ -1,42 +1,15 @@
 //Activity Post Window Component Constructor
 Ti.include("common_net.js");
-
+Ti.include("common_util.js");
 
 
 function ActivityPostWindow() {
 	//load component dependencies
-	var self = Ti.UI.createWindow({
-		backgroundColor:'#ffffff',
-		navBarHidden:true,
+	var self = createNormalWin(true);
+	var backgroundView = self.backgroundView;
+	var forwardView = self.forwardView;
+	var titleView = self.titleView;
 
-	});
-	
-	
-	
-	var backgroundView = Ti.UI.createView({
-		width:'100%',
-		height:'100%',
-		layout:'vertical',
-		top: 0,
-		left: 0
-	});
-	
-	var forwardView = Ti.UI.createView({
-		width:'100%',
-		height:'100%',
-		visible:false,     
-		backgroundColor:'#333333',
-		opacity:0.5,
-		top: 0,
-		left: 0,
-		layout:'vertical',
-	});
-	
-	var loginIndicator = Ti.UI.createActivityIndicator({
-		  font: {fontFamily:'Helvetica Neue', fontSize:14, fontWeight:'bold'},
-		  style:Titanium.UI.ActivityIndicatorStyle.BIG,
-	      top: '40%',
-	});
 	var ind=Titanium.UI.createProgressBar({
 	        width:'90%',
 	        min:0,
@@ -46,24 +19,14 @@ function ActivityPostWindow() {
 	        color:'#ffffff',
 	        message:L('uploadimage'),
 	        font:{fontSize:14, fontWeight:'bold'},
-	        
-	        top:'50dp' 
+ 	        top:'50dp' 
 	});
 
-	forwardView.add(loginIndicator);
 	forwardView.add(ind);
-	loginIndicator.show();
+	
 
 	////  title  //////
-	
-	var titleView = Ti.UI.createView({
-		backgroundColor:'#3498db',
-		width:'100%',
-		height:'50dp',
-		top:'0dp',
 
-	});
-	
 	var selectPosText = Ti.UI.createLabel({
 		font:{fontSize:'24sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 		text: L('send')+L('club'),
@@ -72,9 +35,7 @@ function ActivityPostWindow() {
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
 	
-	
-	
-	
+
 	var uploadimg = [];
 	var totalUploadImg = 0;
 	var currentUploadImg = 0;
@@ -213,19 +174,19 @@ function ActivityPostWindow() {
 	            error:function(error)
 	            {
 	                //error happend, create alert
-	                var a = Titanium.UI.createAlertDialog({title:'Camera'});
+	            
 	                //set message
 	                if (error.code == Titanium.Media.NO_CAMERA)
 	                {
-	                    a.setMessage('Device does not have camera');
+	                	showAlert('Camera', 'Device does not have camera'); 
+	                    
 	                }
 	                else
 	                {
-	                    a.setMessage('Unexpected error: ' + error.code);
+	                	showAlert('Camera', 'Unexpected error: ' + error.code);  
+
 	                }
-	 
-	                // show alert
-	                a.show();
+
 	            },
 	            allowImageEditing:true,
 	            saveToPhotoGallery:true
@@ -612,12 +573,9 @@ function ActivityPostWindow() {
     contentScrollView.add(mapParentView);
 
     	
-    backgroundView.add(titleView);
+
     backgroundView.add(contentScrollView);
      
-	self.add(backgroundView);
-	self.add(forwardView);
-	
 	
 	function uploadImage(){
 		var data_to_send = { 
@@ -647,11 +605,7 @@ function ActivityPostWindow() {
 			}
         };
         xhr.onerror = function(e){
-        	var alertDlg = Titanium.UI.createAlertDialog({
-				title:'Error !',
-				message:'Server Error. Please try again.'
-			});
-			alertDlg.show();
+			showAlert('Error !', 'Server Error. Please try again.');
 			Ti.API.info('Upload image fail.');
 			forwardView.visible = false;
         	
@@ -673,12 +627,9 @@ function ActivityPostWindow() {
 
 		}
 		else{
-			var alertDlg = Titanium.UI.createAlertDialog({
-				title:'Error !',
-				message:resultmsg
-			});
+			
+			showAlert('Error !', resultmsg);
 			forwardView.visible = false;
-			alertDlg.show();
 			Ti.API.info('Post event false.');
 			
 			

@@ -6,49 +6,13 @@ Ti.include("common_util.js");
 
 function notifyWindow() {
 	//load component dependencies
-	var self = Ti.UI.createWindow({
-		backgroundColor:'#dddddd',
-		navBarHidden:true,
-        
- 	});
- 	
-
- 	var backgroundView = Ti.UI.createView({
-		width:'100%',
-		layout:'vertical',
-		top: 0,
-		left: 0,
-		backgroundColor:'#dddddd',
-	});
+	var self = createNormalWin(true);
+	var backgroundView = self.backgroundView;
+	var forwardView = self.forwardView;
+	var titleView = self.titleView;
 	
-	var forwardView = Ti.UI.createView({
-		width:'100%',
-		height:'100%',
-		visible:false,
-		backgroundColor:'#333333',
-		opacity:0.5,
-		top: 0,
-		left: 0
-	});
 	
-	var loginIndicator = Ti.UI.createActivityIndicator({
-		  font: {fontFamily:'Helvetica Neue', fontSize:14, fontWeight:'bold'},
-		  style:Titanium.UI.ActivityIndicatorStyle.BIG,
 	
-	});
-	
-	forwardView.add(loginIndicator);
-	loginIndicator.show();
-	
-	////  title  //////
-	
-	var titleView = Ti.UI.createView({
-		backgroundColor:'#3498db',
-		width:'100%',
-		height:'50dp',
-		top:'0dp'
-
-	});
 	
 	var backImg = Titanium.UI.createImageView({
 		image:'backward.png',
@@ -67,7 +31,6 @@ function notifyWindow() {
 	
 	titleView.add(backImg);
 	titleView.add(notifyTitleText);
-	backgroundView.add(titleView);
 	
 	//////////////   middle   table view  //////////////////////
 	var notifyDataItems = [];
@@ -174,13 +137,7 @@ function notifyWindow() {
     	};
     	forwardView.visible = false;
     	notifyTableView.data = notifyDataItems;
-	    
-    	
-		//var alertCreateAccountDlg = Titanium.UI.createAlertDialog({
-		//		title:'Error !',
-		//		message:JSON.stringify(notifydData)
-		//	});
-		//	alertCreateAccountDlg.show();
+
 	}	
 	
     notifyTableView.addEventListener('click', function(e){
@@ -242,11 +199,7 @@ function notifyWindow() {
 		querynotify( starttime, 10, parseNotify);
 		
 	}
-	
-	
-	
-	self.add(backgroundView);
-	self.add(forwardView);
+
 	
 	requestNotify();
 	

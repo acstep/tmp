@@ -1,47 +1,16 @@
 //Create account Window Component Constructor
-
+Ti.include("common_util.js");
 function createAccountWindow() {
 
-    var self = Ti.UI.createWindow({
-		backgroundColor:'#eeeeee',
-		navBarHidden:true,
-	});
+    var self = createNormalWin(true);
+	var backgroundView = self.backgroundView;
+	var forwardView = self.forwardView;
+	var titleView = self.titleView;
 	
-	var backgroundView = Ti.UI.createView({
-		width:'100%',
-		height:'100%',
-		layout:'vertical',
-		top: 0,
-		left: 0
-	});
-	
-	var forwardView = Ti.UI.createView({
-		width:'100%',
-		height:'100%',
-		visible:false,
-		backgroundColor:'#333333',
-		opacity:0.5,
-		top: 0,
-		left: 0
-	});
-	
-	var loginIndicator = Ti.UI.createActivityIndicator({
-		  font: {fontFamily:'Helvetica Neue', fontSize:14, fontWeight:'bold'},
-		  style:Titanium.UI.ActivityIndicatorStyle.BIG,
-	
-	});
-	
-	forwardView.add(loginIndicator);
-	loginIndicator.show();
-	
+    
 	
 	////////////// window title  /////////////////
-	var titleView = Ti.UI.createView({
-		backgroundColor:'#3498db',
-		width:'100%',
-		height:'50dp',
-		top:'0dp'
-	});
+	
 	
 	var titleText = Ti.UI.createLabel({
 		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
@@ -88,22 +57,17 @@ function createAccountWindow() {
 			self.close();
 		}
 		else{
-			var alertCreateAccountDlg = Titanium.UI.createAlertDialog({
-				title:'Error !',
-				message:resultmsg
-			});
+			
 			forwardView.visible = false;
-			alertCreateAccountDlg.show();
+			
+			showAlert('Error !', resultmsg);
 			Ti.API.info('create account false.');
 			
 			
 		}
 	};
 	
-	var alertDlg = Titanium.UI.createAlertDialog({
-		title:'Error !',
-		message:'Password empty or not the same.'
-	});
+	
 	doneButton.addEventListener('click',function(e)
 	{
 		var nametext = nameField.value; 
@@ -116,7 +80,7 @@ function createAccountWindow() {
 	    Ti.API.info('passwdVtext :'+ passwdVtext);
 	    var headfile = Ti.App.Properties.getString('headfile','');
 	    if(passwdtext.length == 0 ||passwdtext != passwdVtext){
-	   	    alertDlg.show();
+	   	    showAlert('Error !', 'Password empty or not the same.');
 			
 			passwdField.value = '';
 			passwdVtext.value = '';
@@ -314,7 +278,7 @@ function createAccountWindow() {
 	});
 	
 	var getheadphoto = function(e) {
-		i.API.info('receive event headphotodone ');
+		Ti.API.info('receive event headphotodone ');
         var f = Titanium.Filesystem.getFile(Titanium.Filesystem.externalStorageDirectory,'head.jpg');
         if (f.exists()) {
 	        headPhotoImg.image =  f.read();
@@ -348,12 +312,12 @@ function createAccountWindow() {
 		left:'0dp',
 		top:'5dp',
 		font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
-		color:'#888',
+		color:'#ffffff',
 		textAlign:'left',
 		borderColor:'#cccccc',
 		borderRadius:5,
-		hintText:'Your Name'
-
+		hintText:'Your Name',
+        backgroundColor:'#4aa3df'
 	});
 	
 	
@@ -372,11 +336,12 @@ function createAccountWindow() {
 		left:'0dp',
 		top:'5dp',
 		font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
-		color:'#888',
+		color:'#ffffff',
 		textAlign:'left',
 		borderColor:'#cccccc',
 		borderRadius:5,
-		hintText:'Your Email'
+		hintText:'Your Email',
+		backgroundColor:'#4aa3df'
 
 	});
     
@@ -394,12 +359,13 @@ function createAccountWindow() {
 		left:'0dp',
 		top:'5dp',
 		font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
-		color:'#888',
+		color:'#ffffff',
 		textAlign:'left',
 		borderColor:'#cccccc',
 		borderRadius:5,
 		passwordMask: true,
-		hintText:'Your Password'
+		hintText:'Your Password',
+		backgroundColor:'#4aa3df'
 
 	});
 	
@@ -417,12 +383,13 @@ function createAccountWindow() {
 		left:'0dp',
 		top:'5dp',
 		font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
-		color:'#888',
+		color:'#ffffff',
 		textAlign:'left',
 		borderColor:'#cccccc',
 		borderRadius:5,
 		passwordMask: true,
-		hintText:'Your Password Again'
+		hintText:'Your Password Again',
+		backgroundColor:'#4aa3df'
 
 	});
 	
@@ -442,20 +409,13 @@ function createAccountWindow() {
 	    passwdVField.enable = true;
 	    passwdVField.focus();
 	});
-	
-	
-	
-	
+
 	profilellScrollView.add(headFieldView);
 	profilellScrollView.add(profileDataView);
-	
-	backgroundView.add(titleView);
+
     backgroundView.add(profilellScrollView);
-    
-    
-    self.add(backgroundView);
-	self.add(forwardView);
-	self.add(alertDlg);
+  
+
 
     var firstTimeBlur = false;
 	self.addEventListener('postlayout',function(e){

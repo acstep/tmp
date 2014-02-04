@@ -5,28 +5,13 @@
 
 function HeadWindow(cropimage) {
 	//load component dependencies
-	var self = Ti.UI.createWindow({
-		backgroundColor:'#ffffff',
-		navBarHidden:true,
-
-	});
 	
-	var forwardView = Ti.UI.createView({
-		width:'100%',
-		height:'100%',
-		visible:false,     
-		backgroundColor:'#333333',
-		opacity:0.5,
-		top: 0,
-		left: 0,
-		layout:'vertical',
-	});
-	
-	var loginIndicator = Ti.UI.createActivityIndicator({
-		  font: {fontFamily:'Helvetica Neue', fontSize:14, fontWeight:'bold'},
-		  style:Titanium.UI.ActivityIndicatorStyle.BIG,
-	      top: '40%',
-	});
+	var self = createNormalWin(true);
+	var backgroundView = self.backgroundView;
+	var forwardView = self.forwardView;
+	var titleView = self.titleView;
+    backgroundView.layout = 'composite';
+    
 	var ind=Titanium.UI.createProgressBar({
 	        width:'90%',
 	        min:0,
@@ -40,27 +25,9 @@ function HeadWindow(cropimage) {
 	        top:'50dp' 
 	});
 
-	forwardView.add(loginIndicator);
 	forwardView.add(ind);
-	loginIndicator.show();
-	
-	
-	var backgroundView = Ti.UI.createView({
-		width:'100%',
-		height:'100%',
-		backgroundColor:'#eeeeee',
-		top: 0,
-		left: 0
-	});
-	
-	var titleView = Ti.UI.createView({
-		width:'100%',
-		height:'50dp',
-		backgroundColor:'#222222',
-		top: 0,
-		left: 0
-	});
-	
+
+
 	var middleView = Ti.UI.createView({
 		width:'100%',
 		height:'auto',
@@ -241,11 +208,8 @@ function HeadWindow(cropimage) {
 			forwardView.visible = false;
         };
         xhr.onerror = function(e){
-        	var alertDlg = Titanium.UI.createAlertDialog({
-				title:'Error !',
-				message:'Server Error. Please try again.'
-			});
-			alertDlg.show();
+
+			showAlert('Error !', 'Server Error. Please try again.');
 			Ti.API.info('Upload image fail.');
 			forwardView.visible = false;
         	
@@ -263,12 +227,11 @@ function HeadWindow(cropimage) {
 	middleView.add(headImg);
     middleView.add(cropView);
    
-	backgroundView.add(titleView);
+	
 	backgroundView.add(bottonView);
 	backgroundView.add(middleView);
     
-	self.add(backgroundView);
-	self.add(forwardView);
+	
 	
 	return self;
 }

@@ -6,50 +6,13 @@ Ti.include("activityview.js");
 
 function feedContentWindow(eventid, fullcontent) {
 	//load component dependencies
-	var self = Ti.UI.createWindow({
-		backgroundColor:'#dddddd',
-		navBarHidden:true,
-        layout: 'vertical'
- 	});
- 	
+	
+	var self = createNormalWin(true);
+	var backgroundView = self.backgroundView;
+	var forwardView = self.forwardView;
+	var titleView = self.titleView;
+	
 
- 	var backgroundView = Ti.UI.createView({
-		width:'100%',
-		layout:'vertical',
-		top: 0,
-		left: 0,
-		backgroundColor:'#dddddd',
-	});
-	
-	var forwardView = Ti.UI.createView({
-		width:'100%',
-		height:'100%',
-		visible:false,
-		backgroundColor:'#333333',
-		opacity:0.5,
-		top: 0,
-		left: 0
-	});
-	
-	var loginIndicator = Ti.UI.createActivityIndicator({
-		  font: {fontFamily:'Helvetica Neue', fontSize:14, fontWeight:'bold'},
-		  style:Titanium.UI.ActivityIndicatorStyle.BIG,
-	
-	});
-	
-	forwardView.add(loginIndicator);
-	loginIndicator.show();
-	
-	////  title  //////
-	
-	var titleView = Ti.UI.createView({
-		backgroundColor:'#3498db',
-		width:'100%',
-		height:'50dp',
-		top:'0dp'
-
-	});
-	
 	var backImg = Titanium.UI.createImageView({
 		image:'backward.png',
 		top: '10dp', left:'15dp', height: '30dp', width: '30dp'
@@ -68,7 +31,7 @@ function feedContentWindow(eventid, fullcontent) {
 	});
 	titleView.add(categoryText);
 	titleView.add(backImg);
-    backgroundView.add(titleView);
+
 	
 	
 	
@@ -108,12 +71,8 @@ function feedContentWindow(eventid, fullcontent) {
 	function parseEvent(result, data){
 		forwardView.visible = false;
 		if(result == false){
-			var alertCreateAccountDlg = Titanium.UI.createAlertDialog({
-				title:'Error !',
-				message:data
-			});
 			
-			alertCreateAccountDlg.show();
+			showAlert('Error !', data);
 			Ti.API.info('Post Comment false.');
 			return;
 		}
@@ -182,12 +141,8 @@ function feedContentWindow(eventid, fullcontent) {
 		forwardView.visible = false;
 		
 		if(result == false){
-			var alertCreateAccountDlg = Titanium.UI.createAlertDialog({
-				title:'Error !',
-				message:data
-			});
 			
-			alertCreateAccountDlg.show();
+			showAlert('Error !', data);
 			Ti.API.info('Query Comment false.');
 			return;
 		}
@@ -314,12 +269,8 @@ function feedContentWindow(eventid, fullcontent) {
 	function sendCommentCB(result, data){
 		forwardView.visible = false;
 		if(result == false){
-			var alertCreateAccountDlg = Titanium.UI.createAlertDialog({
-				title:'Error !',
-				message:data
-			});
 			
-			alertCreateAccountDlg.show();
+			showAlert('Error !', data);
 			Ti.API.info('Post Comment false.');
 			return;
 		}
@@ -353,8 +304,7 @@ function feedContentWindow(eventid, fullcontent) {
 	inputView.add(sendCommentButton);
 	
 	forwardView.visible = true;
-	self.add(backgroundView);
-	self.add(forwardView);
+
 	
 	
 	////////////   show event content ///////////////

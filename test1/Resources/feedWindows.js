@@ -6,52 +6,11 @@ Ti.include("activityview.js");
 
 function feedWindow() {
 	//load component dependencies
-	var self = Ti.UI.createWindow({
-		backgroundColor:'#ffffff',
-		navBarHidden:true,
+	var self = createNormalWin(true);
+	var backgroundView = self.backgroundView;
+	var forwardView = self.forwardView;
+	var titleView = self.titleView;
 
-	});
-	
-	
-	
-	var backgroundView = Ti.UI.createView({
-		width:'100%',
-		height:'100%',
-		layout:'vertical',
-		top: 0,
-		left: 0,
-		backgroundColor:'#dddddd',
-	});
-	
-	var forwardView = Ti.UI.createView({
-		width:'100%',
-		height:'100%',
-		visible:false,
-		backgroundColor:'#333333',
-		opacity:0.5,
-		top: 0,
-		left: 0
-	});
-	
-	var loginIndicator = Ti.UI.createActivityIndicator({
-		  font: {fontFamily:'Helvetica Neue', fontSize:14, fontWeight:'bold'},
-		  style:Titanium.UI.ActivityIndicatorStyle.BIG,
-	
-	});
-	
-	forwardView.add(loginIndicator);
-	loginIndicator.show();
-	
-	////  title  //////
-	
-	var titleView = Ti.UI.createView({
-		backgroundColor:'#3498db',
-		width:'100%',
-		height:'50dp',
-		top:'0dp',
-
-	});
-	
 	var listappImg = Titanium.UI.createImageView({
 		image:'list.png',
 		top: '10dp', left:'10dp', height: '30dp', width: '30dp'
@@ -183,7 +142,7 @@ function feedWindow() {
 	titleView.add(listappImg);
 	titleView.add(titleCenterView);
 	titleView.add(setupImg);
-    backgroundView.add(titleView);
+
 
     /////////  feed  ///////////////////
     var feedView = Ti.UI.createView({
@@ -319,12 +278,7 @@ function feedWindow() {
 	
 	backgroundView.add(feedView);
 	
-	
-	
-	
-	
-	
-	
+
 	///////   menu  ///////////////
  	var mainMenu = Ti.UI.createScrollView({
         left:'0dp',
@@ -333,6 +287,7 @@ function feedWindow() {
         backgroundColor:'#eeeeee',
         layout: 'vertical',
         contentHeight: 'auto',
+        zIndex:1
      
 	});
 	
@@ -419,10 +374,7 @@ function feedWindow() {
 	});  
 	
 	memuTableView.addEventListener('click',function(e) {
-
 	    switchBackgroundView();
-
-	
 	});
 	
 	var menuParentView = Ti.UI.createView({
@@ -432,7 +384,6 @@ function feedWindow() {
 		
 	});
 	
-
 	mainMenu.add(headImg);
 	mainMenu.add(categoryText);
 	mainMenu.add(seperateLineView);
@@ -441,8 +392,7 @@ function feedWindow() {
  
 	
 	self.add(mainMenu);
-	self.add(backgroundView);
-	self.add(forwardView);
+
 	
 	// get current position and render fee
 	var latitude = 0;
@@ -522,9 +472,14 @@ function feedWindow() {
 				        backgroundColor:'#dddddd'
 				        
 				    });
-				    drawFunction['1000'](feedRow, oldfeeditems.data[i],longitude,latitude);
-				    feedRow.eventid = oldfeeditems.data[i]['eventid'];
-				    feedtableItems.push(feedRow);
+				    try{
+					    drawFunction[oldfeeditems.data[i]['category']](feedRow, oldfeeditems.data[i],longitude,latitude);
+					    feedRow.eventid = oldfeeditems.data[i]['eventid'];
+					    feedtableItems.push(feedRow);
+					}
+				    catch(e){
+				    	
+				    }    
 				}   
 				feedTableView.data = feedtableItems;
 				nexttime = oldfeeditems.data[(oldfeeditems.data.length -1)]['lastupdate'];
@@ -687,11 +642,28 @@ function feedWindow() {
 	});
 	
 	
+	function shownotifynum(notifynum){
+		eventnumText.text =  notifynum  ;
+	 	eventnumText.left = eventImg.rect.x + eventImg.rect.width - 5;
+	 	eventnumText.top = eventImg.rect.y-5 ;
+	 	eventnumText.width = '20dp';
+	 	eventnumText.height = '20dp';
+	 	eventnumText.visible = true;
+
+	}
+	
+	function showtalknum(talknum){
+	 	
+	 	talknumText.text =  talknum ;
+	 	talknumText.left = talkImg.rect.x + talkImg.rect.width - 5;
+	 	talknumText.top = talkImg.rect.y-5 ;
+	 	talknumText.width = '20dp';
+	 	talknumText.height = '20dp';
+	 	talknumText.visible = true;
+	}
+	
     ///////////////   scroll  update and next logic ////////////////////
 
-		
-	
-	
     getNewFeed();
     ///////////////// handle location ///////////////
     gpsProvider = Ti.Geolocation.Android.createLocationProvider({
@@ -702,8 +674,7 @@ function feedWindow() {
 	Ti.Geolocation.Android.addLocationProvider(gpsProvider);
 	Ti.Geolocation.Android.manualMode = true;
 
-    
-	
+
     var locationCallback = function(e) {
 	    if (!e.success || e.error) {
 	        Ti.API.info('error:' + JSON.stringify(e.error));
@@ -729,11 +700,8 @@ function feedWindow() {
 			Ti.API.info('update gcm success.');
 		}
 		else{
-			var alertCreateAccountDlg = Titanium.UI.createAlertDialog({
-				title:'Error !',
-				message:resultmsg
-			});
-			alertCreateAccountDlg.show();
+			
+			showAlert('Error !', resultmsg);
 			Ti.API.info('update gcm false.');
 
 		}
@@ -791,14 +759,10 @@ function feedWindow() {
 				var notifynum = Ti.App.Properties.getInt('notifynum',0);
 				notifynum = notifynum + 1;
 				Ti.App.Properties.setInt('notifynum',notifynum);
-				
-			 	eventnumText.text =  notifynum  ;
-			 	eventnumText.left = eventImg.rect.x + eventImg.rect.width - 5;
-			 	eventnumText.top = eventImg.rect.y-5 ;
-			 	eventnumText.width = '20dp';
-			 	eventnumText.height = '20dp';
-			 	eventnumText.visible = true;
-			 	
+				if(notifynum > 0){
+					shownotifynum(notifynum);
+				}
+
 			}
 			if(tmpdata.type == 'talk'){
 				talkingRoomID = Ti.App.Properties.getString('TalkRoomID','');
@@ -825,15 +789,10 @@ function feedWindow() {
 					var talknum = Ti.App.Properties.getInt('talknum',0);
 					talknum = talknum + 1;
 					Ti.App.Properties.setInt('talknum',talknum);
-					
+					if(talknum > 0){
+						showtalknum(talknum);
+					}
 
-					talknumText.text =  talknum ;
-				 	talknumText.left = talkImg.rect.x + talkImg.rect.width - 5;
-				 	talknumText.top = talkImg.rect.y-5 ;
-				 	talknumText.width = '20dp';
-				 	talknumText.height = '20dp';
-				 	talknumText.visible = true;
-				 	
 				 	Ti.App.fireEvent('updatechatroom',tmpdata);
 				}
 				
@@ -849,13 +808,9 @@ function feedWindow() {
 
 			if(tmpdata.type == 'comment'){
 				var notifynum = Ti.App.Properties.getInt('notifynum',0);
-			 	eventnumText.text =  notifynum  ;
-			 	eventnumText.left = eventImg.rect.x + eventImg.rect.width - 5;
-			 	eventnumText.top = eventImg.rect.y-5 ;
-			 	eventnumText.width = '20dp';
-			 	eventnumText.height = '20dp';
-			 	eventnumText.visible = true;
-			 	
+				if(notifynum > 0){
+					shownotifynum(notifynum);
+				}
 			}
 			
 			if(tmpdata.type == 'talk'){
@@ -866,16 +821,10 @@ function feedWindow() {
 					Ti.App.fireEvent('updattalk',tmpdata);
 					return;
 				}
-				
 				var talknum = Ti.App.Properties.getInt('talknum',0);
-				
-				talknumText.text =  talknum  ;
-			 	talknumText.left = talkImg.rect.x + talkImg.rect.width - 5;
-			 	talknumText.top = talkImg.rect.y-5 ;
-			 	talknumText.width = '20dp';
-			 	talknumText.height = '20dp';
-			 	talknumText.visible = true;
-			 	
+				if(talknum > 0){
+					showtalknum(talknum);
+				}
 			 	Ti.App.fireEvent('updatechatroom',tmpdata);
 			}
 			
@@ -891,23 +840,12 @@ function feedWindow() {
     setTimeout(function(){
 	    var notifynum = Ti.App.Properties.getInt('notifynum',0);
 	    if(notifynum > 0){
-	    	eventnumText.text =  notifynum  ;
-		 	eventnumText.left = eventImg.rect.x + eventImg.rect.width - 5;
-		 	eventnumText.top = eventImg.rect.y-5 ;
-		 	eventnumText.width = '20dp';
-		 	eventnumText.height = '20dp';
-		 	eventnumText.visible = true;
-	    }
-	 	
-	 	
+			shownotifynum(notifynum);
+		}
+
 	 	var talknum = Ti.App.Properties.getInt('talknum',0);
 		if(talknum > 0){
-			talknumText.text =  talknum  ;
-		 	talknumText.left = talkImg.rect.x + talkImg.rect.width - 5;
-		 	talknumText.top = talkImg.rect.y-5 ;
-		 	talknumText.width = '20dp';
-		 	talknumText.height = '20dp';
-		 	talknumText.visible = true;
+			showtalknum(talknum);
 		}
 		
 	}, 5000);
@@ -915,23 +853,12 @@ function feedWindow() {
 	setTimeout(function(){
 	    var notifynum = Ti.App.Properties.getInt('notifynum',0);
 	    if(notifynum > 0){
-	    	eventnumText.text =  notifynum  ;
-		 	eventnumText.left = eventImg.rect.x + eventImg.rect.width - 5;
-		 	eventnumText.top = eventImg.rect.y-5 ;
-		 	eventnumText.width = '20dp';
-		 	eventnumText.height = '20dp';
-		 	eventnumText.visible = true;
-	    }
-	 	
-	 	
+			shownotifynum(notifynum);
+		}
+
 	 	var talknum = Ti.App.Properties.getInt('talknum',0);
 		if(talknum > 0){
-			talknumText.text =  talknum  ;
-		 	talknumText.left = talkImg.rect.x + talkImg.rect.width - 5;
-		 	talknumText.top = talkImg.rect.y-5 ;
-		 	talknumText.width = '20dp';
-		 	talknumText.height = '20dp';
-		 	talknumText.visible = true;
+			showtalknum(talknum);
 		}
 		
 	}, 1000);
@@ -940,23 +867,11 @@ function feedWindow() {
         self.activity.addEventListener('resume', function(e) {
             var notifynum = Ti.App.Properties.getInt('notifynum',0);
 		    if(notifynum > 0){
-		    	eventnumText.text =  notifynum  ;
-			 	eventnumText.left = eventImg.rect.x + eventImg.rect.width - 5;
-			 	eventnumText.top = eventImg.rect.y-5 ;
-			 	eventnumText.width = '20dp';
-			 	eventnumText.height = '20dp';
-			 	eventnumText.visible = true;
-		    }
-		 	
-		 	
+				shownotifynum(notifynum);
+			}
 		 	var talknum = Ti.App.Properties.getInt('talknum',0);
 			if(talknum > 0){
-				talknumText.text =  talknum  ;
-			 	talknumText.left = talkImg.rect.x + talkImg.rect.width - 5;
-			 	talknumText.top = talkImg.rect.y-5 ;
-			 	talknumText.width = '20dp';
-			 	talknumText.height = '20dp';
-			 	talknumText.visible = true;
+				showtalknum(talknum);
 			}
         });
     });

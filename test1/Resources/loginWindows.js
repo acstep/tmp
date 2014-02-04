@@ -1,40 +1,16 @@
 //Login Window Component Constructor
 Ti.include("common_net.js");
-
+Ti.include("common_util.js");
 function LoginWindow() {
 	//load component dependencies
-	var self = Ti.UI.createWindow({
-		backgroundColor:'#3498db',
-		navBarHidden:true,
-
-	});
 	
-	var backgroundView = Ti.UI.createView({
-		width:'100%',
-		height:'100%',
-		layout:'vertical',
-		top: 0,
-		left: 0
-	});
+	var self = createNormalWin(false);
+	var backgroundView = self.backgroundView;
+	var forwardView = self.forwardView;
+	var titleView = self.titleView;
 	
-	var forwardView = Ti.UI.createView({
-		width:'100%',
-		height:'100%',
-		visible:false,
-		backgroundColor:'#333333',
-		opacity:0.5,
-		top: 0,
-		left: 0
-	});
 	
-	var loginIndicator = Ti.UI.createActivityIndicator({
-		  font: {fontFamily:'Helvetica Neue', fontSize:14, fontWeight:'bold'},
-		  style:Titanium.UI.ActivityIndicatorStyle.BIG,
 	
-	});
-	
-	forwardView.add(loginIndicator);
-	loginIndicator.show();
 	
 	var emailText= Titanium.UI.createTextField({
 		editable: true,
@@ -42,23 +18,27 @@ function LoginWindow() {
 		width:'80%',
 		top:'35%',
 		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
-		color:'#888',
+		color:'#ffffff',
 		textAlign:'left',
 		borderColor:'#bbb',
 		borderRadius:2,
-		suppressReturn:false
+		suppressReturn:false,
+		backgroundColor:'#4aa3df',
+
 	});
 	var passText= Titanium.UI.createTextField({
 		editable: true,
 		hintText:'Password',
 		width:'80%',
 		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
-		color:'#888',
+		color:'#ffffff',
 		textAlign:'left',
 		borderColor:'#bbb',
 		borderRadius:2,
 		suppressReturn:false,
-		passwordMask: true
+		passwordMask: true,
+		backgroundColor:'#4aa3df',
+        top:'1dp'
 	});
 	
 	var loginBotton = Titanium.UI.createButton({
@@ -93,12 +73,10 @@ function LoginWindow() {
 			new feedWindow().open();
 		}
 		else{
-			var alertDlg = Titanium.UI.createAlertDialog({
-				title:'Error !',
-				message:'Email or Password is not correct. Please try again.'
-			});
+			
 			forwardView.visible = false;
-			alertDlg.show();
+			showAlert('Error !', 'Email or Password is not correct. Please try again.');
+			
 			Ti.API.info('login false.');
 			
 			
@@ -134,9 +112,6 @@ function LoginWindow() {
 	backgroundView.add(passText);
 	backgroundView.add(loginBotton);
 	backgroundView.add(createAccountButton);
-	self.add(backgroundView);
-	self.add(forwardView);
-	
 
 	return self;
 }
