@@ -3,6 +3,10 @@ Ti.include("common_net.js");
 Ti.include("common_util.js");
 Ti.include("newsview.js");
 Ti.include("activityview.js");
+Ti.include("helpview.js");
+Ti.include("salesview.js");
+Ti.include("usedview.js");
+Ti.include("teambuyview.js");
 
 function feedWindow() {
 	//load component dependencies
@@ -220,7 +224,7 @@ function feedWindow() {
     //title of dialog
 	    title: L('choosecategory'),
 	    //options
-	    options: [L('club'),L('sale'), L('needhelp'), L('dating'), L('news')],
+	    options: [L('club'),L('sale'), L('needhelp'), L('dating'), L('news'), L('secondhand'), L('teambuying')],
 	    //index of cancel button
 	});
 	
@@ -231,6 +235,26 @@ function feedWindow() {
 			    ActivityPostWindow = require('activityPostWindows');
 				new ActivityPostWindow().open(); 
 				break;
+			case 1:
+			    SalesPostWindow = require('salesPostWindows');
+				new SalesPostWindow().open(); 
+				break;	
+			case 2:
+			    HelpPostWindow = require('helpPostWindows');
+				new HelpPostWindow().open(); 
+				break;	
+			case 4:
+			    HelpPostWindow = require('helpPostWindows');
+				new HelpPostWindow().open(); 
+				break;	
+			case 5:
+			    UsedPostWindow = require('usedPostWindows');
+				new UsedPostWindow().open(); 
+				break;
+			case 6:
+			    TeambuyPostWindow = require('teambuyPostWindows');
+				new TeambuyPostWindow().open(); 
+				break;							
 			default:
 				NewsPostWindow = require('newsPostWindows');
 		        NewsPostWindow.parentGetNewFeed = getNewFeed;
@@ -327,10 +351,12 @@ function feedWindow() {
 	var categoryMenu = [
  
 		{ leftImage:'group.png', title:'club',category:'1000' },
-		{ leftImage:'sale.png', title:'sale',category:'2000' },
+		{ leftImage:'sale1.png', title:'sale',category:'2000' },
 		{ leftImage:'help.png', title:'needhelp',category:'3000' },
 		{ leftImage:'love.png', title:'dating',category:'4000' },
 		{ leftImage:'news.png', title:'news',category:'5000' },
+		{ leftImage:'teambuy.png', title:'teambuying',category:'6000' },
+		{ leftImage:'used.png', title:'secondhand',category:'5000' },
 	]; 
 	
 	var cateDate = [];
@@ -405,7 +431,12 @@ function feedWindow() {
 	var feeditem = [];
 	var drawFunction = {	    
 	    	'1000':drawNewsEvent,
-	    	'1001':drawActivityEvent
+	    	'1001':drawActivityEvent,
+	    	'1002':drawHelpEvent,
+	    	'1003':drawSalesEvent,
+	    	'1004':drawUsedEvent,
+	    	'1005':drawTeambuyEvent,
+	    	
 	};
 	
 	
@@ -413,10 +444,7 @@ function feedWindow() {
 		feedLoading = false;
 		try{
 			feedRowstatus = 'none';
-			feedtableItems.pop(feedtableItems.length-1);
-			if(feedtableItems.indexOf(refleshRow) == 0){
-				feedtableItems.shift(0);
-			}
+			feedTableView.deleteRow(loadRow);
 		}
 		catch(err){
 			
@@ -443,13 +471,14 @@ function feedWindow() {
 				    	drawFunction[feedData[i]['category']](feedRow, feedData[i],longitude,latitude);
 					    feedRow.eventid = feedData[i]['eventid']; 
 					    feedtableItems.push(feedRow);
+					    feedTableView.appendRow(feedRow);
 				    }
 				    catch(e){
 				    	
 				    }
 				    
 				}   
-				feedTableView.data = feedtableItems;
+
 				Ti.App.Properties.setString('feed',JSON.stringify({'data':feeditem}));
 				
 			}
@@ -476,19 +505,19 @@ function feedWindow() {
 					    drawFunction[oldfeeditems.data[i]['category']](feedRow, oldfeeditems.data[i],longitude,latitude);
 					    feedRow.eventid = oldfeeditems.data[i]['eventid'];
 					    feedtableItems.push(feedRow);
+					    feedTableView.appendRow(feedRow);
 					}
 				    catch(e){
 				    	
 				    }    
 				}   
-				feedTableView.data = feedtableItems;
+
 				nexttime = oldfeeditems.data[(oldfeeditems.data.length -1)]['lastupdate'];
 			}
 			forwardView.visible = false;
 			firstFeed = false;	
 		}
-		feedtableItems.unshift(refleshRow);
-		feedTableView.data = feedtableItems;
+
 	}
 	
 	feedTableView.addEventListener('click', function(e){
@@ -534,8 +563,7 @@ function feedWindow() {
 				feedLoading =  true;
 			    
 				feedRowstatus = 'loading';
-				feedtableItems.push(loadRow);
-				feedTableView.data = feedtableItems;
+				feedTableView.appendRow(loadRow);
 				getNextFeed();
 					
 			}    
@@ -579,6 +607,8 @@ function feedWindow() {
 	function getNewFeed(){
 		Ti.API.info('getNewFeed ');
 		feedtableItems = [];
+		feedTableView.data = [];
+		feedTableView.appendRow(refleshRow);
 		forwardView.visible = true;
 		currentdate = new Date(); 
 		nexttime = parseInt(currentdate.getTime()/1000);

@@ -7,6 +7,8 @@
 	<string name="needhelp">Need Help</string>
 	<string name="dating">Dating</string>
 	<string name="news">News</string>
+	<string name="secondhand">Second Hand Deal</string>
+	<string name="teambuying">Team Buying</string>
 	<string name="sortorder">Sorting</string>
 	<string name="postnew">Post</string>
 	<string name="choosecategory">Choose a Category</string>
@@ -27,8 +29,8 @@
 	<string name="uploadimage">Uploading you Image...</string>
 	<string name="km">km</string>
 	<string name="m">m</string>
-	<string name="beforesec">seconds before</string>
-	<string name="beforemin">minutes before.</string>
+	<string name="beforesec">sec before</string>
+	<string name="beforemin">min before.</string>
 	<string name="beforehour">hours before.</string>
 	<string name="beforeday">days before</string>
 	<string name="back">Back</string>
@@ -43,8 +45,8 @@
 	<string name="uhavetalk">You have a new message.</string>
 	<string name="activitytitle">Activity Title</string>
 	<string name="groupname">Group Name</string>
-	<string name="starttime">Start Time</string>
-	<string name="endtime">End Time</string>
+	<string name="starttime">Start</string>
+	<string name="endtime">End</string>
 	<string name="addactivitycontent">Add Activity Content Here... \n\n\n\n\n\n</string>
-	
+	<string name="addhelpcontent">What do you need help? \n\n\n\n\n\n</string>
 </resources>

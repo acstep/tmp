@@ -3,6 +3,8 @@ Ti.include("common_net.js");
 Ti.include("common_util.js");
 Ti.include("newsview.js");
 Ti.include("activityview.js");
+Ti.include("usedview.js");
+Ti.include("teambuyview.js");
 
 function feedContentWindow(eventid, fullcontent) {
 	//load component dependencies
@@ -25,7 +27,7 @@ function feedContentWindow(eventid, fullcontent) {
 	
 	
 	var categoryText = Ti.UI.createLabel({
-		font:{fontSize:'24sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
+		font:{fontSize:'20sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 		text: '',
 		color:'#ffffff'
 	});
@@ -51,13 +53,21 @@ function feedContentWindow(eventid, fullcontent) {
     /////////////  event info ////////////////////////
     var drawFeedContentFunction = {	    
 	    	'1000':drawNewsContnet,
-	    	'1001':drawActivityContnet
+	    	'1001':drawActivityContnet,
+	    	'1002':drawHelpContnet,
+	    	'1003':drawSalesContnet,
+	    	'1004':drawUsedContnet,
+	    	'1005':drawTeambuyContnet,
 	};
     
     
     var titleString = {
     	'1000':'news',
-    	'1001':'club'
+    	'1001':'club',
+    	'1002':'needhelp',
+    	'1003':'sale',
+    	'1004':'used',
+    	'1005':'teambuying',
     };
     
     var contentView = Ti.UI.createView({

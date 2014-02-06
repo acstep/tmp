@@ -1,15 +1,17 @@
-//Activity Post Window Component Constructor
+//Sales Post Window Component Constructor
 Ti.include("common_net.js");
-Ti.include("common_util.js");
 
 
-function ActivityPostWindow() {
+
+function SalesPostWindow() {
 	//load component dependencies
+	
 	var self = createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
-
+	
+	
 	var ind=Titanium.UI.createProgressBar({
 	        width:'90%',
 	        min:0,
@@ -19,22 +21,28 @@ function ActivityPostWindow() {
 	        color:'#ffffff',
 	        message:L('uploadimage'),
 	        font:{fontSize:14, fontWeight:'bold'},
- 	        top:'50dp' 
+	        
+	        top:'50dp' 
 	});
 
-	forwardView.add(ind);
 	
+	forwardView.add(ind);
+
 
 	////  title  //////
-
+	
+	
+	
 	var selectPosText = Ti.UI.createLabel({
 		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
-		text: L('club'),
+		text: L('sale'),
 		color:'#ffffff',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
 	
-
+	
+	
+	
 	var uploadimg = [];
 	var totalUploadImg = 0;
 	var currentUploadImg = 0;
@@ -66,7 +74,7 @@ function ActivityPostWindow() {
 	    uploadimg = [];
 		forwardView.visible = true; 
 		if(totalUploadImg == 0){
-			postActivityEvent();
+			postSalesEvent();
 		}
 		else{
 			uploadImage();
@@ -173,18 +181,17 @@ function ActivityPostWindow() {
 	            },
 	            error:function(error)
 	            {
-	                //error happend, create alert
-	            
+
 	                //set message
 	                if (error.code == Titanium.Media.NO_CAMERA)
 	                {
-	                	showAlert('Camera', 'Device does not have camera'); 
-	                    
+	                	showAlert('Camera', 'Device does not have camera');
+	                   
 	                }
 	                else
 	                {
-	                	showAlert('Camera', 'Unexpected error: ' + error.code);  
-
+	                	showAlert('Camera', 'Unexpected error: ' + error.code); 
+	                   
 	                }
 
 	            },
@@ -248,252 +255,20 @@ function ActivityPostWindow() {
     contentScrollView.add(imageScrollView);
 
     ///////    description and map /////////////
-    var titleTextField = Ti.UI.createTextField({
-	    font: {fontSize:'20sp'},
-	    color:'#333333',
-	    textAlign: 'left',
-	    hintText:L('activitytitle'),
-	    top: '30dp',
-	    width: '90%', 
-	    height : 'auto',
-	    left: '5%',
-	    backgroundColor:'#ffffff',
-	    borderColor:'#666666',
-	    borderWidth:'1dp',borderRadius:10,
-	});
-	
-	var groupTextField = Ti.UI.createTextField({
-	    font: {fontSize:'20sp'},
-	    color:'#333333',
-	    textAlign: 'left',
-	    hintText:L('groupname'),
-	    top: '10dp',
-	    width: '90%', 
-	    height : 'auto',
-	    left: '5%',backgroundColor:'#ffffff',
-	    borderColor:'#666666',
-	    borderWidth:'1dp',borderRadius:10,
-	});
-	
-	
-	
-	startTime = new Date(); 
-    endTime = new Date(startTime); 
-    endTime.setHours(startTime.getHours()+1);
-	
-	function adjTimeText(start){
-		if(start == true){
-			if(startTime.getTime() > endTime.getTime()){
-				endTime = new Date(startTime); 
-				endTime.setHours(endTime.getHours()+1);
-			}
-		}
-		else{
-			if(startTime.getTime() > endTime.getTime()){
-				startTime = new Date(endTime); 
-				startTime.setHours(startTime.getHours()-1);
-			}
-		}
-		sDateText.text = startTime.getFullYear()+'/'+(startTime.getMonth()+1)+'/'+startTime.getDate();
-		eDateText.text = endTime.getFullYear()+'/'+(endTime.getMonth()+1)+'/'+endTime.getDate();
-		var minutes = startTime.getMinutes();
-		if(minutes < 10){
-			minutes = '0'+minutes;
-		}
-		sTimeText.text = startTime.getHours()+':'+minutes;
-		minutes = endTime.getMinutes();
-		if(minutes < 10){
-			minutes = '0'+minutes;
-		}
-		eTimeText.text = endTime.getHours()+':'+minutes;
-	}
-	
-	
-	function showDatePicker(start, mtime){
-		
-		var picker = Ti.UI.createPicker({
-		    type:Ti.UI.PICKER_TYPE_DATE,
-		    
-		    value:mtime
-		});
-	    picker.showDatePickerDialog({
-	    	value:mtime,
-		    callback: function(e) {
-		      if (e.cancel) {
-		          Ti.API.info('User canceled dialog');
-		      } 
-		      else {
-                    if(start == true){
-                    	startTime.setFullYear(e.value.getFullYear()) ;
-	      		    	startTime.setMonth(e.value.getMonth());
-	      		    	startTime.setDate( e.value.getDate()) ;
-	      		    	
-                    }
-                    else{
-                    	endTime.setFullYear(e.value.getFullYear()) ;
-	      		    	endTime.setMonth(e.value.getMonth());
-	      		    	endTime.setDate( e.value.getDate()) ;
-                    }
-	      		    adjTimeText(start);
-                    
-		        }
-		    }
-		});
-	}
-	
-	function showTimePicker(start, mtime){
-		var picker = Ti.UI.createPicker({
-		    type:Ti.UI.PICKER_TYPE_TIME,
-		    
-		    value:mtime
-		});
-	    picker.showTimePickerDialog({
-	    	value: mtime,
-		    callback: function(e) {
-		      if (e.cancel) {
-		          Ti.API.info('User canceled dialog');
-		      } 
-		      else{
-		      	
-		      	  if(start == true){
-                    	startTime.setHours(e.value.getHours()) ;
-	      		    	startTime.setMinutes( e.value.getMinutes()) ;
-	      		    	
-                    }
-                    else{
-                    	endTime.setHours(e.value.getHours()) ;
-	      		    	endTime.setMinutes( e.value.getMinutes()) ;
-                    }
-	      		    adjTimeText(start);  
-		        }
-		    }
-		});
-	}
-	
-    var startTimeView = Ti.UI.createView({
-		backgroundColor:'#ffffff',
-		width:'90%',
-		height:'50dp',
-		top:'30dp',
-		left: '5%',
-
-		
-	});
-	
-	var starttimeText = Ti.UI.createLabel({
-		font:{fontSize:'20sp'},
-		text: L('starttime') + ':',
-		color:'#3498db',
-		top:'10dp', left:'10dp',
-  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
-	});
-	
-	var sDateText = Ti.UI.createLabel({
-		font:{fontSize:'20sp'},
-		text: startTime.getFullYear()+'/'+(startTime.getMonth()+1)+'/'+startTime.getDate(),
-		color:'#666666',
-		top:'10dp', left:'130dp',
-  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
-	});
-	
-	sDateText.addEventListener('click',function(e){
-		showDatePicker(true, startTime);
-	
-	});
-	
-	var minutes = startTime.getMinutes();
-	if(minutes < 10){
-		minutes = '0'+minutes;
-	}
-	var sTimeText = Ti.UI.createLabel({
-		font:{fontSize:'20sp'},
-		text: startTime.getHours()+':'+minutes,
-		color:'#666666',
-		top:'10dp', right:'20dp',
-  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
-	});
-	
-	sTimeText.addEventListener('click',function(e){
-		showTimePicker(true, startTime);
-	});
-	
-    startTimeView.add(starttimeText);
-	startTimeView.add(sDateText);
-	startTimeView.add(sTimeText);
-	
-	var endTimeView = Ti.UI.createView({
-		backgroundColor:'#ffffff',
-		width:'90%',
-		height:'50dp',
-		top:'30dp',
-		left: '5%',
-
-		
-	});
-	
-	var endtimeText = Ti.UI.createLabel({
-		font:{fontSize:'20sp'},
-		text: L('endtime') + ':',
-		color:'#3498db',
-		top:'10dp', left:'10dp',
-  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
-	});
-	
-	var eDateText = Ti.UI.createLabel({
-		font:{fontSize:'20sp'},
-		text: endTime.getFullYear()+'/'+(endTime.getMonth()+1)+'/'+endTime.getDate(),
-		color:'#666666',
-		top:'10dp', left:'130dp',
-  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
-	});
-	
-	eDateText.addEventListener('click',function(e){
-		showDatePicker(false, endTime);
-	
-	});
-	
-	var minutes = endTime.getMinutes();
-	if(minutes < 10){
-		minutes = '0'+minutes;
-	}
-	var eTimeText = Ti.UI.createLabel({
-		font:{fontSize:'20sp'},
-		text: endTime.getHours()+':'+minutes,
-		color:'#666666',
-		top:'10dp', right:'20dp',
-  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
-	});
-	
-	eTimeText.addEventListener('click',function(e){
-		showTimePicker(false, endTime);
-	});
-	
-	endTimeView.add(endtimeText);
-	endTimeView.add(eDateText);
-	endTimeView.add(eTimeText);
-	
-	
-	
-    
     var desTextArea = Ti.UI.createTextArea({
 	    font: {fontSize:'20sp'},
 	    color:'#333333',
 	    textAlign: 'left',
-	    hintText:L('addactivitycontent'),
+	    hintText:L('addsalescontent'),
 	    top: '30dp',
 	    width: '90%', 
-	    height : Ti.UI.SIZE,
+	    height : 'auto',
 	    left: '5%',
-	    backgroundColor:'#ffffff',
+        backgroundColor:'#ffffff',
 	    borderColor:'#666666',
-	    borderWidth:'1dp',
-        maxLength:500
+	    borderWidth:'1dp'
 	});
-    
-    contentScrollView.add(titleTextField);
-    contentScrollView.add(groupTextField);
-    contentScrollView.add(startTimeView);
-    contentScrollView.add(endTimeView);
+
 	contentScrollView.add(desTextArea);
      
 
@@ -572,10 +347,10 @@ function ActivityPostWindow() {
 	mapParentView.add(mapforgroundView);
     contentScrollView.add(mapParentView);
 
-    	
-
     backgroundView.add(contentScrollView);
      
+
+	
 	
 	function uploadImage(){
 		var data_to_send = { 
@@ -598,14 +373,18 @@ function ActivityPostWindow() {
 				
 				ind.value = 100;
 				//  finish image upload, post event to server
-				postActivityEvent();
+				postSalesEvent();
 			}
 			else{
 				uploadImage();
 			}
         };
         xhr.onerror = function(e){
-			showAlert('Error !', 'Server Error. Please try again.');
+        	var alertDlg = Titanium.UI.createAlertDialog({
+				title:'Error !',
+				message:'Server Error. Please try again.'
+			});
+			alertDlg.show();
 			Ti.API.info('Upload image fail.');
 			forwardView.visible = false;
         	
@@ -617,9 +396,9 @@ function ActivityPostWindow() {
 		};
 	}
 	
-	function activityPostCallback(result, resultmsg){
+	function salesPostCallback(result, resultmsg){
 		if(result == true){
-			Ti.API.info('Post Activity Event success.');
+			Ti.API.info('Post Sales Event success.');
 			forwardView.visible = false;
 			Ti.App.fireEvent('getnewfeed');
      
@@ -627,16 +406,19 @@ function ActivityPostWindow() {
 
 		}
 		else{
-			
-			showAlert('Error !', resultmsg);
+			var alertDlg = Titanium.UI.createAlertDialog({
+				title:'Error !',
+				message:resultmsg
+			});
 			forwardView.visible = false;
+			alertDlg.show();
 			Ti.API.info('Post event false.');
 			
 			
 		}
 	};
 	
-	function postActivityEvent(){
+	function postSalesEvent(){
 		currentdate = new Date(); 
 		extime = parseInt(currentdate.getTime()/1000)+Ti.App.Properties.getInt('defaultexpiretime',0);
 		
@@ -645,20 +427,15 @@ function ActivityPostWindow() {
 			'photos':uploadimg,
 			'des':desTextArea.value,
 			'pos':[parseFloat(Ti.App.Properties.getString('userchooselongitude',0)),parseFloat(Ti.App.Properties.getString('userchooselatitude',0))],
-			'title':titleTextField.value,
+			'title':'',
 			'extime':extime,
-			'headphoto':Ti.App.Properties.getString('headfile',''),
-			'category':1001,
-			'pdata':{
-				 'gname':groupTextField.value,
-				 'starttime':parseInt(startTime.getTime()/1000),
-				 'endtime':parseInt(endTime.getTime()/1000)
-			}
+			'category':1003,
+			'headphoto':Ti.App.Properties.getString('headfile','')
 		};
 	    
 	    datastring = JSON.stringify(data);
 	    Ti.API.info('datastring : ' + datastring);
-		createvent(datastring ,activityPostCallback);
+		createvent(datastring ,salesPostCallback);
 	}
 	
 	var firstTimeBlur = false;
@@ -674,4 +451,4 @@ function ActivityPostWindow() {
 }
 
 //make constructor function the public component interface
-module.exports = ActivityPostWindow;
+module.exports = SalesPostWindow;

@@ -170,7 +170,7 @@ function talkWindow(id, toid,roomdata) {
 				parseHeadPhoto(data);
 				tmpRow = createTextRow(id, msgTextArea.value);
 		    	talkDataItems.push(tmpRow);
-		    	talkTableView.data = talkDataItems;
+		    	talkTableView.appendRow(tmpRow);
 		    	talkTableView.scrollToIndex(talkDataItems.length-1);
 		    	msgTextArea.value = '';
 				sendmsg(roomdata['roomid'] , needSendMsg, sendMsgCB);
@@ -302,25 +302,23 @@ function talkWindow(id, toid,roomdata) {
 	
 	function parseMsg(result, data){
 		if(result == true){
-			if(talkDataItems[0] == loadmoreRow){
-				loadmoreText.visible = true;
-				loginIndicator.hide();
-				talkDataItems.shift(loadmoreRow);
-				talkTableView.data = talkDataItems;
-			}
-			
-			talkTableView.data = talkDataItems;
+			loadmoreText.visible = true;
+			loginIndicator.hide();
+            try{
+            	talkTableView.deleteRow(loadmoreRow);
+            }catch(e){};
+				
+	
 			for(var i = 0 ; i <= data.length -1; i++){
 				
 				tmpRow = createTextRow(data[i]['owner'], data[i]['data']['string']);
-				
-				
 				talkDataItems.unshift(tmpRow);
+				talkTableView.insertRowBefore(0,tmpRow);
 				lastMsgTime = data[i]['time'];
 			}
-			talkDataItems.unshift(loadmoreRow);
 	
-			talkTableView.data = talkDataItems;
+	        talkTableView.insertRowBefore(0,loadmoreRow);
+	
 			if(needScroolEnd == true){
 				talkTableView.scrollToIndex(talkDataItems.length-1);
 			}
@@ -371,7 +369,7 @@ function talkWindow(id, toid,roomdata) {
 			return;
 	    tmpRow = createTextRow(e.owner, e.content.string);
     	talkDataItems.push(tmpRow);
-    	talkTableView.data = talkDataItems;
+    	talkTableView.appendRow(tmpRow);
     	talkTableView.scrollToIndex(talkDataItems.length-1);
 	};
 	
@@ -412,6 +410,7 @@ function talkWindow(id, toid,roomdata) {
         		currentdate = new Date(); 
 				starttime = parseInt(currentdate.getTime()/1000);
 				talkDataItems = [];
+				talkTableView.data = [];
 				querymsg( roomdata['roomid'], starttime, 10 ,parseMsg);
         	}
             

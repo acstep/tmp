@@ -34,10 +34,9 @@ function NewsPostWindow() {
 	
 	
 	var selectPosText = Ti.UI.createLabel({
-		font:{fontSize:'24sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
-		text: L('send')+L('news'),
+		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
+		text: L('news'),
 		color:'#ffffff',
-		top:'10dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
 	
@@ -72,6 +71,7 @@ function NewsPostWindow() {
 	{
 	    totalUploadImg = imageList.length;
 	    currentUploadImg = 0;
+	    uploadimg = [];
 		forwardView.visible = true; 
 		if(totalUploadImg == 0){
 			postNewsEvent();
@@ -266,7 +266,7 @@ function NewsPostWindow() {
 	    left: '5%',
         backgroundColor:'#ffffff',
 	    borderColor:'#666666',
-	    borderWidth:'1dp',borderRadius:10,
+	    borderWidth:'1dp'
 	});
 
 	contentScrollView.add(desTextArea);

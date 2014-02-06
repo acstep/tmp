@@ -2,7 +2,7 @@ Ti.include("common_net.js");
 Ti.include("common_util.js");
 
 
-function drawNewsEvent(view, data, lon, lat){
+function drawUsedEvent(view, data, lon, lat){
 	
 	
 	var feedView = Ti.UI.createView({
@@ -105,11 +105,11 @@ function drawNewsEvent(view, data, lon, lat){
 	
 	var categoryText = Ti.UI.createLabel({
 		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
-		text:  '   ' + L('news') +'   ',
+		text:  '   ' + L('secondhand') +'   ',
 		color:'#ffffff',
 
 		left:'10dp',
-		backgroundColor:'#2ecc71',
+		backgroundColor:'#bdc3c7',
 		borderRadius:10,
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
 	});
@@ -134,8 +134,8 @@ function drawNewsEvent(view, data, lon, lat){
 	topinfoView.add(topCategoryDistanceView);
 	
 	var categoryImg = Titanium.UI.createImageView({
-        image:'news.png',
-		height: '30dp', width: '30dp', top:'20dp', right:'20dp'
+        image:'used.png',
+		height: '40dp', width: '40dp', top:'20dp', right:'20dp'
 	});
 	
 	
@@ -372,9 +372,9 @@ function drawNewsEvent(view, data, lon, lat){
 
 
 
-function drawNewsContnet(contentView,data){
+function drawUsedContnet(contentView,data){
 	
-	Ti.API.info('enter drawNewsContnet.');
+	Ti.API.info('enter drawUsedContnet.');
 	var imageList = data['photos'];
 	//////////////////   image list /////////////////////////
 	if(imageList.length == 1){

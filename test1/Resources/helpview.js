@@ -1,8 +1,13 @@
 Ti.include("common_net.js");
 Ti.include("common_util.js");
 
+var toast = Ti.UI.createNotification({
+    message:'',
+    duration: Ti.UI.NOTIFICATION_DURATION_LONG
+});
 
-function drawNewsEvent(view, data, lon, lat){
+
+function drawHelpEvent(view, data, lon, lat){
 	
 	
 	var feedView = Ti.UI.createView({
@@ -105,11 +110,11 @@ function drawNewsEvent(view, data, lon, lat){
 	
 	var categoryText = Ti.UI.createLabel({
 		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
-		text:  '   ' + L('news') +'   ',
+		text:  '   ' + L('needhelp') +'   ',
 		color:'#ffffff',
 
 		left:'10dp',
-		backgroundColor:'#2ecc71',
+		backgroundColor:'#ff0000',
 		borderRadius:10,
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
 	});
@@ -134,8 +139,8 @@ function drawNewsEvent(view, data, lon, lat){
 	topinfoView.add(topCategoryDistanceView);
 	
 	var categoryImg = Titanium.UI.createImageView({
-        image:'news.png',
-		height: '30dp', width: '30dp', top:'20dp', right:'20dp'
+        image:'help2.png',
+		height: '30dp', width: '40dp', top:'20dp', right:'20dp'
 	});
 	
 	
@@ -214,7 +219,9 @@ function drawNewsEvent(view, data, lon, lat){
 		
 		imageContentView.add(feedImage);
 		
+		
 		middleView.add(imageContentView);
+		
 		
 		feedImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + data['photos'][0]).replace('.jpg','-m.jpg');
 
@@ -372,9 +379,9 @@ function drawNewsEvent(view, data, lon, lat){
 
 
 
-function drawNewsContnet(contentView,data){
+function drawHelpContnet(contentView,data){
 	
-	Ti.API.info('enter drawNewsContnet.');
+	Ti.API.info('enter drawHelpContnet.');
 	var imageList = data['photos'];
 	//////////////////   image list /////////////////////////
 	if(imageList.length == 1){
@@ -647,6 +654,7 @@ function drawNewsContnet(contentView,data){
 		contentView.add(imageScrollView);
 		contentView.add(createHSepLine('90%','20dp','0dp'));
 	}
+	
 	contentView.add(topView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
 	contentView.add(desView);

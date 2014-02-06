@@ -31,7 +31,7 @@ function drawActivityEvent(view, data, lon, lat){
 
 	var headPhotoImg = Titanium.UI.createImageView({
         borderRadius:15,
-		height: '60dp', width: '60dp', top:'10dp', left:'10dp'
+		height: '60dp', width: '60dp', top:'15dp', left:'10dp'
 	});
 	
 	if(data['headphoto'] == undefined || data['headphoto'] == ''){
@@ -45,7 +45,7 @@ function drawActivityEvent(view, data, lon, lat){
 	    backgroundColor: '#ffffff',
 	    layout: 'vertical',
 	    height: '80dp',
-	    top:'0dp',left:'80dp',right:'70dp'
+	    top:'0dp',left:'70dp',right:'70dp'
 	});
 	
 	
@@ -121,7 +121,7 @@ function drawActivityEvent(view, data, lon, lat){
 		text: feedDistanceStr,
 		color:'#ffffff',
 
-		left:'20dp',
+		left:'10dp',
 		backgroundColor:'#3498db',
 		borderRadius:10,
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
@@ -165,7 +165,7 @@ function drawActivityEvent(view, data, lon, lat){
 	    
 	    var titlenameImg = Titanium.UI.createImageView({
 	        image:'titlename.png',
-			height: '15dp', width: '15dp', left:'20dp',top:'5dp'
+			height: '15dp', width: '15dp', left:'20dp'
 		});
 		
 		var titlenameText = Ti.UI.createLabel({
@@ -191,7 +191,7 @@ function drawActivityEvent(view, data, lon, lat){
 	    
 	    var groupNameImg = Titanium.UI.createImageView({
 	        image:'groupname.png',
-			height: '15dp', width: '15dp', left:'20dp',top:'5dp'
+			height: '15dp', width: '15dp', left:'20dp'
 		});
 		
 		var groupNameText = Ti.UI.createLabel({
@@ -217,7 +217,7 @@ function drawActivityEvent(view, data, lon, lat){
 	    
 	    var startTimeImg = Titanium.UI.createImageView({
 	        image:'sorttime.png',
-			height: '15dp', width: '15dp', left:'20dp',top:'5dp'
+			height: '15dp', width: '15dp', left:'20dp'
 		});
 		
 		startTime = new Date(data['pdata']['starttime']*1000);
@@ -252,7 +252,7 @@ function drawActivityEvent(view, data, lon, lat){
   		
 	});
 
-	middleView.add(desText);
+	
 	
 	if(data['photos'].length > 0){
 		var imageContentView = Titanium.UI.createView({
@@ -298,12 +298,16 @@ function drawActivityEvent(view, data, lon, lat){
 		});
 		
 		imageContentView.add(activityImage);
+		
+
 		middleView.add(imageContentView);
+		
 		activityImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + data['photos'][0]).replace('.jpg','-m.jpg');
 
 	}
 
-    
+    middleView.add(desText);
+		
 	feedView.add(middleView);
   
   
@@ -521,8 +525,7 @@ function drawActivityContnet(contentView,data){
 	if(imageList.length == 1){
 		var imageScrollView = Titanium.UI.createView({
 		  	backgroundColor: '#ffffff',
-		    top: '15dp', 
-		   
+	   
 		    width:'100%',height:'200dp',
 		    name:'imagecontentview'
 		});  
@@ -637,11 +640,16 @@ function drawActivityContnet(contentView,data){
 			top:'10dp',
 		});
 		
+		var clockImg = Titanium.UI.createImageView({
+	        image:'starttime.png',
+			height: '20dp', width: '20dp', left:'0dp'
+		});
+		
 		var starttimeText = Ti.UI.createLabel({
 			font:{fontSize:'20sp'},
 			text: L('starttime') + ':',
 			color:'#f1c40f',
-			top:'10dp', left:'10dp',
+			 left:'30dp',
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});
 		
@@ -649,7 +657,7 @@ function drawActivityContnet(contentView,data){
 			font:{fontSize:'20sp'},
 			text: startTime.getFullYear()+'/'+(startTime.getMonth()+1)+'/'+startTime.getDate(),
 			color:'#666666',
-			top:'10dp', left:'130dp',
+			left:'130dp',
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});
 		
@@ -663,12 +671,12 @@ function drawActivityContnet(contentView,data){
 			font:{fontSize:'20sp'},
 			text: startTime.getHours()+':'+minutes,
 			color:'#666666',
-			top:'10dp', right:'20dp',
+			right:'20dp',
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});
 		
 		
-		
+		startTimeView.add(clockImg);
 	    startTimeView.add(starttimeText);
 		startTimeView.add(sDateText);
 		startTimeView.add(sTimeText);
@@ -686,11 +694,16 @@ function drawActivityContnet(contentView,data){
 			
 		});
 		
+		var clockImg = Titanium.UI.createImageView({
+	        image:'starttime.png',
+			height: '20dp', width: '20dp', left:'0dp'
+		});
+		
 		var endtimeText = Ti.UI.createLabel({
 			font:{fontSize:'20sp'},
 			text: L('endtime') + ':',
 			color:'#f1c40f',
-			top:'10dp', left:'10dp',
+			left:'30dp',
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});
 		
@@ -698,7 +711,7 @@ function drawActivityContnet(contentView,data){
 			font:{fontSize:'20sp'},
 			text: endTime.getFullYear()+'/'+(endTime.getMonth()+1)+'/'+endTime.getDate(),
 			color:'#666666',
-			top:'10dp', left:'130dp',
+			left:'130dp',
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});
 		
@@ -712,10 +725,11 @@ function drawActivityContnet(contentView,data){
 			font:{fontSize:'20sp'},
 			text: endTime.getHours()+':'+minutes,
 			color:'#666666',
-			top:'10dp', right:'20dp',
+			right:'20dp',
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});
-	
+	    
+	    endTimeView.add(clockImg);
 		endTimeView.add(endtimeText);
 		endTimeView.add(eDateText);
 		endTimeView.add(eTimeText);
@@ -731,7 +745,7 @@ function drawActivityContnet(contentView,data){
 	
 	
 	var desText = Ti.UI.createLabel({
-		font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: data['des'],
 		color:'#333333',
 		top:'10dp',
@@ -827,7 +841,7 @@ function drawActivityContnet(contentView,data){
 	
 	
 	var nameText = Ti.UI.createLabel({
-		font:{fontSize:'20sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 		text: data['name'],
 		color:'#4aa3df',
 		top:'12dp',
@@ -870,7 +884,7 @@ function drawActivityContnet(contentView,data){
 	}
 	
 	var timeText = Ti.UI.createLabel({
-		font:{fontSize:'20sp',fontFamily:'Helvetica Neue'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: timeString,
 		color:'#aaaaaa',
 		top:'5dp',
@@ -893,7 +907,7 @@ function drawActivityContnet(contentView,data){
 	});
 	if(data['title'] != undefined && data['title'] != ''){
 		var titleText = Ti.UI.createLabel({
-			font:{fontSize:'24sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
+			font:{fontSize:'20sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 			text: data['title'],
 			color:'#000000',
 			top:'10dp',
@@ -903,15 +917,26 @@ function drawActivityContnet(contentView,data){
 		titleGroupNameView.exist = true;
 	}
 	if(data['pdata']['gname'] != undefined && data['pdata']['gname'] != ''){
+		var groupNameView = Ti.UI.createView({
+		    backgroundColor: 'white',
+		    layout: 'horizontal',
+		    width:'100%', height: Ti.UI.SIZE,
+		    top:'10dp',left:'0dp'
+		});
 		var nameText = Ti.UI.createLabel({
-			font:{fontSize:'20sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
+			font:{fontSize:'18sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 			text: data['pdata']['gname'],
 			color:'#3498db',
-			top:'10dp',
-			left:'0dp',
+			left:'10dp',
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
 		});
-		titleGroupNameView.add(nameText);
+		var groupNameImg = Titanium.UI.createImageView({
+	        image:'groupname.png',
+			height: '20dp', width: '20dp', left:'0dp'
+		});
+		groupNameView.add(groupNameImg);
+		groupNameView.add(nameText);
+		titleGroupNameView.add(groupNameView);
 		titleGroupNameView.exist = true;
 	}
 
