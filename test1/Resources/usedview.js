@@ -105,7 +105,7 @@ function drawUsedEvent(view, data, lon, lat){
 	
 	var categoryText = Ti.UI.createLabel({
 		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
-		text:  '   ' + L('secondhand') +'   ',
+		text:  '   ' + L('used') +'   ',
 		color:'#ffffff',
 
 		left:'10dp',
@@ -595,6 +595,10 @@ function drawUsedContnet(contentView,data){
 	
 	nameText.addEventListener('click',function(e) {
 		//  enter talk window
+		var myid = Ti.App.Properties.getString('userid','');
+		if(myid == e.source.ownerid){
+			return;
+		}
 	    Ti.API.info('postView click.');
         TalkWindow = require('talkWindows');
         tmpRoomData = {

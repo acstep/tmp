@@ -173,6 +173,8 @@ function talkWindow(id, toid,roomdata) {
 		    	talkTableView.appendRow(tmpRow);
 		    	talkTableView.scrollToIndex(talkDataItems.length-1);
 		    	msgTextArea.value = '';
+		    	Ti.API.info('roomdata 2: ' + JSON.stringify({'data':roomdata}));
+		    	setTitle(roomdata);
 				sendmsg(roomdata['roomid'] , needSendMsg, sendMsgCB);
 			}
 			
@@ -351,6 +353,7 @@ function talkWindow(id, toid,roomdata) {
 				starttime = parseInt(currentdate.getTime()/1000);
 				Ti.API.info('roomid : ' + roomdata['roomid']);
 				Ti.App.Properties.setString('TalkRoomID',roomdata['roomid']);
+				Ti.API.info('roomdata1 : ' + JSON.stringify({'data':roomdata}));
 				querymsg( roomdata['roomid'], starttime, 10 ,parseMsg);
 			}
 			
@@ -411,11 +414,23 @@ function talkWindow(id, toid,roomdata) {
 				starttime = parseInt(currentdate.getTime()/1000);
 				talkDataItems = [];
 				talkTableView.data = [];
+				Ti.API.info('roomdata : ' + JSON.stringify({'data':roomdata}));
+				setTitle(roomdata);
 				querymsg( roomdata['roomid'], starttime, 10 ,parseMsg);
         	}
             
         });
     });
+	
+	function setTitle(roomdata){
+		var myid = Ti.App.Properties.getString('userid','');
+		for(var i=0 ; i< roomdata['memdata'].length ; i++){
+			if(roomdata['memdata'][i]['id'] != myid){
+				talkTitleText.text = roomdata['memdata'][i]['name'];
+			}
+		}
+		
+	}
 	
 	return self;
 }

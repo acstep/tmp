@@ -183,6 +183,42 @@ function queryevent(geo, distance, category, limitcount, nexttime, callbackf){
 	
 };
 
+
+function querymyevent(limitcount, nexttime, callbackf){
+
+    id = Ti.App.Properties.getString('userid','');
+    token = Ti.App.Properties.getString('token','');
+    data = {
+    	'limit':limitcount,
+    	'nextstarttime':nexttime,
+    };
+    
+    datastring = JSON.stringify(data);
+	url = 'http://54.254.208.12/api/querymyevent?' + 'id=' + id + '&token=' + token + '&data=' + datastring;
+	Ti.API.info('url : ' + url);
+	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.data);
+    	}
+    	else{
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'network error');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+
+};
+
+
+
 function likeevent(eventid, sourceobj, callbackf){
 	id = Ti.App.Properties.getString('userid','');
     token = Ti.App.Properties.getString('token','');

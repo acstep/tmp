@@ -595,6 +595,10 @@ function drawSalesContnet(contentView,data){
 	
 	nameText.addEventListener('click',function(e) {
 		//  enter talk window
+		var myid = Ti.App.Properties.getString('userid','');
+		if(myid == e.source.ownerid){
+			return;
+		}
 	    Ti.API.info('postView click.');
         TalkWindow = require('talkWindows');
         tmpRoomData = {

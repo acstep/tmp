@@ -60,6 +60,289 @@ function createNormalWin(title){
 }
 
 
+function createNormalFeed(viewobj,category){
+	/////////  feed  ///////////////////
+	
+	lat = parseFloat(Ti.App.Properties.getString('latitude',0));
+	lon = parseFloat(Ti.App.Properties.getString('longitude',0));
+    var feedView = Ti.UI.createView({
+		backgroundColor:'#dddddd',
+		width:'100%',
+		height:'100%',
+		top:'0dp',
+		layout:'vertical'
+	});
+	
+	
+	
+	/////////////   scroll feed  ////////////////////////////
+	var feedtableItems = [];
+	var feedTableView = Ti.UI.createTableView({
+		showVerticalScrollIndicator:false,
+        backgroundSelectedColor:'#dddddd',
+        top:'0dp',
+	    left:'0dp',bottom:'0dp',
+	    layout: 'vertical',
+	    backgroundColor:'#dddddd',
+        separatorColor:'#dddddd',
+		data:feedtableItems
+    });
+	
+	
+	var getNewFeedHintView = Ti.UI.createView({
+		height:'0dp',
+		top:'50dp',
+	});
+
+
+	feedView.add(feedTableView);
+	
+	viewobj.add(feedView);
+
+	// get current position and render fee
+
+	var lastposupdate = 0;
+	currentdate = new Date(); 
+	var nexttime = parseInt(currentdate.getTime()/1000);
+	var firstFeed = true;
+	//////////////////   Draw feeds  /////////////////////////
+	var feeditem = [];
+	var drawFunction = {	    
+	    	'1000':drawNewsEvent,
+	    	'1001':drawActivityEvent,
+	    	'1002':drawHelpEvent,
+	    	'1003':drawSalesEvent,
+	    	'1004':drawUsedEvent,
+	    	'1005':drawTeambuyEvent,
+	    	
+	};
+	
+	
+	function parseFeed(result, feedData){
+		feedLoading = false;
+		try{
+			feedRowstatus = 'none';
+			feedTableView.deleteRow(loadRow);
+		}
+		catch(err){
+			
+		}
+
+		if(result == true){
+			
+			Ti.API.info(feedData);
+			feedData = sortByKeyUp(feedData, 'lastupdate');
+
+			if(feedData.length > 0){	
+				if(firstFeed == true){
+					feeditem.length = 0;
+				}	
+				for(var i = 0 ; i <= feedData.length -1; i++) {
+					feeditem.push(feedData[i]);
+					var feedRow = Ti.UI.createTableViewRow({
+				        backgroundSelectedColor:'#dddddd',
+				        backgroundColor:'#dddddd'
+				        
+				    });
+				    //drawFunction[feedData[i].category.toString()](feedData[i]);
+				    try{
+				    	drawFunction[feedData[i]['category']](feedRow, feedData[i],lon,lat);
+					    feedRow.eventid = feedData[i]['eventid']; 
+					    feedtableItems.push(feedRow);
+					    feedTableView.appendRow(feedRow);
+				    }
+				    catch(e){
+				    	
+				    }
+				    
+				}   
+                
+                if(category == 'myfeed'){
+					Ti.App.Properties.setString('myfeed',JSON.stringify({'data':feeditem}));
+				}
+				else{
+					Ti.App.Properties.setString(category.toString(),JSON.stringify({'data':feeditem}));
+				}
+				
+				nexttime = feedData[(feedData.length -1)]['lastupdate'];
+			}
+			viewobj.forwardView.visible = false;
+			
+			firstFeed = false;	
+		}
+		else{
+			viewobj.forwardView.visible = false;
+			if(feedData == 'network error' && firstFeed == true){
+				firstFeed = false;
+				if(category == 'myfeed'){
+					oldfeeditems = JSON.parse(Ti.App.Properties.getString(category.toString(),{'data':[]}));
+					
+				}
+				else{
+					oldfeeditems = JSON.parse(Ti.App.Properties.getString('myfeed',{'data':[]}));
+				}
+				
+				for(var i = 0 ; i <= oldfeeditems.data.length -1; i++) {
+					
+					
+				    //drawFunction[feedData[i].category.toString()](feedData[i]);
+				    var feedRow = Ti.UI.createTableViewRow({
+				        backgroundSelectedColor:'#dddddd',
+				        backgroundColor:'#dddddd'
+				        
+				    });
+				    try{
+					    drawFunction[oldfeeditems.data[i]['category']](feedRow, oldfeeditems.data[i],lon,lat);
+					    feedRow.eventid = oldfeeditems.data[i]['eventid'];
+					    feedtableItems.push(feedRow);
+					    feedTableView.appendRow(feedRow);
+					}
+				    catch(e){
+				    	
+				    }    
+				}   
+
+				nexttime = oldfeeditems.data[(oldfeeditems.data.length -1)]['lastupdate'];
+			}
+			viewobj.forwardView.visible = false;
+			firstFeed = false;	
+		}
+
+	}
+	
+	feedTableView.addEventListener('click', function(e){
+    	FeedContentWindow = require('feedContentWindows');
+		new FeedContentWindow(e.row.eventid, true).open(); 
+    });
+    
+    var loadRow = Ti.UI.createTableViewRow({
+        backgroundSelectedColor:'#dddddd',
+        backgroundColor:'#dddddd'
+        
+    });
+    var itemView = Titanium.UI.createView({
+		backgroundColor:'transparent',
+		width:Ti.UI.SIZE ,height: Ti.UI.SIZE,width: Ti.UI.SIZE,top:'10dp',bottom:'10dp'
+	});
+	var loginIndicator = Ti.UI.createActivityIndicator({
+		  font: {fontFamily:'Helvetica Neue', fontSize:18, fontWeight:'bold'},
+		  style:Titanium.UI.ActivityIndicatorStyle.DARK,
+		  message: L('loading')
+	});
+
+	itemView.add(loginIndicator);
+	loginIndicator.show();
+	loadRow.add(itemView);
+	
+	
+	var refleshRow = Ti.UI.createTableViewRow({
+        backgroundSelectedColor:'#dddddd',
+        backgroundColor:'#dddddd',
+        hieght:'1dp'
+    });
+	
+	var feedRowstatus = 'none';
+    var feedLoading = false;
+    var reachTop = false;
+    
+    feedTableView.addEventListener('scroll', function(e)
+	{
+
+		if((e.firstVisibleItem + e.visibleItemCount) == feedtableItems.length){
+			if(feedLoading == false){
+				feedLoading =  true;
+			    
+				feedRowstatus = 'loading';
+				feedTableView.appendRow(loadRow);
+				getNextFeed();
+					
+			}    
+		}
+		if(e.firstVisibleItem == 0){
+
+			reachTop = true;
+		}
+		else{
+
+			startRec = false;
+			reachTop = false;
+		}
+		
+	});
+	
+	var startScrollY = 0;
+    var startRec = false; 
+	feedTableView.addEventListener('touchstart', function(e)
+	{
+		if(reachTop == true){
+			startRec = true;
+			startScrollY = e.y;
+		}
+	});
+	
+	feedTableView.addEventListener('touchend', function(e)
+	{
+		if(reachTop == true && startRec == true){
+			if(e.y - startScrollY > 0){
+				reachTop = false;
+				startRec = false; 
+				Ti.API.info('tableview getnewfeed');
+				getNewFeed();
+			}
+
+		}
+		Ti.API.info('tttt : ' + e.x + '  ' + e.y);
+	});
+	
+	function getNewFeed(){
+		Ti.API.info('getNewFeed ');
+		feedtableItems = [];
+		feedTableView.data = [];
+		feedTableView.appendRow(refleshRow);
+		viewobj.forwardView.visible = true;
+		currentdate = new Date(); 
+		nexttime = parseInt(currentdate.getTime()/1000);
+		firstFeed = true;
+        nexttime = parseInt(currentdate.getTime()/1000);
+
+		limitcount = parseInt(Ti.App.Properties.getString('limitcount',5));
+		if(category == 'myfeed'){
+			querymyevent(limitcount, nexttime, parseFeed);
+		}
+		else{
+			latitude = parseFloat(Ti.App.Properties.getString('latitude',-1));
+			longitude = parseFloat(Ti.App.Properties.getString('longitude',-1));
+			distance = parseInt(Ti.App.Properties.getString('distance',feedDistance));
+			queryevent([longitude,latitude], distance, [category], limitcount, nexttime, parseFeed);
+		}
+		
+   
+	};
+
+    function getNextFeed(){
+    	Ti.API.info('getNextFeed ');
+    	if(category == 'myfeed'){
+			querymyevent(limitcount, nexttime, parseFeed);
+		}
+		else{
+			latitude = parseFloat(Ti.App.Properties.getString('latitude',-1));
+			longitude = parseFloat(Ti.App.Properties.getString('longitude',-1));
+			distance = parseInt(Ti.App.Properties.getString('distance',feedDistance));
+			queryevent([longitude,latitude], distance, [category], limitcount, nexttime, parseFeed);
+		}
+    	
+    };
+    
+    Ti.App.addEventListener('getnewfeed',function(e) {
+    	Ti.API.info('receive event getNextFeed ');
+        getNewFeed();
+	});
+	
+	viewobj.getNewFeed = getNewFeed;
+	viewobj.getNextFeed = getNextFeed;
+}
+
+
 function showAlert(title, message){
 	var alertDlg = Titanium.UI.createAlertDialog({
 		title:title,

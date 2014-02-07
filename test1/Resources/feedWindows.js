@@ -224,7 +224,7 @@ function feedWindow() {
     //title of dialog
 	    title: L('choosecategory'),
 	    //options
-	    options: [L('club'),L('sale'), L('needhelp'), L('dating'), L('news'), L('secondhand'), L('teambuying')],
+	    options: [L('club'),L('sale'), L('needhelp'), L('dating'), L('news'), L('used'), L('teambuying')],
 	    //index of cancel button
 	});
 	
@@ -256,9 +256,7 @@ function feedWindow() {
 				new TeambuyPostWindow().open(); 
 				break;							
 			default:
-				NewsPostWindow = require('newsPostWindows');
-		        NewsPostWindow.parentGetNewFeed = getNewFeed;
-				new NewsPostWindow().open(); 	
+				
 		}
         
 	});
@@ -318,7 +316,7 @@ function feedWindow() {
 	
 	var headImg = Titanium.UI.createImageView({
 		image:'head.png',borderRadius:15,
-		top: '15dp', left:'5%', height: '60dp', width: '60dp'
+		left:'0dp', height: '60dp', width: '60dp'
 	});
 	
 	var headimage = Ti.App.Properties.getString('headfile','');
@@ -330,6 +328,33 @@ function feedWindow() {
 	else{
 		headImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + headimage;
 	}
+	
+	var menuTopView = Ti.UI.createView({
+		width:'90%',
+		height:Titanium.UI.SIZE,
+        left:'5%',
+        top:'20dp'
+	});
+	
+	menuTopView.addEventListener('click',function(e) {
+	    myFeedWindow = require('myFeedWindows');
+		new myFeedWindow().open(); 
+		switchBackgroundView();
+	});
+	
+	
+	
+	
+	var topNameText = Ti.UI.createLabel({
+		font:{fontSize:'18sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
+		text: Ti.App.Properties.getString('username'),
+		color:'#666666',
+		left:'80dp',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+	});
+	
+	menuTopView.add(headImg);
+	menuTopView.add(topNameText);
 	
 	var categoryText = Ti.UI.createLabel({
 		font:{fontSize:'18sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
@@ -356,7 +381,7 @@ function feedWindow() {
 		{ leftImage:'love.png', title:'dating',category:'4000' },
 		{ leftImage:'news.png', title:'news',category:'5000' },
 		{ leftImage:'teambuy.png', title:'teambuying',category:'6000' },
-		{ leftImage:'used.png', title:'secondhand',category:'5000' },
+		{ leftImage:'used.png', title:'used',category:'5000' },
 	]; 
 	
 	var cateDate = [];
@@ -400,7 +425,32 @@ function feedWindow() {
 	});  
 	
 	memuTableView.addEventListener('click',function(e) {
-	    switchBackgroundView();
+		switch(e.index){
+			case 0:
+			    newsAppWindow = require('newsAppWindows');
+				new newsAppWindow().open(); 
+				switchBackgroundView();
+				break;
+			case 1:
+			    
+				break;	
+			case 2:
+			    
+				break;	
+			case 4:
+			    
+				break;	
+			case 5:
+			    
+				break;
+			case 6:
+			    
+				break;							
+			default:
+				
+		}
+		   
+
 	});
 	
 	var menuParentView = Ti.UI.createView({
@@ -410,7 +460,7 @@ function feedWindow() {
 		
 	});
 	
-	mainMenu.add(headImg);
+	mainMenu.add(menuTopView);
 	mainMenu.add(categoryText);
 	mainMenu.add(seperateLineView);
 	mainMenu.add(menuParentView);
@@ -480,10 +530,10 @@ function feedWindow() {
 				}   
 
 				Ti.App.Properties.setString('feed',JSON.stringify({'data':feeditem}));
-				
+				nexttime = feedData[(feedData.length -1)]['lastupdate'];
 			}
 			forwardView.visible = false;
-			nexttime = feedData[(feedData.length -1)]['lastupdate'];
+			
 			firstFeed = false;	
 		}
 		else{
@@ -613,46 +663,14 @@ function feedWindow() {
 		currentdate = new Date(); 
 		nexttime = parseInt(currentdate.getTime()/1000);
 		firstFeed = true;
-        nexttime = parseInt(currentdate.getTime()/1000);
+		
         latitude = parseFloat(Ti.App.Properties.getString('latitude',-1));
 		longitude = parseFloat(Ti.App.Properties.getString('longitude',-1));
 		distance = parseInt(Ti.App.Properties.getString('distance',feedDistance));
 		category = Ti.App.Properties.getList('category','none');
 		limitcount = parseInt(Ti.App.Properties.getString('limitcount',5));
-		
-		if(latitude ==-1 || longitude == -1){
-			Titanium.Geolocation.getCurrentPosition(function(e){
-			    if(e.error){
-			        Ti.API.error(e.error);
-			        currentdate = new Date(); 
-			        nexttime = parseInt(currentdate.getTime()/1000);
-			        latitude = parseFloat(Ti.App.Properties.getString('latitude',0));
-					longitude = parseFloat(Ti.App.Properties.getString('longitude',0));
-					distance = parseInt(Ti.App.Properties.getString('distance',feedDistance));
-					category = Ti.App.Properties.getList('category','none');
-					limitcount = parseInt(Ti.App.Properties.getString('limitcount',5));
-					queryevent([longitude,latitude], distance, category, limitcount, nexttime, parseFeed);
-			    }
-		        else{
-		        	currentdate = new Date(); 
-					nexttime = parseInt(currentdate.getTime()/1000);
-		        	latitude = e.coords.latitude;
-					longitude = e.coords.longitude;
-					Ti.App.Properties.setString('latitude',latitude);
-					Ti.App.Properties.setString('longitude',longitude);
-					distance = parseInt(Ti.App.Properties.getString('distance',feedDistance));
-					category = Ti.App.Properties.getList('category','none');
-					limitcount = Ti.App.Properties.getString('limitcount',5);
-					queryevent([longitude,latitude], distance, category, limitcount, nexttime, parseFeed);
-		        }
-		    });    
-		}
-		else{
-			
-			queryevent([longitude,latitude], distance, category, limitcount, nexttime, parseFeed);
-		}
-		
-            
+		queryevent([longitude,latitude], distance, category, limitcount, nexttime, parseFeed);
+   
 	};
 
     function getNextFeed(){

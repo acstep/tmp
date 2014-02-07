@@ -3,11 +3,11 @@
 	<string name="category">Category</string>
 	<string name="welcome">Welcome to %s!</string>
 	<string name="club">Club Activities</string>
-	<string name="sale">Sale</string>
+	<string name="sale">Promotions</string>
 	<string name="needhelp">Need Help</string>
 	<string name="dating">Dating</string>
 	<string name="news">News</string>
-	<string name="secondhand">Second Hand Deal</string>
+	<string name="used">Garage Sale</string>
 	<string name="teambuying">Team Buying</string>
 	<string name="sortorder">Sorting</string>
 	<string name="postnew">Post</string>
