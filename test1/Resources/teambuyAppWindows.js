@@ -1,16 +1,16 @@
-//My feed Window Component Constructor
+//usedAppWindow Component Constructor
 Ti.include("common_net.js");
 Ti.include("common_util.js");
-Ti.include("newsview.js");
+Ti.include("teambuyview.js");
 
-function newsAppWindow() {
+function teambuyAppWindow() {
 	//load component dependencies
 	var self = createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
     backgroundView.forwardView = forwardView;
-    createNormalFeed(backgroundView, 1000);
+    createNormalFeed(backgroundView, 1005);
     
     var backImg = Titanium.UI.createImageView({
 		image:'backward.png',
@@ -25,11 +25,15 @@ function newsAppWindow() {
 	
 	var TitleText = Ti.UI.createLabel({
 		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
-		text:L('news'),
+		text:L('teambuying'),
 		color:'#ffffff',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
   		left:'50dp'
 	});
+	
+	TitleText.addEventListener('click',function(e){
+		self.close();
+	});	
 	
 	titleView.add(TitleText);
 	
@@ -42,4 +46,4 @@ function newsAppWindow() {
 }
 
 //make constructor function the public component interface
-module.exports = newsAppWindow;
+module.exports = teambuyAppWindow;

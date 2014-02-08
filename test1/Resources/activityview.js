@@ -51,10 +51,10 @@ function drawActivityEvent(view, data, lon, lat){
 	
 	
 	var nameText = Ti.UI.createLabel({
-		font:{fontSize:'16sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
+		font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 		text: data['name'],
 		color:'#333333',
-		top:'10dp',
+		top:'15dp',
 		left:'10dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
 	});
@@ -106,7 +106,7 @@ function drawActivityEvent(view, data, lon, lat){
 	});
 	
 	var categoryText = Ti.UI.createLabel({
-		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
+		font:{fontSize:'10sp',fontFamily:'Helvetica Neue'},
 		text:  '   ' + L('club') +'   ',
 		color:'#ffffff',
 
@@ -529,12 +529,12 @@ function drawActivityContnet(contentView,data){
 		    width:'100%',height:'200dp',
 		    name:'imagecontentview'
 		});  
-		var topImage = Titanium.UI.createImageView({
+		var feedImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
 		    visible : false,
 		    name:'image'
 		});
-		topImage.addEventListener('load', function()
+		feedImage.addEventListener('load', function()
 		{
 			
 			platheight = Ti.Platform.displayCaps.platformHeight,
@@ -542,23 +542,25 @@ function drawActivityContnet(contentView,data){
 
 			imgwidth = this.size.width;
 			imgheight = this.size.height;
+			if(imgwidth == 0 || imgheight == 0){
+				var tmpimage = this.toBlob();
+				imgwidth = tmpimage.width;
+				imgheight = tmpimage.height;
+			}
 			if(imgwidth < platwidth){
-		
 				ratio = (platwidth / parseFloat(imgwidth));
-		
 				this.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
 				this.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
-				topImage.visible = true;
-
 			}
+			this.visible = true;
 		});
-		topImage.addEventListener('click', function(){
+		feedImage.addEventListener('click', function(){
 			topImageListWindow = require('imagelistWindows');
 			new topImageListWindow(imageList,0).open(); 
 		});
-		imageScrollView.add(topImage);
-		topImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[0]).replace('.jpg','-m.jpg');
-		
+		imageScrollView.add(feedImage);
+		feedImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[0]).replace('.jpg','-m.jpg');
+	
 	}
 	else{
 		
@@ -581,18 +583,22 @@ function drawActivityContnet(contentView,data){
 			    name:'imagecontentview'
 			});  
 			Ti.API.info('image file : ',('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[0]).replace('.jpg','-m.jpg'));
-			var topImage = Titanium.UI.createImageView({
+			var feedImage = Titanium.UI.createImageView({
 			    backgroundColor: '#ffffff',
 			    visible : false,
 			    name:'image'
 			});
-		    topImage.index = i;
-			topImage.addEventListener('load', function()
+		    feedImage.index = i;
+			feedImage.addEventListener('load', function()
 			{
 				
-	
 				imgwidth = this.size.width;
 				imgheight = this.size.height;
+                if(imgwidth == 0 || imgheight == 0){
+					var tmpimage = this.toBlob();
+					imgwidth = tmpimage.width;
+					imgheight = tmpimage.height;
+				}
 				if(imgwidth < imgheight){
 					ratio = (130 / parseFloat(imgwidth));
 					this.width = (imgwidth * ratio) ;
@@ -603,7 +609,7 @@ function drawActivityContnet(contentView,data){
 					this.width = (imgwidth * ratio) ;
 					this.height = (imgheight * ratio) ;
 				}
-	
+
 				this.visible = true;
 				this.addEventListener('click',function(e) {
 			        Ti.API.info('photo view click.');
@@ -612,13 +618,13 @@ function drawActivityContnet(contentView,data){
 	
 			});
 			
-			topImage.addEventListener('click', function(){
+			feedImage.addEventListener('click', function(){
 				topImageListWindow = require('imagelistWindows');
 				new topImageListWindow(imageList,this.index).open(); 
 			});
-			topImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[i]).replace('.jpg','-m.jpg');
-			imageContentView.add(topImage);
-		
+			feedImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[i]).replace('.jpg','-m.jpg');
+			imageContentView.add(feedImage);
+
 			imageScrollView.add(imageContentView);
 		}	
 	}

@@ -74,7 +74,7 @@ function createNormalFeed(viewobj,category){
 	});
 	
 	
-	
+	Ti.API.info('category backup  ' + category + ' : ' + Ti.App.Properties.getString(category.toString(),{'data':[]}));
 	/////////////   scroll feed  ////////////////////////////
 	var feedtableItems = [];
 	var feedTableView = Ti.UI.createTableView({
@@ -174,7 +174,7 @@ function createNormalFeed(viewobj,category){
 			viewobj.forwardView.visible = false;
 			if(feedData == 'network error' && firstFeed == true){
 				firstFeed = false;
-				if(category == 'myfeed'){
+				if(category != 'myfeed'){
 					oldfeeditems = JSON.parse(Ti.App.Properties.getString(category.toString(),{'data':[]}));
 					
 				}

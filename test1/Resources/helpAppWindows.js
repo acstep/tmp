@@ -1,16 +1,16 @@
-//My feed Window Component Constructor
+//helpview Component Constructor
 Ti.include("common_net.js");
 Ti.include("common_util.js");
-Ti.include("newsview.js");
+Ti.include("helpview.js");
 
-function newsAppWindow() {
+function helpAppWindow() {
 	//load component dependencies
 	var self = createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
     backgroundView.forwardView = forwardView;
-    createNormalFeed(backgroundView, 1000);
+    createNormalFeed(backgroundView, 1002);
     
     var backImg = Titanium.UI.createImageView({
 		image:'backward.png',
@@ -25,21 +25,21 @@ function newsAppWindow() {
 	
 	var TitleText = Ti.UI.createLabel({
 		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
-		text:L('news'),
+		text:L('needhelp'),
 		color:'#ffffff',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
   		left:'50dp'
 	});
 	
-	titleView.add(TitleText);
-	
 	TitleText.addEventListener('click',function(e){
 		self.close();
 	});
+	
+	titleView.add(TitleText);
 	
     backgroundView.getNewFeed();
 	return self;
 }
 
 //make constructor function the public component interface
-module.exports = newsAppWindow;
+module.exports = helpAppWindow;

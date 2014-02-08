@@ -36,7 +36,7 @@ function talkWindow(id, toid,roomdata) {
 	});	
 	
 	var talkTitleText = Ti.UI.createLabel({
-		font:{fontSize:'24sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
+		font:{fontSize:'20sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 		color:'#ffffff'
 		
 	});
@@ -354,6 +354,7 @@ function talkWindow(id, toid,roomdata) {
 				Ti.API.info('roomid : ' + roomdata['roomid']);
 				Ti.App.Properties.setString('TalkRoomID',roomdata['roomid']);
 				Ti.API.info('roomdata1 : ' + JSON.stringify({'data':roomdata}));
+				setTitle(roomdata);
 				querymsg( roomdata['roomid'], starttime, 10 ,parseMsg);
 			}
 			

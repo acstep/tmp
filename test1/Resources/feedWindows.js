@@ -380,8 +380,8 @@ function feedWindow() {
 		{ leftImage:'help.png', title:'needhelp',category:'3000' },
 		{ leftImage:'love.png', title:'dating',category:'4000' },
 		{ leftImage:'news.png', title:'news',category:'5000' },
-		{ leftImage:'teambuy.png', title:'teambuying',category:'6000' },
 		{ leftImage:'used.png', title:'used',category:'5000' },
+		{ leftImage:'teambuy.png', title:'teambuying',category:'6000' },
 	]; 
 	
 	var cateDate = [];
@@ -427,24 +427,34 @@ function feedWindow() {
 	memuTableView.addEventListener('click',function(e) {
 		switch(e.index){
 			case 0:
-			    newsAppWindow = require('newsAppWindows');
-				new newsAppWindow().open(); 
+			    activityAppWindow = require('activityAppWindows');
+				new activityAppWindow().open(); 
 				switchBackgroundView();
 				break;
 			case 1:
-			    
+			    slaesAppWindow = require('salesAppWindows');
+				new slaesAppWindow().open(); 
+				switchBackgroundView();
 				break;	
 			case 2:
-			    
+			    helpAppWindow = require('helpAppWindows');
+				new helpAppWindow().open(); 
+				switchBackgroundView();
 				break;	
 			case 4:
-			    
+			    newsAppWindow = require('newsAppWindows');
+				new newsAppWindow().open(); 
+				switchBackgroundView();
 				break;	
 			case 5:
-			    
+			    usedAppWindow = require('usedAppWindows');
+				new usedAppWindow().open(); 
+				switchBackgroundView();
 				break;
 			case 6:
-			    
+			    teambuyAppWindow = require('teambuyAppWindows');
+				new teambuyAppWindow().open(); 
+				switchBackgroundView();
 				break;							
 			default:
 				
@@ -726,8 +736,16 @@ function feedWindow() {
     var locationCallback = function(e) {
 	    if (!e.success || e.error) {
 	        Ti.API.info('error:' + JSON.stringify(e.error));
-	    } else {
+	    } 
+	    else {
 	    	
+	    	var data = {
+				'pos':[e.coords.longitude,e.coords.latitude]
+			};
+	    
+		    datastring = JSON.stringify(data);
+		    Ti.API.info('datastring : ' + datastring);
+	    	updatepos(datastring);
 	    	Ti.App.Properties.setString('latitude',e.coords.latitude);
 			Ti.App.Properties.setString('longitude',e.coords.longitude);
 			Ti.API.info('coords: ' + JSON.stringify(e.coords));

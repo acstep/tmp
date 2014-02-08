@@ -93,6 +93,23 @@ function updateaccount(data, callbackf){
 	
 };
 
+function updatepos(data){
+	id = Ti.App.Properties.getString('userid','');
+    token = Ti.App.Properties.getString('token','');
+	url = 'http://54.254.208.12/api/updatepos?'+ 'id=' + id + '&token=' + token + '&data=' + data ;
+	Ti.API.info('url : ' + url);
+	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+    };
+    xhr.onerror = function(e){
+    	
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+};
+
+
 function createvent(data, callbackf){
 	id = Ti.App.Properties.getString('userid','');
     token = Ti.App.Properties.getString('token','');

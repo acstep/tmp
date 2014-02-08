@@ -49,10 +49,10 @@ function drawNewsEvent(view, data, lon, lat){
 	
 	
 	var nameText = Ti.UI.createLabel({
-		font:{fontSize:'16sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
+		font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 		text: data['name'],
 		color:'#333333',
-		top:'10dp',
+		top:'15dp',
 		left:'10dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
 	});
@@ -76,7 +76,7 @@ function drawNewsEvent(view, data, lon, lat){
 	}
 	
 	var timeText = Ti.UI.createLabel({
-		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
+		font:{fontSize:'10sp',fontFamily:'Helvetica Neue'},
 		text: timeString,
 		color:'#aaaaaa',
 		top:'1dp',
@@ -388,23 +388,25 @@ function drawNewsContnet(contentView,data){
 		    visible : false,
 		    name:'image'
 		});
-		feedImage.addEventListener('load', function()
+		feedImage.addEventListener('load', function(e)
 		{
-			
+			Ti.API.info('image load stat : ' + e.state);
 			platheight = Ti.Platform.displayCaps.platformHeight,
 			platwidth = Ti.Platform.displayCaps.platformWidth ;
 
 			imgwidth = this.size.width;
 			imgheight = this.size.height;
+			if(imgwidth == 0 || imgheight == 0){
+				var tmpimage = this.toBlob();
+				imgwidth = tmpimage.width;
+				imgheight = tmpimage.height;
+			}
 			if(imgwidth < platwidth){
-		
 				ratio = (platwidth / parseFloat(imgwidth));
-		
 				this.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
 				this.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
-				feedImage.visible = true;
-
 			}
+			this.visible = true;
 		});
 		feedImage.addEventListener('click', function(){
 			FeedImageListWindow = require('imagelistWindows');
@@ -412,7 +414,7 @@ function drawNewsContnet(contentView,data){
 		});
 		imageScrollView.add(feedImage);
 		feedImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[0]).replace('.jpg','-m.jpg');
-		
+
 	}
 	else{
 		
@@ -443,10 +445,13 @@ function drawNewsContnet(contentView,data){
 		    feedImage.index = i;
 			feedImage.addEventListener('load', function()
 			{
-				
-	
 				imgwidth = this.size.width;
 				imgheight = this.size.height;
+                if(imgwidth == 0 || imgheight == 0){
+					var tmpimage = this.toBlob();
+					imgwidth = tmpimage.width;
+					imgheight = tmpimage.height;
+				}
 				if(imgwidth < imgheight){
 					ratio = (130 / parseFloat(imgwidth));
 					this.width = (imgwidth * ratio) ;
@@ -457,7 +462,7 @@ function drawNewsContnet(contentView,data){
 					this.width = (imgwidth * ratio) ;
 					this.height = (imgheight * ratio) ;
 				}
-	
+
 				this.visible = true;
 				this.addEventListener('click',function(e) {
 			        Ti.API.info('photo view click.');
@@ -472,7 +477,7 @@ function drawNewsContnet(contentView,data){
 			});
 			feedImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[i]).replace('.jpg','-m.jpg');
 			imageContentView.add(feedImage);
-		
+
 			imageScrollView.add(imageContentView);
 		}	
 	}

@@ -18,8 +18,8 @@ function imageListWindow(imagelist,index) {
 
     for(var i=0 ; i< imagelist.length; i++){
     	var imgWrapper = Ti.UI.createScrollView({
-    		contentWidth:'auto',
-            contentHeight:'auto',
+    		contentWidth:'100%',
+            contentHeight:'100%',
             top:0,left:0,backgroundColor:'#000000',
 		});
     	var imgView = Ti.UI.createImageView({
@@ -27,8 +27,17 @@ function imageListWindow(imagelist,index) {
 		    width:'100%',backgroundColor:'#000000',
 		});
 
-        
+        var pageText = Ti.UI.createLabel({
+			font:{fontSize:'30sp',fontFamily:'Helvetica Neue'},
+			text: (i+1) + '/' + imagelist.length,
+			color:'#ffffff',backgroundColor:'#000000',
+			bottom:'50dp',
+			right:'50dp',
+	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
+		});
+	
 		imgWrapper.add(imgView);
+		imgWrapper.add(pageText);
 		imageViewList.push(imgWrapper);
     }
 
