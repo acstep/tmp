@@ -19,9 +19,7 @@ function drawSalesEvent(view, data, lon, lat){
 	/////////  top  photo  time  name ////////////////////
 	var topView = Ti.UI.createView({
 	    backgroundColor: 'white',
-
-	    
-	    width:'100%', height: '80dp',
+	    width:'100%', height:  Ti.UI.SIZE,
 	    top:'0dp'
 	});
 	
@@ -42,7 +40,7 @@ function drawSalesEvent(view, data, lon, lat){
 	var topinfoView = Ti.UI.createView({
 	    backgroundColor: '#ffffff',
 	    layout: 'vertical',
-	    height: '80dp',
+	    height:  Ti.UI.SIZE,
 	    top:'0dp',left:'70dp',right:'70dp'
 	});
 	
@@ -104,7 +102,7 @@ function drawSalesEvent(view, data, lon, lat){
 	});
 	
 	var categoryText = Ti.UI.createLabel({
-		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
+		font:{fontSize:'10sp',fontFamily:'Helvetica Neue'},
 		text:  '   ' + L('sale') +'   ',
 		color:'#ffffff',
 
@@ -115,7 +113,7 @@ function drawSalesEvent(view, data, lon, lat){
 	});
 	
 	var distanceText = Ti.UI.createLabel({
-		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
+		font:{fontSize:'10sp',fontFamily:'Helvetica Neue'},
 		text: feedDistanceStr,
 		color:'#ffffff',
 
@@ -156,11 +154,11 @@ function drawSalesEvent(view, data, lon, lat){
 	
 
 	var desText = Ti.UI.createLabel({
-		font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
+		font:{fontSize:'15sp',fontFamily:'Helvetica Neue'},
 		text: getStringlimit(data['des'],50,100),
 		color:'#666666',
 		top:'10dp',
-		left:'10dp',right:'10dp', height: Ti.UI.SIZE,
+		left:'20dp',right:'20dp', height: Ti.UI.SIZE,
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
   		width: Ti.UI.FILL,
   		name:'destext',
@@ -225,142 +223,7 @@ function drawSalesEvent(view, data, lon, lat){
   
   
 	///////////  bottom  like common button /////////////////////////////
-	var bottomView = Ti.UI.createView({
-	    backgroundColor: '#ffffff',
-	    layout: 'horizontal',
-	    width:'100%', height: '40dp',
-	    borderColor: '#bbb',
-	    borderWidth: 1,
-	    top:'10dp'
-	});
-	var bottomLikeView = Ti.UI.createView({
-	    backgroundColor: '#ffffff',
-	    width:'50%', height: '40dp',
-	    top:'0dp',
-	    name:'view'
-	});
-	
-	var bottomLikecontentView = Ti.UI.createView({
-	    backgroundColor: '#ffffff',
-        layout: 'horizontal',
-	    name:'view',
-	    width: Ti.UI.SIZE,height: Ti.UI.SIZE,
-	    name:'view1',center:{x:'50%',y:'50%'}
-	});
-	
-
-	bottomLikeView.eventid = data['eventid'];
-	bottomLikecontentView.eventid = data['eventid'];
-	
-	var likeImg = Titanium.UI.createImageView({
-		image:'like.png',
-		height: '20dp', width: '20dp',
-		name:'img'
-	});
-	likeImg.eventid = data['eventid'];
-	
-	var likeText = Ti.UI.createLabel({
-		font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
-		text: data['like'] ,
-		color:'#666666',
-  		left:'15dp',
-  		name:'text'
-	});
-	likeText.eventid = data['eventid'];
-	
-	function likeCB(result, resultText, source){
-		if(result == true){
-			source.liketextlabel.color = "#3498db";
-			source.liketextlabel.text = parseInt(source.liketextlabel.text)+1;
-			source.likeimg.image = "likeb.png";
-        } 
-	}
-	
-	bottomLikeView.addEventListener('click',function(e) {
-		e.cancelBubble = true;
-        if(e.source.name == 'img' || e.source.name == 'text'){
-        	likeevent(e.source.getParent().eventid , e.source.getParent().getParent(), likeCB);
-        }
-        else if(e.source.name == 'view1'){
-        	likeevent(e.source.eventid , e.source.getParent(), likeCB);
-        }
-        else{
-        	likeevent(e.source.eventid , e.source, likeCB);
-        }
-        
-	});
-	
-	bottomLikeView.liketextlabel = likeText;
-	bottomLikeView.likeimg = likeImg;
-	bottomLikecontentView.add(likeImg);
-	bottomLikecontentView.add(likeText);
-    bottomLikeView.add(bottomLikecontentView);
-	
-	var bottomSepView = Ti.UI.createView({
-	    backgroundColor: '#bbbbbb',
-	    width:'1dp', height: '30dp',
-	    top:'5dp'
-	});
-	var bottomCommentView = Ti.UI.createView({
-	    backgroundColor: '#ffffff',
-	    width:'auto', height: '40dp',
-	    top:'0dp',
-	    name:'commentview'
-	});
-	bottomCommentView.eventid = data['eventid'];
-	
-	
-	var bottomCommentcontentView = Ti.UI.createView({
-	    backgroundColor: '#ffffff',
-        layout: 'horizontal',
-        width: Ti.UI.SIZE,height: Ti.UI.SIZE,
-	    name:'view',center:{x:'50%',y:'50%'}
-	});
-	
-	
-	bottomCommentcontentView.eventid = data['eventid'];
-	
-	var commentImg = Titanium.UI.createImageView({
-		image:'comment.png',
-		height: '20dp', width: '20dp'
-	});
-	commentImg.eventid = data['eventid'];
-	if(data['comment'] == undefined){
-		data['comment'] = 0;
-	}
-	var commentText = Ti.UI.createLabel({
-		font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
-		text: data['comment'],
-		color:'#666666',
-  		left:'15dp'
-	});
-	commentText.eventid = data['eventid'];
-	
-	bottomCommentView.addEventListener('click',function(e) {
-		e.cancelBubble = true;
-        if(e.source.name == 'img' || e.source.name == 'text'){
-        	Ti.API.info('postView click.');
-	        FeedContentWindow = require('feedContentWindows');
-	  		new FeedContentWindow(e.source.getParent().eventid, false).open(); 
-        	
-        }
-        else{
-        	Ti.API.info('postView click.');
-	        FeedContentWindow = require('feedContentWindows');
-	  		new FeedContentWindow(e.source.eventid, false).open(); 
-            
-        }
-        
-	});
-	
-	bottomCommentcontentView.add(commentImg);
-	bottomCommentcontentView.add(commentText);
-	bottomCommentView.add(bottomCommentcontentView);
-	
-	bottomView.add(bottomLikeView);
-	bottomView.add(bottomSepView);
-	bottomView.add(bottomCommentView);
-	feedView.add(bottomView);
+	createCardBottom(feedView, data);
 
 	
 	
@@ -507,53 +370,12 @@ function drawSalesContnet(contentView,data){
 	//////////////  map //////////////////////////////////////////
 	var mapView = Ti.UI.createView({
 	    backgroundColor: 'white',
-	    width:'90%', height: Ti.UI.SIZE,
+	    width:'90%', height: Ti.UI.SIZE,layout: 'vertical',
 	    top:'20dp',left:'5%'
 	});
 	
-	var mapParentView = Titanium.UI.createView({
-		height: '200dp', width: '100%',backgroundColor:'#transparent'
-		
-	});
+	createMapView(mapView,data);
 	
-	latitude = data['loc']['coordinates'][1];
-	longitude = data['loc']['coordinates'][0];
-	
-    var Map = require('ti.map');    
-	var posAnno = Map.createAnnotation({
-	    latitude:latitude,
-	    longitude:longitude,
-	    pincolor:Map.ANNOTATION_RED,
-	    myid:1 
-	});
-	
-	var mapview = Map.createView({
-	    mapType: Map.NORMAL_TYPE,
-	    region: {latitude:latitude, longitude:longitude, latitudeDelta:0.005, longitudeDelta:0.005},
-	    userLocation:false,
-	    enableZoomControls:false,
-	    annotations:[posAnno],
-	    height: '100%', width: '100%', top:'0dp',left:'0dp'
-	});
-	
-	var mapforgroundView = Titanium.UI.createImageView({
-		height: '100%', width: '100%', top:'0dp',left:'0dp',backgroundColor:'transparent',
-	});
-	
-	mapforgroundView.addEventListener('click',function(e)
-	{
-	     var intent = Ti.Android.createIntent({
-            action : Ti.Android.ACTION_VIEW,
-            data : 'geo:' + latitude +',' + longitude + '?q=' + latitude +',' + longitude
-        });
-        Ti.Android.currentActivity.startActivity(intent);	
-	});	
-	
-	mapParentView.add(mapview);
-	mapParentView.add(mapforgroundView);
-	
-
-	mapView.add(mapParentView);
 	
 	
 	//////////////////////   head photo  /////////////////////////////
@@ -662,6 +484,8 @@ function drawSalesContnet(contentView,data){
 	contentView.add(createHSepLine('90%','20dp','0dp'));
 	contentView.add(mapView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
+	
+	setPosString(latitude,longitude,mapView.addressText);
 }
 
 

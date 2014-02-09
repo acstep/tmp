@@ -47,8 +47,8 @@ function mapWindow() {
     self.add(titleView);
     
 	self.image = {};
-	self.latitude = parseFloat(Ti.App.Properties.getString('latitude'));
-	self.longitude = parseFloat(Ti.App.Properties.getString('longitude'));
+	self.latitude = parseFloat(Ti.App.Properties.getDouble('latitude'));
+	self.longitude = parseFloat(Ti.App.Properties.getDouble('longitude'));
 	
 	
 	/////   map  /////
@@ -89,8 +89,8 @@ function mapWindow() {
 	    self.orgAnnotation.latitude = e.annotation.latitude;
 		self.orgAnnotation.longitude = e.annotation.longitude;
     	self.orgmapview.region = {latitude:e.annotation.latitude, longitude:e.annotation.longitude, latitudeDelta:0.005, longitudeDelta:0.005};
-        Ti.App.Properties.setString('userchooselatitude',e.annotation.latitude);
-		Ti.App.Properties.setString('userchooselongitude',e.annotation.longitude);
+        Ti.App.Properties.setDouble('userchooselatitude',e.annotation.latitude);
+		Ti.App.Properties.setDouble('userchooselongitude',e.annotation.longitude);
 	});	
 	
 	mapview.addEventListener('longclick',function(e)
@@ -101,8 +101,8 @@ function mapWindow() {
 	    self.orgAnnotation.latitude = e.latitude;
 		self.orgAnnotation.longitude = e.longitude;
     	self.orgmapview.region = {latitude:e.latitude, longitude:e.longitude, latitudeDelta:0.005, longitudeDelta:0.005};
-        Ti.App.Properties.setString('userchooselatitude',e.latitude);
-		Ti.App.Properties.setString('userchooselongitude',e.longitude);
+        Ti.App.Properties.setDouble('userchooselatitude',e.latitude);
+		Ti.App.Properties.setDouble('userchooselongitude',e.longitude);
 	});	
 	
     mapContentView.add(mapview);

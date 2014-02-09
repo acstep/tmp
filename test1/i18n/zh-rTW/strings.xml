@@ -5,7 +5,7 @@
 	<string name="club">社團活動</string>
 	<string name="sale">特價優惠</string>
 	<string name="needhelp">協助幫忙</string>
-	<string name="dating">聯誼</string>
+	<string name="dating">交友聯誼</string>
 	<string name="news">周邊新聞</string>
 	<string name="used">二手交易</string>
 	<string name="teambuying">團購</string>
@@ -14,7 +14,6 @@
 	<string name="choosecategory">選擇類別</string>
 	<string name="postnewsevent">發布新聞</string>
 	<string name="addphoto">增加照片</string>
-	<string name="addnewscontent">您想發布的新聞內容... \n\n\n\n\n\n</string>
 	<string name="changemap">按下面的地圖來更改位置...</string>
 	<string name="dragmarker">拖拉標記到您想要發布的位置</string>
 	<string name="pullreflash">下拉以重新整理...</string>
@@ -47,9 +46,15 @@
 	<string name="groupname">團體名稱</string>
 	<string name="starttime">開始</string>
 	<string name="endtime">結束</string>
+	<string name="addnewscontent">您想發布的新聞內容... \n\n\n\n\n\n</string>
 	<string name="addactivitycontent">您想發布的活動內容... \n\n\n\n\n\n</string>
 	<string name="addhelpcontent">您需要幫忙的事項... \n\n\n\n\n\n</string>
 	<string name="addusedcontent">您想要賣的物品... \n\n\n\n\n\n</string>
 	<string name="addsalescontent">您想要發布的優惠... \n\n\n\n\n\n</string>
 	<string name="addteambuycontent">您想要團購的物品... \n\n\n\n\n\n</string>
+	<string name="addsocialcontent">您想要交友聯誼的敘述... \n\n\n\n\n\n</string>
+	<string name="purpose">型態:  例如  吃飯聊天,郊遊</string>
+	<string name="preferredtime">首選時間</string>
+	<string name="preferredplace">首選地點: 例如  XX餐廳</string>
+	<string name="preferredppl">參加人數 : </string>
 </resources>

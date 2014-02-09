@@ -187,7 +187,7 @@ function feedContentWindow(eventid, fullcontent) {
 			
 				
 	        var nameText = Ti.UI.createLabel({
-				font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
+				font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
 				text: data[i]['name'],
 				color:'#3498db',
 				top:'12dp',left:'70dp',right:'10dp',
@@ -214,7 +214,7 @@ function feedContentWindow(eventid, fullcontent) {
 			}
 			
 			var timeText = Ti.UI.createLabel({
-				font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
+				font:{fontSize:'10sp',fontFamily:'Helvetica Neue'},
 				text: timeString,
 				color:'#aaaaaa',
 				top:'35dp',left:'70dp',right:'10dp',
@@ -222,7 +222,7 @@ function feedContentWindow(eventid, fullcontent) {
 			});
 		
 			var desText = Ti.UI.createLabel({
-				font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
+				font:{fontSize:'15sp',fontFamily:'Helvetica Neue'},
 				text: data[i]['content'],
 				color:'#333333',
 				top:'55dp',left:'70dp',right:'10dp',

@@ -7,6 +7,7 @@ Ti.include("helpview.js");
 Ti.include("salesview.js");
 Ti.include("usedview.js");
 Ti.include("teambuyview.js");
+Ti.include("socialview.js");
 
 function feedWindow() {
 	//load component dependencies
@@ -243,6 +244,10 @@ function feedWindow() {
 			    HelpPostWindow = require('helpPostWindows');
 				new HelpPostWindow().open(); 
 				break;	
+			case 3:
+			    SocialPostWindow = require('socialPostWindows');
+				new SocialPostWindow().open(); 
+				break;		
 			case 4:
 			    HelpPostWindow = require('helpPostWindows');
 				new HelpPostWindow().open(); 
@@ -496,7 +501,7 @@ function feedWindow() {
 	    	'1003':drawSalesEvent,
 	    	'1004':drawUsedEvent,
 	    	'1005':drawTeambuyEvent,
-	    	
+	    	'1006':drawSocialEvent
 	};
 	
 	
@@ -553,8 +558,8 @@ function feedWindow() {
 				oldfeeditems = JSON.parse(Ti.App.Properties.getString('feed',{'data':[]}));
 				for(var i = 0 ; i <= oldfeeditems.data.length -1; i++) {
 					
-					latitude = parseFloat(Ti.App.Properties.getString('latitude',0));
-					longitude = parseFloat(Ti.App.Properties.getString('longitude',0));
+					latitude = parseFloat(Ti.App.Properties.getDouble('latitude',0));
+					longitude = parseFloat(Ti.App.Properties.getDouble('longitude',0));
 				    //drawFunction[feedData[i].category.toString()](feedData[i]);
 				    var feedRow = Ti.UI.createTableViewRow({
 				        backgroundSelectedColor:'#dddddd',
@@ -674,11 +679,11 @@ function feedWindow() {
 		nexttime = parseInt(currentdate.getTime()/1000);
 		firstFeed = true;
 		
-        latitude = parseFloat(Ti.App.Properties.getString('latitude',-1));
-		longitude = parseFloat(Ti.App.Properties.getString('longitude',-1));
-		distance = parseInt(Ti.App.Properties.getString('distance',feedDistance));
+        latitude = parseFloat(Ti.App.Properties.getDouble('latitude',-1));
+		longitude = parseFloat(Ti.App.Properties.getDouble('longitude',-1));
+		distance = parseInt(Ti.App.Properties.getInt('distance',feedDistance));
 		category = Ti.App.Properties.getList('category','none');
-		limitcount = parseInt(Ti.App.Properties.getString('limitcount',5));
+		limitcount = parseInt(Ti.App.Properties.getInt('limitcount',5));
 		queryevent([longitude,latitude], distance, category, limitcount, nexttime, parseFeed);
    
 	};
@@ -739,15 +744,25 @@ function feedWindow() {
 	    } 
 	    else {
 	    	
-	    	var data = {
-				'pos':[e.coords.longitude,e.coords.latitude]
-			};
-	    
-		    datastring = JSON.stringify(data);
-		    Ti.API.info('datastring : ' + datastring);
-	    	updatepos(datastring);
-	    	Ti.App.Properties.setString('latitude',e.coords.latitude);
-			Ti.App.Properties.setString('longitude',e.coords.longitude);
+	    	oldlatitude = Ti.App.Properties.getDouble('latitude',e.coords.latitude);
+	    	oldlongitude = Ti.App.Properties.getDouble('longitude',e.coords.longitude);
+			Ti.API.info('lat lot : ' + oldlatitude +'  ' +e.coords.latitude+'  '+ oldlongitude +'  '+ e.coords.longitude);
+			var distance = GetDistance(oldlatitude, oldlongitude, e.coords.latitude, e.coords.longitude, 'K');
+			Ti.API.info('distance : ' + distance);
+	        // if user move than 500m update the postion to server
+	    	if(distance > 0.5){
+	    		var data = {
+					'pos':[e.coords.longitude,e.coords.latitude]
+				};
+		    
+			    datastring = JSON.stringify(data);
+			    Ti.API.info('datastring : ' + datastring);
+		    	updatepos(datastring);
+	    	}
+	    	
+	    	
+	    	Ti.App.Properties.setDouble('latitude',e.coords.latitude);
+			Ti.App.Properties.setDouble('longitude',e.coords.longitude);
 			Ti.API.info('coords: ' + JSON.stringify(e.coords));
 		}
 	};

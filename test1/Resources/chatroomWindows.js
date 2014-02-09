@@ -113,7 +113,7 @@ function chatroomWindow() {
 			});
 			
 			var nameText = Ti.UI.createLabel({
-				font:{fontSize:'16sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+				font:{fontSize:'14sp',fontFamily:'Marker Felt',fontWeight:'bold'},
 				text: idData['name'],
 				color:'#888888',left:'10dp',right:'10dp'
 			});
@@ -124,7 +124,7 @@ function chatroomWindow() {
 				lastmsg = chatroomData[i]['lastmsg']['string'];
 			}
 			var contentText = Ti.UI.createLabel({
-				font:{fontSize:'16sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+				font:{fontSize:'14sp',fontFamily:'Marker Felt',fontWeight:'bold'},
 				text: getStringlimit(lastmsg ,20,50),
 				color:'#333333',left:'10dp',right:'10dp'
 			});

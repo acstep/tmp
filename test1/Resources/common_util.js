@@ -63,8 +63,8 @@ function createNormalWin(title){
 function createNormalFeed(viewobj,category){
 	/////////  feed  ///////////////////
 	
-	lat = parseFloat(Ti.App.Properties.getString('latitude',0));
-	lon = parseFloat(Ti.App.Properties.getString('longitude',0));
+	lat = parseFloat(Ti.App.Properties.getDouble('latitude',0));
+	lon = parseFloat(Ti.App.Properties.getDouble('longitude',0));
     var feedView = Ti.UI.createView({
 		backgroundColor:'#dddddd',
 		width:'100%',
@@ -305,14 +305,14 @@ function createNormalFeed(viewobj,category){
 		firstFeed = true;
         nexttime = parseInt(currentdate.getTime()/1000);
 
-		limitcount = parseInt(Ti.App.Properties.getString('limitcount',5));
+		limitcount = parseInt(Ti.App.Properties.getInt('limitcount',5));
 		if(category == 'myfeed'){
 			querymyevent(limitcount, nexttime, parseFeed);
 		}
 		else{
-			latitude = parseFloat(Ti.App.Properties.getString('latitude',-1));
-			longitude = parseFloat(Ti.App.Properties.getString('longitude',-1));
-			distance = parseInt(Ti.App.Properties.getString('distance',feedDistance));
+			latitude = parseFloat(Ti.App.Properties.getDouble('latitude',-1));
+			longitude = parseFloat(Ti.App.Properties.getDouble('longitude',-1));
+			distance = parseInt(Ti.App.Properties.getInt('distance',feedDistance));
 			queryevent([longitude,latitude], distance, [category], limitcount, nexttime, parseFeed);
 		}
 		
@@ -325,9 +325,9 @@ function createNormalFeed(viewobj,category){
 			querymyevent(limitcount, nexttime, parseFeed);
 		}
 		else{
-			latitude = parseFloat(Ti.App.Properties.getString('latitude',-1));
-			longitude = parseFloat(Ti.App.Properties.getString('longitude',-1));
-			distance = parseInt(Ti.App.Properties.getString('distance',feedDistance));
+			latitude = parseFloat(Ti.App.Properties.getDouble('latitude',-1));
+			longitude = parseFloat(Ti.App.Properties.getDouble('longitude',-1));
+			distance = parseInt(Ti.App.Properties.getInt('distance',feedDistance));
 			queryevent([longitude,latitude], distance, [category], limitcount, nexttime, parseFeed);
 		}
     	
@@ -446,3 +446,223 @@ function getStringlimit(orgstring,start,end){
     }
     return desString;
 }
+
+function setPosString(latitude,longitude,tmpobj){
+	
+	Titanium.Geolocation.reverseGeocoder(latitude,longitude,function(evt){
+		if (evt.success) {
+			var address = evt.places[0].address;
+
+			if (address && address.length ) {
+				tmpobj.text = address;
+				streetstr = true;
+			} 
+	
+			Ti.API.info("reverse geolocation result = "+JSON.stringify(evt));
+		}
+		
+	});		
+	
+}
+
+function createMapView(mapView,data){
+	var addressText = Ti.UI.createLabel({
+		font:{fontSize:'16sp'},
+		text: '',
+		color:'#666666',
+		left:'0dp', height: Ti.UI.SIZE,
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+	});
+	
+	mapView.addressText = addressText;
+	
+	latitude = data['loc']['coordinates'][1];
+	longitude = data['loc']['coordinates'][0];
+	
+	
+	
+	mapView.add(addressText);
+	
+	var mapParentView = Titanium.UI.createView({
+		height: '200dp', width: '100%',backgroundColor:'#transparent',
+		top:'10dp'
+		
+	});
+	
+
+    var Map = require('ti.map');    
+	var posAnno = Map.createAnnotation({
+	    latitude:latitude,
+	    longitude:longitude,
+	    pincolor:Map.ANNOTATION_RED,
+	    myid:1 
+	});
+	
+	var mapview = Map.createView({
+	    mapType: Map.NORMAL_TYPE,
+	    region: {latitude:latitude, longitude:longitude, latitudeDelta:0.005, longitudeDelta:0.005},
+	    userLocation:false,
+	    enableZoomControls:false,
+	    annotations:[posAnno],
+	    height: '100%', width: '100%', top:'0dp',left:'0dp'
+	});
+	
+	var mapforgroundView = Titanium.UI.createImageView({
+		height: '100%', width: '100%', top:'0dp',left:'0dp',backgroundColor:'transparent',
+	});
+	
+	mapforgroundView.addEventListener('click',function(e)
+	{
+	     var intent = Ti.Android.createIntent({
+            action : Ti.Android.ACTION_VIEW,
+            data : 'geo:' + latitude +',' + longitude + '?q=' + latitude +',' + longitude
+        });
+        Ti.Android.currentActivity.startActivity(intent);	
+	});	
+	
+	mapParentView.add(mapview);
+	mapParentView.add(mapforgroundView);
+	
+
+	mapView.add(mapParentView);
+}
+
+function createCardBottom(feedView, data){
+	var bottomView = Ti.UI.createView({
+	    backgroundColor: '#ffffff',
+	    layout: 'horizontal',
+	    width:'100%', height: '40dp',
+	    borderColor: '#bbb',
+	    borderWidth: 1,
+	    top:'10dp'
+	});
+	var bottomLikeView = Ti.UI.createView({
+	    backgroundColor: '#ffffff',
+	    width:'50%', height: '40dp',
+	    top:'0dp',
+	    name:'view'
+	});
+	
+	var bottomLikecontentView = Ti.UI.createView({
+	    backgroundColor: '#ffffff',
+        layout: 'horizontal',
+	    name:'view',
+	    width: Ti.UI.SIZE,height: Ti.UI.SIZE,
+	    name:'view1',center:{x:'50%',y:'50%'}
+	});
+	
+
+	bottomLikeView.eventid = data['eventid'];
+	bottomLikecontentView.eventid = data['eventid'];
+	
+	var likeImg = Titanium.UI.createImageView({
+		image:'like.png',
+		height: '20dp', width: '20dp',
+		name:'img'
+	});
+	likeImg.eventid = data['eventid'];
+	
+	var likeText = Ti.UI.createLabel({
+		font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
+		text: data['like'] ,
+		color:'#666666',
+  		left:'15dp',
+  		name:'text'
+	});
+	likeText.eventid = data['eventid'];
+	
+	function likeCB(result, resultText, source){
+		if(result == true){
+			source.liketextlabel.color = "#3498db";
+			source.liketextlabel.text = parseInt(source.liketextlabel.text)+1;
+			source.likeimg.image = "likeb.png";
+        } 
+	}
+	
+	bottomLikeView.addEventListener('click',function(e) {
+		e.cancelBubble = true;
+        if(e.source.name == 'img' || e.source.name == 'text'){
+        	likeevent(e.source.getParent().eventid , e.source.getParent().getParent(), likeCB);
+        }
+        else if(e.source.name == 'view1'){
+        	likeevent(e.source.eventid , e.source.getParent(), likeCB);
+        }
+        else{
+        	likeevent(e.source.eventid , e.source, likeCB);
+        }
+        
+	});
+	
+	bottomLikeView.liketextlabel = likeText;
+	bottomLikeView.likeimg = likeImg;
+	bottomLikecontentView.add(likeImg);
+	bottomLikecontentView.add(likeText);
+    bottomLikeView.add(bottomLikecontentView);
+	
+	var bottomSepView = Ti.UI.createView({
+	    backgroundColor: '#bbbbbb',
+	    width:'1dp', height: '30dp',
+	    top:'5dp'
+	});
+	var bottomCommentView = Ti.UI.createView({
+	    backgroundColor: '#ffffff',
+	    width:'auto', height: '40dp',
+	    top:'0dp',
+	    name:'commentview'
+	});
+	bottomCommentView.eventid = data['eventid'];
+	
+	
+	var bottomCommentcontentView = Ti.UI.createView({
+	    backgroundColor: '#ffffff',
+        layout: 'horizontal',
+        width: Ti.UI.SIZE,height: Ti.UI.SIZE,
+	    name:'view',center:{x:'50%',y:'50%'}
+	});
+	
+	
+	bottomCommentcontentView.eventid = data['eventid'];
+	
+	var commentImg = Titanium.UI.createImageView({
+		image:'comment.png',
+		height: '20dp', width: '20dp'
+	});
+	commentImg.eventid = data['eventid'];
+	if(data['comment'] == undefined){
+		data['comment'] = 0;
+	}
+	var commentText = Ti.UI.createLabel({
+		font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
+		text: data['comment'],
+		color:'#666666',
+  		left:'15dp'
+	});
+	commentText.eventid = data['eventid'];
+	
+	bottomCommentView.addEventListener('click',function(e) {
+		e.cancelBubble = true;
+        if(e.source.name == 'img' || e.source.name == 'text'){
+        	Ti.API.info('postView click.');
+	        FeedContentWindow = require('feedContentWindows');
+	  		new FeedContentWindow(e.source.getParent().eventid, false).open(); 
+        	
+        }
+        else{
+        	Ti.API.info('postView click.');
+	        FeedContentWindow = require('feedContentWindows');
+	  		new FeedContentWindow(e.source.eventid, false).open(); 
+            
+        }
+        
+	});
+	
+	bottomCommentcontentView.add(commentImg);
+	bottomCommentcontentView.add(commentText);
+	bottomCommentView.add(bottomCommentcontentView);
+	
+	bottomView.add(bottomLikeView);
+	bottomView.add(bottomSepView);
+	bottomView.add(bottomCommentView);
+	feedView.add(bottomView);
+}
+

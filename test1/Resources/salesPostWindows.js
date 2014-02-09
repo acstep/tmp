@@ -293,10 +293,10 @@ function SalesPostWindow() {
 	var latitude = 0;
 	var longitude = 0;
 
-	latitude = Ti.App.Properties.getString('latitude',latitude);
-	longitude = Ti.App.Properties.getString('longitude',longitude);
-	Ti.App.Properties.setString('userchooselatitude',latitude);
-	Ti.App.Properties.setString('userchooselongitude',longitude);
+	latitude = Ti.App.Properties.getDouble('latitude',latitude);
+	longitude = Ti.App.Properties.getDouble('longitude',longitude);
+	Ti.App.Properties.setDouble('userchooselatitude',latitude);
+	Ti.App.Properties.setDouble('userchooselongitude',longitude);
 	//url = "http://maps.googleapis.com/maps/api/staticmap?center=" +latitude +',' +longitude 
 	//    + "&zoom=16&size=" + mapwidth/2 +'x' + mapheight/2 +'&markers=color:red%7C'+ latitude
 	//    +',' + longitude +'&sensor=false';
@@ -426,7 +426,7 @@ function SalesPostWindow() {
 			'name': Ti.App.Properties.getString('username'),
 			'photos':uploadimg,
 			'des':desTextArea.value,
-			'pos':[parseFloat(Ti.App.Properties.getString('userchooselongitude',0)),parseFloat(Ti.App.Properties.getString('userchooselatitude',0))],
+			'pos':[parseFloat(Ti.App.Properties.getDouble('userchooselongitude',0)),parseFloat(Ti.App.Properties.getDouble('userchooselatitude',0))],
 			'title':'',
 			'extime':extime,
 			'category':1003,

@@ -5,7 +5,7 @@
 	<string name="club">Club Activities</string>
 	<string name="sale">Promotions</string>
 	<string name="needhelp">Need Help</string>
-	<string name="dating">Dating</string>
+	<string name="dating">Social,Dating</string>
 	<string name="news">News</string>
 	<string name="used">Garage Sale</string>
 	<string name="teambuying">Team Buying</string>
@@ -14,7 +14,6 @@
 	<string name="choosecategory">Choose a Category</string>
 	<string name="postnewsevent">Post News Event</string>
 	<string name="addphoto">Add Photo</string>
-	<string name="addnewscontent">Add News Content Here... \n\n\n\n\n\n</string>
 	<string name="changemap">Click to change the position on Map....</string>
 	<string name="dragmarker">Drag the marker to event position</string>
 	<string name="pullreflash">Pull down to reflash...</string>
@@ -47,6 +46,15 @@
 	<string name="groupname">Group Name</string>
 	<string name="starttime">Start</string>
 	<string name="endtime">End</string>
+	<string name="addnewscontent">Add News Content Here... \n\n\n\n\n\n</string>
 	<string name="addactivitycontent">Add Activity Content Here... \n\n\n\n\n\n</string>
 	<string name="addhelpcontent">What do you need help? \n\n\n\n\n\n</string>
+	<string name="addusedcontent">Used Products Description... \n\n\n\n\n\n</string>
+	<string name="addsalescontent">Promotion Content Description... \n\n\n\n\n\n</string>
+	<string name="addteambuycontent">Team Buy Products Description... \n\n\n\n\n\n</string>
+	<string name="addsocialcontent">Your Social or Dating Content... \n\n\n\n\n\n</string>
+	<string name="purpose">Type: ex. Dinner, Talking</string>
+	<string name="preferredtime">Preferred Time</string>
+	<string name="preferredplace">Preferred Place: ex. XX restaurant</string>
+	<string name="preferredppl">People attended : </string>
 </resources>

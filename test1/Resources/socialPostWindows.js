@@ -1,17 +1,15 @@
-//Help Post Window Component Constructor
+//SocialPostWindow Post Window Component Constructor
 Ti.include("common_net.js");
+Ti.include("common_util.js");
 
 
-
-function HelpPostWindow() {
+function SocialPostWindow() {
 	//load component dependencies
-	
 	var self = createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
-	
-	
+
 	var ind=Titanium.UI.createProgressBar({
 	        width:'90%',
 	        min:0,
@@ -21,23 +19,22 @@ function HelpPostWindow() {
 	        color:'#ffffff',
 	        message:L('uploadimage'),
 	        font:{fontSize:14, fontWeight:'bold'},
-	        
-	        top:'50dp' 
+ 	        top:'50dp' 
 	});
 
-	
 	forwardView.add(ind);
-
+	
 
 	////  title  //////
 
 	var selectPosText = Ti.UI.createLabel({
 		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
-		text: L('needhelp'),
+		text: L('dating'),
 		color:'#ffffff',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
 	
+
 	var uploadimg = [];
 	var totalUploadImg = 0;
 	var currentUploadImg = 0;
@@ -69,7 +66,7 @@ function HelpPostWindow() {
 	    uploadimg = [];
 		forwardView.visible = true; 
 		if(totalUploadImg == 0){
-			postHelpEvent();
+			postActivityEvent();
 		}
 		else{
 			uploadImage();
@@ -176,17 +173,18 @@ function HelpPostWindow() {
 	            },
 	            error:function(error)
 	            {
-
+	                //error happend, create alert
+	            
 	                //set message
 	                if (error.code == Titanium.Media.NO_CAMERA)
 	                {
-	                	showAlert('Camera', 'Device does not have camera');
-	                   
+	                	showAlert('Camera', 'Device does not have camera'); 
+	                    
 	                }
 	                else
 	                {
-	                	showAlert('Camera', 'Unexpected error: ' + error.code); 
-	                   
+	                	showAlert('Camera', 'Unexpected error: ' + error.code);  
+
 	                }
 
 	            },
@@ -250,20 +248,160 @@ function HelpPostWindow() {
     contentScrollView.add(imageScrollView);
 
     ///////    description and map /////////////
+    var purposeTextField = Ti.UI.createTextField({
+	    font: {fontSize:'16sp'},
+	    color:'#333333',
+	    textAlign: 'left',
+	    hintText:L('purpose'),
+	    top: '20dp',
+	    width: '90%', 
+	    height : Titanium.UI.SIZE,
+	    left: '5%',
+	    backgroundColor:'#ffffff',
+	    borderColor:'#666666',
+	    borderWidth:'1dp',borderRadius:10,
+	});
+	
+	var placeTextField = Ti.UI.createTextField({
+	    font: {fontSize:'16sp'},
+	    color:'#333333',
+	    textAlign: 'left',
+	    hintText:L('preferredplace'),
+	    top: '20dp',
+	    width: '90%', 
+	    height : Titanium.UI.SIZE,
+	    left: '5%',backgroundColor:'#ffffff',
+	    borderColor:'#666666',
+	    borderWidth:'1dp',borderRadius:10,
+	});
+
+    ///////////  time //////////////////
+	startTime = new Date(); 
+ 
+	function showDatePicker(start, mtime){
+		
+		var picker = Ti.UI.createPicker({
+		    type:Ti.UI.PICKER_TYPE_DATE,
+		    
+		    value:mtime
+		});
+	    picker.showDatePickerDialog({
+	    	value:mtime,
+		    callback: function(e) {
+		      if (e.cancel) {
+		          Ti.API.info('User canceled dialog');
+		      } 
+		      else {
+                  
+                	startTime.setFullYear(e.value.getFullYear()) ;
+      		    	startTime.setMonth(e.value.getMonth());
+      		    	startTime.setDate( e.value.getDate()) ;
+      		    	sDateText.text = startTime.getFullYear()+'/'+(startTime.getMonth()+1)+'/'+startTime.getDate();
+		        }
+		    }
+		});
+	}
+	
+	
+	
+    var startTimeView = Ti.UI.createView({
+		backgroundColor:'#ffffff',
+		width:'90%',
+		height:Titanium.UI.SIZE,
+		top:'20dp',
+		left: '5%',
+        layout: 'horizontal'
+	});
+	
+	var socialTimeImg = Titanium.UI.createImageView({
+        image:'starttime.png',
+		height: '15dp', width: '15dp', left:'10dp'
+	});
+	
+	var starttimeText = Ti.UI.createLabel({
+		font:{fontSize:'16sp'},
+		text: L('preferredtime') + ':',
+		color:'#3498db',
+		top:'10dp', left:'10dp',bottom:'10dp',
+		height:Titanium.UI.SIZE,
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+	});
+	
+	var sDateText = Ti.UI.createLabel({
+		font:{fontSize:'16sp'},
+		text: startTime.getFullYear()+'/'+(startTime.getMonth()+1)+'/'+startTime.getDate(),
+		color:'#666666',
+		top:'10dp', left:'30dp',bottom:'10dp',
+		height:Titanium.UI.SIZE,
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+	});
+	
+	sDateText.addEventListener('click',function(e){
+		showDatePicker(true, startTime);
+	
+	});
+	
+	
+	startTimeView.add(socialTimeImg);
+    startTimeView.add(starttimeText);
+	startTimeView.add(sDateText);
+
+	var peopleView = Ti.UI.createView({
+		backgroundColor:'#ffffff',
+		width:'90%',
+		height:Titanium.UI.SIZE,
+		top:'20dp',
+		left: '5%',
+        layout: 'horizontal'
+	});
+	
+	var pplImg = Titanium.UI.createImageView({
+        image:'ppl.png',
+		height: '15dp', width: '15dp', left:'10dp'
+	});
+	
+	var peopleText = Ti.UI.createLabel({
+		font:{fontSize:'16sp'},
+		text: L('preferredppl') ,
+		color:'#3498db', width:'40%',
+		left:'10dp',
+		height:Titanium.UI.SIZE,
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+	});
+	
+	
+	var pplTextfield = Titanium.UI.createTextField({
+		editable: true,
+		value:'1',
+		hintText:'1',
+		width:'40%',
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
+		color:'#000000',
+		textAlign:'left',
+	});
+    peopleView.add(pplImg);
+    peopleView.add(peopleText);
+	peopleView.add(pplTextfield);
+    
     var desTextArea = Ti.UI.createTextArea({
 	    font: {fontSize:'20sp'},
 	    color:'#333333',
 	    textAlign: 'left',
-	    hintText:L('addhelpcontent'),
+	    hintText:L('addsocialcontent'),
 	    top: '30dp',
 	    width: '90%', 
-	    height : 'auto',
+	    height : Ti.UI.SIZE,
 	    left: '5%',
-        backgroundColor:'#ffffff',
+	    backgroundColor:'#ffffff',
 	    borderColor:'#666666',
-	    borderWidth:'1dp'
+	    borderWidth:'1dp',
+        maxLength:500
 	});
-
+    
+    contentScrollView.add(purposeTextField);
+    contentScrollView.add(placeTextField);
+    contentScrollView.add(startTimeView);
+    contentScrollView.add(peopleView);
 	contentScrollView.add(desTextArea);
      
 
@@ -342,10 +480,10 @@ function HelpPostWindow() {
 	mapParentView.add(mapforgroundView);
     contentScrollView.add(mapParentView);
 
+    	
+
     backgroundView.add(contentScrollView);
      
-
-	
 	
 	function uploadImage(){
 		var data_to_send = { 
@@ -368,18 +506,14 @@ function HelpPostWindow() {
 				
 				ind.value = 100;
 				//  finish image upload, post event to server
-				postHelpEvent();
+				postActivityEvent();
 			}
 			else{
 				uploadImage();
 			}
         };
         xhr.onerror = function(e){
-        	var alertDlg = Titanium.UI.createAlertDialog({
-				title:'Error !',
-				message:'Server Error. Please try again.'
-			});
-			alertDlg.show();
+			showAlert('Error !', 'Server Error. Please try again.');
 			Ti.API.info('Upload image fail.');
 			forwardView.visible = false;
         	
@@ -391,9 +525,9 @@ function HelpPostWindow() {
 		};
 	}
 	
-	function helpPostCallback(result, resultmsg){
+	function activityPostCallback(result, resultmsg){
 		if(result == true){
-			Ti.API.info('Post Help Event success.');
+			Ti.API.info('Post Activity Event success.');
 			forwardView.visible = false;
 			Ti.App.fireEvent('getnewfeed');
      
@@ -401,36 +535,44 @@ function HelpPostWindow() {
 
 		}
 		else{
-			var alertDlg = Titanium.UI.createAlertDialog({
-				title:'Error !',
-				message:resultmsg
-			});
+			
+			showAlert('Error !', resultmsg);
 			forwardView.visible = false;
-			alertDlg.show();
 			Ti.API.info('Post event false.');
 			
 			
 		}
 	};
 	
-	function postHelpEvent(){
+	function postActivityEvent(){
 		currentdate = new Date(); 
 		extime = parseInt(currentdate.getTime()/1000)+Ti.App.Properties.getInt('defaultexpiretime',0);
-		
+		numppl = parseInt(pplTextfield.value);
+		if(isNaN(numppl)) {
+            numppl = 1;
+        }
+        if(numppl <= 1){
+        	numppl = 1;
+        }
 		var data = {
 			'name': Ti.App.Properties.getString('username'),
 			'photos':uploadimg,
 			'des':desTextArea.value,
 			'pos':[parseFloat(Ti.App.Properties.getDouble('userchooselongitude',0)),parseFloat(Ti.App.Properties.getDouble('userchooselatitude',0))],
-			'title':'',
+			'title':purposeTextField.value,
 			'extime':extime,
-			'category':1002,
-			'headphoto':Ti.App.Properties.getString('headfile','')
+			'headphoto':Ti.App.Properties.getString('headfile',''),
+			'category':1006,
+			'pdata':{
+				 'place':placeTextField.value,
+				 'time':parseInt(startTime.getTime()/1000),
+				 'numppl':numppl
+			}
 		};
 	    
 	    datastring = JSON.stringify(data);
 	    Ti.API.info('datastring : ' + datastring);
-		createvent(datastring ,helpPostCallback);
+		createvent(datastring ,activityPostCallback);
 	}
 	
 	var firstTimeBlur = false;
@@ -446,4 +588,4 @@ function HelpPostWindow() {
 }
 
 //make constructor function the public component interface
-module.exports = HelpPostWindow;
+module.exports = SocialPostWindow;

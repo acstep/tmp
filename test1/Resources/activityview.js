@@ -1,10 +1,6 @@
 Ti.include("common_net.js");
 Ti.include("common_util.js");
 
-var toast = Ti.UI.createNotification({
-    message:'',
-    duration: Ti.UI.NOTIFICATION_DURATION_LONG
-});
 
 
 function drawActivityEvent(view, data, lon, lat){
@@ -24,7 +20,7 @@ function drawActivityEvent(view, data, lon, lat){
 	/////////  top  photo  time  name ////////////////////
 	var topView = Ti.UI.createView({
 	    backgroundColor: 'white',
-	    width:'100%', height: '80dp',
+	    width:'100%', height: Ti.UI.SIZE,
 	    top:'0dp'
 	});
 	
@@ -44,7 +40,7 @@ function drawActivityEvent(view, data, lon, lat){
 	var topinfoView = Ti.UI.createView({
 	    backgroundColor: '#ffffff',
 	    layout: 'vertical',
-	    height: '80dp',
+	    height: Ti.UI.SIZE,
 	    top:'0dp',left:'70dp',right:'70dp'
 	});
 	
@@ -78,7 +74,7 @@ function drawActivityEvent(view, data, lon, lat){
 	}
 	
 	var timeText = Ti.UI.createLabel({
-		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
+		font:{fontSize:'10sp',fontFamily:'Helvetica Neue'},
 		text: timeString,
 		color:'#aaaaaa',
 		top:'1dp',
@@ -117,7 +113,7 @@ function drawActivityEvent(view, data, lon, lat){
 	});
 	
 	var distanceText = Ti.UI.createLabel({
-		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
+		font:{fontSize:'10sp',fontFamily:'Helvetica Neue'},
 		text: feedDistanceStr,
 		color:'#ffffff',
 
@@ -153,26 +149,26 @@ function drawActivityEvent(view, data, lon, lat){
 	    backgroundColor: '#ffffff',
 	    layout: 'vertical',
 	    width:'100%', height: Ti.UI.SIZE,
-	    top:'0dp'
+	    top:'10dp'
 	});
 	
 	if(data['title'] != undefined && data['title'] != ''){
 		var titlenameView = Ti.UI.createView({
 		    backgroundColor: '#ffffff',
-		    width:'100%', height: Ti.UI.SIZE,
-		    top:'10dp'
+		    width:'90%', height: Ti.UI.SIZE,left:'5%',
+		    top:'0dp'
 		});
 	    
 	    var titlenameImg = Titanium.UI.createImageView({
 	        image:'titlename.png',
-			height: '15dp', width: '15dp', left:'20dp'
+			height: '15dp', width: '15dp',left:'10dp',
 		});
 		
 		var titlenameText = Ti.UI.createLabel({
-			font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
+			font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
 			text: data['title'],
 			color:'#333333',
-			left:'45dp', right:'10dp',height: Ti.UI.SIZE,
+			left:'35dp', right:'10dp',height: Ti.UI.SIZE,
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});
 		
@@ -185,20 +181,20 @@ function drawActivityEvent(view, data, lon, lat){
 	if(data['pdata'] != undefined && data['pdata']['gname'] != undefined && data['pdata']['gname'] != ''){
 		var groupNameView = Ti.UI.createView({
 		    backgroundColor: '#ffffff',
-		    width:'100%', height: Ti.UI.SIZE,
+		    width:'90%', height: Ti.UI.SIZE,left:'5%',
 		    top:'0dp'
 		});
 	    
 	    var groupNameImg = Titanium.UI.createImageView({
 	        image:'groupname.png',
-			height: '15dp', width: '15dp', left:'20dp'
+			height: '15dp', width: '15dp', left:'10dp'
 		});
 		
 		var groupNameText = Ti.UI.createLabel({
-			font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
+			font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
 			text: data['pdata']['gname'],
 			color:'#3498db',
-			left:'45dp', right:'10dp', height: Ti.UI.SIZE,
+			left:'35dp', right:'10dp', height: Ti.UI.SIZE,
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});
 		
@@ -211,13 +207,13 @@ function drawActivityEvent(view, data, lon, lat){
 	if(data['pdata'] != undefined && data['pdata']['starttime'] != undefined && data['pdata']['starttime'] != ''){
 		var startTimeView = Ti.UI.createView({
 		    backgroundColor: '#ffffff',
-		    width:'100%', height: Ti.UI.SIZE,
+		    width:'90%', height: Ti.UI.SIZE,left:'5%',
 		    top:'0dp'
 		});
 	    
 	    var startTimeImg = Titanium.UI.createImageView({
 	        image:'sorttime.png',
-			height: '15dp', width: '15dp', left:'20dp'
+			height: '15dp', width: '15dp', left:'10dp'
 		});
 		
 		startTime = new Date(data['pdata']['starttime']*1000);
@@ -226,10 +222,10 @@ function drawActivityEvent(view, data, lon, lat){
 			minutes = '0'+minutes;
 		}
 		var startTimeText = Ti.UI.createLabel({
-			font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
+			font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
 			text: startTime.getFullYear()+'/'+(startTime.getMonth()+1)+'/'+startTime.getDate()+'  '+startTime.getHours()+':'+minutes,
 			color:'#34495e',
-			left:'45dp', right:'10dp', height: Ti.UI.SIZE,
+			left:'35dp', right:'10dp', height: Ti.UI.SIZE,
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});
 		
@@ -241,11 +237,11 @@ function drawActivityEvent(view, data, lon, lat){
     
 
 	var desText = Ti.UI.createLabel({
-		font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
+		font:{fontSize:'15sp',fontFamily:'Helvetica Neue'},
 		text: getStringlimit(data['des'],50,100),
 		color:'#666666',
-		top:'20dp',
-		left:'10dp',right:'10dp', height: Ti.UI.SIZE,
+		top:'10dp',
+		left:'20dp',right:'20dp', height: Ti.UI.SIZE,
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
   		width: Ti.UI.FILL,
   		name:'destext',
@@ -262,14 +258,14 @@ function drawActivityEvent(view, data, lon, lat){
 		    name:'imagecontentview'
 		});  
 		Ti.API.info('image file : ',('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + data['photos'][0]).replace('.jpg','-m.jpg'));
-		var activityImage = Titanium.UI.createImageView({
+		var feedImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
 		    visible : false,
 		    name:'image'
 		});
 		
 		  
-		activityImage.addEventListener('load', function(e)
+		feedImage.addEventListener('load', function(e)
 		{
 			platheight = Ti.Platform.displayCaps.platformHeight,
 			platwidth = Ti.Platform.displayCaps.platformWidth *0.90;
@@ -297,12 +293,12 @@ function drawActivityEvent(view, data, lon, lat){
 
 		});
 		
-		imageContentView.add(activityImage);
+		imageContentView.add(feedImage);
 		
 
 		middleView.add(imageContentView);
 		
-		activityImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + data['photos'][0]).replace('.jpg','-m.jpg');
+		feedImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + data['photos'][0]).replace('.jpg','-m.jpg');
 
 	}
 
@@ -766,53 +762,11 @@ function drawActivityContnet(contentView,data){
 	//////////////  map //////////////////////////////////////////
 	var mapView = Ti.UI.createView({
 	    backgroundColor: 'white',
-	    width:'90%', height: Ti.UI.SIZE,
+	    width:'90%', height: Ti.UI.SIZE,layout: 'vertical',
 	    top:'20dp',left:'5%'
 	});
 	
-	var mapParentView = Titanium.UI.createView({
-		height: '200dp', width: '100%',backgroundColor:'#transparent'
-		
-	});
-	
-	latitude = data['loc']['coordinates'][1];
-	longitude = data['loc']['coordinates'][0];
-	
-    var Map = require('ti.map');    
-	var posAnno = Map.createAnnotation({
-	    latitude:latitude,
-	    longitude:longitude,
-	    pincolor:Map.ANNOTATION_RED,
-	    myid:1 
-	});
-	
-	var mapview = Map.createView({
-	    mapType: Map.NORMAL_TYPE,
-	    region: {latitude:latitude, longitude:longitude, latitudeDelta:0.005, longitudeDelta:0.005},
-	    userLocation:false,
-	    enableZoomControls:false,
-	    annotations:[posAnno],
-	    height: '100%', width: '100%', top:'0dp',left:'0dp'
-	});
-	
-	var mapforgroundView = Titanium.UI.createImageView({
-		height: '100%', width: '100%', top:'0dp',left:'0dp',backgroundColor:'transparent',
-	});
-	
-	mapforgroundView.addEventListener('click',function(e)
-	{
-	     var intent = Ti.Android.createIntent({
-            action : Ti.Android.ACTION_VIEW,
-            data : 'geo:' + latitude +',' + longitude + '?q=' + latitude +',' + longitude
-        });
-        Ti.Android.currentActivity.startActivity(intent);	
-	});	
-	
-	mapParentView.add(mapview);
-	mapParentView.add(mapforgroundView);
-	
-
-	mapView.add(mapParentView);
+	createMapView(mapView,data);
 	
 	
 	//////////////////////   head photo  /////////////////////////////
@@ -969,6 +923,8 @@ function drawActivityContnet(contentView,data){
 	contentView.add(createHSepLine('90%','20dp','0dp'));
 	contentView.add(mapView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
+	
+	setPosString(latitude,longitude,mapView.addressText);
 }
 
 
