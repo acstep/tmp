@@ -446,6 +446,11 @@ function feedWindow() {
 				new helpAppWindow().open(); 
 				switchBackgroundView();
 				break;	
+			case 3:
+			    socialAppWindow = require('socialAppWindows');
+				new socialAppWindow().open(); 
+				switchBackgroundView();
+				break;	
 			case 4:
 			    newsAppWindow = require('newsAppWindows');
 				new newsAppWindow().open(); 

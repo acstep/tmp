@@ -114,7 +114,7 @@ function createNormalFeed(viewobj,category){
 	    	'1003':drawSalesEvent,
 	    	'1004':drawUsedEvent,
 	    	'1005':drawTeambuyEvent,
-	    	
+	    	'1006':drawSocialEvent,
 	};
 	
 	

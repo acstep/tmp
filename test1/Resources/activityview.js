@@ -924,7 +924,7 @@ function drawActivityContnet(contentView,data){
 	contentView.add(mapView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
 	
-	setPosString(latitude,longitude,mapView.addressText);
+	
 }
 
 
