@@ -131,7 +131,7 @@ function SocialPostWindow() {
     //title of dialog
 	    title: L('chooseimage'),
 	    //options
-	    options: [L('camera'),L('photogaooery'), L('cancel')],
+	    options: [L('camera'),L('photogallery'), L('cancel')],
 	    //index of cancel button
 	    cancel:2
 	});
@@ -360,10 +360,10 @@ function SocialPostWindow() {
 		height: '15dp', width: '15dp', left:'10dp'
 	});
 	
-	var peopleText = Ti.UI.createLabel({
+	var lookingText = Ti.UI.createLabel({
 		font:{fontSize:'16sp'},
 		text: L('preferredppl') ,
-		color:'#3498db', width:'40%',
+		color:'#3498db', width:'35%',
 		left:'10dp',
 		height:Titanium.UI.SIZE,
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
@@ -374,17 +374,28 @@ function SocialPostWindow() {
 		editable: true,
 		value:'1',
 		hintText:'1',
-		width:'40%',
+		width:'20%',
 		font:{fontSize:'16sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 		color:'#000000',
 		textAlign:'left',
 	});
+	
+	var peopleText = Ti.UI.createLabel({
+		font:{fontSize:'16sp'},
+		text: L('people') ,
+		color:'#3498db', width:'25%',
+		left:'10dp',
+		height:Titanium.UI.SIZE,
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+	});
+	
     peopleView.add(pplImg);
-    peopleView.add(peopleText);
+    peopleView.add(lookingText);
 	peopleView.add(pplTextfield);
+	peopleView.add(peopleText);
     
     var desTextArea = Ti.UI.createTextArea({
-	    font: {fontSize:'20sp'},
+	    font: {fontSize:'16sp'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    hintText:L('addsocialcontent'),
@@ -408,7 +419,7 @@ function SocialPostWindow() {
     ////////////   map  //////////////
     
     var mapHintText = Ti.UI.createLabel({
-		font:{fontSize:'20sp',fontFamily:'Helvetica Neue'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('changemap'),
 		color:'#2c3e50',
 		top:'50dp',

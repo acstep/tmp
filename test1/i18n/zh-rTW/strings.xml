@@ -21,9 +21,10 @@
 	<string name="loading">   載入更多訊息...</string>
 	<string name="chooseimage">選擇照片來源...</string>
 	<string name="camera">照相機</string>
-	<string name="photogaooery">相片簿</string>
+	<string name="photogallery">相片簿</string>
 	<string name="cancel">取消</string>
 	<string name="done">確認</string>
+	<string name="delete">刪除</string>
 	<string name="cropimage">裁切與選擇照片區域</string>
 	<string name="uploadimage">正在上傳您的圖片...</string>
 	<string name="km">公里</string>
@@ -56,5 +57,9 @@
 	<string name="purpose">型態:  例如  吃飯聊天,郊遊</string>
 	<string name="preferredtime">首選時間</string>
 	<string name="preferredplace">首選地點: 例如  XX餐廳</string>
-	<string name="preferredppl">參加人數 : </string>
+	<string name="preferredppl">想找 : </string>
+	<string name="people">人 </string>
+	<string name="enterchatroom">進入聊天室</string>
+	<string name="deletechatroom">刪除聊天室</string>
+	<string name="hasleft">  已經離開聊天室</string>
 </resources>

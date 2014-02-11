@@ -137,6 +137,35 @@ function createvent(data, callbackf){
 	
 };
 
+
+function deleteevent(eventid, callbackf){
+	id = Ti.App.Properties.getString('userid','');
+    token = Ti.App.Properties.getString('token','');
+	url = 'http://54.254.208.12/api/removeevent?' + 'id=' + id + '&token=' + token + '&eventid=' + eventid;
+	Ti.API.info('url : ' + url);
+	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.result);
+    	}
+    	else{
+    		callbackf(false,result.result);
+    	}
+
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'network error');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
+
+
 function queryeventbyid(eventid,callbackf){
 	
 	url = 'http://54.254.208.12/api/queryeventbyid?' + 'eventid=' + eventid ;
@@ -382,6 +411,35 @@ function createchatroom( id, toid, check, callbackf){
 	
 };
 
+
+function quitchatroom( roomid, callbackf){
+    id = Ti.App.Properties.getString('userid','');
+    token = Ti.App.Properties.getString('token','');
+    
+    url = 'http://54.254.208.12/api/quitchatroom?' + 'id=' + id + '&token=' + token+'&chatroomid=' +roomid;
+
+	
+	Ti.API.info('url : ' + url);
+	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.result);
+    	}
+    	else{
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'network error');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
 
 
 function querychatroom( starttime, limitcount,onlytime ,callbackf){

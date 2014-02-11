@@ -34,7 +34,7 @@ function notifyWindow() {
 	
 	//////////////   middle   table view  //////////////////////
 	var notifyDataItems = [];
-	
+	var savedNotifyData = [];
 	var notifyTableView = Ti.UI.createTableView({
 	    
 	    data:notifyDataItems
@@ -45,10 +45,23 @@ function notifyWindow() {
     function parseNotify(result, notifyData){
     	
     	notifyLoading = false;
-    	if(notifyRowstatus == 'loading'){
-    		notifyDataItems.pop(notifyDataItems.length-1);
-    		notifyRowstatus = 'none';
-    	}	
+    	try{
+    		notifyTableView.deleteRow(notifyRow);
+
+
+    	}catch(e){}	
+    	
+    	if(result == false){
+    		Ti.API.info('result false. savedNotifyData : ' + JSON.stringify(savedNotifyData));
+    		if(savedNotifyData.length == 0){
+    			// if savedChatroomData is empty, it means we enter chatroom at first time
+    			notifyData = JSON.parse(Ti.App.Properties.getString('savedNotifyData','[]'));
+    			Ti.API.info('NotifyData load from file :  ' + JSON.stringify(notifyData));
+     		}
+     		savedNotifyData = [];
+     		
+    	}
+    	
     	for(var i = 0 ; i <= notifyData.length -1; i++){
     		var notifyRow = Ti.UI.createTableViewRow({
 		        backgroundSelectedColor:'#3f9ddd',
@@ -131,10 +144,14 @@ function notifyWindow() {
 			notifyRow.add(itemView);
 			notifyRow.add(contentView);
 		    notifyDataItems.push(notifyRow);
+		    savedNotifyData.push(notifyData[i]);
 		    notifyRow.type = 'comment';
 		    notifyRow.eventid = notifyData[i]['eventid'];
 		    starttime = notifyData[i]['time'];
     	};
+    	
+    	Ti.API.info('notify data save:  ' + JSON.stringify(savedNotifyData));
+    	Ti.App.Properties.setString('savedNotifyData',JSON.stringify(savedNotifyData));
     	forwardView.visible = false;
     	notifyTableView.data = notifyDataItems;
 
@@ -169,7 +186,7 @@ function notifyWindow() {
 	notifyRow.add(itemView);
 	
 	
-    var notifyRowstatus = 'none';
+
     var notifyLoading = false;
     notifyTableView.addEventListener('scroll', function(e)
 	{
@@ -179,7 +196,7 @@ function notifyWindow() {
 			if(notifyLoading == false){
 				notifyLoading =  true;
 			    
-				notifyRowstatus = 'loading';
+
 				notifyDataItems.push(notifyRow);
 				notifyTableView.data = notifyDataItems;
 				querynotify( starttime, 10, parseNotify);
@@ -195,6 +212,8 @@ function notifyWindow() {
 	function requestNotify(){
 		forwardView.visible = true;
 		currentdate = new Date(); 
+		savedNotifyData = [];
+		notifyDataItems = [];
 		starttime = parseInt(currentdate.getTime()/1000);
 		querynotify( starttime, 10, parseNotify);
 		

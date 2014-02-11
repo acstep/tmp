@@ -666,3 +666,291 @@ function createCardBottom(feedView, data){
 	feedView.add(bottomView);
 }
 
+
+function createFeedTop(feedView, data, lon, lat){
+	var topView = Ti.UI.createView({
+	    backgroundColor: '#ffffff',
+
+	    width:'100%', height:  Ti.UI.SIZE,
+	    top:'0dp'
+	});
+	
+	
+	
+	var headPhotoImg = Titanium.UI.createImageView({
+        borderRadius:15,
+		height: '60dp', width: '60dp', top:'15dp', left:'10dp'
+	});
+	
+	if(data['headphoto'] == undefined || data['headphoto'] == ''){
+		headPhotoImg.image = 'headphoto.png';
+	}
+	else{
+		headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + data['headphoto'];
+	}
+	
+	var topinfoView = Ti.UI.createView({
+	    
+	    layout: 'vertical',
+	    height:  Ti.UI.SIZE,
+	    top:'0dp',left:'70dp',right:'70dp'
+	});
+	
+	
+	
+	var nameText = Ti.UI.createLabel({
+		font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
+		text: data['name'],
+		color:'#333333',
+		top:'15dp',
+		left:'10dp',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
+	});
+	
+	
+	eventtime = new Date(data['lastupdate']);
+	currenttime =  new Date().getTime()/1000;
+	difftime = currenttime - eventtime;
+	var timeString = '';
+	if(difftime < 60){
+		timeString = parseInt(difftime) + ' ' + L('beforesec');
+	}
+	else if(difftime >=60 &&  difftime < 3600){
+		timeString = parseInt(difftime/60) + ' ' + L('beforemin');
+	}
+	else if(difftime >=3600 &&  difftime < 86400){
+		timeString = parseInt(difftime/3600) + ' ' + L('beforehour');
+	}
+	else{
+		timeString = parseInt(difftime/86400) + ' ' + L('beforeday');
+	}
+	
+	var timeText = Ti.UI.createLabel({
+		font:{fontSize:'10sp',fontFamily:'Helvetica Neue'},
+		text: timeString,
+		color:'#aaaaaa',
+		top:'1dp',
+		left:'10dp',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
+	});
+	
+
+	
+	var feeddistance = GetDistance(lat, lon, data.loc['coordinates'][1], data['loc']['coordinates'][0], 'K');
+	if(feeddistance < 1){
+		feeddistance =  parseInt(feeddistance * 1000);
+		feedDistanceStr = '   '+feeddistance+ ' '+L('m')+ '   ';
+	}
+	else{
+		feeddistance =  parseInt(feeddistance);
+		feedDistanceStr = '   '+feeddistance+ ' '+ L('km')+ '   ';
+	} 
+	
+	var topCategoryDistanceView = Ti.UI.createView({
+	    layout: 'horizontal',
+	    width:'100%', height: Ti.UI.SIZE,
+	    top:'3dp'
+	});
+	
+	var categoryText = Ti.UI.createLabel({
+		font:{fontSize:'10sp',fontFamily:'Helvetica Neue'},
+		color:'#ffffff',
+		left:'10dp',
+		borderRadius:10,
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
+	});
+	
+	var distanceText = Ti.UI.createLabel({
+		font:{fontSize:'10sp',fontFamily:'Helvetica Neue'},
+		text: feedDistanceStr,
+		color:'#ffffff',
+
+		left:'10dp',
+		backgroundColor:'#3498db',
+		borderRadius:10,
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
+	});
+	
+	topinfoView.add(nameText);
+	topinfoView.add(timeText);
+	
+	topCategoryDistanceView.add(categoryText);
+	topCategoryDistanceView.add(distanceText);
+	
+	topinfoView.add(topCategoryDistanceView);
+	
+	var categoryImg = Titanium.UI.createImageView({
+		height: '30dp', width: '30dp', top:'20dp', right:'20dp'
+	});
+	
+	
+	topView.add(headPhotoImg);
+	topView.add(topinfoView);
+	topView.add(categoryImg);
+	
+	feedView.add(topView);
+	feedView.categoryText = categoryText;
+	feedView.categoryImg = categoryImg;
+}
+
+function createAddPhoto(contentScrollView,imageList){
+	var imageScrollView = Ti.UI.createScrollView({
+	    contentWidth: 'auto',
+	    contentHeight:'160dp',
+	    layout: 'horizontal',
+	    backgroundColor:'#ffffff',
+        height:'160dp'
+	});
+	
+	//////   camera  /////////////
+	
+	
+	var cameraViewImageView = Ti.UI.createView({
+		backgroundColor:'#dddddd',
+		width:'100dp',
+		height:'100dp',
+		top:'30dp',
+		left:'10dp',
+		layout:'vertical',
+		borderRadius:15,
+		
+	});
+	
+	var addImg = Titanium.UI.createImageView({
+		image:'add.png',
+		height: '30dp', width: '30dp', top:'20dp'
+	});
+	
+	var addPhotoText = Ti.UI.createLabel({
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
+		text: L('addphoto'),
+		color:'#666666',
+		top:'15dp',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+	});
+	
+	
+	/////////////   select image from camera or gallary ///////////////////
+	
+	
+	var dialog = Titanium.UI.createOptionDialog({
+    //title of dialog
+	    title: L('chooseimage'),
+	    //options
+	    options: [L('camera'),L('photogallery'), L('cancel')],
+	    //index of cancel button
+	    cancel:2
+	});
+	 
+	//add event listener
+	dialog.addEventListener('click', function(e) {
+	    //if first option was selected
+	    if(e.index == 0)
+	    {
+	        //then we are getting image from camera
+	        Titanium.Media.showCamera({
+	            //we got something
+	            success:function(event)
+	            {
+	                //getting media
+	                var image = event.media;
+	                 
+	                //checking if it is photo
+	                if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO)
+	                {
+	                    //we may create image view with contents from image variable
+	                    //or simply save path to image
+	                    imageList.push(image);
+	                    var addSelectImg = Titanium.UI.createImageView({
+							image:image,
+							width:'100dp',
+							height:'100dp',
+							top:'30dp',
+							left:'10dp',
+							borderRadius:15
+						});
+						imageScrollView.contentWidth = ((imageList.length+1)*110 + 20)*(Titanium.Platform.displayCaps.dpi / 160);
+						imageScrollView.add(addSelectImg);
+	                }
+	            },
+	            cancel:function()
+	            {
+	                //do somehting if user cancels operation
+	            },
+	            error:function(error)
+	            {
+	                //error happend, create alert
+	            
+	                //set message
+	                if (error.code == Titanium.Media.NO_CAMERA)
+	                {
+	                	showAlert('Camera', 'Device does not have camera'); 
+	                    
+	                }
+	                else
+	                {
+	                	showAlert('Camera', 'Unexpected error: ' + error.code);  
+
+	                }
+
+	            },
+	            allowImageEditing:true,
+	            saveToPhotoGallery:true
+	        });
+	    }
+	    else if(e.index == 1)
+	    {
+	        //obtain an image from the gallery
+	        Titanium.Media.openPhotoGallery({
+	            success:function(event)
+	            {
+	                //getting media
+	                var image = event.media;
+	                // set image view
+	                 
+	                //checking if it is photo
+	                if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO)
+	                {
+	                    //we may create image view with contents from image variable
+	                    //or simply save path to image
+	                    imageList.push(image);
+	                    var addSelectImg = Titanium.UI.createImageView({
+							image:image,
+							width:'100dp',
+							height:'100dp',
+							top:'30dp',
+							left:'10dp',
+							borderRadius:15
+						});
+						imageScrollView.contentWidth = ((imageList.length+1)*110 + 20)*(Titanium.Platform.displayCaps.dpi / 160);
+						imageScrollView.add(addSelectImg);
+	                }  
+	            },
+	            cancel:function()
+	            {
+	                //user cancelled the action fron within
+	                //the photo gallery
+	            }
+	        });
+	    }
+	    else
+	    {
+	        //cancel was tapped
+	        //user opted not to choose a photo
+	    }
+	});
+
+    cameraViewImageView.addEventListener('click',function(e)
+	{
+		dialog.show();
+	});	
+	
+	
+	cameraViewImageView.add(addImg);
+	cameraViewImageView.add(addPhotoText);
+	
+	imageScrollView.add(cameraViewImageView);
+	imageScrollView.dialog = dialog;
+	contentScrollView.add(imageScrollView);
+	
+}

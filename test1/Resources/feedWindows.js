@@ -353,7 +353,7 @@ function feedWindow() {
 	var topNameText = Ti.UI.createLabel({
 		font:{fontSize:'18sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 		text: Ti.App.Properties.getString('username'),
-		color:'#666666',
+		color:'#4aa3df',
 		left:'80dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});

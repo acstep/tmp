@@ -10,6 +10,7 @@ function talkWindow(id, toid,roomdata) {
     var messageLock = true; 
     var lastMsgTime = 0;
     var msgItems = []; 
+    var recordText = [];
  
 	//load component dependencies
 	
@@ -148,7 +149,8 @@ function talkWindow(id, toid,roomdata) {
 	    else{
 	    	tmpRow = createTextRow(id, msgTextArea.value);
 	    	talkDataItems.push(tmpRow);
-	    	talkTableView.data = talkDataItems;
+	    	talkTableView.appendRow(tmpRow);
+
 	    	talkTableView.scrollToIndex(talkDataItems.length-1);
 	    	msgTextArea.value = '';
 	    	
@@ -415,6 +417,7 @@ function talkWindow(id, toid,roomdata) {
 				starttime = parseInt(currentdate.getTime()/1000);
 				talkDataItems = [];
 				talkTableView.data = [];
+				recordText = [];
 				Ti.API.info('roomdata : ' + JSON.stringify({'data':roomdata}));
 				setTitle(roomdata);
 				querymsg( roomdata['roomid'], starttime, 10 ,parseMsg);

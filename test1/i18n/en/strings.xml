@@ -21,9 +21,10 @@
 	<string name="loading">   Loading...</string>
 	<string name="chooseimage">Choose an image source...</string>
 	<string name="camera">Camera</string>
-	<string name="photogaooery">Photo Gallery</string>
+	<string name="photogallery">Photo Gallery</string>
 	<string name="cancel">Cancel</string>
 	<string name="done">Done</string>
+	<string name="delete">Delete</string>
 	<string name="cropimage">Crop and Select Image</string>
 	<string name="uploadimage">Uploading you Image...</string>
 	<string name="km">km</string>
@@ -53,8 +54,12 @@
 	<string name="addsalescontent">Promotion Content Description... \n\n\n\n\n\n</string>
 	<string name="addteambuycontent">Team Buy Products Description... \n\n\n\n\n\n</string>
 	<string name="addsocialcontent">Your Social or Dating Content... \n\n\n\n\n\n</string>
-	<string name="purpose">Type: ex. Dinner, Talking</string>
+	<string name="purpose">Preferred Type: ex. Dinner, Talking</string>
 	<string name="preferredtime">Preferred Time</string>
 	<string name="preferredplace">Preferred Place: ex. XX restaurant</string>
-	<string name="preferredppl">People attended : </string>
+	<string name="preferredppl">Looking for : </string>
+	<string name="people">members</string>
+	<string name="enterchatroom">Enter chat room</string>
+	<string name="deletechatroom">Delete chat room</string>
+	<string name="hasleft">  has left chat room</string>
 </resources>

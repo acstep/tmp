@@ -18,130 +18,11 @@ function drawActivityEvent(view, data, lon, lat){
 
 	
 	/////////  top  photo  time  name ////////////////////
-	var topView = Ti.UI.createView({
-	    backgroundColor: 'white',
-	    width:'100%', height: Ti.UI.SIZE,
-	    top:'0dp'
-	});
+	createFeedTop(feedView, data, lon, lat);
+	feedView.categoryText.text = '   ' + L('club') +'   ';
+	feedView.categoryText.backgroundColor = '#f39c12';
+	feedView.categoryImg.image = 'group.png';
 	
-
-	var headPhotoImg = Titanium.UI.createImageView({
-        borderRadius:15,
-		height: '60dp', width: '60dp', top:'15dp', left:'10dp'
-	});
-	
-	if(data['headphoto'] == undefined || data['headphoto'] == ''){
-		headPhotoImg.image = 'headphoto.png';
-	}
-	else{
-		headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + data['headphoto'];
-	}
-	
-	var topinfoView = Ti.UI.createView({
-	    backgroundColor: '#ffffff',
-	    layout: 'vertical',
-	    height: Ti.UI.SIZE,
-	    top:'0dp',left:'70dp',right:'70dp'
-	});
-	
-	
-	
-	var nameText = Ti.UI.createLabel({
-		font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
-		text: data['name'],
-		color:'#333333',
-		top:'15dp',
-		left:'10dp',
-  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
-	});
-	
-	
-	eventtime = new Date(data['lastupdate']);
-	currenttime =  new Date().getTime()/1000;
-	difftime = currenttime - eventtime;
-	var timeString = '';
-	if(difftime < 60){
-		timeString = parseInt(difftime) + ' ' + L('beforesec');
-	}
-	else if(difftime >=60 &&  difftime < 3600){
-		timeString = parseInt(difftime/60) + ' ' + L('beforemin');
-	}
-	else if(difftime >=3600 &&  difftime < 86400){
-		timeString = parseInt(difftime/3600) + ' ' + L('beforehour');
-	}
-	else{
-		timeString = parseInt(difftime/86400) + ' ' + L('beforeday');
-	}
-	
-	var timeText = Ti.UI.createLabel({
-		font:{fontSize:'10sp',fontFamily:'Helvetica Neue'},
-		text: timeString,
-		color:'#aaaaaa',
-		top:'1dp',
-		left:'10dp',
-  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
-	});
-	
-
-	
-	var feeddistance = GetDistance(lat, lon, data.loc['coordinates'][1], data['loc']['coordinates'][0], 'K');
-	if(feeddistance < 1){
-		feeddistance =  parseInt(feeddistance * 1000);
-		feedDistanceStr = '   '+feeddistance+ ' '+L('m')+ '   ';
-	}
-	else{
-		feeddistance =  parseInt(feeddistance);
-		feedDistanceStr = '   '+feeddistance+ ' '+ L('km')+ '   ';
-	} 
-	
-	var topCategoryDistanceView = Ti.UI.createView({
-	    backgroundColor: 'white',
-	    layout: 'horizontal',
-	    width:'100%', height: Ti.UI.SIZE,
-	    top:'3dp'
-	});
-	
-	var categoryText = Ti.UI.createLabel({
-		font:{fontSize:'10sp',fontFamily:'Helvetica Neue'},
-		text:  '   ' + L('club') +'   ',
-		color:'#ffffff',
-
-		left:'10dp',
-		backgroundColor:'#f39c12',
-		borderRadius:10,
-  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
-	});
-	
-	var distanceText = Ti.UI.createLabel({
-		font:{fontSize:'10sp',fontFamily:'Helvetica Neue'},
-		text: feedDistanceStr,
-		color:'#ffffff',
-
-		left:'10dp',
-		backgroundColor:'#3498db',
-		borderRadius:10,
-  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
-	});
-	
-	topinfoView.add(nameText);
-	topinfoView.add(timeText);
-	
-	topCategoryDistanceView.add(categoryText);
-	topCategoryDistanceView.add(distanceText);
-	
-	topinfoView.add(topCategoryDistanceView);
-	
-	var categoryImg = Titanium.UI.createImageView({
-        image:'group.png',
-		height: '30dp', width: '30dp', top:'20dp', right:'20dp'
-	});
-	
-	
-	topView.add(headPhotoImg);
-	topView.add(topinfoView);
-	topView.add(categoryImg);
-	
-	feedView.add(topView);
 	
 	
 	/////////  middle description  photo  ///////////////////////////////
@@ -253,7 +134,7 @@ function drawActivityEvent(view, data, lon, lat){
 	if(data['photos'].length > 0){
 		var imageContentView = Titanium.UI.createView({
 		  	backgroundColor: '#ffffff',
-		    top: '5dp', left:'3%',
+		    top: '10dp', left:'3%',
 		    width:'94%',height:'200dp',
 		    name:'imagecontentview'
 		});  

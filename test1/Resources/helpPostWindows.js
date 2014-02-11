@@ -134,7 +134,7 @@ function HelpPostWindow() {
     //title of dialog
 	    title: L('chooseimage'),
 	    //options
-	    options: [L('camera'),L('photogaooery'), L('cancel')],
+	    options: [L('camera'),L('photogallery'), L('cancel')],
 	    //index of cancel button
 	    cancel:2
 	});
@@ -251,7 +251,7 @@ function HelpPostWindow() {
 
     ///////    description and map /////////////
     var desTextArea = Ti.UI.createTextArea({
-	    font: {fontSize:'20sp'},
+	    font: {fontSize:'16sp'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    hintText:L('addhelpcontent'),
@@ -270,7 +270,7 @@ function HelpPostWindow() {
     ////////////   map  //////////////
     
     var mapHintText = Ti.UI.createLabel({
-		font:{fontSize:'20sp',fontFamily:'Helvetica Neue'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('changemap'),
 		color:'#2c3e50',
 		top:'50dp',

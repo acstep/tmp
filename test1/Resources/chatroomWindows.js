@@ -40,7 +40,7 @@ function chatroomWindow() {
 	
 	//////////////   middle   table view  //////////////////////
 	var chatroomDataItems = [];
-	
+	var savedChatroomData = [];
 	var chatroomTableView = Ti.UI.createTableView({
 	    
 	    data:chatroomDataItems
@@ -49,12 +49,23 @@ function chatroomWindow() {
 	backgroundView.add(chatroomTableView);
 	
     function parseChatroom(result, chatroomData){
+    	Ti.API.info(' chatroom data : ' + JSON.stringify(chatroomData));
     	forwardView.visible = false;
     	chatroomLoading = false;
-    	if(chatroomRowstatus == 'loading'){
+    	try{
     		chatroomTableView.deleteRow(chatroomLoadingRow);
-    		chatroomRowstatus = 'none';
     	}	
+    	catch(e){}
+    	if(result == false){
+    		Ti.API.info('result false. savedChatroomData : ' + JSON.stringify(savedChatroomData));
+    		if(savedChatroomData.length == 0){
+    			// if savedChatroomData is empty, it means we enter chatroom at first time
+    			chatroomData = JSON.parse(Ti.App.Properties.getString('savedChatroomData','[]'));
+    			Ti.API.info('roomdata load from file :  ' + JSON.stringify(chatroomData));
+     		}
+     		savedChatroomData = [];
+     		
+    	}
     	for(var i = 0 ; i < chatroomData.length ; i++){
     		var chatroomRow = Ti.UI.createTableViewRow({
 		        backgroundSelectedColor:'#3f9ddd',
@@ -70,7 +81,7 @@ function chatroomWindow() {
 			});
 			
 			var toidIndex = 0;
-			var idData = {'name':chatroomData[i]['memberid'][0]['name']+chatroomData[i]['memberid'][1]['name']+'...'};
+			var idData = {};
 			if(chatroomData[i]['memberid'].length > 2){
 				toidIndex = 2;
 				headPhotoImg.image = 'group.png';
@@ -79,7 +90,7 @@ function chatroomWindow() {
 			else{
 				userid = Ti.App.Properties.getString('userid','');
 				
-				if(chatroomData[i]['memberid'][0] == userid){
+				if(chatroomData[i]['memdata'][0]['id'] == userid){
 					toidIndex = 1;
 					idData = chatroomData[i]['memdata'][1];
 					if(typeof(idData['photo']) == 'undefined' || idData['photo'] == ''){
@@ -99,8 +110,6 @@ function chatroomWindow() {
 						headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + idData['photo'];
 					}
 				}
-				
-				
 			}
 			
 			
@@ -112,9 +121,13 @@ function chatroomWindow() {
 				layout: 'vertical'
 			});
 			
+			var leftstr = '';
+			if(chatroomData[i]['memberid'].length == 1){
+				leftstr = L('hasleft');
+			}
 			var nameText = Ti.UI.createLabel({
 				font:{fontSize:'14sp',fontFamily:'Marker Felt',fontWeight:'bold'},
-				text: idData['name'],
+				text: idData['name'] + leftstr,
 				color:'#888888',left:'10dp',right:'10dp'
 			});
 			contentView.add(nameText);
@@ -194,12 +207,47 @@ function chatroomWindow() {
 		    chatroomRow.newMsgText = newMsgText;
 		    chatroomDataItems.push(chatroomRow);
 		    starttime = chatroomData[i]['lasttime'];
+		    savedChatroomData.push(chatroomData[i]);
     	};
+    	Ti.API.info('roomdata save:  ' + JSON.stringify(savedChatroomData));
+    	Ti.App.Properties.setString('savedChatroomData',JSON.stringify(savedChatroomData));
     	chatroomTableView.data = chatroomDataItems;
 	    chatroomLock = false;
     	
 		
 	}	
+	
+	var chatroomDialog = Titanium.UI.createOptionDialog({
+	    //options
+	    options: [L('enterchatroom'),L('deletechatroom'), L('cancel')],
+	    //index of cancel button
+	});
+	
+	function quitroomCB(result,data){
+		if(result == true){
+			requestChatroom();
+		}
+		else{
+			showAlert('Error !', data); 
+		}
+		
+	}
+	
+	chatroomDialog.addEventListener('click', function(e) {
+		Ti.API.info('postView click.');
+		switch(e.index){
+			case 0:
+			    talkWindow = require('talkWindows');
+	    		new talkWindow(Ti.App.Properties.getString('userid',''), '', chatroomDialog.roomdata).open(); 	 
+				break;
+			case 1:
+			    Ti.API.info(' delete room :  ' + chatroomDialog.roomdata['roomid']);
+			    quitchatroom(chatroomDialog.roomdata['roomid'],quitroomCB);
+				break;	
+			default:
+		}
+        
+	});
 	
     chatroomTableView.addEventListener('click', function(e){
 
@@ -211,11 +259,27 @@ function chatroomWindow() {
 			Ti.App.Properties.setString('roominfo',JSON.stringify(roominfo));
 			Ti.API.info(' roominfo delete result ' + JSON.stringify(roominfo));
 		}
+		talkWindow = require('talkWindows');
+	    new talkWindow(Ti.App.Properties.getString('userid',''), '', e.row.roomdata).open(); 
 
-	    talkWindow = require('talkWindows');
-	    new talkWindow(Ti.App.Properties.getString('userid',''), '', e.row.roomdata).open(); 	
+    });
+    
+    chatroomTableView.addEventListener('longclick', function(e){
+
+		e.row.newMsgView.visible = false;
+		e.row.newMsgText.text = 0;
+		var roominfo = JSON.parse(Ti.App.Properties.getString('roominfo','{}'));
+		if(typeof(roominfo[e.row.roomid]) != 'undefined'){
+		    delete roominfo[e.row.roomid] ;
+			Ti.App.Properties.setString('roominfo',JSON.stringify(roominfo));
+			Ti.API.info(' roominfo delete result ' + JSON.stringify(roominfo));
+		}
+        chatroomDialog.roomdata = e.row.roomdata;
+        chatroomDialog.show(); 
+	    	
 	
     });
+    
     
     var chatroomLoadingRow = Ti.UI.createTableViewRow({
         backgroundSelectedColor:'#3f9ddd',
@@ -237,7 +301,7 @@ function chatroomWindow() {
 	chatroomLoadingRow.add(itemView);
 	
 	
-    var chatroomRowstatus = 'none';
+
     var chatroomLoading = false;
     chatroomTableView.addEventListener('scroll', function(e)
 	{
@@ -247,7 +311,7 @@ function chatroomWindow() {
 			if(chatroomLoading == false){
 				chatroomLoading =  true;
 			    
-				chatroomRowstatus = 'loading';
+
 				chatroomTableView.appendRow(chatroomLoadingRow);
 				querychatroom( starttime, 10, false, parseChatroom);
 					
@@ -262,6 +326,7 @@ function chatroomWindow() {
 	function requestChatroom(){
 		forwardView.visible = true;
 		chatroomDataItems = [];
+		savedChatroomData = [];
 		currentdate = new Date(); 
 		starttime = parseInt(currentdate.getTime()/1000);
 		querychatroom( starttime, 10, false,parseChatroom);

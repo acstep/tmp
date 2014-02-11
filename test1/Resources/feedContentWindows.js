@@ -34,7 +34,37 @@ function feedContentWindow(eventid, fullcontent) {
 	titleView.add(categoryText);
 	titleView.add(backImg);
 
+	var doneButton = Titanium.UI.createButton({
+	    title: L('delete'),
+	    top: '10dp',
+	    bottom:'10dp',
+	    height: '30dp',
+	    right:'10dp',
+	    color:'#ffffff',
+	    backgroundColor:'#ff0000',
+	    borderRadius:10,
+	    visible:false
+	});
 	
+	function deleteCB(result, data){
+		if(result == false){
+			
+			showAlert('Error !', data);
+			Ti.API.info('Delete event false.');
+			return;
+		}
+		else{
+			Ti.App.fireEvent('getnewfeed');
+			self.close();
+		}
+	}
+	
+	doneButton.addEventListener('click',function(e)
+	{
+	    deleteevent(eventid, deleteCB);
+	});	
+	
+	titleView.add(doneButton);
 	
 	
 	var contentScrollView = Ti.UI.createScrollView({
@@ -58,6 +88,7 @@ function feedContentWindow(eventid, fullcontent) {
 	    	'1003':drawSalesContnet,
 	    	'1004':drawUsedContnet,
 	    	'1005':drawTeambuyContnet,
+	    	'1006':drawSocialContnet
 	};
     
     
@@ -68,6 +99,7 @@ function feedContentWindow(eventid, fullcontent) {
     	'1003':'sale',
     	'1004':'used',
     	'1005':'teambuying',
+    	'1006':'dating',
     };
     
     var contentView = Ti.UI.createView({
@@ -88,6 +120,10 @@ function feedContentWindow(eventid, fullcontent) {
 		}
 		else{
 			Ti.API.info('drawFeedContentFunction.');
+			myid =  Ti.App.Properties.getString('userid','');
+			if(data['ownerid'] == myid){
+				doneButton.visible = true;
+			}
 			categoryText.text = L(titleString[data['category'].toString()]);
 			drawFeedContentFunction[data['category'].toString()](contentView,data);
 			self.add(contentView);

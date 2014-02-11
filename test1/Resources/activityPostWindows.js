@@ -89,7 +89,6 @@ function ActivityPostWindow() {
 	///////  image  scroll///////////////////
 	var imageList = [];
 	
-	
 	var imageScrollView = Ti.UI.createScrollView({
 	    contentWidth: 'auto',
 	    contentHeight:'160dp',
@@ -117,7 +116,7 @@ function ActivityPostWindow() {
 		height: '30dp', width: '30dp', top:'20dp'
 	});
 	
-	var addPhoeoText = Ti.UI.createLabel({
+	var addPhotoText = Ti.UI.createLabel({
 		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('addphoto'),
 		color:'#666666',
@@ -127,11 +126,13 @@ function ActivityPostWindow() {
 	
 	
 	/////////////   select image from camera or gallary ///////////////////
+	
+	
 	var dialog = Titanium.UI.createOptionDialog({
     //title of dialog
 	    title: L('chooseimage'),
 	    //options
-	    options: [L('camera'),L('photogaooery'), L('cancel')],
+	    options: [L('camera'),L('photogallery'), L('cancel')],
 	    //index of cancel button
 	    cancel:2
 	});
@@ -241,15 +242,15 @@ function ActivityPostWindow() {
 	
 	
 	cameraViewImageView.add(addImg);
-	cameraViewImageView.add(addPhoeoText);
+	cameraViewImageView.add(addPhotoText);
 	
 	imageScrollView.add(cameraViewImageView);
-
-    contentScrollView.add(imageScrollView);
+	contentScrollView.add(imageScrollView);
+   
 
     ///////    description and map /////////////
     var titleTextField = Ti.UI.createTextField({
-	    font: {fontSize:'20sp'},
+	    font: {fontSize:'16sp'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    hintText:L('activitytitle'),
@@ -263,7 +264,7 @@ function ActivityPostWindow() {
 	});
 	
 	var groupTextField = Ti.UI.createTextField({
-	    font: {fontSize:'20sp'},
+	    font: {fontSize:'16sp'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    hintText:L('groupname'),
@@ -381,7 +382,7 @@ function ActivityPostWindow() {
 	});
 	
 	var starttimeText = Ti.UI.createLabel({
-		font:{fontSize:'20sp'},
+		font:{fontSize:'16sp'},
 		text: L('starttime') + ':',
 		color:'#3498db',
 		top:'10dp', left:'10dp',
@@ -389,7 +390,7 @@ function ActivityPostWindow() {
 	});
 	
 	var sDateText = Ti.UI.createLabel({
-		font:{fontSize:'20sp'},
+		font:{fontSize:'16sp'},
 		text: startTime.getFullYear()+'/'+(startTime.getMonth()+1)+'/'+startTime.getDate(),
 		color:'#666666',
 		top:'10dp', left:'130dp',
@@ -406,7 +407,7 @@ function ActivityPostWindow() {
 		minutes = '0'+minutes;
 	}
 	var sTimeText = Ti.UI.createLabel({
-		font:{fontSize:'20sp'},
+		font:{fontSize:'16sp'},
 		text: startTime.getHours()+':'+minutes,
 		color:'#666666',
 		top:'10dp', right:'20dp',
@@ -432,7 +433,7 @@ function ActivityPostWindow() {
 	});
 	
 	var endtimeText = Ti.UI.createLabel({
-		font:{fontSize:'20sp'},
+		font:{fontSize:'16sp'},
 		text: L('endtime') + ':',
 		color:'#3498db',
 		top:'10dp', left:'10dp',
@@ -440,7 +441,7 @@ function ActivityPostWindow() {
 	});
 	
 	var eDateText = Ti.UI.createLabel({
-		font:{fontSize:'20sp'},
+		font:{fontSize:'16sp'},
 		text: endTime.getFullYear()+'/'+(endTime.getMonth()+1)+'/'+endTime.getDate(),
 		color:'#666666',
 		top:'10dp', left:'130dp',
@@ -476,7 +477,7 @@ function ActivityPostWindow() {
 	
     
     var desTextArea = Ti.UI.createTextArea({
-	    font: {fontSize:'20sp'},
+	    font: {fontSize:'16sp'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    hintText:L('addactivitycontent'),
@@ -500,7 +501,7 @@ function ActivityPostWindow() {
     ////////////   map  //////////////
     
     var mapHintText = Ti.UI.createLabel({
-		font:{fontSize:'20sp',fontFamily:'Helvetica Neue'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('changemap'),
 		color:'#2c3e50',
 		top:'50dp',
