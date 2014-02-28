@@ -63,14 +63,19 @@ function LoginWindow() {
 
 	});
 	
-	function loginCallback(result, id, token){
+	function loginCallback(result, data){
 		if(result == true){
 			Ti.API.info('login success.');
-			Ti.App.Properties.setString('userid',id);
-			Ti.App.Properties.setString('token',token);
+			Ti.App.Properties.setString('userid',data['id']);
+			Ti.App.Properties.setString('token',data['token']);
+			Ti.App.Properties.setString('headfile',data['photo']);
+            Ti.App.Properties.setString('useremail',data['email']);
+            Ti.App.Properties.setString('username',data['name']);
+            Ti.App.Properties.setString('userdata',JSON.stringify(data));
+            Ti.API.info('user data : '  + JSON.stringify(data));
 			forwardView.visible = false;
 			feedWindow = require('feedWindows');
-			new feedWindow().open();
+			new feedWindow().open(); 
 		}
 		else{
 			

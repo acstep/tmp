@@ -67,7 +67,7 @@
 		  	var notifynum = Ti.App.Properties.getInt('notifynum',0);
 			notifynum = notifynum + 1;
 			Ti.App.Properties.setInt('notifynum',notifynum);
-			
+			Ti.API.info('Get gcm notify comment ');
 		    break;
         case 'talk':
             var talkingRoomID = Ti.App.Properties.getString('TalkRoomID','');

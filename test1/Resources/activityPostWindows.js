@@ -126,7 +126,21 @@ function ActivityPostWindow() {
 	
 	
 	/////////////   select image from camera or gallary ///////////////////
-	
+	deleteImageobj = {};
+	var deleteImageDialog = Titanium.UI.createOptionDialog({
+
+	    title: L('deletefile'),
+	    options: [L('delete'),L('cancel')],
+        cancel:1
+	});
+	deleteImageDialog.addEventListener('click', function(e) {
+		if(e.index == 0){
+			position = imageList.indexOf(deleteImageobj.image);
+            Ti.API.info('remove image list pos : ' + position);
+			if ( ~position ) imageList.splice(position, 1);
+			imageScrollView.remove(deleteImageobj);
+		}
+	});	
 	
 	var dialog = Titanium.UI.createOptionDialog({
     //title of dialog
@@ -164,6 +178,12 @@ function ActivityPostWindow() {
 							left:'10dp',
 							borderRadius:15
 						});
+						addSelectImg.addEventListener('click',function(e)
+						{
+							deleteImageobj = this; 
+							deleteImageDialog.show();
+							
+						});	
 						imageScrollView.contentWidth = ((imageList.length+1)*110 + 20)*(Titanium.Platform.displayCaps.dpi / 160);
 						imageScrollView.add(addSelectImg);
 	                }
@@ -217,6 +237,11 @@ function ActivityPostWindow() {
 							left:'10dp',
 							borderRadius:15
 						});
+						addSelectImg.addEventListener('click',function(e)
+						{
+							deleteImageobj = this; 
+							deleteImageDialog.show();
+						});	
 						imageScrollView.contentWidth = ((imageList.length+1)*110 + 20)*(Titanium.Platform.displayCaps.dpi / 160);
 						imageScrollView.add(addSelectImg);
 	                }  
@@ -648,7 +673,6 @@ function ActivityPostWindow() {
 			'pos':[parseFloat(Ti.App.Properties.getDouble('userchooselongitude',0)),parseFloat(Ti.App.Properties.getDouble('userchooselatitude',0))],
 			'title':titleTextField.value,
 			'extime':extime,
-			'headphoto':Ti.App.Properties.getString('headfile',''),
 			'category':1001,
 			'pdata':{
 				 'gname':groupTextField.value,

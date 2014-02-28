@@ -116,6 +116,7 @@ function feedContentWindow(eventid, fullcontent) {
 			
 			showAlert('Error !', data);
 			Ti.API.info('Post Comment false.');
+			self.close();
 			return;
 		}
 		else{
@@ -209,16 +210,13 @@ function feedContentWindow(eventid, fullcontent) {
 			
 						
 		    var headPhotoImg = Titanium.UI.createImageView({
-		        borderRadius:15,
+		        borderRadius:15,backgroundImage:'headphoto.png',
 				height: '50dp', width: '50dp', top:'15dp', left:'10dp'
 			});
 
-			if(data[i]['headphoto'] == undefined || data[i]['headphoto'] == ''){
-				headPhotoImg.image = 'headphoto.png';
-			}
-			else{
-				headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + data[i]['headphoto'];
-			}
+			
+			headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + data[i]['ownerid']+'.jpg';
+	
 			tmpContentView.add(headPhotoImg);
 			
 				

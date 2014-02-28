@@ -12,20 +12,7 @@ function HeadWindow(cropimage) {
 	var titleView = self.titleView;
     backgroundView.layout = 'composite';
     
-	var ind=Titanium.UI.createProgressBar({
-	        width:'90%',
-	        min:0,
-	        max:100,
-	        value:0,
-	        height:'50dp',
-	        color:'#ffffff',
-	        message:L('uploadimage'),
-	        font:{fontSize:14, fontWeight:'bold'},
-	        
-	        top:'50dp' 
-	});
-
-	forwardView.add(ind);
+	
 
 
 	var middleView = Ti.UI.createView({
@@ -182,44 +169,12 @@ function HeadWindow(cropimage) {
 	    var f = Titanium.Filesystem.getFile(Titanium.Filesystem.externalStorageDirectory,'head.jpg');
 	    
 		f.write(cropimage.imageAsCropped({x:realX,y:realY,width:realWidth,height:realHeight}).imageAsResized(200,200));
-		
-        uploadHeadImage();
+		Ti.App.fireEvent('headphotodone');
+        self.close();
 	});	
 	
 
-	////////////////////////////   upload photo  ///////////////////////
-	function uploadHeadImage(){
-		var f = Titanium.Filesystem.getFile(Titanium.Filesystem.externalStorageDirectory,'head.jpg');
-
-		var data_to_send = { 
-            "file": f.read(), 
-            "name": 'head.jpg',
-        };
-		xhr = Titanium.Network.createHTTPClient();
-        xhr.open("POST","http://54.254.208.12/api/uploadheadimg");
-        xhr.send(data_to_send); 
-        xhr.onload = function(e) {
-            var result =  JSON.parse(this.responseText);
-            if(result.result == 'ok'){
-            	Ti.App.Properties.setString('headfile',result.filename);
-            	Ti.App.fireEvent('headphotodone');
-            	self.close();
-			}
-			forwardView.visible = false;
-        };
-        xhr.onerror = function(e){
-
-			showAlert('Error !', 'Server Error. Please try again.');
-			Ti.API.info('Upload image fail.');
-			forwardView.visible = false;
-        	
-        };
-		xhr.onsendstream = function(e) {
-			ind.value = e.progress*100 ;
-			
-			Ti.API.info('upload - PROGRESS: ' + e.progress);
-		};
-	}
+	
 	
 	
 	bottonView.add(cropDoneButton);

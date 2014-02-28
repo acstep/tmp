@@ -6,8 +6,22 @@ function createAccountWindow() {
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
+	var headphotoExist = false;
 	
-    
+    var ind=Titanium.UI.createProgressBar({
+	        width:'90%',
+	        min:0,
+	        max:100,
+	        value:0,
+	        height:'50dp',
+	        color:'#ffffff',
+	        message:L('uploadimage'),
+	        font:{fontSize:14, fontWeight:'bold'},
+	        
+	        top:'50dp' 
+	});
+
+	forwardView.add(ind);
 	
 	////////////// window title  /////////////////
 	
@@ -49,12 +63,18 @@ function createAccountWindow() {
 			Ti.App.Properties.setString('token',token);
 			Ti.App.Properties.setString('username',nameField.value);
 			
-			Ti.API.info('id : ' + id);
-			Ti.API.info('token : ' + token);
-			forwardView.visible = false;
-			feedWindow = require('feedWindows');
-			new feedWindow().open();
-			self.close();
+			if(headphotoExist == true){
+				uploadHeadImage();
+			}
+			else{
+				forwardView.visible = false;
+				feedWindow = require('feedWindows');
+				new feedWindow().open();
+				self.close();
+			}
+			
+			
+			
 		}
 		else{
 			
@@ -160,7 +180,7 @@ function createAccountWindow() {
     //title of dialog
 	    title: L('chooseimage'),
 	    //options
-	    options: [L('camera'),L('photogaooery'), L('cancel')],
+	    options: [L('camera'),L('photogallery'), L('cancel')],
 	    //index of cancel button
 	    cancel:2
 	});
@@ -283,6 +303,7 @@ function createAccountWindow() {
         if (f.exists()) {
 	        headPhotoImg.image =  f.read();
 	        headPhotoImg.visible = true;
+	        headphotoExist = true;
 	    }
 	};
 	
@@ -434,6 +455,50 @@ function createAccountWindow() {
 	    Ti.API.info('remove listener');
 	    self.close();
 	});
+
+
+    ////////////////////////////   upload photo  ///////////////////////
+	function uploadHeadImage(){
+		var f = Titanium.Filesystem.getFile(Titanium.Filesystem.externalStorageDirectory,'head.jpg');
+
+		var data_to_send = { 
+            "file": f.read(), 
+            "name": 'head.jpg',
+            "id": Ti.App.Properties.getString('userid',''),
+            'token':Ti.App.Properties.getString('token','')
+        };
+		xhr = Titanium.Network.createHTTPClient();
+        xhr.open("POST","http://54.254.208.12/api/uploadheadimg");
+        xhr.send(data_to_send); 
+        xhr.onload = function(e) {
+            var result =  JSON.parse(this.responseText);
+            if(result.result == 'ok'){
+            	Ti.App.Properties.setString('headfile',result.filename);
+
+				forwardView.visible = false;
+				feedWindow = require('feedWindows');
+				new feedWindow().open();
+				self.close();
+            	
+			}
+			forwardView.visible = false;
+        };
+        xhr.onerror = function(e){
+
+			showAlert('Error !', 'Upload image error. Please reset in setup menu.');
+			Ti.API.info('Upload image fail.');
+			forwardView.visible = false;
+			feedWindow = require('feedWindows');
+			new feedWindow().open();
+			self.close();
+        	
+        };
+		xhr.onsendstream = function(e) {
+			ind.value = e.progress*100 ;
+			
+			Ti.API.info('upload - PROGRESS: ' + e.progress);
+		};
+	}
 
 	return self;
 };

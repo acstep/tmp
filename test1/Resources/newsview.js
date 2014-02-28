@@ -267,16 +267,12 @@ function drawNewsContnet(contentView,data){
 	
 	
 	var headPhotoImg = Titanium.UI.createImageView({
-        borderRadius:15,
+        borderRadius:15,backgroundImage:'headphoto.png',
 		height: '60dp', width: '60dp', top:'10dp', left:'0dp'
 	});
 	
-	if(data['headphoto'] == undefined || data['headphoto'] == ''){
-		headPhotoImg.image = 'headphoto.png';
-	}
-	else{
-		headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + data['headphoto'];
-	}
+
+	headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + data['ownerid']+'.jpg';
 	
 	var topinfoView = Ti.UI.createView({
 	    backgroundColor: 'white',

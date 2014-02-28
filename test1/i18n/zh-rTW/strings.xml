@@ -62,4 +62,5 @@
 	<string name="enterchatroom">進入聊天室</string>
 	<string name="deletechatroom">刪除聊天室</string>
 	<string name="hasleft">  已經離開聊天室</string>
+	<string name="deletefile">刪除照片</string>
 </resources>

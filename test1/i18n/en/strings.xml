@@ -62,4 +62,5 @@
 	<string name="enterchatroom">Enter chat room</string>
 	<string name="deletechatroom">Delete chat room</string>
 	<string name="hasleft">  has left chat room</string>
+	<string name="deletefile">Delete Image</string>
 </resources>

@@ -135,6 +135,22 @@ function SalesPostWindow() {
 	
 	
 	/////////////   select image from camera or gallary ///////////////////
+	deleteImageobj = {};
+	var deleteImageDialog = Titanium.UI.createOptionDialog({
+
+	    title: L('deletefile'),
+	    options: [L('delete'),L('cancel')],
+        cancel:1
+	});
+	deleteImageDialog.addEventListener('click', function(e) {
+		if(e.index == 0){
+			position = imageList.indexOf(deleteImageobj.image);
+            Ti.API.info('remove image list pos : ' + position);
+			if ( ~position ) imageList.splice(position, 1);
+			imageScrollView.remove(deleteImageobj);
+		}
+	});	
+	
 	var dialog = Titanium.UI.createOptionDialog({
     //title of dialog
 	    title: L('chooseimage'),
@@ -171,6 +187,12 @@ function SalesPostWindow() {
 							left:'10dp',
 							borderRadius:15
 						});
+						addSelectImg.addEventListener('click',function(e)
+						{
+							deleteImageobj = this; 
+							deleteImageDialog.show();
+							
+						});	
 						imageScrollView.contentWidth = ((imageList.length+1)*110 + 20)*(Titanium.Platform.displayCaps.dpi / 160);
 						imageScrollView.add(addSelectImg);
 	                }
@@ -181,17 +203,18 @@ function SalesPostWindow() {
 	            },
 	            error:function(error)
 	            {
-
+	                //error happend, create alert
+	            
 	                //set message
 	                if (error.code == Titanium.Media.NO_CAMERA)
 	                {
-	                	showAlert('Camera', 'Device does not have camera');
-	                   
+	                	showAlert('Camera', 'Device does not have camera'); 
+	                    
 	                }
 	                else
 	                {
-	                	showAlert('Camera', 'Unexpected error: ' + error.code); 
-	                   
+	                	showAlert('Camera', 'Unexpected error: ' + error.code);  
+
 	                }
 
 	            },
@@ -223,6 +246,11 @@ function SalesPostWindow() {
 							left:'10dp',
 							borderRadius:15
 						});
+						addSelectImg.addEventListener('click',function(e)
+						{
+							deleteImageobj = this; 
+							deleteImageDialog.show();
+						});	
 						imageScrollView.contentWidth = ((imageList.length+1)*110 + 20)*(Titanium.Platform.displayCaps.dpi / 160);
 						imageScrollView.add(addSelectImg);
 	                }  
@@ -248,12 +276,12 @@ function SalesPostWindow() {
 	
 	
 	cameraViewImageView.add(addImg);
-	cameraViewImageView.add(addPhoeoText);
+	cameraViewImageView.add(addPhotoText);
 	
 	imageScrollView.add(cameraViewImageView);
-
-    contentScrollView.add(imageScrollView);
-
+	contentScrollView.add(imageScrollView);
+	
+	
     ///////    description and map /////////////
     var desTextArea = Ti.UI.createTextArea({
 	    font: {fontSize:'16sp'},
@@ -430,7 +458,7 @@ function SalesPostWindow() {
 			'title':'',
 			'extime':extime,
 			'category':1003,
-			'headphoto':Ti.App.Properties.getString('headfile','')
+
 		};
 	    
 	    datastring = JSON.stringify(data);

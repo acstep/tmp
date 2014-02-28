@@ -529,22 +529,19 @@ function createMapView(mapView,data){
 
 function createCardBottom(feedView, data){
 	var bottomView = Ti.UI.createView({
-	    backgroundColor: '#ffffff',
+	    backgroundColor: '#f6f6f6',
 	    layout: 'horizontal',
 	    width:'100%', height: '40dp',
-	    borderColor: '#bbb',
-	    borderWidth: 1,
 	    top:'10dp'
 	});
+	
 	var bottomLikeView = Ti.UI.createView({
-	    backgroundColor: '#ffffff',
-	    width:'50%', height: '40dp',
+	    width:Ti.UI.SIZE, height: '40dp',left:'20dp',
 	    top:'0dp',
 	    name:'view'
 	});
 	
 	var bottomLikecontentView = Ti.UI.createView({
-	    backgroundColor: '#ffffff',
         layout: 'horizontal',
 	    name:'view',
 	    width: Ti.UI.SIZE,height: Ti.UI.SIZE,
@@ -566,7 +563,7 @@ function createCardBottom(feedView, data){
 		font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
 		text: data['like'] ,
 		color:'#666666',
-  		left:'15dp',
+  		left:'15dp',right:'10dp',
   		name:'text'
 	});
 	likeText.eventid = data['eventid'];
@@ -599,14 +596,14 @@ function createCardBottom(feedView, data){
 	bottomLikecontentView.add(likeText);
     bottomLikeView.add(bottomLikecontentView);
 	
-	var bottomSepView = Ti.UI.createView({
-	    backgroundColor: '#bbbbbb',
-	    width:'1dp', height: '30dp',
-	    top:'5dp'
-	});
+	//var bottomSepView = Ti.UI.createView({
+	//    backgroundColor: '#bbbbbb',
+	//    width:'1dp', height: '30dp',
+	//    top:'5dp'
+	//});
 	var bottomCommentView = Ti.UI.createView({
-	    backgroundColor: '#ffffff',
-	    width:'auto', height: '40dp',
+
+	    width:Ti.UI.SIZE, height: '40dp',
 	    top:'0dp',
 	    name:'commentview'
 	});
@@ -614,10 +611,9 @@ function createCardBottom(feedView, data){
 	
 	
 	var bottomCommentcontentView = Ti.UI.createView({
-	    backgroundColor: '#ffffff',
         layout: 'horizontal',
         width: Ti.UI.SIZE,height: Ti.UI.SIZE,
-	    name:'view',center:{x:'50%',y:'50%'}
+	    name:'view',left:'30dp'
 	});
 	
 	
@@ -635,7 +631,7 @@ function createCardBottom(feedView, data){
 		font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
 		text: data['comment'],
 		color:'#666666',
-  		left:'15dp'
+  		left:'15dp',right:'10dp'
 	});
 	commentText.eventid = data['eventid'];
 	
@@ -661,7 +657,7 @@ function createCardBottom(feedView, data){
 	bottomCommentView.add(bottomCommentcontentView);
 	
 	bottomView.add(bottomLikeView);
-	bottomView.add(bottomSepView);
+	
 	bottomView.add(bottomCommentView);
 	feedView.add(bottomView);
 }
@@ -678,16 +674,13 @@ function createFeedTop(feedView, data, lon, lat){
 	
 	
 	var headPhotoImg = Titanium.UI.createImageView({
-        borderRadius:15,
+        borderRadius:15,backgroundImage:'headphoto.png',
 		height: '60dp', width: '60dp', top:'15dp', left:'10dp'
 	});
 	
-	if(data['headphoto'] == undefined || data['headphoto'] == ''){
-		headPhotoImg.image = 'headphoto.png';
-	}
-	else{
-		headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + data['headphoto'];
-	}
+	
+	headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + data['ownerid']+'.jpg';
+
 	
 	var topinfoView = Ti.UI.createView({
 	    

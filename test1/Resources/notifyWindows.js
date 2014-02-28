@@ -44,13 +44,12 @@ function notifyWindow() {
 	
     function parseNotify(result, notifyData){
     	
-    	notifyLoading = false;
-    	try{
-    		notifyTableView.deleteRow(notifyRow);
-
-
-    	}catch(e){}	
+    	if(notifyLoading == true){
+    		notifyLoading = false;
+    	}
     	
+    	
+    	notifyDataItems.pop();
     	if(result == false){
     		Ti.API.info('result false. savedNotifyData : ' + JSON.stringify(savedNotifyData));
     		if(savedNotifyData.length == 0){
@@ -75,15 +74,12 @@ function notifyWindow() {
 						width:Ti.UI.SIZE ,height: Ti.UI.SIZE,left:'10dp',top:'0dp'
 					});
 					var headPhotoImg = Titanium.UI.createImageView({
-				        borderRadius:15,height: '60dp', width: '60dp',top:'10dp',bottom:'10dp'
+				        borderRadius:15,height: '60dp', width: '60dp',top:'10dp',bottom:'10dp',backgroundImage:'headphoto.png'
 					});
 					
-					if(notifyData[i]['headphoto'] == undefined || notifyData[i]['headphoto'] == ''){
-						headPhotoImg.image = 'headphoto.png';
-					}
-					else{
-						headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + notifyData[i]['headphoto'];
-					}
+					
+					headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + notifyData[i]['senderid']+'.jpg';
+			
 					itemView.add(headPhotoImg);
 					
 					var contentView = Titanium.UI.createView({
@@ -166,7 +162,7 @@ function notifyWindow() {
 		}		
     });
     
-    var notifyRow = Ti.UI.createTableViewRow({
+    var notifyLoadingRow = Ti.UI.createTableViewRow({
         backgroundSelectedColor:'#3f9ddd',
         backgroundColor:'#ffffff'
         
@@ -183,7 +179,7 @@ function notifyWindow() {
 
 	itemView.add(loginIndicator);
 	loginIndicator.show();
-	notifyRow.add(itemView);
+	notifyLoadingRow.add(itemView);
 	
 	
 
@@ -197,7 +193,7 @@ function notifyWindow() {
 				notifyLoading =  true;
 			    
 
-				notifyDataItems.push(notifyRow);
+				notifyDataItems.push(notifyLoadingRow);
 				notifyTableView.data = notifyDataItems;
 				querynotify( starttime, 10, parseNotify);
 					

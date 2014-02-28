@@ -19,9 +19,8 @@ function login(email, pass, callbackf){
         var result =  JSON.parse(this.responseText);
     	if(result.result == 'ok')
     	{
-    		Ti.API.info('id : ' + result.id);
-    		Ti.API.info('token : ' + result.token);
-    		callbackf(true,result.id,result.token,result.result);
+ 
+    		callbackf(true,result.data);
     	}
     	else{
     		callbackf(false,'','',result.result);

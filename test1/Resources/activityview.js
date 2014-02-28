@@ -190,22 +190,26 @@ function drawActivityEvent(view, data, lon, lat){
   
 	///////////  bottom  like common button /////////////////////////////
 	var bottomView = Ti.UI.createView({
-	    backgroundColor: '#ffffff',
-	    layout: 'horizontal',
+	    backgroundColor: '#f6f6f6',
+
 	    width:'100%', height: '40dp',
-	    borderColor: '#bbb',
-	    borderWidth: 1,
 	    top:'10dp'
 	});
+	
+	var bottomlikecommentView = Ti.UI.createView({
+	    left:'0dp',
+	    layout: 'horizontal',
+	    width:Ti.UI.SIZE, height: '40dp',
+
+	});
+	
 	var bottomLikeView = Ti.UI.createView({
-	    backgroundColor: '#ffffff',
-	    width:'34%', height: '40dp',
+	    width:Ti.UI.SIZE, height: '40dp',left:'30dp',
 	    top:'0dp',
 	    name:'view'
 	});
 	
 	var bottomLikecontentView = Ti.UI.createView({
-	    backgroundColor: '#ffffff',
         layout: 'horizontal',
 	    name:'view',
 	    width: Ti.UI.SIZE,height: Ti.UI.SIZE,
@@ -260,22 +264,20 @@ function drawActivityEvent(view, data, lon, lat){
 	bottomLikecontentView.add(likeText);
     bottomLikeView.add(bottomLikecontentView);
 	
-	var bottomSepView = Ti.UI.createView({
-	    backgroundColor: '#bbbbbb',
-	    width:'1dp', height: '30dp',
-	    top:'5dp'
-	});
+	//var bottomSepView = Ti.UI.createView({
+	 //   backgroundColor: '#bbbbbb',
+	//    width:'1dp', height: '30dp',
+	//    top:'5dp'
+	//});
 	var bottomCommentView = Ti.UI.createView({
-	    backgroundColor: '#ffffff',
-	    width:'34%', height: '40dp',
-	    top:'0dp',
+	    width:Ti.UI.SIZE, height: '40dp',
+	    top:'0dp',left:'30dp',
 	    name:'commentview'
 	});
 	bottomCommentView.eventid = data['eventid'];
 	
 	
 	var bottomCommentcontentView = Ti.UI.createView({
-	    backgroundColor: '#ffffff',
         layout: 'horizontal',
         width: Ti.UI.SIZE,height: Ti.UI.SIZE,
 	    name:'view',center:{x:'50%',y:'50%'}
@@ -321,16 +323,15 @@ function drawActivityEvent(view, data, lon, lat){
 	bottomCommentcontentView.add(commentText);
 	bottomCommentView.add(bottomCommentcontentView);
 	
-	var bottomSepView1 = Ti.UI.createView({
-	    backgroundColor: '#bbbbbb',
-	    width:'1dp', height: '30dp',
-	    top:'5dp'
-	});
+	//var bottomSepView1 = Ti.UI.createView({
+	//    backgroundColor: '#bbbbbb',
+	//    width:'1dp', height: '30dp',
+	//    top:'5dp'
+	//});
 	
 	var bottomCalendarView = Ti.UI.createView({
-	    backgroundColor: '#ffffff',
-	    width:'auto', height: '40dp',
-	    top:'0dp',
+	    width:Ti.UI.SIZE, height: '40dp',
+	    top:'0dp',right:'20dp',
 	    name:'calendarParent'
 	});
 	
@@ -338,48 +339,66 @@ function drawActivityEvent(view, data, lon, lat){
 	
 	var calendarImg = Titanium.UI.createImageView({
 		image:'addcalender.png',
-		height: '23dp', width: '23dp',
+		height: '23dp', width: '23dp',left:'30dp',right:'30dp',
 		name:'calendarimg'
 	});
 	calendarImg.data = data;
 	bottomCalendarView.data = data;
 	bottomCalendarView.imageobj = calendarImg;
+	
+	
+	
+	
+	
 	bottomCalendarView.addEventListener('click',function(e) {
-		e.cancelBubble = true;
-		if(e.source.data['pdata']['starttime'] == undefined){
-			return;
-		}
+			e.cancelBubble = true;
+			if(e.source.data['pdata']['starttime'] == undefined){
+				return;
+			}
+			var improvedintent = require('com.test.module');
+			
+            //intent.addCategory(Ti.Android.Calendar);
+            //intent.packageName("com.android.calender");
+        	var intent = improvedintent.createImprovedIntent({
+				data : 'content://com.android.calendar/events',
+				action : Ti.Android.ACTION_INSERT
+			});
 
-		var CALENDAR_TO_USE = 3;
-		var calendar = Ti.Android.Calendar.getCalendarById(CALENDAR_TO_USE);
-		
-		// Create the event
-		var eventBegins = new Date(e.source.data['pdata']['starttime']*1000);
-		var eventEnds = new Date(e.source.data['pdata']['starttime']*1000+3600*1000);
-		var details = {
-		    title: e.source.data['title'],
-		    description: e.source.data['des'],
-		    begin: eventBegins,
-		    end: eventEnds
-		};
-		if(e.source.name == 'calendarimg'){
-			e.source.image = 'addcalenderdone.png';
-		}
-		else{
-			e.source.imageobj.image = 'addcalenderdone.png';
-		}
-		
-		var event = calendar.createEvent(details);
+            var eventBegins =e.source.data['pdata']['starttime']*1000;
+			var eventEnds = e.source.data['pdata']['starttime']*1000+3600*1000;
+            intent.getPackageName(intent.packageName);
+            intent.putExtra("title" , e.source.data['title']);
+            intent.putExtra("description" ,e.source.data['des']);
+            intent.putLongExtra("beginTime", eventBegins);
+            intent.putLongExtra("endTime",eventEnds);
+            intent.putExtra("allDay", false);
+            intent.putExtra("eventStatus", true);
+            intent.putExtra("visible", true);
+            intent.putExtra("hasAlarm", true);
+            intent.putExtra("calendar_id", 1);
+ 
+      
+            //intent.addCategory(Ti.Android.Calendar);
+             intent.addCategory(Ti.Android.CATEGORY_DEFAULT);
+	         try {
+	              Ti.Android.currentActivity.startActivity(intent);
+	         } catch (ex) {
+	             
+	         }
 		
 		
 	});
 	
+	
+	
+	
 	bottomCalendarView.add(calendarImg);
 	
-	bottomView.add(bottomLikeView);
-	bottomView.add(bottomSepView);
-	bottomView.add(bottomCommentView);
-	bottomView.add(bottomSepView1);
+	bottomlikecommentView.add(bottomLikeView);
+
+	bottomlikecommentView.add(bottomCommentView);
+	
+	bottomView.add(bottomlikecommentView);
 	bottomView.add(bottomCalendarView);
 	
 	feedView.add(bottomView);
@@ -661,16 +680,12 @@ function drawActivityContnet(contentView,data){
 	
 	
 	var headPhotoImg = Titanium.UI.createImageView({
-        borderRadius:15,
+        borderRadius:15,backgroundImage:'headphoto.png',
 		height: '60dp', width: '60dp', top:'10dp', left:'0dp'
 	});
 	
-	if(data['headphoto'] == undefined || data['headphoto'] == ''){
-		headPhotoImg.image = 'headphoto.png';
-	}
-	else{
-		headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + data['headphoto'];
-	}
+
+	headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + data['ownerid']+'.jpg';
 	
 	var topinfoView = Ti.UI.createView({
 	    backgroundColor: 'white',

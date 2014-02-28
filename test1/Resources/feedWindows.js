@@ -87,8 +87,9 @@ function feedWindow() {
 	eventView.addEventListener('click',function(e)
 	{
 		eventnumText.text =  0  ;
+		eventnumText.visible = false;
 		Ti.App.Properties.setInt('notifynum',0);
-        eventnumText.visible = false;
+        
 		NotifyWindow = require('notifyWindows');
 		new NotifyWindow().open();  
 
@@ -249,8 +250,8 @@ function feedWindow() {
 				new SocialPostWindow().open(); 
 				break;		
 			case 4:
-			    HelpPostWindow = require('helpPostWindows');
-				new HelpPostWindow().open(); 
+			    newsPostWindow = require('newsPostWindows');
+				new newsPostWindow().open(); 
 				break;	
 			case 5:
 			    UsedPostWindow = require('usedPostWindows');
@@ -320,7 +321,7 @@ function feedWindow() {
 	
 	
 	var headImg = Titanium.UI.createImageView({
-		image:'head.png',borderRadius:15,
+		image:'head.png',borderRadius:15,backgroundImage:'headphoto.png',
 		left:'0dp', height: '60dp', width: '60dp'
 	});
 	
@@ -732,12 +733,12 @@ function feedWindow() {
 	
     ///////////////   scroll  update and next logic ////////////////////
 
-    getNewFeed();
+    
     ///////////////// handle location ///////////////
     gpsProvider = Ti.Geolocation.Android.createLocationProvider({
 	    name: Ti.Geolocation.PROVIDER_NETWORK,
 	    minUpdateTime: 300, 
-	    minUpdateDistance: 100
+	    minUpdateDistance: 300
 	});
 	Ti.Geolocation.Android.addLocationProvider(gpsProvider);
 	Ti.Geolocation.Android.manualMode = true;
@@ -842,6 +843,7 @@ function feedWindow() {
 			// when a gcm notification is received WHEN the app IS IN FOREGROUND
 			tmpdata = JSON.parse(data.data);
 			if(tmpdata.type == 'comment'){
+				Ti.API.info('get comment notify');
 				var notifynum = Ti.App.Properties.getInt('notifynum',0);
 				notifynum = notifynum + 1;
 				Ti.App.Properties.setInt('notifynum',notifynum);
@@ -962,6 +964,23 @@ function feedWindow() {
         });
     });
 	
+	tmplatitude = parseFloat(Ti.App.Properties.getDouble('latitude',-1));
+	tmplongitude = parseFloat(Ti.App.Properties.getDouble('longitude',-1));
+	if(tmplatitude == -1 || tmplongitude == -1){
+		Titanium.Geolocation.getCurrentPosition(function(e){
+		    // エラー時はコールバック関數の引數のerrorプロパティがセットされます
+		    if(e.error){
+		        Ti.API.error(e.error);
+		        return;
+		    }
+		    Ti.App.Properties.setDouble('latitude',e.coords.latitude);
+			Ti.App.Properties.setDouble('longitude',e.coords.longitude);
+		    getNewFeed();
+		});
+	}
+	else{
+		getNewFeed();
+	}
     
 	return self;
 }

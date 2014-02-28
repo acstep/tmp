@@ -77,7 +77,7 @@ function chatroomWindow() {
 				width:Ti.UI.SIZE ,height: Ti.UI.SIZE,left:'10dp',top:'0dp'
 			});
 			var headPhotoImg = Titanium.UI.createImageView({
-		        borderRadius:15,height: '60dp', width: '60dp',top:'10dp',bottom:'10dp'
+		        borderRadius:15,height: '60dp', width: '60dp',top:'10dp',bottom:'10dp',backgroundImage:'headphoto.png'
 			});
 			
 			var toidIndex = 0;
@@ -93,22 +93,16 @@ function chatroomWindow() {
 				if(chatroomData[i]['memdata'][0]['id'] == userid){
 					toidIndex = 1;
 					idData = chatroomData[i]['memdata'][1];
-					if(typeof(idData['photo']) == 'undefined' || idData['photo'] == ''){
-						headPhotoImg.image = 'headphoto.png';
-					}
-					else{
-						headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + idData['photo'];
-					}
+					
+					headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + idData['id']+'.jpg';
+
 				}
 				else{
 					toidIndex = 0;
 					idData = chatroomData[i]['memdata'][0];
-					if(typeof(idData['photo']) == 'undefined' || idData['photo'] == ''){
-						headPhotoImg.image = 'headphoto.png';
-					}
-					else{
-						headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + idData['photo'];
-					}
+	
+					headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + idData['id']+'.jpg';
+
 				}
 			}
 			

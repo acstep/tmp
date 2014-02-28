@@ -286,12 +286,9 @@ function talkWindow(id, toid,roomdata) {
 		        borderRadius:5 ,height: '40dp', width: '40dp',top:'10dp'
 			});
 			
-			if(typeof headimage[ownerid] == 'undefined' || headimage[ownerid] == ''){
-				headPhotoImg.image = 'headphoto.png';
-			}
-			else{
-				headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + headimage[ownerid];
-			}
+
+			headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + ownerid +'.jpg';
+
 			headPhotoImg.left = '0dp';
 			itemView.add(headPhotoImg);
 		}

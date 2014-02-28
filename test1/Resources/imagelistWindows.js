@@ -23,12 +23,12 @@ function imageListWindow(imagelist,index) {
             top:0,left:0,backgroundColor:'#000000',
 		});
     	var imgView = Ti.UI.createImageView({
-		    image: 'https://s3-ap-southeast-1.amazonaws.com/feedimg/' + imagelist[i],
+		    image: 'https://s3-ap-southeast-1.amazonaws.com/feedimgl/' + imagelist[i].replace('.jpg','-l.jpg'),
 		    width:'100%',backgroundColor:'#000000',
 		});
 
         var pageText = Ti.UI.createLabel({
-			font:{fontSize:'30sp',fontFamily:'Helvetica Neue'},
+			font:{fontSize:'30sp',fontFamily:'Helvetica Neue'},      
 			text: (i+1) + '/' + imagelist.length,
 			color:'#ffffff',backgroundColor:'#000000',
 			bottom:'50dp',
