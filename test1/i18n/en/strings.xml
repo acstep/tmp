@@ -2,6 +2,12 @@
 <resources>
 	<string name="category">Category</string>
 	<string name="welcome">Welcome to %s!</string>
+	<string name="login">Login</string>
+	<string name="signup">Sign Up</string>
+	<string name="name">Name</string>
+	<string name="email">Email</string>
+	<string name="passwd">Password</string>
+	<string name="passwdagain">Password Verify</string>
 	<string name="club">Club Activities</string>
 	<string name="sale">Promotions</string>
 	<string name="needhelp">Need Help</string>

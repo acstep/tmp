@@ -125,7 +125,7 @@ function TeambuyPostWindow() {
 		height: '30dp', width: '30dp', top:'20dp'
 	});
 	
-	var addPhoeoText = Ti.UI.createLabel({
+	var addPhotoText = Ti.UI.createLabel({
 		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('addphoto'),
 		color:'#666666',

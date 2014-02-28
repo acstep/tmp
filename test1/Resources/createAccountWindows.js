@@ -28,7 +28,7 @@ function createAccountWindow() {
 	
 	var titleText = Ti.UI.createLabel({
 		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
-		text: 'Sign Up',
+		text: L('signup'),
 		color:'#ffffff',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
 	});
@@ -51,7 +51,7 @@ function createAccountWindow() {
 	    bottom:'10dp',
 	    height: '30dp',
 	    right:'10dp',
-	    color:'#666666',
+	    color:'#ffffff',
 	    borderRadius:10,
 	    backgroundColor:'#f1c40f'
 	});
@@ -162,7 +162,7 @@ function createAccountWindow() {
 	
 	var addPhoeoText = Ti.UI.createLabel({
 		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
-		text: 'Add Photo',
+		text: L('addphoto'),
 		color:'#555555',
 		top:'65dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
@@ -321,7 +321,7 @@ function createAccountWindow() {
 	
 	var nameText = Ti.UI.createLabel({
 		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
-		text: 'Name',
+		text: L('name'),
 		color:'#333333',
 		top:'10dp',
   		left:'0dp'
@@ -333,19 +333,20 @@ function createAccountWindow() {
 		left:'0dp',
 		top:'5dp',
 		font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
-		color:'#ffffff',
+		color:'#333333',
 		textAlign:'left',
-		borderColor:'#cccccc',
-		borderRadius:5,
+		backgroundColor:'#ffffff',
+	    borderColor:'#666666',
+	    borderWidth:'1dp',borderRadius:10,
 		hintText:'Your Name',
-        backgroundColor:'#4aa3df'
+        
 	});
 	
 	
 	
 	var emailText = Ti.UI.createLabel({
 		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
-		text: 'Email',
+		text: L('email'),
 		color:'#333333',
 		top:'10dp',
   		left:'0dp'
@@ -357,18 +358,19 @@ function createAccountWindow() {
 		left:'0dp',
 		top:'5dp',
 		font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
-		color:'#ffffff',
+		color:'#333333',
 		textAlign:'left',
-		borderColor:'#cccccc',
-		borderRadius:5,
+		backgroundColor:'#ffffff',
+	    borderColor:'#666666',
+	    borderWidth:'1dp',borderRadius:10,
 		hintText:'Your Email',
-		backgroundColor:'#4aa3df'
+		
 
 	});
     
 	var passwdText = Ti.UI.createLabel({
 		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
-		text: 'Password',
+		text: L('passwd'),
 		color:'#333333',
 		top:'10dp',
   		left:'0dp'
@@ -380,19 +382,20 @@ function createAccountWindow() {
 		left:'0dp',
 		top:'5dp',
 		font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
-		color:'#ffffff',
+		color:'#333333',
 		textAlign:'left',
-		borderColor:'#cccccc',
-		borderRadius:5,
+		backgroundColor:'#ffffff',
+	    borderColor:'#666666',
+	    borderWidth:'1dp',borderRadius:10,
 		passwordMask: true,
 		hintText:'Your Password',
-		backgroundColor:'#4aa3df'
+		
 
 	});
 	
 	var passwdVText = Ti.UI.createLabel({
 		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
-		text: 'Password Verify',
+		text: L('passwdagain'),
 		color:'#333333',
 		top:'10dp',
   		left:'0dp'
@@ -404,13 +407,14 @@ function createAccountWindow() {
 		left:'0dp',
 		top:'5dp',
 		font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
-		color:'#ffffff',
+		color:'#333333',
 		textAlign:'left',
-		borderColor:'#cccccc',
-		borderRadius:5,
+		backgroundColor:'#ffffff',
+	    borderColor:'#666666',
+	    borderWidth:'1dp',borderRadius:10,
 		passwordMask: true,
 		hintText:'Your Password Again',
-		backgroundColor:'#4aa3df'
+		
 
 	});
 	

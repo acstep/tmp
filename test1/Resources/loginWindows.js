@@ -9,8 +9,9 @@ function LoginWindow() {
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
 	
-	
-	
+	self.backgroundColor = '#4aa3df';
+	backgroundView.backgroundColor = '#4aa3df';
+	backgroundView.height='80%';
 	
 	var emailText= Titanium.UI.createTextField({
 		editable: true,
@@ -23,13 +24,14 @@ function LoginWindow() {
 		borderColor:'#bbb',
 		borderRadius:2,
 		suppressReturn:false,
-		backgroundColor:'#4aa3df',
+		backgroundColor:'#ffffff',
 
 	});
 	var passText= Titanium.UI.createTextField({
 		editable: true,
 		hintText:'Password',
 		width:'80%',
+		top:'10dp',
 		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 		color:'#ffffff',
 		textAlign:'left',
@@ -37,12 +39,12 @@ function LoginWindow() {
 		borderRadius:2,
 		suppressReturn:false,
 		passwordMask: true,
-		backgroundColor:'#4aa3df',
+		backgroundColor:'#ffffff',
         top:'1dp'
 	});
 	
 	var loginBotton = Titanium.UI.createButton({
-	    title: 'Login',
+	    title: L('login'),
 	    top:'3%',
 	    width:'80%',
 	    color:'#ffffff',
@@ -53,8 +55,8 @@ function LoginWindow() {
 	});
 	
 	var createAccountButton = Titanium.UI.createButton({
-	    title: 'Sign Up',
-	    top:'30%',
+	    title: L('signup'),
+	    bottom:'20dp',
 	    width:'60%',
 	    color:'#ffffff',
 	    backgroundColor:'#F7AC43',
@@ -116,7 +118,7 @@ function LoginWindow() {
 	backgroundView.add(emailText);
 	backgroundView.add(passText);
 	backgroundView.add(loginBotton);
-	backgroundView.add(createAccountButton);
+	self.add(createAccountButton);
 
 	return self;
 }

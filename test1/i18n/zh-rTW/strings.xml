@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 	<string name="welcome">Welcome to %s!</string>
+	<string name="login">登入</string>
+	<string name="signup">註冊</string>
+	<string name="name">帳號</string>
+	<string name="email">電子信箱</string>
+	<string name="passwd">密碼</string>
+	<string name="passwdagain">再次輸入密碼</string>
 	<string name="category">應用分類</string>
 	<string name="club">社團活動</string>
 	<string name="sale">特價優惠</string>
