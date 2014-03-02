@@ -190,9 +190,33 @@ function feedWindow() {
 	sortView.add(sortImg);
 	sortView.add(sortText);
 	
+	var sortDialog = Titanium.UI.createOptionDialog({
+
+	    title: L('sorttype'),
+	    options: [L('sorttime'),L('sortlike')],
+	});
+	
+	sortDialog.addEventListener('click', function(e) {
+		var orgsorttype = Ti.App.Properties.getString('sorttype','');
+		if(e.index == 0){
+			sorttype = 'time';
+			Ti.App.Properties.setString('sorttype','time');
+		}
+		else{
+			sorttype = 'like';
+			Ti.App.Properties.setString('sorttype','like');
+		}
+		getNewFeed();
+
+			
+	});	
+	
 	sortView.addEventListener('click',function(e) {
 	    Ti.API.info('sortView click.');
+	    sortDialog.show();
 	});
+	
+	
 	
 	var conSeperateView = Ti.UI.createView({
 		backgroundColor:'#cccccc',
@@ -497,6 +521,7 @@ function feedWindow() {
 	var lastposupdate = 0;
 	currentdate = new Date(); 
 	var nexttime = parseInt(currentdate.getTime()/1000);
+	var nextlike = 0;
 	var firstFeed = true;
 	//////////////////   Draw feeds  /////////////////////////
 	var feeditem = [];
@@ -524,7 +549,7 @@ function feedWindow() {
 		if(result == true){
 			
 			Ti.API.info(feedData);
-			feedData = sortByKeyUp(feedData, 'lastupdate');
+			
 
 			if(feedData.length > 0){	
 				if(firstFeed == true){
@@ -584,6 +609,7 @@ function feedWindow() {
 				}   
 
 				nexttime = oldfeeditems.data[(oldfeeditems.data.length -1)]['lastupdate'];
+				nextlike = oldfeeditems.data[(oldfeeditems.data.length -1)]['like'];
 			}
 			forwardView.visible = false;
 			firstFeed = false;	
@@ -683,6 +709,7 @@ function feedWindow() {
 		forwardView.visible = true;
 		currentdate = new Date(); 
 		nexttime = parseInt(currentdate.getTime()/1000);
+		nextlike = 0;
 		firstFeed = true;
 		
         latitude = parseFloat(Ti.App.Properties.getDouble('latitude',-1));
@@ -690,14 +717,27 @@ function feedWindow() {
 		distance = parseInt(Ti.App.Properties.getInt('distance',feedDistance));
 		category = Ti.App.Properties.getList('category','none');
 		limitcount = parseInt(Ti.App.Properties.getInt('limitcount',5));
-		queryevent([longitude,latitude], distance, category, limitcount, nexttime, parseFeed);
+		var sorttype =  Ti.App.Properties.getString('sorttype','');
+		if(sorttype == 'time'){
+			queryevent([longitude,latitude], distance, category, limitcount,'time', nexttime, 0,parseFeed);
+		}
+		else{
+			queryevent([longitude,latitude], distance, category, limitcount,'like', 0, 'first',parseFeed);
+		}
+		
    
 	};
 
     function getNextFeed(){
     	Ti.API.info('getNextFeed ');
-    	
-    	queryevent([longitude,latitude], distance, category, limitcount, nexttime, parseFeed);
+    	var sorttype =  Ti.App.Properties.getString('sorttype','');
+		if(sorttype == 'time'){
+			queryevent([longitude,latitude], distance, category, limitcount,'time', nexttime, 0,parseFeed);
+		}
+		else{
+			queryevent([longitude,latitude], distance, category, limitcount,'like', 0, nextlike,parseFeed);
+		}
+    	   
     };
     
     Ti.App.addEventListener('getnewfeed',function(e) {

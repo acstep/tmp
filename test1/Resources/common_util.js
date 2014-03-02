@@ -313,7 +313,7 @@ function createNormalFeed(viewobj,category){
 			latitude = parseFloat(Ti.App.Properties.getDouble('latitude',-1));
 			longitude = parseFloat(Ti.App.Properties.getDouble('longitude',-1));
 			distance = parseInt(Ti.App.Properties.getInt('distance',feedDistance));
-			queryevent([longitude,latitude], distance, [category], limitcount, nexttime, parseFeed);
+			queryevent([longitude,latitude], distance, [category], limitcount,'time', nexttime, 0, parseFeed);
 		}
 		
    

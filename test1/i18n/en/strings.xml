@@ -69,4 +69,7 @@
 	<string name="deletechatroom">Delete chat room</string>
 	<string name="hasleft">  has left chat room</string>
 	<string name="deletefile">Delete Image</string>
+	<string name="sorttype">Sort</string>
+	<string name="sorttime">Most Recent</string>
+	<string name="sortlike">Most Popular</string>
 </resources>

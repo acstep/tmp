@@ -69,4 +69,7 @@
 	<string name="deletechatroom">刪除聊天室</string>
 	<string name="hasleft">  已經離開聊天室</string>
 	<string name="deletefile">刪除照片</string>
+	<string name="sorttype">排序方式</string>
+	<string name="sorttime">最新訊息</string>
+	<string name="sortlike">人氣訊息</string>
 </resources>

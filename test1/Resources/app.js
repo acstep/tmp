@@ -26,6 +26,10 @@ if (Ti.version < 1.8 ) {
 	var usertoken = Ti.App.Properties.getString('token','');
 	var useremail = Ti.App.Properties.getString('useremail','');
 	var defaultexpiretime = Ti.App.Properties.setInt('defaultexpiretime',604800);
+	var sorttype = Ti.App.Properties.getString('sorttype','');
+	if(sorttype == ''){
+		Ti.App.Properties.setString('sorttype','time');
+	}
 	var LoginWindow;
 	var fewdWindow;
 	

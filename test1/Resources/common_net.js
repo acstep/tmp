@@ -191,20 +191,45 @@ function queryeventbyid(eventid,callbackf){
 }
 
 
-function queryevent(geo, distance, category, limitcount, nexttime, callbackf){
+function queryevent(geo, distance, category, limitcount,sorttype, nexttime, nextlikecount, callbackf){
 
+    if(sorttype == 'time'){
+    	data = {
+	    	'geo':geo,
+	    	'distance':distance,
+	    	'category':category,
+	    	'limit':limitcount,
+	    	'nextstarttime':nexttime,
+	    	
+	    };
+	    datastring = JSON.stringify(data);
+		url = 'http://54.254.208.12/api/queryeventtime?' + 'data=' + datastring;
+    }
+    else{
+	    if(nextlikecount == 'first'){
+	    	data = {
+		    	'geo':geo,
+		    	'distance':distance,
+		    	'category':category,
+		    	'limit':limitcount,
+		    };
+	    }
+	    else{
+	    	data = {
+		    	'geo':geo,
+		    	'distance':distance,
+		    	'category':category,
+		    	'limit':limitcount,
+		    	'nextlikecount':nextlikecount,
+		    };
+	    }
+	    
+	    datastring = JSON.stringify(data);
+		url = 'http://54.254.208.12/api/queryeventlike?' + 'data=' + datastring;
+    }
     
-    data = {
-    	'geo':geo,
-    	'distance':distance,
-    	'category':category,
-    	'limit':limitcount,
-    	'nextstarttime':nexttime,
-    	
-    };
     
-    datastring = JSON.stringify(data);
-	url = 'http://54.254.208.12/api/queryeventtime?' + 'data=' + datastring;
+    
 	Ti.API.info('url : ' + url);
 	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
@@ -227,6 +252,8 @@ function queryevent(geo, distance, category, limitcount, nexttime, callbackf){
     xhr.send(); 
 	
 };
+
+
 
 
 function querymyevent(limitcount, nexttime, callbackf){
