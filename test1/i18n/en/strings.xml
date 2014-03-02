@@ -72,4 +72,8 @@
 	<string name="sorttype">Sort</string>
 	<string name="sorttime">Most Recent</string>
 	<string name="sortlike">Most Popular</string>
+	<string name="setup">Setup</string>
+	<string name="radius">Event Radius</string>
+	<string name="jump">Change Position</string>
+	<string name="logout">Logout</string>
 </resources>

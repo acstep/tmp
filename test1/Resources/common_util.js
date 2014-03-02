@@ -104,6 +104,7 @@ function createNormalFeed(viewobj,category){
 	var lastposupdate = 0;
 	currentdate = new Date(); 
 	var nexttime = parseInt(currentdate.getTime()/1000);
+	var nextlike = 0;
 	var firstFeed = true;
 	//////////////////   Draw feeds  /////////////////////////
 	var feeditem = [];
@@ -131,7 +132,7 @@ function createNormalFeed(viewobj,category){
 		if(result == true){
 			
 			Ti.API.info(feedData);
-			feedData = sortByKeyUp(feedData, 'lastupdate');
+			
 
 			if(feedData.length > 0){	
 				if(firstFeed == true){
@@ -203,6 +204,7 @@ function createNormalFeed(viewobj,category){
 				}   
 
 				nexttime = oldfeeditems.data[(oldfeeditems.data.length -1)]['lastupdate'];
+				nextlike = oldfeeditems.data[(oldfeeditems.data.length -1)]['like'];
 			}
 			viewobj.forwardView.visible = false;
 			firstFeed = false;	
@@ -303,7 +305,7 @@ function createNormalFeed(viewobj,category){
 		currentdate = new Date(); 
 		nexttime = parseInt(currentdate.getTime()/1000);
 		firstFeed = true;
-        nexttime = parseInt(currentdate.getTime()/1000);
+        nextlike = 0;
 
 		limitcount = parseInt(Ti.App.Properties.getInt('limitcount',5));
 		if(category == 'myfeed'){
@@ -313,7 +315,15 @@ function createNormalFeed(viewobj,category){
 			latitude = parseFloat(Ti.App.Properties.getDouble('latitude',-1));
 			longitude = parseFloat(Ti.App.Properties.getDouble('longitude',-1));
 			distance = parseInt(Ti.App.Properties.getInt('distance',feedDistance));
-			queryevent([longitude,latitude], distance, [category], limitcount,'time', nexttime, 0, parseFeed);
+			
+			var sorttype =  Ti.App.Properties.getString('sorttype','');
+			if(sorttype == 'time'){
+				queryevent([longitude,latitude], distance, [category], limitcount,'time', nexttime, 0,parseFeed);
+			}
+			else{
+				queryevent([longitude,latitude], distance, [category], limitcount,'like', 0, 'first',parseFeed);
+			}
+			
 		}
 		
    
@@ -328,7 +338,15 @@ function createNormalFeed(viewobj,category){
 			latitude = parseFloat(Ti.App.Properties.getDouble('latitude',-1));
 			longitude = parseFloat(Ti.App.Properties.getDouble('longitude',-1));
 			distance = parseInt(Ti.App.Properties.getInt('distance',feedDistance));
-			queryevent([longitude,latitude], distance, [category], limitcount, nexttime, parseFeed);
+			
+			var sorttype =  Ti.App.Properties.getString('sorttype','');
+			if(sorttype == 'time'){
+				queryevent([longitude,latitude], distance, [category], limitcount,'time', nexttime, 0,parseFeed);
+			}
+			else{
+				queryevent([longitude,latitude], distance, [category], limitcount,'like', 0, nextlike,parseFeed);
+			}
+			
 		}
     	
     };
@@ -400,6 +418,10 @@ function createHSepLine(width, top, bottom){
 	
 	return SepView;
 	
+}
+
+function createMenuSepLine(){
+	return Ti.UI.createView({ backgroundColor:'#666666', width:'90%', height:'1dp', top:'10dp', left:'5%'});
 }
 
 function createVSepLine(height, top,bottom,left){

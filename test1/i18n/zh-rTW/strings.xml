@@ -72,4 +72,8 @@
 	<string name="sorttype">排序方式</string>
 	<string name="sorttime">最新訊息</string>
 	<string name="sortlike">人氣訊息</string>
+	<string name="setup">設定</string>
+	<string name="radius">訊息距離範圍</string>
+	<string name="jump">改變位置</string>
+	<string name="logout">登出</string>
 </resources>

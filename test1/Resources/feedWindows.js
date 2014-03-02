@@ -395,13 +395,7 @@ function feedWindow() {
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
 	
-	var seperateLineView = Ti.UI.createView({
-		backgroundColor:'#666666',
-		width:'90%',
-		height:'1dp',
-		top:'10dp',
-        left:'5%'
-	});
+	
 	
 	var categoryMenu = [
  
@@ -421,9 +415,14 @@ function feedWindow() {
 			backgroundColor:'transparent',
 			width:'90%',
 			height:'50dp',
-            layout: 'horizontal',
 	        left:'5%'
             
+		});
+		
+		var groupView = Ti.UI.createView({
+			width:'100%',
+			height:'50dp',
+			layout: 'horizontal'
 		});
 		
 		var groupImg = Titanium.UI.createImageView({
@@ -441,10 +440,30 @@ function feedWindow() {
 			top: '13dp',
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});
+		
+		var checkboxView = Ti.UI.createView({
+			width:'20%',
+			height:'50dp',
+			right:'0dp'
+		});
+		
+		var enableSwitch = Ti.UI.createSwitch({
+		    style: Ti.UI.Android.SWITCH_STYLE_CHECKBOX,
+		    textAlign:Ti.UI.TEXT_ALIGNMENT_CENTER,
+		    value:true,
+		});
+		enableSwitch.addEventListener('change',function(e){
+		    e.cancelBubble = true;
+		});		
+		enableSwitch.addEventListener('click',function(e){
+		    e.cancelBubble = true;
+		});		
+		checkboxView.add(enableSwitch);
 
-		row.add(groupImg);
-		row.add(groupText);
-
+		groupView.add(groupImg);
+		groupView.add(groupText);
+        row.add(groupView);
+        row.add(checkboxView);
 		cateDate.push(row);
 	}
 	
@@ -505,13 +524,62 @@ function feedWindow() {
 		
 	});
 	
+	var mainMenuList = [
+ 
+		{ leftImage:'setupm.png', title:'setup' },
+		{ leftImage:'radiusm.png', title:'radius'},
+		{ leftImage:'jumpm.png', title:'jump' },
+		{ leftImage:'logoutm.png', title:'logout'},
+	]; 
+	
+	var mainMenuListRow = [];
+	for(var i = 0 ; i <= mainMenuList.length -1; i++) {
+		var row = Titanium.UI.createTableViewRow({
+            showVerticalScrollIndicator:false,
+			backgroundColor:'transparent',
+			width:'90%',
+			height:'50dp',
+	        left:'5%',
+            layout: 'horizontal'
+		});
+		
+		
+		
+		var groupImg = Titanium.UI.createImageView({
+			image:mainMenuList[i].leftImage,
+			backgroundColor:'transparent',left:'5dp',
+			top: '10dp',  height: '30dp', width: '30dp'
+		});
+		
+		var groupText = Ti.UI.createLabel({
+			font:{fontSize:'18sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
+			text: L(mainMenuList[i].title),
+			backgroundColor:'transparent',
+			color:'#777777',
+			left:'20dp',
+			top: '13dp',
+	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+		});
+		
+		
+		row.add(groupImg);
+		row.add(groupText);
+		mainMenuListRow.push(row);
+	}	
+	
+	var memuCommandTableView = Ti.UI.createTableView({  
+	    data:mainMenuListRow,
+	    width:'90%',
+	    top: '10dp'
+	});  
+	
 	mainMenu.add(menuTopView);
 	mainMenu.add(categoryText);
-	mainMenu.add(seperateLineView);
+	mainMenu.add(createMenuSepLine());
 	mainMenu.add(menuParentView);
 	menuParentView.add(memuTableView);
- 
-	
+    mainMenu.add(createMenuSepLine());
+	mainMenu.add(memuCommandTableView);
 	self.add(mainMenu);
 
 	
