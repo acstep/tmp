@@ -391,7 +391,7 @@ function feedWindow() {
 		text: L('category'),
 		color:'#666666',
 		left:'5%',
-		top: '10dp',
+		top: '20dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
 	
@@ -524,10 +524,10 @@ function feedWindow() {
 		
 	});
 	
+	////////////////////////main menu command  ////////////////////////
 	var mainMenuList = [
  
 		{ leftImage:'setupm.png', title:'setup' },
-		{ leftImage:'radiusm.png', title:'radius'},
 		{ leftImage:'jumpm.png', title:'jump' },
 		{ leftImage:'logoutm.png', title:'logout'},
 	]; 
@@ -573,6 +573,24 @@ function feedWindow() {
 	    top: '10dp'
 	});  
 	
+	memuCommandTableView.addEventListener('click',function(e) {
+		switch(e.index){
+			case 0:
+			break;		
+			case 1:
+				JumpWindow = require('jumpWindows');
+				new JumpWindow().open(); 
+				switchBackgroundView();
+			break;	
+			case 2:
+			break;
+			default:
+					
+		}
+		   
+
+	});
+	
 	mainMenu.add(menuTopView);
 	mainMenu.add(categoryText);
 	mainMenu.add(createMenuSepLine());
@@ -591,6 +609,7 @@ function feedWindow() {
 	var nexttime = parseInt(currentdate.getTime()/1000);
 	var nextlike = 0;
 	var firstFeed = true;
+	
 	//////////////////   Draw feeds  /////////////////////////
 	var feeditem = [];
 	var drawFunction = {	    
@@ -779,10 +798,9 @@ function feedWindow() {
 		nexttime = parseInt(currentdate.getTime()/1000);
 		nextlike = 0;
 		firstFeed = true;
-		
+		distance = getDistance();
         latitude = parseFloat(Ti.App.Properties.getDouble('latitude',-1));
 		longitude = parseFloat(Ti.App.Properties.getDouble('longitude',-1));
-		distance = parseInt(Ti.App.Properties.getInt('distance',feedDistance));
 		category = Ti.App.Properties.getList('category','none');
 		limitcount = parseInt(Ti.App.Properties.getInt('limitcount',5));
 		var sorttype =  Ti.App.Properties.getString('sorttype','');
@@ -798,6 +816,7 @@ function feedWindow() {
 
     function getNextFeed(){
     	Ti.API.info('getNextFeed ');
+    	distance = getDistance();
     	var sorttype =  Ti.App.Properties.getString('sorttype','');
 		if(sorttype == 'time'){
 			queryevent([longitude,latitude], distance, category, limitcount,'time', nexttime, 0,parseFeed);
@@ -809,7 +828,7 @@ function feedWindow() {
     };
     
     Ti.App.addEventListener('getnewfeed',function(e) {
-    	Ti.API.info('receive event getNextFeed ');
+    	Ti.API.info('receive event getNewFeed ');
         getNewFeed();
 	});
 	

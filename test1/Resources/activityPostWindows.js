@@ -544,15 +544,10 @@ function ActivityPostWindow() {
 	var latitude = 0;
 	var longitude = 0;
 
-	latitude = Ti.App.Properties.getDouble('latitude',latitude);
-	longitude = Ti.App.Properties.getDouble('longitude',longitude);
+	latitude = getLat();
+	longitude = getLon();
 	Ti.App.Properties.setDouble('userchooselatitude',latitude);
 	Ti.App.Properties.setDouble('userchooselongitude',longitude);
-	//url = "http://maps.googleapis.com/maps/api/staticmap?center=" +latitude +',' +longitude 
-	//    + "&zoom=16&size=" + mapwidth/2 +'x' + mapheight/2 +'&markers=color:red%7C'+ latitude
-	//    +',' + longitude +'&sensor=false';
-	//Ti.API.info('url : ' + url);
-	//mapImg.image = url; 
 	
 	var mapParentView = Titanium.UI.createView({
 		

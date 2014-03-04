@@ -73,7 +73,12 @@
 	<string name="sorttime">最新訊息</string>
 	<string name="sortlike">人氣訊息</string>
 	<string name="setup">設定</string>
-	<string name="radius">訊息距離範圍</string>
-	<string name="jump">改變位置</string>
+	<string name="jump">改變位置距離</string>
 	<string name="logout">登出</string>
+	<string name="jumpandpos">設定距離及位置</string>
+	<string name="raduisdes">設定您想接收訊息的最大距離</string>
+	<string name="unit">單位</string>
+	<string name="setmap">設定您目前的位置</string>
+	<string name="lockmap">將您的位置鎖定在此地  注意! 您的位置將不會隨著手機移動</string>
+	<string name="draganno">長按後拖拉到您的位置</string>
 </resources>

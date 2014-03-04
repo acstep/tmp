@@ -17,7 +17,7 @@ function mapWindow() {
 
 	});
  	var selectPosText = Ti.UI.createLabel({
-		font:{fontSize:'20sp',fontFamily:'Helvetica Neue'},
+		font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
 		text: L('dragmarker'),
 		color:'#555555',
 		top:'10dp',
@@ -47,8 +47,8 @@ function mapWindow() {
     self.add(titleView);
     
 	self.image = {};
-	self.latitude = parseFloat(Ti.App.Properties.getDouble('latitude'));
-	self.longitude = parseFloat(Ti.App.Properties.getDouble('longitude'));
+	self.latitude = getLat();
+	self.longitude = getLon();
 	
 	
 	/////   map  /////
@@ -64,9 +64,10 @@ function mapWindow() {
     var posAnno = Map.createAnnotation({
 	    latitude:self.latitude,
 	    longitude:self.longitude,
-	    title:"Drag to position",
+	    title:L('draganno'),
 	    pincolor:Map.ANNOTATION_RED,
 	    draggable:true,
+	    showInfoWindow:true,
 	    myid:1 
 	});
     

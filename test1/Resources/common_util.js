@@ -1,5 +1,20 @@
 
 
+var raduisItems = [100,200,300,500,1000,2000,5000,10000,20000,50000,100000];
+
+
+function getDistance(){
+	return (parseFloat(raduisItems[Ti.App.Properties.getInt('distance',feedDistance)])/1000)/1.6;
+}
+
+function getLat(){
+	return parseFloat(Ti.App.Properties.getDouble('latitude',-1));
+}
+
+function getLon(){
+	return parseFloat(Ti.App.Properties.getDouble('longitude',-1));
+}
+
 function createNormalWin(title){
 	var self = Ti.UI.createWindow({
 		backgroundColor:'#ffffff',
@@ -63,8 +78,8 @@ function createNormalWin(title){
 function createNormalFeed(viewobj,category){
 	/////////  feed  ///////////////////
 	
-	lat = parseFloat(Ti.App.Properties.getDouble('latitude',0));
-	lon = parseFloat(Ti.App.Properties.getDouble('longitude',0));
+	lat = getLat();
+	lon = getLon();
     var feedView = Ti.UI.createView({
 		backgroundColor:'#dddddd',
 		width:'100%',
@@ -306,15 +321,15 @@ function createNormalFeed(viewobj,category){
 		nexttime = parseInt(currentdate.getTime()/1000);
 		firstFeed = true;
         nextlike = 0;
-
+        distance = getDistance();
 		limitcount = parseInt(Ti.App.Properties.getInt('limitcount',5));
 		if(category == 'myfeed'){
 			querymyevent(limitcount, nexttime, parseFeed);
 		}
 		else{
-			latitude = parseFloat(Ti.App.Properties.getDouble('latitude',-1));
-			longitude = parseFloat(Ti.App.Properties.getDouble('longitude',-1));
-			distance = parseInt(Ti.App.Properties.getInt('distance',feedDistance));
+			latitude = getLat();
+			longitude = getLon();
+			
 			
 			var sorttype =  Ti.App.Properties.getString('sorttype','');
 			if(sorttype == 'time'){
@@ -331,13 +346,14 @@ function createNormalFeed(viewobj,category){
 
     function getNextFeed(){
     	Ti.API.info('getNextFeed ');
+    	distance = getDistance();
     	if(category == 'myfeed'){
 			querymyevent(limitcount, nexttime, parseFeed);
 		}
 		else{
-			latitude = parseFloat(Ti.App.Properties.getDouble('latitude',-1));
-			longitude = parseFloat(Ti.App.Properties.getDouble('longitude',-1));
-			distance = parseInt(Ti.App.Properties.getInt('distance',feedDistance));
+			latitude = getLat();
+			longitude = getLon();
+			
 			
 			var sorttype =  Ti.App.Properties.getString('sorttype','');
 			if(sorttype == 'time'){
