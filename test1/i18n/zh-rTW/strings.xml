@@ -20,8 +20,9 @@
 	<string name="choosecategory">選擇類別</string>
 	<string name="postnewsevent">發布新聞</string>
 	<string name="addphoto">增加照片</string>
-	<string name="changemap">按下面的地圖來更改位置...</string>
-	<string name="dragmarker">拖拉標記到您想要發布的位置</string>
+	<string name="changemap">按地圖來更改訊息位置</string>
+	<string name="maptitle">設定訊息位置</string>
+	<string name="dragmarker">長按紅色標記後拖拉到您想要發布的位置</string>
 	<string name="pullreflash">下拉以重新整理...</string>
 	<string name="releasereflash">釋放以重新整理...</string>
 	<string name="loading">   載入更多訊息...</string>

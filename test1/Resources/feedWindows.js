@@ -23,6 +23,7 @@ function feedWindow() {
 	
 	var feedPos = false;
 	function switchBackgroundView()	{
+		Ti.API.info('switchBackgroundView'); 
 		if(feedPos == true){ 
 			feedPos = false;
 			var animation = Titanium.UI.createAnimation();
@@ -576,14 +577,23 @@ function feedWindow() {
 	memuCommandTableView.addEventListener('click',function(e) {
 		switch(e.index){
 			case 0:
+				SetupWindow = require('setupWindows');
+				new SetupWindow().open(); 
+				switchBackgroundView();
 			break;		
 			case 1:
+			    // set location 
 				JumpWindow = require('jumpWindows');
 				new JumpWindow().open(); 
 				switchBackgroundView();
-			break;	
+			    break;	
 			case 2:
-			break;
+			    //logout
+			    Ti.App.Properties.setString('userid','');
+				Ti.App.Properties.setString('token','');
+				Ti.App.Properties.setString('useremail','');
+				Ti.App.Properties.setString('locklocation','false');
+				break;
 			default:
 					
 		}
@@ -676,8 +686,8 @@ function feedWindow() {
 				oldfeeditems = JSON.parse(Ti.App.Properties.getString('feed',{'data':[]}));
 				for(var i = 0 ; i <= oldfeeditems.data.length -1; i++) {
 					
-					latitude = parseFloat(Ti.App.Properties.getDouble('latitude',0));
-					longitude = parseFloat(Ti.App.Properties.getDouble('longitude',0));
+					latitude = getLat();
+					longitude = getLon();
 				    //drawFunction[feedData[i].category.toString()](feedData[i]);
 				    var feedRow = Ti.UI.createTableViewRow({
 				        backgroundSelectedColor:'#dddddd',
@@ -799,8 +809,8 @@ function feedWindow() {
 		nextlike = 0;
 		firstFeed = true;
 		distance = getDistance();
-        latitude = parseFloat(Ti.App.Properties.getDouble('latitude',-1));
-		longitude = parseFloat(Ti.App.Properties.getDouble('longitude',-1));
+        latitude = getLat();
+		longitude = getLon();
 		category = Ti.App.Properties.getList('category','none');
 		limitcount = parseInt(Ti.App.Properties.getInt('limitcount',5));
 		var sorttype =  Ti.App.Properties.getString('sorttype','');
@@ -817,6 +827,8 @@ function feedWindow() {
     function getNextFeed(){
     	Ti.API.info('getNextFeed ');
     	distance = getDistance();
+    	latitude = getLat();
+		longitude = getLon();
     	var sorttype =  Ti.App.Properties.getString('sorttype','');
 		if(sorttype == 'time'){
 			queryevent([longitude,latitude], distance, category, limitcount,'time', nexttime, 0,parseFeed);
@@ -864,8 +876,8 @@ function feedWindow() {
     ///////////////// handle location ///////////////
     gpsProvider = Ti.Geolocation.Android.createLocationProvider({
 	    name: Ti.Geolocation.PROVIDER_NETWORK,
-	    minUpdateTime: 300, 
-	    minUpdateDistance: 300
+	    minUpdateTime: 120, 
+	    minUpdateDistance: 200
 	});
 	Ti.Geolocation.Android.addLocationProvider(gpsProvider);
 	Ti.Geolocation.Android.manualMode = true;
@@ -1091,8 +1103,8 @@ function feedWindow() {
         });
     });
 	
-	tmplatitude = parseFloat(Ti.App.Properties.getDouble('latitude',-1));
-	tmplongitude = parseFloat(Ti.App.Properties.getDouble('longitude',-1));
+	tmplatitude = getLat();
+	tmplongitude = getLon();
 	if(tmplatitude == -1 || tmplongitude == -1){
 		Titanium.Geolocation.getCurrentPosition(function(e){
 		    // エラー時はコールバック関數の引數のerrorプロパティがセットされます

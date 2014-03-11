@@ -8,10 +8,18 @@ function getDistance(){
 }
 
 function getLat(){
+	if(Ti.App.Properties.getString('locklocation','false') == 'true'){
+		Ti.API.info('getLat: locklocation : '  +  parseFloat(Ti.App.Properties.getDouble('locklatitude',-1)));
+		return parseFloat(Ti.App.Properties.getDouble('locklatitude',-1));
+	}
 	return parseFloat(Ti.App.Properties.getDouble('latitude',-1));
 }
 
 function getLon(){
+	if(Ti.App.Properties.getString('locklocation','false') == 'true'){
+		Ti.API.info('getLon: locklocation : ' + parseFloat(Ti.App.Properties.getDouble('locklongitude',-1)) );
+		return parseFloat(Ti.App.Properties.getDouble('locklongitude',-1));
+	}
 	return parseFloat(Ti.App.Properties.getDouble('longitude',-1));
 }
 
@@ -383,6 +391,21 @@ function showAlert(title, message){
 		message:message
 	});
 	alertDlg.show();
+}
+
+
+function getCurrentLocation(){
+	Titanium.Geolocation.getCurrentPosition(function(e){
+  
+	    if(e.error){
+	        Ti.API.error(e.error);
+	        return;
+	    }
+		Ti.App.Properties.setDouble('latitude',e.coords.latitude);
+		Ti.App.Properties.setDouble('longitude',e.coords.longitude);
+		Ti.API.info('coords: ' + JSON.stringify(e.coords));   
+		Ti.App.fireEvent('getnewfeed');
+	});
 }
 
 function sortByKeyUp(array, key) {

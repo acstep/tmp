@@ -307,7 +307,7 @@ function feedContentWindow(eventid, fullcontent) {
 	    bottom:'10dp',
 	    width:'25%',
 	    height: '40dp',
-	    right:'0dp'
+	    right:'0dp',backgroundColor:'#3498db',borderRadius:10
 	});
 
 	function sendCommentCB(result, data){

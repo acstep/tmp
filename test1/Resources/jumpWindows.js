@@ -55,17 +55,24 @@ function jumpWindow() {
 		if(lockmapSwitch.value == true){
 			Ti.API.info('set locklocation: ' + 'true');
 			Ti.App.Properties.setString('locklocation','true'); 
+			Ti.API.info('set locklatitude: ' + posAnno.latitude);
+			Ti.API.info('set locklongitude: ' + posAnno.longitude);
+			Ti.App.Properties.setDouble('locklatitude',posAnno.latitude);
+			Ti.App.Properties.setDouble('locklongitude',posAnno.longitude);
+			Ti.App.Properties.setDouble('latitude',posAnno.latitude);
+			Ti.App.Properties.setDouble('longitude',posAnno.longitude);
+			Ti.API.info('set latitude: ' + latitude);
+			Ti.API.info('set longitude: ' + longitude);
+			Ti.App.fireEvent('getnewfeed');
+			self.close();  
 		}
 		else{
 			Ti.API.info('set locklocation: ' + 'false');
 			Ti.App.Properties.setString('locklocation','false'); 
+			getCurrentLocation();
+			self.close();  
 		}
-		Ti.App.Properties.setDouble('latitude',posAnno.latitude);
-		Ti.App.Properties.setDouble('longitude',posAnno.longitude);
-		Ti.API.info('set latitude: ' + latitude);
-		Ti.API.info('set longitude: ' + longitude);
-		Ti.App.fireEvent('getnewfeed');
-		self.close();  
+		
 	});	
 	
 	titleView.add(doneButton);
@@ -150,14 +157,20 @@ function jumpWindow() {
 	});
 	
 	var setmapText = Ti.UI.createLabel({
-			font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
-			text: L('setmap'),
-			color:'#333333',
-			left:'50dp',right:'10dp',
-	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
-		});
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
+		text: L('setmap'),
+		color:'#333333',
+		left:'50dp',right:'10dp',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
+	});
     
-    
+    var hintText = Ti.UI.createLabel({
+		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
+		text: L('dragmarker'),
+		color:'#333333',
+		left:'20%',right:'10dp',top:'10dp',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
+	});
     
     var lockmapSwitch = Ti.UI.createSwitch({
 	    style: Ti.UI.Android.SWITCH_STYLE_CHECKBOX,
@@ -166,8 +179,8 @@ function jumpWindow() {
 	    title:L('lockmap'),
 	    value:false,
 	    color:'#333333',
-	    top:'20dp', left:'10%',
-	    width: '80%' // necessary for textAlign to be effective
+	    top:'30dp', left:'5%',
+	    width: '90%' // necessary for textAlign to be effective
 	});
 	
 	if(Ti.App.Properties.getString('locklocation','false') == 'true'){
@@ -213,6 +226,7 @@ function jumpWindow() {
     backgroundView.add(topLabelView);
     backgroundView.add(sliderView);
     backgroundView.add(setMapView);
+    backgroundView.add(hintText);
     backgroundView.add(lockmapSwitch);
     backgroundView.add(bottomMapView);
 	return self;

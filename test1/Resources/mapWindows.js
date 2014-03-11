@@ -18,8 +18,8 @@ function mapWindow() {
 	});
  	var selectPosText = Ti.UI.createLabel({
 		font:{fontSize:'18sp',fontFamily:'Helvetica Neue'},
-		text: L('dragmarker'),
-		color:'#555555',
+		text: L('maptitle'),
+		color:'#ffffff',
 		top:'10dp',
 		left:'10dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
@@ -52,10 +52,19 @@ function mapWindow() {
 	
 	
 	/////   map  /////
+	var mapHintText = Ti.UI.createLabel({
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
+		text: L('dragmarker'),
+		color:'#ff0000',
+		top:'20dp',
+		left:'20dp',right:'10dp',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
+	});
+	
 	var mapContentView = Ti.UI.createView({
 		backgroundColor:'#ffffff',
 		width:'100%',
-	    top:'0dp',
+	    top:'20dp',
         height:'auto'       
 	});
 	
@@ -107,6 +116,7 @@ function mapWindow() {
 	});	
 	
     mapContentView.add(mapview);
+    self.add(mapHintText);
     self.add(mapContentView);
 	return self;
 }

@@ -20,8 +20,9 @@
 	<string name="choosecategory">Choose a Category</string>
 	<string name="postnewsevent">Post News Event</string>
 	<string name="addphoto">Add Photo</string>
-	<string name="changemap">Click to change the location on Map....</string>
-	<string name="dragmarker">Set Event location.</string>
+	<string name="changemap">Click the Map to change the event location.</string>
+	<string name="maptitle">Set Event Location</string>
+	<string name="dragmarker">Long click the red marker and drop to the event location.</string>
 	<string name="pullreflash">Pull down to reflash...</string>
 	<string name="releasereflash">Release to reflash...</string>
 	<string name="loading">   Loading...</string>

@@ -30,7 +30,7 @@ function drawSalesEvent(view, data, lon, lat){
 	    backgroundColor: 'white',
 	    layout: 'vertical',
 	    width:'100%', height: Ti.UI.SIZE,
-	    top:'0dp'
+	    top:'10dp'
 	});
 	
 

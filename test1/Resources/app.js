@@ -30,6 +30,11 @@ if (Ti.version < 1.8 ) {
 	if(sorttype == ''){
 		Ti.App.Properties.setString('sorttype','time');
 	}
+	
+	var distance = Ti.App.Properties.getInt('distance',0);
+	if(distance == 0){
+		Ti.App.Properties.setInt('distance',5);
+	}
 	var LoginWindow;
 	var fewdWindow;
 	
