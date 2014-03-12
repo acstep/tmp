@@ -874,13 +874,56 @@ function feedWindow() {
 
     
     ///////////////// handle location ///////////////
-    gpsProvider = Ti.Geolocation.Android.createLocationProvider({
-	    name: Ti.Geolocation.PROVIDER_NETWORK,
-	    minUpdateTime: 120, 
-	    minUpdateDistance: 200
-	});
-	Ti.Geolocation.Android.addLocationProvider(gpsProvider);
+    
+    var locationsrc = Ti.App.Properties.getString('locationsrc','network');
+    
+    
+	var locationProvider = {};
+	
+	if(locationsrc == 'gps'){
+		locationProvider = Ti.Geolocation.Android.createLocationProvider({
+	    	name: Ti.Geolocation.PROVIDER_GPS,
+		    minUpdateTime: 300, 
+		    minUpdateDistance: 300
+		});
+	}
+	else{
+		locationProvider = Ti.Geolocation.Android.createLocationProvider({
+	    	name: Ti.Geolocation.PROVIDER_NETWORK,
+		    minUpdateTime: 300, 
+		    minUpdateDistance: 300
+		});
+	}
+	
+	
+	Ti.Geolocation.Android.addLocationProvider(locationProvider);
 	Ti.Geolocation.Android.manualMode = true;
+
+    Ti.App.addEventListener('changelocationsrc',function(e) {
+
+    	var locationsrc = Ti.App.Properties.getString('locationsrc','network');
+    	Ti.Geolocation.Android.removeLocationProvider(locationProvider);
+    	if(locationsrc == 'gps'){
+    		Ti.API.info('receive event changegps ');
+	    	locationProvider = Ti.Geolocation.Android.createLocationProvider({
+		    	name: Ti.Geolocation.PROVIDER_GPS,
+			    minUpdateTime: 300, 
+			    minUpdateDistance: 300
+			});
+	        Ti.Geolocation.Android.addLocationProvider(locationProvider);
+    	}
+    	else{
+    		Ti.API.info('receive event changenetwork ');
+	    	locationProvider = Ti.Geolocation.Android.createLocationProvider({
+		    	name: Ti.Geolocation.PROVIDER_NETWORK,
+			    minUpdateTime: 300, 
+			    minUpdateDistance: 300
+			});
+	        Ti.Geolocation.Android.addLocationProvider(locationProvider);
+    	}
+	});
+	
+
 
 
     var locationCallback = function(e) {

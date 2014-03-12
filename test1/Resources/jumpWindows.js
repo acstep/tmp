@@ -178,7 +178,7 @@ function jumpWindow() {
 	    font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
 	    title:L('lockmap'),
 	    value:false,
-	    color:'#333333',
+	    color:'#ff0000',
 	    top:'30dp', left:'5%',
 	    width: '90%' // necessary for textAlign to be effective
 	});

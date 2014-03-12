@@ -82,4 +82,10 @@
 	<string name="setmap">Change your current Location.</string>
 	<string name="lockmap">Lock your location here. Your location will not move with the mobile phone.</string>
 	<string name="draganno">Long Click and Drag the Marker to your location</string>
+	<string name="personalinfo">Persional Info</string>
+	<string name="locationsrc">Location Source</string>
+	<string name="changepass">Change Password</string>
+	<string name="appinfo">Software Info</string>
+	<string name="fromgps">GPS Satellites</string>
+	<string name="fromnetwork">Wi-Fi & mobile network</string>
 </resources>

@@ -35,6 +35,13 @@ if (Ti.version < 1.8 ) {
 	if(distance == 0){
 		Ti.App.Properties.setInt('distance',5);
 	}
+	
+	var locationsrc = Ti.App.Properties.getString('locationsrc','');
+	if(locationsrc == ''){
+		Ti.App.Properties.setString('locationsrc','network');
+	}
+	
+	
 	var LoginWindow;
 	var fewdWindow;
 	

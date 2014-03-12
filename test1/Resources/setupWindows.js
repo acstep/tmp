@@ -40,71 +40,72 @@ function setupWindow() {
     //////////////  setup menu /////////////////////////////
     var mainMenuList = [
  
-		{ leftImage:'setupm.png', title:'setup' },
-		{ leftImage:'jumpm.png', title:'jump' },
-		{ leftImage:'logoutm.png', title:'logout'},
+		{ leftImage:'human.png', title:'personalinfo' },
+		{ leftImage:'gps.png', title:'locationsrc' },
+		{ leftImage:'sortpos.png', title:'jumpandpos' },
+		{ leftImage:'passwd.png', title:'changepass'},
+		{ leftImage:'info.png', title:'appinfo'},
 	]; 
 	
 	var mainMenuListRow = [];
 	for(var i = 0 ; i <= mainMenuList.length -1; i++) {
 		var row = Titanium.UI.createTableViewRow({
             showVerticalScrollIndicator:false,
-			backgroundColor:'transparent',
 			width:'90%',
-			height:'50dp',
-	        left:'5%',
-            layout: 'horizontal'
+			height:'70dp',
+	        left:'5%'
+            
 		});
 		
 		
 		
-		var groupImg = Titanium.UI.createImageView({
+		var rowImg = Titanium.UI.createImageView({
 			image:mainMenuList[i].leftImage,
 			backgroundColor:'transparent',left:'5dp',
-			top: '10dp',  height: '30dp', width: '30dp'
+			height: '30dp', width: '30dp'
 		});
 		
-		var groupText = Ti.UI.createLabel({
+		var rowText = Ti.UI.createLabel({
 			font:{fontSize:'18sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 			text: L(mainMenuList[i].title),
 			backgroundColor:'transparent',
 			color:'#777777',
-			left:'20dp',
-			top: '13dp',
+			left:'60dp',
+			
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});
 		
+		var arrowImg = Titanium.UI.createImageView({
+			image:'next.png',
+			backgroundColor:'transparent',right:'1dp',
+			height: '20dp', width: '20dp'
+		});
 		
-		row.add(groupImg);
-		row.add(groupText);
+		row.add(rowImg);
+		row.add(rowText);
+		row.add(arrowImg);
 		mainMenuListRow.push(row);
 	}	
 	
 	var memuCommandTableView = Ti.UI.createTableView({  
 	    data:mainMenuListRow,
 	    width:'90%',
-	    top: '10dp'
+	    top: '10dp',
+	    separatorColor:'#666666'
 	});  
 	
 	memuCommandTableView.addEventListener('click',function(e) {
 		switch(e.index){
 			case 0:
-				SetupWindow = require('setupWindows');
-				new SetupWindow().open(); 
-				switchBackgroundView();
-			break;		
+			    AccountInfoWindow = require('accountinfoWindows');
+				new AccountInfoWindow().open();
+				break;		
 			case 1:
-			    // set location 
-				JumpWindow = require('jumpWindows');
-				new JumpWindow().open(); 
-				switchBackgroundView();
+			    locationsrcDialog.show();
 			    break;	
 			case 2:
-			    //logout
-			    Ti.App.Properties.setString('userid','');
-				Ti.App.Properties.setString('token','');
-				Ti.App.Properties.setString('useremail','');
-				Ti.App.Properties.setString('locklocation','false');
+			    JumpWindow = require('jumpWindows');
+				new JumpWindow().open(); 
 				break;
 			default:
 					
@@ -112,8 +113,37 @@ function setupWindow() {
 		   
 
 	});
-
-
+	
+	var locationsrc = Ti.App.Properties.getString('locationsrc','network');
+	var defaultIndex = 0;
+	if(locationsrc == 'gps'){
+		defaultIndex = 0;
+	}
+	else{
+		defaultIndex = 1;
+	}
+	var locationsrcDialog = Titanium.UI.createOptionDialog({
+        selectedIndex: defaultIndex,
+	    title: L('locationsrc'),
+	    options: [L('fromgps'),L('fromnetwork'),L('cancel')],
+	});
+	
+	locationsrcDialog.addEventListener('click', function(e) {
+		if(e.index == 0){
+			Ti.App.Properties.setString('locationsrc','gps');
+            Ti.App.fireEvent('changelocationsrc');
+		}
+		else if(e.index == 1){
+			Ti.App.Properties.setString('locationsrc','network');
+            Ti.App.fireEvent('changelocationsrc');
+		}
+		else{
+			
+		}
+	});	
+	
+    
+    backgroundView.add(memuCommandTableView);
 	return self;
 }
 

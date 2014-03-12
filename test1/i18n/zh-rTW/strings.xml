@@ -82,4 +82,10 @@
 	<string name="setmap">設定您目前的位置</string>
 	<string name="lockmap">將您的位置鎖定在此地  注意! 您的位置將不會隨著手機移動</string>
 	<string name="draganno">長按後拖拉到您的位置</string>
+	<string name="personalinfo">個人資訊</string>
+	<string name="locationsrc">位置來源</string>
+	<string name="changepass">變更密碼</string>
+	<string name="appinfo">軟體資訊</string>
+	<string name="fromgps">GPS衛星定位</string>
+	<string name="fromnetwork">Wifi 和行動網路位置資訊</string>
 </resources>
