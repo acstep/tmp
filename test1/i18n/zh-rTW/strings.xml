@@ -100,4 +100,14 @@
 	<string name="intro">個人介紹</string>
 	<string name="inputintro">請輸入您的個人介紹</string>
 	<string name="birthday">您的生日</string>
+	<string name="changepass">更改密碼</string>
+	<string name="orgpass">原始密碼</string>
+	<string name="inputorgpass">請輸入原始密碼</string>
+	<string name="newpass">新密碼</string>
+	<string name="inputnewpass">請輸入新密碼</string>
+	<string name="newpassagain">確認新密碼</string>
+	<string name="inputnewpassagain">請再次輸入新密碼</string>
+	<string name="passempty">密碼不能空白</string>
+	<string name="passverifyerror">密碼不同</string>
+	<string name="tokenerror">您的密碼已經被更改過 請重新登入</string>
 </resources>

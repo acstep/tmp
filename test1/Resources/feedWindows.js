@@ -15,7 +15,8 @@ function feedWindow() {
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
-
+   
+    
 	var listappImg = Titanium.UI.createImageView({
 		image:'list.png',
 		top: '10dp', left:'10dp', height: '30dp', width: '30dp'
@@ -350,15 +351,11 @@ function feedWindow() {
 		left:'0dp', height: '60dp', width: '60dp'
 	});
 	
-	var headimage = Ti.App.Properties.getString('headfile','');
+	
 
 	
-	if(headimage == ''){
-		headImg.image = 'headphoto.png';
-	}
-	else{
-		headImg.image = getHeadImg(Ti.App.Properties.getString('userid',''));
-	}
+	headImg.image = getHeadImg(Ti.App.Properties.getString('userid',''));
+	
 	
 	Ti.App.addEventListener('changemenuhead',function(e) {
     	Ti.API.info('receive event changemenuhead ');
@@ -854,6 +851,9 @@ function feedWindow() {
     	talknumText.text =  0  ;
         talknumText.visible = false;
 	});
+	
+	
+	
 	
 	
 	function shownotifynum(notifynum){

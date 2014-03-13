@@ -72,7 +72,7 @@ function accountinfoWindow() {
 	
 	titleView.add(doneButton);
 	
-	function updateCallback(result, resultmsg){
+	function updateCallback(result, data){
 		if(result == true){
 			Ti.App.Properties.setString('username',nameTextField.value);
 			Ti.App.Properties.setString('school',schoolTextField.value);
@@ -89,7 +89,7 @@ function accountinfoWindow() {
 		}
 		else{
 			forwardView.visible = false;
-			showAlert('Error !', resultmsg);
+			showAlert('Error !', data);
 			Ti.API.info('update account false.');
 		}	
     }

@@ -100,4 +100,14 @@
 	<string name="intro">Personal Introduction</string>
 	<string name="inputintro">Please input your introduction</string>
 	<string name="birthday">Birthday</string>
+	<string name="changepass">Change Password</string>
+	<string name="orgpass">Old Password</string>
+	<string name="inputorgpass">Please input your old password</string>
+	<string name="newpass">New Password</string>
+	<string name="inputnewpass">Please input your new password</string>
+	<string name="newpassagain">Verify password</string>
+	<string name="inputnewpassagain">Please input your new password again</string>
+	<string name="passempty">Password empty</string>
+	<string name="passverifyerror">Password verify error</string>
+	<string name="tokenerror">Your password has been changed. Please login again.</string>
 </resources>

@@ -94,26 +94,6 @@ function setupWindow() {
 	    separatorColor:'#666666'
 	});  
 	
-	memuCommandTableView.addEventListener('click',function(e) {
-		switch(e.index){
-			case 0:
-			    AccountInfoWindow = require('accountInfoWindows');
-				new AccountInfoWindow().open();
-				break;		
-			case 1:
-			    locationsrcDialog.show();
-			    break;	
-			case 2:
-			    JumpWindow = require('jumpWindows');
-				new JumpWindow().open(); 
-				break;
-			default:
-					
-		}
-		   
-
-	});
-	
 	var locationsrc = Ti.App.Properties.getString('locationsrc','network');
 	var defaultIndex = 0;
 	if(locationsrc == 'gps'){
@@ -122,10 +102,11 @@ function setupWindow() {
 	else{
 		defaultIndex = 1;
 	}
+	
 	var locationsrcDialog = Titanium.UI.createOptionDialog({
         selectedIndex: defaultIndex,
 	    title: L('locationsrc'),
-	    options: [L('fromgps'),L('fromnetwork'),L('cancel')],
+	    options: [L('fromgps'),L('fromnetwork'),L('cancel')]
 	});
 	
 	locationsrcDialog.addEventListener('click', function(e) {
@@ -141,6 +122,33 @@ function setupWindow() {
 			
 		}
 	});	
+	
+	memuCommandTableView.addEventListener('click',function(e) {
+		switch(e.index){
+			case 0:
+			    AccountInfoWindow = require('accountInfoWindows');
+				new AccountInfoWindow().open();
+				break;		
+			case 1:
+			    locationsrcDialog.show();
+			    break;	
+			case 2:
+			    JumpWindow = require('jumpWindows');
+				new JumpWindow().open(); 
+				break;
+			case 3:
+			    passWindow = require('changePassWindows');
+				new passWindow().open(); 
+				break;	
+			default:
+					
+		}
+		   
+
+	});
+	
+	
+	
 	
     
     backgroundView.add(memuCommandTableView);

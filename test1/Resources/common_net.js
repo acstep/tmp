@@ -22,6 +22,27 @@ function getHeadImgAddr(){
 	return Ti.App.Properties.getString('headimgaddr','');
 }
 
+function checkTokneError(result){
+	Ti.App.Properties.setString('userid','');
+    Ti.App.Properties.setString('token','');
+    Ti.App.Properties.setString('useremail','');
+	var alertDlg = Titanium.UI.createAlertDialog({
+		title:'Error !',
+		message:L('tokenerror')
+	});
+	alertDlg.show();
+	alertDlg.addEventListener('click', function(e){
+	    var activity = Titanium.Android.currentActivity;
+    	activity.finish();
+	});
+	
+	
+    //Ti.App.fireEvent('tokenchange');
+    return true;
+	//alertDlg.show();
+	
+}
+
 function getHeadImg(id){
 	var cache= new Date().getTime();
 	var expirecache = Ti.App.Properties.getDouble('expirecache',0);
@@ -47,6 +68,7 @@ function login(email, pass, callbackf){
     		callbackf(true,result.data);
     	}
     	else{
+    		
     		callbackf(false,'','',result.result);
     	}
 
@@ -101,9 +123,12 @@ function updateaccount(data, callbackf){
     	{
     		Ti.API.info('id : ' + result.id);
     		Ti.API.info('token : ' + result.token);
-    		callbackf(true,result.result);
+    		callbackf(true,result);
     	}
     	else{
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
     		callbackf(false,result.result);
     	}
 
@@ -148,6 +173,9 @@ function createvent(data, callbackf){
     		callbackf(true,result.result);
     	}
     	else{
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
     		callbackf(false,result.result);
     	}
 
@@ -176,6 +204,9 @@ function deleteevent(eventid, callbackf){
     		callbackf(true,result.result);
     	}
     	else{
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
     		callbackf(false,result.result);
     	}
 
@@ -302,6 +333,9 @@ function querymyevent(limitcount, nexttime, callbackf){
     		callbackf(true,result.data);
     	}
     	else{
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
     		callbackf(false,result.result);
     	}
     };
@@ -333,6 +367,9 @@ function likeevent(eventid, sourceobj, callbackf){
     		if(result.result = 'like duplicate'){
     			
     		}
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
     		callbackf(false,result.result,sourceobj);
     	}
     };
@@ -360,6 +397,9 @@ function commentevt(eventid, data, callbackf){
     		callbackf(true,result.result);
     	}
     	else{
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
     		callbackf(false,result.result);
     	}
     };
@@ -421,6 +461,9 @@ function querynotify( starttime, limitcount, callbackf){
     		callbackf(true,result.data);
     	}
     	else{
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
     		callbackf(false,result.result);
     	}
     };
@@ -450,6 +493,9 @@ function createchatroom( id, toid, check, callbackf){
     		callbackf(true,result.data);
     	}
     	else{
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
     		callbackf(false,result.result);
     	}
     };
@@ -480,6 +526,9 @@ function quitchatroom( roomid, callbackf){
     		callbackf(true,result.result);
     	}
     	else{
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
     		callbackf(false,result.result);
     	}
     };
@@ -513,6 +562,9 @@ function querychatroom( starttime, limitcount,onlytime ,callbackf){
     		callbackf(true,result.data);
     	}
     	else{
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
     		callbackf(false,result.result);
     	}
     };
@@ -542,6 +594,9 @@ function sendmsg( roomid, msgdata ,callbackf){
     		callbackf(true,result.data);
     	}
     	else{
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
     		callbackf(false,result.result);
     	}
     };
@@ -572,6 +627,9 @@ function querymsg( roomid, starttime, limitcount ,callbackf){
     		callbackf(true,result.data);
     	}
     	else{
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
     		callbackf(false,result.result);
     	}
     };

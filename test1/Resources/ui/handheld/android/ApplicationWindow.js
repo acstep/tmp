@@ -11,6 +11,15 @@ function ApplicationWindow() {
 		layout:'vertical'
 	});
 	
+	
+	Ti.App.addEventListener('tokenchange',function(e) {
+		Ti.API.info('receive event tokenchange ');
+		self.close();
+		var activity = Titanium.Android.currentActivity;
+    	activity.finish();
+        
+	});
+	
 	return self;
 }
 

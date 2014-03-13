@@ -58,14 +58,14 @@ if (Ti.version < 1.8 ) {
 	
 	
 	var LoginWindow;
-	var fewdWindow;
+	var feedWindow;
 	
 	
 	var Window;
 
-	Window = require('ui/handheld/android/ApplicationWindow');
+	//Window = require('ui/handheld/android/ApplicationWindow');
 
-	new Window().open();
+	//new Window().open();
 	
 	if(userid == ''){
 		LoginWindow = require('loginWindows');
