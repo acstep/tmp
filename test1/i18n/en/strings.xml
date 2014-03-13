@@ -88,4 +88,16 @@
 	<string name="appinfo">Software Info</string>
 	<string name="fromgps">GPS Satellites</string>
 	<string name="fromnetwork">Wi-Fi & mobile network</string>
+	<string name="changehead">Change</string>
+	<string name="inputname">Please input your name</string>
+	<string name="inputemail">Please input your Email</string>
+	<string name="inputpass">Please input your password</string>
+	<string name="inputpassagain">Please input your password again</string>
+	<string name="work">Company</string>
+	<string name="inputwork">Please input your company</string>
+	<string name="school">School</string>
+	<string name="inputschool">Please input your school</string>
+	<string name="intro">Personal Introduction</string>
+	<string name="inputintro">Please input your introduction</string>
+	<string name="birthday">Birthday</string>
 </resources>

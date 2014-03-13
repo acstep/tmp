@@ -23,7 +23,7 @@ function imageListWindow(imagelist,index) {
             top:0,left:0,backgroundColor:'#000000',
 		});
     	var imgView = Ti.UI.createImageView({
-		    image: 'https://s3-ap-southeast-1.amazonaws.com/feedimgl/' + imagelist[i].replace('.jpg','-l.jpg'),
+		    image: getFeedImgAddr() +'feedimgl/' + imagelist[i].replace('.jpg','-l.jpg'),
 		    width:'100%',backgroundColor:'#000000',
 		});
 

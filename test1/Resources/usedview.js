@@ -53,7 +53,7 @@ function drawUsedEvent(view, data, lon, lat){
 		    width:'94%',height:'200dp',
 		    name:'imagecontentview'
 		});  
-		Ti.API.info('image file : ',('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + data['photos'][0]).replace('.jpg','-m.jpg'));
+		Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgm/' + data['photos'][0]).replace('.jpg','-m.jpg'));
 		var feedImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
 		    visible : false,
@@ -93,7 +93,7 @@ function drawUsedEvent(view, data, lon, lat){
 		
 		middleView.add(imageContentView);
 		
-		feedImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + data['photos'][0]).replace('.jpg','-m.jpg');
+		feedImage.image = (getFeedImgAddr()+'feedimgm/' + data['photos'][0]).replace('.jpg','-m.jpg');
 
 	}
 
@@ -155,7 +155,7 @@ function drawUsedContnet(contentView,data){
 			new FeedImageListWindow(imageList,0).open(); 
 		});
 		imageScrollView.add(feedImage);
-		feedImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[0]).replace('.jpg','-m.jpg');
+		feedImage.image = (getFeedImgAddr()+'feedimgm/' + imageList[0]).replace('.jpg','-m.jpg');
 
 	}
 	else{
@@ -178,7 +178,7 @@ function drawUsedContnet(contentView,data){
 			    width:'130dp',height:'130dp',left:'10dp',
 			    name:'imagecontentview'
 			});  
-			Ti.API.info('image file : ',('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[0]).replace('.jpg','-m.jpg'));
+			Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgm/' + imageList[0]).replace('.jpg','-m.jpg'));
 			var feedImage = Titanium.UI.createImageView({
 			    backgroundColor: '#ffffff',
 			    visible : false,
@@ -220,7 +220,7 @@ function drawUsedContnet(contentView,data){
 				FeedImageListWindow = require('imagelistWindows');
 				new FeedImageListWindow(imageList,this.index).open(); 
 			});
-			feedImage.image = ('https://s3-ap-southeast-1.amazonaws.com/feedimgm/' + imageList[i]).replace('.jpg','-m.jpg');
+			feedImage.image = (getFeedImgAddr()+'feedimgm/' + imageList[i]).replace('.jpg','-m.jpg');
 			imageContentView.add(feedImage);
 	
 			imageScrollView.add(imageContentView);
@@ -275,7 +275,7 @@ function drawUsedContnet(contentView,data){
 	});
 	
 
-	headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + data['ownerid']+'.jpg';
+	headPhotoImg.image = getHeadImg(data['ownerid']);
 
 	
 	var topinfoView = Ti.UI.createView({

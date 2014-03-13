@@ -94,14 +94,14 @@ function chatroomWindow() {
 					toidIndex = 1;
 					idData = chatroomData[i]['memdata'][1];
 					
-					headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + idData['id']+'.jpg';
+					headPhotoImg.image = getHeadImg(idData['id']);
 
 				}
 				else{
 					toidIndex = 0;
 					idData = chatroomData[i]['memdata'][0];
 	
-					headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + idData['id']+'.jpg';
+					headPhotoImg.image = getHeadImg(idData['id']);
 
 				}
 			}

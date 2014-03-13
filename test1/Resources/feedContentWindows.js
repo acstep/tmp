@@ -215,7 +215,7 @@ function feedContentWindow(eventid, fullcontent) {
 			});
 
 			
-			headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + data[i]['ownerid']+'.jpg';
+			headPhotoImg.image = getHeadImg(data['ownerid']);
 	
 			tmpContentView.add(headPhotoImg);
 			

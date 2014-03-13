@@ -357,8 +357,14 @@ function feedWindow() {
 		headImg.image = 'headphoto.png';
 	}
 	else{
-		headImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + headimage;
+		headImg.image = getHeadImg(Ti.App.Properties.getString('userid',''));
 	}
+	
+	Ti.App.addEventListener('changemenuhead',function(e) {
+    	Ti.API.info('receive event changemenuhead ');
+        headImg.image = getHeadImg(Ti.App.Properties.getString('userid',''));
+	});
+	
 	
 	var menuTopView = Ti.UI.createView({
 		width:'90%',

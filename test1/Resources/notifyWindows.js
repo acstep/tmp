@@ -78,7 +78,7 @@ function notifyWindow() {
 					});
 					
 					
-					headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + notifyData[i]['senderid']+'.jpg';
+					headPhotoImg.image = getHeadImg(notifyData[i]['senderid']);
 			
 					itemView.add(headPhotoImg);
 					

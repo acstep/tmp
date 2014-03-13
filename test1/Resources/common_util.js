@@ -2,6 +2,10 @@
 
 var raduisItems = [100,200,300,500,1000,2000,5000,10000,20000,50000,100000];
 
+function getUserID(){
+	return Ti.App.Properties.getString('userid','');
+}
+
 
 function getDistance(){
 	return (parseFloat(raduisItems[Ti.App.Properties.getInt('distance',feedDistance)])/1000)/1.6;
@@ -740,7 +744,7 @@ function createFeedTop(feedView, data, lon, lat){
 	});
 	
 	
-	headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + data['ownerid']+'.jpg';
+	headPhotoImg.image = getHeadImg(data['ownerid']);
 
 	
 	var topinfoView = Ti.UI.createView({

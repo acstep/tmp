@@ -387,7 +387,7 @@ function SalesPostWindow() {
             'token':Ti.App.Properties.getString('token','') 
         };
 		xhr = Titanium.Network.createHTTPClient();
-        xhr.open("POST","http://54.254.208.12/api/uploadimg");
+        xhr.open("POST",getServerAddr()+"uploadimg");
         xhr.send(data_to_send); 
         xhr.onload = function(e) {
         	currentUploadImg = currentUploadImg + 1;

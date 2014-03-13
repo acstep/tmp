@@ -41,6 +41,21 @@ if (Ti.version < 1.8 ) {
 		Ti.App.Properties.setString('locationsrc','network');
 	}
 	
+	var serveraddr = Ti.App.Properties.getString('serveraddr','');
+	if(serveraddr == ''){
+		Ti.App.Properties.setString('serveraddr','http://54.254.208.12/api/');
+	}
+	
+	var feedimgaddr = Ti.App.Properties.getString('feedimgaddr','');
+	if(feedimgaddr == ''){
+		Ti.App.Properties.setString('feedimgaddr','https://s3-ap-southeast-1.amazonaws.com/');
+	}
+	
+	var headimgaddr = Ti.App.Properties.getString('headimgaddr','');
+	if(headimgaddr == ''){
+		Ti.App.Properties.setString('headimgaddr','https://s3-ap-southeast-1.amazonaws.com/');
+	}
+	
 	
 	var LoginWindow;
 	var fewdWindow;

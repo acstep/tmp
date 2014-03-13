@@ -97,7 +97,7 @@ function setupWindow() {
 	memuCommandTableView.addEventListener('click',function(e) {
 		switch(e.index){
 			case 0:
-			    AccountInfoWindow = require('accountinfoWindows');
+			    AccountInfoWindow = require('accountInfoWindows');
 				new AccountInfoWindow().open();
 				break;		
 			case 1:

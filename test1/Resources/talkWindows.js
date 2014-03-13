@@ -287,7 +287,7 @@ function talkWindow(id, toid,roomdata) {
 			});
 			
 
-			headPhotoImg.image = 'https://s3-ap-southeast-1.amazonaws.com/headphotos/' + ownerid +'.jpg';
+			headPhotoImg.image = getHeadImg(ownerid) ;
 
 			headPhotoImg.left = '0dp';
 			itemView.add(headPhotoImg);

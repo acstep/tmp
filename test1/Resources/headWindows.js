@@ -3,7 +3,7 @@
 
 
 
-function HeadWindow(cropimage) {
+function HeadWindow(cropimage,mode) {
 	//load component dependencies
 	
 	var self = createNormalWin(true);
@@ -169,7 +169,13 @@ function HeadWindow(cropimage) {
 	    var f = Titanium.Filesystem.getFile(Titanium.Filesystem.externalStorageDirectory,'head.jpg');
 	    
 		f.write(cropimage.imageAsCropped({x:realX,y:realY,width:realWidth,height:realHeight}).imageAsResized(200,200));
-		Ti.App.fireEvent('headphotodone');
+		if(mode == 'create'){
+			Ti.App.fireEvent('createheadphotodone');
+		}
+		if(mode == 'modify'){
+			Ti.App.fireEvent('modifyheadphotodone');
+		}
+		
         self.close();
 	});	
 	

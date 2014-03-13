@@ -3,7 +3,7 @@
 	<string name="welcome">Welcome to %s!</string>
 	<string name="login">登入</string>
 	<string name="signup">註冊</string>
-	<string name="name">帳號</string>
+	<string name="name">姓名</string>
 	<string name="email">電子信箱</string>
 	<string name="passwd">密碼</string>
 	<string name="passwdagain">再次輸入密碼</string>
@@ -88,4 +88,16 @@
 	<string name="appinfo">軟體資訊</string>
 	<string name="fromgps">GPS衛星定位</string>
 	<string name="fromnetwork">Wifi 和行動網路位置資訊</string>
+	<string name="changehead">更換照片</string>
+	<string name="inputname">請輸入您的姓名</string>
+	<string name="inputemail">請輸入您的Email</string>
+	<string name="inputpass">請輸入您的密碼</string>
+	<string name="inputpassagain">請再次輸入您的密碼</string>
+	<string name="work">公司</string>
+	<string name="inputwork">請輸入您的公司</string>
+	<string name="school">學校</string>
+	<string name="inputschool">請輸入您的學校</string>
+	<string name="intro">個人介紹</string>
+	<string name="inputintro">請輸入您的個人介紹</string>
+	<string name="birthday">您的生日</string>
 </resources>

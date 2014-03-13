@@ -204,8 +204,8 @@ function createAccountWindow() {
 	                {
 	                    //we may create image view with contents from image variable
 	                    //or simply save path to image
-	                    
-	                    CropPhotoWindow = require('headWindows');
+	                    var CropPhotoWindow = require('headWindows');
+	                    newimage = image;
 	                    if(image.width >  image.height){
 	                    	if(image.width > 1000){
 	                    		ratio = image.width / 1000.0;
@@ -218,7 +218,7 @@ function createAccountWindow() {
 	                    		newimage = image.imageAsResized(image.width/ratio,image.height/ratio);
 	                    	}
 	                    }
-						new CropPhotoWindow(newimage).open();
+						new CropPhotoWindow(newimage,'create').open();
 	                    
 	                }
 	            },
@@ -262,7 +262,8 @@ function createAccountWindow() {
 	                {
 	                    //we may create image view with contents from image variable
 	                    //or simply save path to image
-	                    CropPhotoWindow = require('headWindows');
+	                    var CropPhotoWindow = require('headWindows');
+	                    newimage = image;
 	                    if(image.width >  image.height){
 	                    	if(image.width > 1000){
 	                    		ratio = image.width / 1000.0;
@@ -275,7 +276,7 @@ function createAccountWindow() {
 	                    		newimage = image.imageAsResized(image.width/ratio,image.height/ratio);
 	                    	}
 	                    }
-						new CropPhotoWindow(newimage).open();
+						new CropPhotoWindow(newimage,'create').open();
 	                }  
 	            },
 	            cancel:function()
@@ -307,7 +308,7 @@ function createAccountWindow() {
 	    }
 	};
 	
-	Ti.App.addEventListener('headphotodone',getheadphoto);
+	Ti.App.addEventListener('createheadphotodone',getheadphoto);
 	
 	
 	//////////////  profile data  //////////////////////////
@@ -338,7 +339,7 @@ function createAccountWindow() {
 		backgroundColor:'#ffffff',
 	    borderColor:'#666666',
 	    borderWidth:'1dp',borderRadius:10,
-		hintText:'Your Name',
+		hintText:L('inputname'),
         
 	});
 	
@@ -363,9 +364,7 @@ function createAccountWindow() {
 		backgroundColor:'#ffffff',
 	    borderColor:'#666666',
 	    borderWidth:'1dp',borderRadius:10,
-		hintText:'Your Email',
-		
-
+		hintText:L('inputemail')
 	});
     
 	var passwdText = Ti.UI.createLabel({
@@ -388,9 +387,7 @@ function createAccountWindow() {
 	    borderColor:'#666666',
 	    borderWidth:'1dp',borderRadius:10,
 		passwordMask: true,
-		hintText:'Your Password',
-		
-
+		hintText:L('inputpass')
 	});
 	
 	var passwdVText = Ti.UI.createLabel({
@@ -413,9 +410,7 @@ function createAccountWindow() {
 	    borderColor:'#666666',
 	    borderWidth:'1dp',borderRadius:10,
 		passwordMask: true,
-		hintText:'Your Password Again',
-		
-
+		hintText:L('inputpassagain')
 	});
 	
 
@@ -472,7 +467,7 @@ function createAccountWindow() {
             'token':Ti.App.Properties.getString('token','')
         };
 		xhr = Titanium.Network.createHTTPClient();
-        xhr.open("POST","http://54.254.208.12/api/uploadheadimg");
+        xhr.open("POST",getServerAddr()+"uploadheadimg");
         xhr.send(data_to_send); 
         xhr.onload = function(e) {
             var result =  JSON.parse(this.responseText);
