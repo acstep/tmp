@@ -135,14 +135,21 @@ function createNormalFeed(viewobj,category){
 	var firstFeed = true;
 	//////////////////   Draw feeds  /////////////////////////
 	var feeditem = [];
-	var drawFunction = {	    
-	    	'1000':drawNewsEvent,
-	    	'1001':drawActivityEvent,
-	    	'1002':drawHelpEvent,
-	    	'1003':drawSalesEvent,
-	    	'1004':drawUsedEvent,
-	    	'1005':drawTeambuyEvent,
-	    	'1006':drawSocialEvent,
+	var drawFunction = {	   
+		    'base':createBaseFeedView ,
+		    'template1':drawtemplate1Event ,
+		    'template2':drawtemplate2Event
+	};
+	
+	layoutDataDes = {
+		'1000': {'layouttype':'base','title': L('news'),'color':'#2ecc71','catimage':'news.png'},
+		'1001': {'layouttype':'template1','title':L('club'),'color':'#f39c12','catimage':'group.png'},
+		'1002': {'layouttype':'base','title':L('needhelp'),'color':'#ff0000','catimage':'help2.png'},
+		'1003': {'layouttype':'base','title':L('sale'),'color':'#ff0000','catimage':'sale2.png'},
+		'1004': {'layouttype':'base','title':L('used'),'color':'#bdc3c7','catimage':'used.png'},
+		'1005': {'layouttype':'base','title':L('teambuying'),'color':'#9b59b6','catimage':'teambuy.png'},
+		'1006': {'layouttype':'template2','title':L('dating'),'color':'#e667af','catimage':'love.png'},
+		
 	};
 	
 	
@@ -174,7 +181,15 @@ function createNormalFeed(viewobj,category){
 				    });
 				    //drawFunction[feedData[i].category.toString()](feedData[i]);
 				    try{
-				    	drawFunction[feedData[i]['category']](feedRow, feedData[i],lon,lat);
+				    	var data = {'info':feedData[i],
+				    	            'lat':latitude,
+				    	            'lon':longitude, 
+				    	            'title':layoutDataDes[feedData[i]['category']].title,
+				    	            'color':layoutDataDes[feedData[i]['category']].color,
+				    	            'image':layoutDataDes[feedData[i]['category']].catimage,
+				    	};
+				    	drawFunction[layoutDataDes[feedData[i]['category']].layouttype](feedRow,data);
+
 					    feedRow.eventid = feedData[i]['eventid']; 
 					    feedtableItems.push(feedRow);
 					    feedTableView.appendRow(feedRow);

@@ -23,23 +23,27 @@ function getHeadImgAddr(){
 }
 
 function checkTokneError(result){
-	Ti.App.Properties.setString('userid','');
-    Ti.App.Properties.setString('token','');
-    Ti.App.Properties.setString('useremail','');
-	var alertDlg = Titanium.UI.createAlertDialog({
-		title:'Error !',
-		message:L('tokenerror')
-	});
-	alertDlg.show();
-	alertDlg.addEventListener('click', function(e){
-	    var activity = Titanium.Android.currentActivity;
-    	activity.finish();
-	});
+	if(result == 'auth_error'){
+		Ti.App.Properties.setString('userid','');
+	    Ti.App.Properties.setString('token','');
+	    Ti.App.Properties.setString('useremail','');
+		var alertDlg = Titanium.UI.createAlertDialog({
+			title:'Error !',
+			message:L('tokenerror')
+		});
+		alertDlg.show();
+		alertDlg.addEventListener('click', function(e){
+		    var activity = Titanium.Android.currentActivity;
+	    	activity.finish();
+		});
+
+	    return true;
+
+	}
+	else{
+		return false;
+	}
 	
-	
-    //Ti.App.fireEvent('tokenchange');
-    return true;
-	//alertDlg.show();
 	
 }
 

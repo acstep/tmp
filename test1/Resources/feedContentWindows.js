@@ -1,10 +1,7 @@
 //feed content Window Component Constructor
-Ti.include("common_net.js");
-Ti.include("common_util.js");
-Ti.include("newsview.js");
-Ti.include("activityview.js");
-Ti.include("usedview.js");
-Ti.include("teambuyview.js");
+
+Ti.include("baseContentView.js");
+
 
 function feedContentWindow(eventid, fullcontent) {
 	//load component dependencies
@@ -81,14 +78,22 @@ function feedContentWindow(eventid, fullcontent) {
     
     
     /////////////  event info ////////////////////////
-    var drawFeedContentFunction = {	    
-	    	'1000':drawNewsContnet,
-	    	'1001':drawActivityContnet,
-	    	'1002':drawHelpContnet,
-	    	'1003':drawSalesContnet,
-	    	'1004':drawUsedContnet,
-	    	'1005':drawTeambuyContnet,
-	    	'1006':drawSocialContnet
+    	
+	layoutDataDes = {
+		'1000': {'layouttype':'base'},
+		'1001': {'layouttype':'template1'},
+		'1002': {'layouttype':'base'},
+		'1003': {'layouttype':'base'},
+		'1004': {'layouttype':'base'},
+		'1005': {'layouttype':'base'},
+		'1006': {'layouttype':'template2'},
+		
+	};
+    
+    var drawFunction = {	   
+		    'base':drawBaseContnet ,
+		    'template1':drawtemplate1Contnet ,
+		    'template2':drawtemplate2Contnet
 	};
     
     
@@ -126,7 +131,7 @@ function feedContentWindow(eventid, fullcontent) {
 				doneButton.visible = true;
 			}
 			categoryText.text = L(titleString[data['category'].toString()]);
-			drawFeedContentFunction[data['category'].toString()](contentView,data);
+			drawFunction[layoutDataDes[data['category'].toString()]['layouttype']](contentView,data);
 			self.add(contentView);
 			if(inputParentView.inputView != undefined){
 				inputParentView.remove(inputView);

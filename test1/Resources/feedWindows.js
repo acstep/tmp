@@ -1,13 +1,7 @@
 //Main Window Component Constructor
 Ti.include("common_net.js");
 Ti.include("common_util.js");
-Ti.include("newsview.js");
-Ti.include("activityview.js");
-Ti.include("helpview.js");
-Ti.include("salesview.js");
-Ti.include("usedview.js");
-Ti.include("teambuyview.js");
-Ti.include("socialview.js");
+Ti.include("baseFeedView.js");
 
 function feedWindow() {
 	//load component dependencies
@@ -256,36 +250,77 @@ function feedWindow() {
 	    //index of cancel button
 	});
 	
+	
+	
 	postDialog.addEventListener('click', function(e) {
 		Ti.API.info('postView click.');
 		switch(e.index){
 			case 0:
-			    ActivityPostWindow = require('activityPostWindows');
-				new ActivityPostWindow().open(); 
+			   var data = {
+			    	'title': L('club'),
+			    	'titlehinttext':L('activitytitle'),
+			    	'grouphinttext':L('groupname'),
+			    	'deshinttext':L('addactivitycontent'),
+			    	'category':1001
+			    };
+			    Template1PostWindow = require('template1PostWindows');
+				new Template1PostWindow(data).open(); 
 				break;
 			case 1:
-			    SalesPostWindow = require('salesPostWindows');
-				new SalesPostWindow().open(); 
+			    var data = {
+			    	'title':L('sale'),
+			    	'hinttext':L('addsalescontent'),
+			    	'category':1003
+			    };
+			    BasePostWindow = require('basePostWindows');
+				new BasePostWindow(data).open(); 
 				break;	
 			case 2:
-			    HelpPostWindow = require('helpPostWindows');
-				new HelpPostWindow().open(); 
+			    var data = {
+			    	'title':L('needhelp'),
+			    	'hinttext':L('addhelpcontent'),
+			    	'category':1002
+			    };
+			    BasePostWindow = require('basePostWindows');
+				new BasePostWindow(data).open(); 
 				break;	
 			case 3:
-			    SocialPostWindow = require('socialPostWindows');
-				new SocialPostWindow().open(); 
+			    var data = {
+			    	'title': L('dating'),
+			    	'titlehinttext':L('purpose'),
+			    	'placehinttext':L('preferredplace'),
+			    	'deshinttext':L('addsocialcontent'),
+			    	'category':1006
+			    };
+			    Template1PostWindow = require('template2PostWindows');
+				new Template1PostWindow(data).open(); 
 				break;		
 			case 4:
-			    newsPostWindow = require('newsPostWindows');
-				new newsPostWindow().open(); 
+			    var data = {
+			    	'title': L('news'),
+			    	'hinttext':L('addnewscontent'),
+			    	'category':1000
+			    };
+			    BasePostWindow = require('basePostWindows');
+				new BasePostWindow(data).open(); 
 				break;	
 			case 5:
-			    UsedPostWindow = require('usedPostWindows');
-				new UsedPostWindow().open(); 
+			    var data = {
+			    	'title': L('used'),
+			    	'hinttext':L('addusedcontent'),
+			    	'category':1004
+			    };
+			    BasePostWindow = require('basePostWindows');
+				new BasePostWindow(data).open(); 
 				break;
 			case 6:
-			    TeambuyPostWindow = require('teambuyPostWindows');
-				new TeambuyPostWindow().open(); 
+			    var data = {
+			    	'title': L('teambuying'),
+			    	'hinttext':L('addteambuycontent'),
+			    	'category':1005
+			    };
+			    BasePostWindow = require('basePostWindows');
+				new BasePostWindow(data).open(); 
 				break;							
 			default:
 				
@@ -654,14 +689,21 @@ function feedWindow() {
 	
 	//////////////////   Draw feeds  /////////////////////////
 	var feeditem = [];
-	var drawFunction = {	    
-	    	'1000':drawNewsEvent,
-	    	'1001':drawActivityEvent,
-	    	'1002':drawHelpEvent,
-	    	'1003':drawSalesEvent,
-	    	'1004':drawUsedEvent,
-	    	'1005':drawTeambuyEvent,
-	    	'1006':drawSocialEvent
+	var drawFunction = {	   
+		    'base':createBaseFeedView ,
+		    'template1':drawtemplate1Event ,
+		    'template2':drawtemplate2Event
+	};
+	
+	layoutDataDes = {
+		'1000': {'layouttype':'base','title': L('news'),'color':'#2ecc71','catimage':'news.png'},
+		'1001': {'layouttype':'template1','title':L('club'),'color':'#f39c12','catimage':'group.png'},
+		'1002': {'layouttype':'base','title':L('needhelp'),'color':'#ff0000','catimage':'help2.png'},
+		'1003': {'layouttype':'base','title':L('sale'),'color':'#ff0000','catimage':'sale2.png'},
+		'1004': {'layouttype':'base','title':L('used'),'color':'#bdc3c7','catimage':'used.png'},
+		'1005': {'layouttype':'base','title':L('teambuying'),'color':'#9b59b6','catimage':'teambuy.png'},
+		'1006': {'layouttype':'template2','title':L('dating'),'color':'#e667af','catimage':'love.png'},
+		
 	};
 	
 	
@@ -693,7 +735,15 @@ function feedWindow() {
 				    });
 				    //drawFunction[feedData[i].category.toString()](feedData[i]);
 				    try{
-				    	drawFunction[feedData[i]['category']](feedRow, feedData[i],longitude,latitude);
+				    	var data = {'info':feedData[i],
+				    	            'lat':latitude,
+				    	            'lon':longitude, 
+				    	            'title':layoutDataDes[feedData[i]['category']].title,
+				    	            'color':layoutDataDes[feedData[i]['category']].color,
+				    	            'image':layoutDataDes[feedData[i]['category']].catimage,
+				    	};
+				    	drawFunction[layoutDataDes[feedData[i]['category']].layouttype](feedRow,data);
+
 					    feedRow.eventid = feedData[i]['eventid']; 
 					    feedtableItems.push(feedRow);
 					    feedTableView.appendRow(feedRow);
