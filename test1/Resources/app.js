@@ -56,6 +56,10 @@ if (Ti.version < 1.8 ) {
 		Ti.App.Properties.setString('headimgaddr','https://s3-ap-southeast-1.amazonaws.com/');
 	}
 	
+	var category = Ti.App.Properties.getList('category','');
+	if(category == ''){
+		Ti.App.Properties.setList('category',[1001,1002,1003,1004,1005,1006]);
+	}
 	
 	var LoginWindow;
 	var feedWindow;

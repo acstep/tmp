@@ -410,7 +410,7 @@ function ActivityPostWindow() {
 		font:{fontSize:'16sp'},
 		text: L('starttime') + ':',
 		color:'#3498db',
-		top:'10dp', left:'10dp',
+		left:'10dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
 	
@@ -418,7 +418,7 @@ function ActivityPostWindow() {
 		font:{fontSize:'16sp'},
 		text: startTime.getFullYear()+'/'+(startTime.getMonth()+1)+'/'+startTime.getDate(),
 		color:'#666666',
-		top:'10dp', left:'130dp',
+		left:'130dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
 	
@@ -435,7 +435,7 @@ function ActivityPostWindow() {
 		font:{fontSize:'16sp'},
 		text: startTime.getHours()+':'+minutes,
 		color:'#666666',
-		top:'10dp', right:'20dp',
+		right:'20dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
 	
@@ -461,7 +461,7 @@ function ActivityPostWindow() {
 		font:{fontSize:'16sp'},
 		text: L('endtime') + ':',
 		color:'#3498db',
-		top:'10dp', left:'10dp',
+		left:'10dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
 	
@@ -469,7 +469,7 @@ function ActivityPostWindow() {
 		font:{fontSize:'16sp'},
 		text: endTime.getFullYear()+'/'+(endTime.getMonth()+1)+'/'+endTime.getDate(),
 		color:'#666666',
-		top:'10dp', left:'130dp',
+		left:'130dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
 	
@@ -483,10 +483,10 @@ function ActivityPostWindow() {
 		minutes = '0'+minutes;
 	}
 	var eTimeText = Ti.UI.createLabel({
-		font:{fontSize:'20sp'},
+		font:{fontSize:'16sp'},
 		text: endTime.getHours()+':'+minutes,
 		color:'#666666',
-		top:'10dp', right:'20dp',
+		right:'20dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
 	

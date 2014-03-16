@@ -56,6 +56,11 @@ function drawHelpEvent(view, data, lon, lat){
 		    width:'94%',height:'200dp',
 		    name:'imagecontentview'
 		});  
+		
+		var tmpview = Ti.UI.createView({
+            backgroundColor:'#ffffff'
+		});
+		
 		Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgm/' + data['photos'][0]).replace('.jpg','-m.jpg'));
 		var feedImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
@@ -66,17 +71,21 @@ function drawHelpEvent(view, data, lon, lat){
 		  
 		feedImage.addEventListener('load', function(e)
 		{
-			platheight = Ti.Platform.displayCaps.platformHeight,
-			platwidth = Ti.Platform.displayCaps.platformWidth *0.90;
+			var platheight = Ti.Platform.displayCaps.platformHeight;
+			var platwidth = Ti.Platform.displayCaps.platformWidth *0.90;
 
-			imgwidth = e.source.size.width;
-			imgheight = e.source.size.height;
+			var imgwidth = e.source.size.width;
+			var imgheight = e.source.size.height;
 			
 			Ti.API.info('platheight ' + platheight);
 			Ti.API.info('platwidth ' + platwidth);
 			Ti.API.info('imgwidth ' + imgwidth);
 			Ti.API.info('imgheight ' + imgheight);
-			
+			if(imgwidth == 0 || imgheight == 0){
+				var tmpimage = this.toBlob();
+				imgwidth = tmpimage.width;
+				imgheight = tmpimage.height;
+			}
 			if(imgwidth != 0 && imgwidth < platwidth){
 		
 				ratio = (platwidth / parseFloat(imgwidth));
@@ -92,7 +101,8 @@ function drawHelpEvent(view, data, lon, lat){
 
 		});
 		
-		imageContentView.add(feedImage);
+		tmpview.add(feedImage);
+		imageContentView.add(tmpview);
 		
 		
 		middleView.add(imageContentView);
@@ -137,11 +147,11 @@ function drawHelpContnet(contentView,data){
 		feedImage.addEventListener('load', function()
 		{
 			
-			platheight = Ti.Platform.displayCaps.platformHeight,
-			platwidth = Ti.Platform.displayCaps.platformWidth ;
+			var platheight = Ti.Platform.displayCaps.platformHeight;
+			var platwidth = Ti.Platform.displayCaps.platformWidth ;
 
-			imgwidth = this.size.width;
-			imgheight = this.size.height;
+			var imgwidth = this.size.width;
+			var imgheight = this.size.height;
 			if(imgwidth == 0 || imgheight == 0){
 				var tmpimage = this.toBlob();
 				imgwidth = tmpimage.width;
@@ -191,8 +201,8 @@ function drawHelpContnet(contentView,data){
 		    feedImage.index = i;
 			feedImage.addEventListener('load', function()
 			{
-				imgwidth = this.size.width;
-				imgheight = this.size.height;
+				var imgwidth = this.size.width;
+				var imgheight = this.size.height;
                 if(imgwidth == 0 || imgheight == 0){
 					var tmpimage = this.toBlob();
 					imgwidth = tmpimage.width;

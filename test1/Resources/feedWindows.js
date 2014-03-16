@@ -403,14 +403,15 @@ function feedWindow() {
 	
 	var categoryMenu = [
  
-		{ leftImage:'group.png', title:'club',category:'1000' },
-		{ leftImage:'sale1.png', title:'sale',category:'2000' },
-		{ leftImage:'help.png', title:'needhelp',category:'3000' },
-		{ leftImage:'love.png', title:'dating',category:'4000' },
-		{ leftImage:'news.png', title:'news',category:'5000' },
-		{ leftImage:'used.png', title:'used',category:'5000' },
-		{ leftImage:'teambuy.png', title:'teambuying',category:'6000' },
+		{ leftImage:'group.png', title:'club',category:1001 },
+		{ leftImage:'sale1.png', title:'sale',category:1003 },
+		{ leftImage:'help.png', title:'needhelp',category:1002 },
+		{ leftImage:'love.png', title:'dating',category:1006 },
+		{ leftImage:'news.png', title:'news',category:1000 },
+		{ leftImage:'used.png', title:'used',category:1004 },
+		{ leftImage:'teambuy.png', title:'teambuying',category:1005 },
 	]; 
+	
 	
 	var cateDate = [];
 	for(var i = 0 ; i <= categoryMenu.length -1; i++) {
@@ -451,12 +452,37 @@ function feedWindow() {
 			right:'0dp'
 		});
 		
+		var category = Ti.App.Properties.getList('category',[]);
+		var tmpExist = false;
+		if(category.indexOf(categoryMenu[i].category) != -1){
+			tmpExist = true;
+		}
 		var enableSwitch = Ti.UI.createSwitch({
 		    style: Ti.UI.Android.SWITCH_STYLE_CHECKBOX,
 		    textAlign:Ti.UI.TEXT_ALIGNMENT_CENTER,
-		    value:true,
+		    value:tmpExist,
 		});
+		enableSwitch.category = categoryMenu[i].category;
+		
+		
 		enableSwitch.addEventListener('change',function(e){
+			Ti.API.info(this.category);
+			var tmpCategory = Ti.App.Properties.getList('category',[]);
+			if(this.value == true){
+				if(tmpCategory.indexOf(this.category) == -1){
+					tmpCategory.push(this.category);
+					Ti.App.Properties.setList('category',tmpCategory);
+					Ti.API.info('change category left: ' +  tmpCategory);
+				}
+			}
+			else{
+				if(tmpCategory.indexOf(this.category) != -1){
+					tmpCategory.splice(tmpCategory.indexOf(this.category) , 1 );
+					Ti.App.Properties.setList('category',tmpCategory);
+					Ti.API.info('change category left: ' +  tmpCategory);
+				}
+			}
+			
 		    e.cancelBubble = true;
 		});		
 		enableSwitch.addEventListener('click',function(e){
@@ -596,6 +622,9 @@ function feedWindow() {
 				Ti.App.Properties.setString('token','');
 				Ti.App.Properties.setString('useremail','');
 				Ti.App.Properties.setString('locklocation','false');
+				self.close();
+				LoginWindow = require('loginWindows');
+				new LoginWindow().open();
 				break;
 			default:
 					
