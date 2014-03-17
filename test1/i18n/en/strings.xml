@@ -110,4 +110,9 @@
 	<string name="passempty">Password empty</string>
 	<string name="passverifyerror">Password verify error</string>
 	<string name="tokenerror">Your password has been changed. Please login again.</string>
+	<string name="lineup">Line Up</string>
+	<string name="lineuplist">Line Up List</string>
+	<string name="join">Join</string>
+	<string name="joinlist">List of people</string>
+	<string name="leavemsg">Leave a message or introduce yourself.</string>
 </resources>

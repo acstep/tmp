@@ -29,7 +29,7 @@ function Template1PostWindows(data) {
 
 	var selectPosText = Ti.UI.createLabel({
 		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
-		text: data.title,
+		text: L(data.title),
 		color:'#ffffff',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
@@ -278,7 +278,7 @@ function Template1PostWindows(data) {
 	    font: {fontSize:'16sp'},
 	    color:'#333333',
 	    textAlign: 'left',
-	    hintText:data.titlehinttext,
+	    hintText:L(data.titlehinttext),
 	    top: '30dp',
 	    width: '90%', 
 	    height : 'auto',
@@ -292,7 +292,7 @@ function Template1PostWindows(data) {
 	    font: {fontSize:'16sp'},
 	    color:'#333333',
 	    textAlign: 'left',
-	    hintText:data.grouphinttext,
+	    hintText:L(data.grouphinttext),
 	    top: '10dp',
 	    width: '90%', 
 	    height : 'auto',
@@ -505,7 +505,7 @@ function Template1PostWindows(data) {
 	    font: {fontSize:'16sp'},
 	    color:'#333333',
 	    textAlign: 'left',
-	    hintText:data.deshinttext,
+	    hintText:L(data.deshinttext),
 	    top: '30dp',
 	    width: '90%', 
 	    height : Ti.UI.SIZE,

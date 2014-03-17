@@ -46,10 +46,11 @@ function notifyWindow() {
     	
     	if(notifyLoading == true){
     		notifyLoading = false;
+    		notifyDataItems.pop();
     	}
     	
     	
-    	notifyDataItems.pop();
+    	
     	if(result == false){
     		Ti.API.info('result false. savedNotifyData : ' + JSON.stringify(savedNotifyData));
     		if(savedNotifyData.length == 0){

@@ -1,7 +1,7 @@
 //activityAppWindow Component Constructor
 Ti.include("common_net.js");
 Ti.include("common_util.js");
-Ti.include("activityview.js");
+
 
 function activityAppWindow() {
 	//load component dependencies

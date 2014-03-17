@@ -415,6 +415,67 @@ function commentevt(eventid, data, callbackf){
 	
 };
 
+
+function joinevt(data, callbackf){
+	id = Ti.App.Properties.getString('userid','');
+    token = Ti.App.Properties.getString('token','');
+	url = getServerAddr()+'joinevent?' + 'id=' + id + '&token=' + token + '&data=' + data ;
+	Ti.API.info('url : ' + url);
+	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.result);
+    	}
+    	else{
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'network error');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
+
+function queryjoinlist(eventid, starttime, callbackf){
+
+    if(starttime == 0){
+    	url = getServerAddr()+'queryjoinlist?' + 'eventid=' + eventid ;
+    }
+    else{
+    	url = getServerAddr()+'queryjoinlist?' + 'eventid=' + eventid + '&starttime=' + starttime;
+    }
+	
+	Ti.API.info('url : ' + url);
+	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		callbackf(true,result.data);
+    	}
+    	else{
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'network error');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
+
+
 function querycomment(eventid, starttime, callbackf){
 
     if(starttime == 0){

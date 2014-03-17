@@ -1,7 +1,7 @@
 //My feed Window Component Constructor
 Ti.include("common_net.js");
 Ti.include("common_util.js");
-Ti.include("newsview.js");
+
 
 function newsAppWindow() {
 	//load component dependencies

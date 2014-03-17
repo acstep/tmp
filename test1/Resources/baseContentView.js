@@ -183,6 +183,8 @@ function drawBaseContnet(contentView,data){
 	nameText.addEventListener('click',function(e) {
 		//  enter talk window
 		var myid = Ti.App.Properties.getString('userid','');
+		Ti.API.info('e.source.ownerid : ' + e.source.ownerid);
+		Ti.API.info('myid : ' + myid);
 		if(myid == e.source.ownerid){
 			return;
 		}
@@ -781,7 +783,7 @@ function drawtemplate2Contnet(contentView,data){
 	var preferView = Ti.UI.createView({
 	    backgroundColor: '#ffffff',
 	    height: Ti.UI.SIZE,layout: 'vertical',
-	    top:'10dp',left:'5%',right:'5%'
+	    top:'20dp',left:'5%',right:'5%'
 	});
 	
 	if(data['title'] != undefined && data['title'] != ''){
@@ -892,6 +894,70 @@ function drawtemplate2Contnet(contentView,data){
 	
 	    preferView.add(socialnumpplView);
 	};
+	
+	////////////////  join  /////////////////////////////////////////////////
+	var joinView = Ti.UI.createView({
+	    backgroundColor: '#ffffff',
+	    height: Ti.UI.SIZE,layout: 'horizontal',
+	    top:'20dp',left:'0dp',width:'100%',height:'50dp'
+	});
+	
+	var joinNumberView = Ti.UI.createView({
+	    backgroundColor: '#ffffff',
+	    height: Ti.UI.SIZE,
+	    top:'0dp',left:'0dp',width:'50%'
+	});
+	
+	var joinNumber = 0;
+	if(data['joinnumber'] != undefined){
+		joinNumber = data['joinnumber'];
+	}
+	
+	var joinNumberText = Ti.UI.createLabel({
+		font:{fontSize:'30sp',fontFamily:'Helvetica Neue'},
+		text:joinNumber,
+		color:'#34495e',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
+	});
+	
+	joinNumberView.addEventListener('click',function(e){
+	
+		JoinListWindow = require('joinMsgWindows');
+		new JoinListWindow(data['eventid']).open(); 
+	});	
+	
+	joinNumberView.add(joinNumberText);	
+	
+	var SepView = Ti.UI.createView({
+	    backgroundColor: '#bbbbbb',
+	    height: '50dp',width:'1dp'
+
+	});
+
+	var joinBottomView = Ti.UI.createView({
+	    backgroundColor: '#ffffff',
+	    height: Ti.UI.SIZE,
+	    top:'0dp',left:'0dp',width:'48%'
+	});
+	
+	var joinBottomButton = Titanium.UI.createButton({
+	    title: L('lineup'),
+	    width:'60%',
+	    backgroundColor:'#3498db',borderRadius:10
+	});
+	
+	joinBottomView.addEventListener('click',function(e){
+	
+		JoinWindow = require('joinWindows');
+		new JoinWindow(data).open(); 
+	});	
+	
+	joinBottomView.add(joinBottomButton);
+	
+	
+	joinView.add(joinNumberView);
+	joinView.add(SepView);
+	joinView.add(joinBottomView);
 	
 	////////////////  description ////////////////////////////////////////////
 	var desView = Ti.UI.createView({
@@ -1024,6 +1090,8 @@ function drawtemplate2Contnet(contentView,data){
 	contentView.add(topView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
 	contentView.add(preferView);
+	contentView.add(createHSepLine('90%','20dp','0dp'));
+	contentView.add(joinView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
 	contentView.add(desView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));

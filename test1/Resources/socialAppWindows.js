@@ -1,7 +1,7 @@
 //usedAppWindow Component Constructor
 Ti.include("common_net.js");
 Ti.include("common_util.js");
-Ti.include("socialview.js");
+
 
 function socialAppWindow() {
 	//load component dependencies

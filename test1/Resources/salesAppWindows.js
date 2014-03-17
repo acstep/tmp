@@ -1,7 +1,7 @@
 //selsAppWindow Component Constructor
 Ti.include("common_net.js");
 Ti.include("common_util.js");
-Ti.include("salesview.js");
+
 
 function selsAppWindow() {
 	//load component dependencies

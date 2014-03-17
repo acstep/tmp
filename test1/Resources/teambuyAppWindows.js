@@ -1,7 +1,7 @@
 //usedAppWindow Component Constructor
 Ti.include("common_net.js");
 Ti.include("common_util.js");
-Ti.include("teambuyview.js");
+
 
 function teambuyAppWindow() {
 	//load component dependencies

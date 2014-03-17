@@ -79,7 +79,7 @@ function feedContentWindow(eventid, fullcontent) {
     
     /////////////  event info ////////////////////////
     	
-	layoutDataDes = {
+	contentDataDes = {
 		'1000': {'layouttype':'base'},
 		'1001': {'layouttype':'template1'},
 		'1002': {'layouttype':'base'},
@@ -131,7 +131,7 @@ function feedContentWindow(eventid, fullcontent) {
 				doneButton.visible = true;
 			}
 			categoryText.text = L(titleString[data['category'].toString()]);
-			drawFunction[layoutDataDes[data['category'].toString()]['layouttype']](contentView,data);
+			drawFunction[contentDataDes[data['category'].toString()]['layouttype']](contentView,data);
 			self.add(contentView);
 			if(inputParentView.inputView != undefined){
 				inputParentView.remove(inputView);
@@ -189,6 +189,7 @@ function feedContentWindow(eventid, fullcontent) {
 	
 	var totalComment = false;
 	var lastCommentTime = 0;
+	
 	function parseComment(result, data){
 		forwardView.visible = false;
 		
@@ -199,10 +200,8 @@ function feedContentWindow(eventid, fullcontent) {
 			return;
 		}
 		
-		
 		commentTableView.remove(requestNextView);
 	
-		
 		data = sortByKeyUp(data, 'time');
 		for(var i = 0 ; i <= data.length -1; i++) {
 			totalComment = true;
@@ -220,7 +219,7 @@ function feedContentWindow(eventid, fullcontent) {
 			});
 
 			
-			headPhotoImg.image = getHeadImg(data['ownerid']);
+			headPhotoImg.image = getHeadImg(data[i]['ownerid']);
 	
 			tmpContentView.add(headPhotoImg);
 			
@@ -231,6 +230,28 @@ function feedContentWindow(eventid, fullcontent) {
 				color:'#3498db',
 				top:'12dp',left:'70dp',right:'10dp',
 		  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
+			});
+			nameText.ownerid = data[i]['ownerid'];
+			Ti.API.info('nameText.ownerid : ' + nameText.ownerid);
+			nameText.addEventListener('click',function(e) {
+				//  enter talk window
+				var myid = Ti.App.Properties.getString('userid','');
+				Ti.API.info('e.source.ownerid : ' + e.source.ownerid);
+				Ti.API.info('myid : ' + myid);
+				if(myid == e.source.ownerid){
+					return;
+				}
+			    Ti.API.info('postView click.');
+		        TalkWindow = require('talkWindows');
+		        tmpRoomData = {
+		            'roomid':'',
+		            'memberid':[],
+		            'lasttime':parseInt(new Date().getTime()/1000),
+		            'host':'',
+		            'lastmsg':'',
+		            'memdata':[]  
+		        };
+		        new TalkWindow(Ti.App.Properties.getString('userid',''), e.source.ownerid,tmpRoomData).open(); 
 			});
 			
 			

@@ -29,7 +29,7 @@ function Template2PostWindows(data) {
 
 	var selectPosText = Ti.UI.createLabel({
 		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
-		text: data.title,
+		text: L(data.title),
 		color:'#ffffff',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
@@ -278,7 +278,7 @@ function Template2PostWindows(data) {
 	    font: {fontSize:'16sp'},
 	    color:'#333333',
 	    textAlign: 'left',
-	    hintText:data.titlehinttext,
+	    hintText:L(data.titlehinttext),
 	    top: '20dp',
 	    width: '90%', 
 	    height : Titanium.UI.SIZE,
@@ -292,7 +292,7 @@ function Template2PostWindows(data) {
 	    font: {fontSize:'16sp'},
 	    color:'#333333',
 	    textAlign: 'left',
-	    hintText:data.placehinttext,
+	    hintText:L(data.placehinttext),
 	    top: '20dp',
 	    width: '90%', 
 	    height : Titanium.UI.SIZE,
@@ -424,7 +424,7 @@ function Template2PostWindows(data) {
 	    font: {fontSize:'16sp'},
 	    color:'#333333',
 	    textAlign: 'left',
-	    hintText:data.deshinttext,
+	    hintText:L(data.deshinttext),
 	    top: '30dp',
 	    width: '90%', 
 	    height : Ti.UI.SIZE,
@@ -597,7 +597,8 @@ function Template2PostWindows(data) {
 			'pdata':{
 				 'place':placeTextField.value,
 				 'time':parseInt(startTime.getTime()/1000),
-				 'numppl':numppl
+				 'numppl':numppl,
+				 
 			}
 		};
 	    

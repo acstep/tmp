@@ -110,4 +110,9 @@
 	<string name="passempty">密碼不能空白</string>
 	<string name="passverifyerror">密碼不同</string>
 	<string name="tokenerror">您的密碼已經被更改過 請重新登入</string>
+	<string name="lineup">排隊</string>
+	<string name="lineuplist">排隊名單</string>
+	<string name="join">參加</string>
+	<string name="joinlist">參加名單</string>
+	<string name="leavemsg">留個言給版主或介紹一下自己</string>
 </resources>

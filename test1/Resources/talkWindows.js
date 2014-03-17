@@ -20,7 +20,7 @@ function talkWindow(id, toid,roomdata) {
 	var titleView = self.titleView;
 	
 	backgroundView.layout = 'composite';
-	
+	Ti.API.info('id: '+ id +'toid : ' + toid);
 	////  title  //////
 	
 		

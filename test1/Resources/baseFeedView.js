@@ -13,10 +13,10 @@ function createBaseFeedView(view, data){
 	});
 	
 
-	
+	Ti.API.info('data.title: ' + data.title);
 	/////////  top  photo  time  name ////////////////////
 	createFeedTop(feedView, data.info, data.lon, data.lat);
-	feedView.categoryText.text = '   ' + data.title +'   ';
+	feedView.categoryText.text = '   ' + L(data.title) +'   ';
 	feedView.categoryText.backgroundColor = data.color;
 	feedView.categoryImg.image = data.image;
 	
@@ -137,7 +137,7 @@ function drawtemplate1Event(view, data){
 	
 	/////////  top  photo  time  name ////////////////////
 	createFeedTop(feedView, data.info, data.lon, data.lat);
-	feedView.categoryText.text = '   ' +data.title +'   ';
+	feedView.categoryText.text = '   ' + L(data.title) +'   ';
 	feedView.categoryText.backgroundColor = data.color;
 	feedView.categoryImg.image = data.image;
 	
@@ -551,7 +551,7 @@ function drawtemplate2Event(view, data){
 	
 	/////////  top  photo  time  name ////////////////////
 	createFeedTop(feedView, data.info, data.lon, data.lat);
-	feedView.categoryText.text = '   ' + data.title +'   ';
+	feedView.categoryText.text = '   ' + L(data.title) +'   ';
 	feedView.categoryText.backgroundColor = data.color;
 	feedView.categoryImg.image =  data.image;
 	

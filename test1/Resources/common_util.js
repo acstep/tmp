@@ -142,13 +142,13 @@ function createNormalFeed(viewobj,category){
 	};
 	
 	layoutDataDes = {
-		'1000': {'layouttype':'base','title': L('news'),'color':'#2ecc71','catimage':'news.png'},
-		'1001': {'layouttype':'template1','title':L('club'),'color':'#f39c12','catimage':'group.png'},
-		'1002': {'layouttype':'base','title':L('needhelp'),'color':'#ff0000','catimage':'help2.png'},
-		'1003': {'layouttype':'base','title':L('sale'),'color':'#ff0000','catimage':'sale2.png'},
-		'1004': {'layouttype':'base','title':L('used'),'color':'#bdc3c7','catimage':'used.png'},
-		'1005': {'layouttype':'base','title':L('teambuying'),'color':'#9b59b6','catimage':'teambuy.png'},
-		'1006': {'layouttype':'template2','title':L('dating'),'color':'#e667af','catimage':'love.png'},
+		'1000': {'layouttype':'base','title': 'news','color':'#2ecc71','catimage':'news.png'},
+		'1001': {'layouttype':'template1','title':'club','color':'#f39c12','catimage':'group.png'},
+		'1002': {'layouttype':'base','title':'needhelp','color':'#ff0000','catimage':'help2.png'},
+		'1003': {'layouttype':'base','title':'sale','color':'#ff0000','catimage':'sale2.png'},
+		'1004': {'layouttype':'base','title':'used','color':'#bdc3c7','catimage':'used.png'},
+		'1005': {'layouttype':'base','title':'teambuying','color':'#9b59b6','catimage':'teambuy.png'},
+		'1006': {'layouttype':'template2','title':'dating','color':'#e667af','catimage':'love.png'},
 		
 	};
 	

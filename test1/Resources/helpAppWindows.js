@@ -1,7 +1,7 @@
 //helpview Component Constructor
 Ti.include("common_net.js");
 Ti.include("common_util.js");
-Ti.include("helpview.js");
+
 
 function helpAppWindow() {
 	//load component dependencies

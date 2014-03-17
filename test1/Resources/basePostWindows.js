@@ -36,7 +36,7 @@ function BasePostWindow(data) {
 
 	var selectPosText = Ti.UI.createLabel({
 		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
-		text: data.title,
+		text: L(data.title),
 		color:'#ffffff',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
@@ -284,7 +284,7 @@ function BasePostWindow(data) {
 	    font: {fontSize:'16sp'},
 	    color:'#333333',
 	    textAlign: 'left',
-	    hintText:data.hinttext,
+	    hintText:L(data.hinttext),
 	    top: '30dp',
 	    width: '90%', 
 	    height : 'auto',

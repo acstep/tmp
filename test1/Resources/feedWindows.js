@@ -257,9 +257,9 @@ function feedWindow() {
 		switch(e.index){
 			case 0:
 			   var data = {
-			    	'title': L('club'),
-			    	'titlehinttext':L('activitytitle'),
-			    	'grouphinttext':L('groupname'),
+			    	'title': 'club',
+			    	'titlehinttext':'activitytitle',
+			    	'grouphinttext':'groupname',
 			    	'deshinttext':L('addactivitycontent'),
 			    	'category':1001
 			    };
@@ -268,8 +268,8 @@ function feedWindow() {
 				break;
 			case 1:
 			    var data = {
-			    	'title':L('sale'),
-			    	'hinttext':L('addsalescontent'),
+			    	'title':'sale',
+			    	'hinttext':'addsalescontent',
 			    	'category':1003
 			    };
 			    BasePostWindow = require('basePostWindows');
@@ -277,8 +277,8 @@ function feedWindow() {
 				break;	
 			case 2:
 			    var data = {
-			    	'title':L('needhelp'),
-			    	'hinttext':L('addhelpcontent'),
+			    	'title':'needhelp',
+			    	'hinttext':'addhelpcontent',
 			    	'category':1002
 			    };
 			    BasePostWindow = require('basePostWindows');
@@ -286,10 +286,10 @@ function feedWindow() {
 				break;	
 			case 3:
 			    var data = {
-			    	'title': L('dating'),
-			    	'titlehinttext':L('purpose'),
-			    	'placehinttext':L('preferredplace'),
-			    	'deshinttext':L('addsocialcontent'),
+			    	'title': 'dating',
+			    	'titlehinttext':'purpose',
+			    	'placehinttext':'preferredplace',
+			    	'deshinttext':'addsocialcontent',
 			    	'category':1006
 			    };
 			    Template1PostWindow = require('template2PostWindows');
@@ -297,7 +297,7 @@ function feedWindow() {
 				break;		
 			case 4:
 			    var data = {
-			    	'title': L('news'),
+			    	'title': 'news',
 			    	'hinttext':L('addnewscontent'),
 			    	'category':1000
 			    };
@@ -306,8 +306,8 @@ function feedWindow() {
 				break;	
 			case 5:
 			    var data = {
-			    	'title': L('used'),
-			    	'hinttext':L('addusedcontent'),
+			    	'title': 'used',
+			    	'hinttext':'addusedcontent',
 			    	'category':1004
 			    };
 			    BasePostWindow = require('basePostWindows');
@@ -315,8 +315,8 @@ function feedWindow() {
 				break;
 			case 6:
 			    var data = {
-			    	'title': L('teambuying'),
-			    	'hinttext':L('addteambuycontent'),
+			    	'title': 'teambuying',
+			    	'hinttext':'addteambuycontent',
 			    	'category':1005
 			    };
 			    BasePostWindow = require('basePostWindows');
@@ -696,13 +696,13 @@ function feedWindow() {
 	};
 	
 	layoutDataDes = {
-		'1000': {'layouttype':'base','title': L('news'),'color':'#2ecc71','catimage':'news.png'},
-		'1001': {'layouttype':'template1','title':L('club'),'color':'#f39c12','catimage':'group.png'},
-		'1002': {'layouttype':'base','title':L('needhelp'),'color':'#ff0000','catimage':'help2.png'},
-		'1003': {'layouttype':'base','title':L('sale'),'color':'#ff0000','catimage':'sale2.png'},
-		'1004': {'layouttype':'base','title':L('used'),'color':'#bdc3c7','catimage':'used.png'},
-		'1005': {'layouttype':'base','title':L('teambuying'),'color':'#9b59b6','catimage':'teambuy.png'},
-		'1006': {'layouttype':'template2','title':L('dating'),'color':'#e667af','catimage':'love.png'},
+		'1000': {'layouttype':'base','title': 'news','color':'#2ecc71','catimage':'news.png'},
+		'1001': {'layouttype':'template1','title':'club','color':'#f39c12','catimage':'group.png'},
+		'1002': {'layouttype':'base','title':'needhelp','color':'#ff0000','catimage':'help2.png'},
+		'1003': {'layouttype':'base','title':'sale','color':'#ff0000','catimage':'sale2.png'},
+		'1004': {'layouttype':'base','title':'used','color':'#bdc3c7','catimage':'used.png'},
+		'1005': {'layouttype':'base','title':'teambuying','color':'#9b59b6','catimage':'teambuy.png'},
+		'1006': {'layouttype':'template2','title':'dating','color':'#e667af','catimage':'love.png'},
 		
 	};
 	
@@ -742,6 +742,8 @@ function feedWindow() {
 				    	            'color':layoutDataDes[feedData[i]['category']].color,
 				    	            'image':layoutDataDes[feedData[i]['category']].catimage,
 				    	};
+				    	Ti.API.info('11data.title: ' + data.title);
+				    	Ti.API.info('22data.title: ' + layoutDataDes[feedData[i]['category']].title);
 				    	drawFunction[layoutDataDes[feedData[i]['category']].layouttype](feedRow,data);
 
 					    feedRow.eventid = feedData[i]['eventid']; 
