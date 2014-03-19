@@ -60,7 +60,7 @@ function getHeadImg(id){
 
 function login(email, pass, callbackf){
 	
-	url = getServerAddr()+'login?' + 'email=' + email + '&pass=' + Titanium.Utils.md5HexDigest(pass);
+	url = getServerAddr()+'login';
 	Ti.API.info('url : ' + url);
 	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
@@ -80,10 +80,28 @@ function login(email, pass, callbackf){
     xhr.onerror = function(e){
     	callbackf(false,'network error');
     };
-    xhr.open("GET",url);
-    xhr.send(); 
+    xhr.open("POST",url);
+    xhr.send({'email':email,'pass': Titanium.Utils.md5HexDigest(pass)}); 
 	
 };
+
+
+function logout(devicetoken){
+	id = Ti.App.Properties.getString('userid','');
+    token = Ti.App.Properties.getString('token','');
+	url = getServerAddr()+'logout?'+ 'id=' + id + '&token=' + token +'&devicetoken='+devicetoken;
+	Ti.API.info('url : ' + url);
+	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+    };
+    xhr.onerror = function(e){
+    	
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+};
+
 
 
 function createAccount(data, callbackf){
@@ -117,7 +135,7 @@ function createAccount(data, callbackf){
 function updateaccount(data, callbackf){
 	id = Ti.App.Properties.getString('userid','');
     token = Ti.App.Properties.getString('token','');
-	url = getServerAddr()+'updateaccount?'+ 'id=' + id + '&token=' + token + '&data=' + data ;
+	url = getServerAddr()+'updateaccount?'+ 'id=' + id + '&token=' + token  ;
 	Ti.API.info('url : ' + url);
 	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
@@ -140,15 +158,15 @@ function updateaccount(data, callbackf){
     xhr.onerror = function(e){
     	callbackf(false,'network error');
     };
-    xhr.open("GET",url);
-    xhr.send(); 
+    xhr.open("POST",url);
+    xhr.send({'data':data}); 
 	
 };
 
 function updatepos(data){
 	id = Ti.App.Properties.getString('userid','');
     token = Ti.App.Properties.getString('token','');
-	url = getServerAddr()+'updatepos?'+ 'id=' + id + '&token=' + token + '&data=' + data ;
+	url = getServerAddr()+'updatepos?'+ 'id=' + id + '&token=' + token ;
 	Ti.API.info('url : ' + url);
 	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
@@ -157,8 +175,8 @@ function updatepos(data){
     xhr.onerror = function(e){
     	
     };
-    xhr.open("GET",url);
-    xhr.send(); 
+    xhr.open("POST",url);
+    xhr.send({'data':data}); 
 };
 
 
@@ -252,7 +270,7 @@ function queryeventbyid(eventid,callbackf){
 
 function queryevent(geo, distance, category, limitcount,sorttype, nexttime, nextlikecount, callbackf){
 
-    if(sorttype == 'time'){
+    if(sorttype == 'time' || sorttype ==''){
     	data = {
 	    	'geo':geo,
 	    	'distance':distance,
@@ -330,6 +348,7 @@ function querymyevent(limitcount, nexttime, callbackf){
 	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
+    	
         var result =  JSON.parse(this.responseText);
     	if(result.result == 'ok')
     	{
@@ -475,6 +494,35 @@ function queryjoinlist(eventid, starttime, callbackf){
 	
 };
 
+
+function querypplnear(data, callbackf){
+	id = Ti.App.Properties.getString('userid','');
+    token = Ti.App.Properties.getString('token','');
+	url = getServerAddr()+'querypeoplenear?' + 'id=' + id + '&token=' + token + '&data=' + data ;
+	Ti.API.info('url : ' + url);
+	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.result);
+    	}
+    	else{
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'network error');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
 
 function querycomment(eventid, starttime, callbackf){
 

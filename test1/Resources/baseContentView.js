@@ -650,9 +650,78 @@ function drawtemplate1Contnet(contentView,data){
     	contentView.add(createHSepLine('90%','20dp','0dp'));
     }
 
+    ////////////////  join  /////////////////////////////////////////////////
+	var joinView = Ti.UI.createView({
+	    backgroundColor: '#ffffff',
+	    height: Ti.UI.SIZE,layout: 'horizontal',
+	    top:'20dp',left:'0dp',width:'100%',height:'50dp'
+	});
+	
+	var joinNumberView = Ti.UI.createView({
+	    backgroundColor: '#ffffff',
+	    height: Ti.UI.SIZE,
+	    top:'0dp',left:'0dp',width:'50%'
+	});
+	
+	var joinNumber = 0;
+	if(data['joinnumber'] != undefined){
+		joinNumber = data['joinnumber'];
+	}
+	
+	var joinNumberText = Ti.UI.createLabel({
+		font:{fontSize:'30sp',fontFamily:'Helvetica Neue'},
+		text:joinNumber,
+		color:'#34495e',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
+	});
+	
+	joinNumberView.addEventListener('click',function(e){
+	
+		JoinListWindow = require('joinMsgWindows');
+		var stringData = {'title':'joinlist'};
+		new JoinListWindow(data['eventid'],stringData).open(); 
+	});	
+	
+	joinNumberView.add(joinNumberText);	
+	
+	var SepView = Ti.UI.createView({
+	    backgroundColor: '#bbbbbb',
+	    height: '50dp',width:'1dp'
+
+	});
+
+	var joinBottomView = Ti.UI.createView({
+	    backgroundColor: '#ffffff',
+	    height: Ti.UI.SIZE,
+	    top:'0dp',left:'0dp',width:'48%'
+	});
+	
+	var joinBottomButton = Titanium.UI.createButton({
+	    title: L('join'),
+	    width:'60%',
+	    backgroundColor:'#3498db',borderRadius:10
+	});
+	
+	joinBottomView.addEventListener('click',function(e){
+	
+		JoinWindow = require('joinWindows');
+		var stringData = {'title':'join'};
+		new JoinWindow(data,stringData).open(); 
+	});	
+	
+	joinBottomView.add(joinBottomButton);
+	
+	
+	joinView.add(joinNumberView);
+	joinView.add(SepView);
+	joinView.add(joinBottomView);
+
+
 	contentView.add(ownerView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
 	contentView.add(eventTimeView);
+	contentView.add(createHSepLine('90%','20dp','0dp'));
+	contentView.add(joinView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
 	contentView.add(desView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
@@ -923,7 +992,8 @@ function drawtemplate2Contnet(contentView,data){
 	joinNumberView.addEventListener('click',function(e){
 	
 		JoinListWindow = require('joinMsgWindows');
-		new JoinListWindow(data['eventid']).open(); 
+		var stringData = {'title':'lineuplist'};
+		new JoinListWindow(data['eventid'],stringData).open(); 
 	});	
 	
 	joinNumberView.add(joinNumberText);	
@@ -949,7 +1019,8 @@ function drawtemplate2Contnet(contentView,data){
 	joinBottomView.addEventListener('click',function(e){
 	
 		JoinWindow = require('joinWindows');
-		new JoinWindow(data).open(); 
+		var stringData = {'title':'lineup'};
+		new JoinWindow(data,stringData).open(); 
 	});	
 	
 	joinBottomView.add(joinBottomButton);

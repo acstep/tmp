@@ -74,6 +74,11 @@ function LoginWindow() {
             Ti.App.Properties.setString('useremail',data['email']);
             Ti.App.Properties.setString('username',data['name']);
             Ti.App.Properties.setString('userdata',JSON.stringify(data));
+            Ti.App.Properties.setString('school',data['school']);
+            Ti.App.Properties.setString('intro',data['des']);
+            Ti.App.Properties.setString('work',data['job']);
+            Ti.App.Properties.setInt('birthday',data['birthday']);
+            Ti.App.Properties.setInt('gender',data['sex']);
             Ti.API.info('user data : '  + JSON.stringify(data));
 			forwardView.visible = false;
 			feedWindow = require('feedWindows');

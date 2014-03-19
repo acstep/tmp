@@ -100,6 +100,10 @@
 	<string name="intro">Personal Introduction</string>
 	<string name="inputintro">Please input your introduction</string>
 	<string name="birthday">Birthday</string>
+	<string name="gender">Gender</string>
+	<string name="boy">Boy</string>
+	<string name="girl">Girl</string>
+	<string name="none">---</string>
 	<string name="changepass">Change Password</string>
 	<string name="orgpass">Old Password</string>
 	<string name="inputorgpass">Please input your old password</string>

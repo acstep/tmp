@@ -100,6 +100,10 @@
 	<string name="intro">個人介紹</string>
 	<string name="inputintro">請輸入您的個人介紹</string>
 	<string name="birthday">您的生日</string>
+	<string name="gender">您的性別</string>
+	<string name="boy">男</string>
+	<string name="girl">女</string>
+	<string name="none">---</string>
 	<string name="changepass">更改密碼</string>
 	<string name="orgpass">原始密碼</string>
 	<string name="inputorgpass">請輸入原始密碼</string>

@@ -5,7 +5,7 @@ Ti.include("common_util.js");
 
 
 
-function joinMsgWindow(eventid) {
+function joinMsgWindow(eventid,stringData) {
 	//load component dependencies
 
 	
@@ -27,7 +27,7 @@ function joinMsgWindow(eventid) {
 	
 	var joinMsgTitleText = Ti.UI.createLabel({
 		font:{fontSize:'24sp',fontFamily:'Marker Felt',fontWeight:'bold'},
-		text: L('lineuplist'),
+		text: L(stringData.title),
 		color:'#ffffff'
 	});
 	

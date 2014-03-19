@@ -111,7 +111,8 @@ function accountinfoWindow() {
 			'job':worktext,
 			'school':schooltext,
 			'des':userdestext,
-			'birthday':parseInt(birthdayDate.getTime()/1000)
+			'birthday':parseInt(birthdayDate.getTime()/1000),
+			'sex':Ti.App.Properties.getInt('gender',0)
 		};
 		forwardView.visible = true;
 		datastring = JSON.stringify(data);
@@ -209,7 +210,7 @@ function accountinfoWindow() {
 	var birthdayText = Ti.UI.createLabel({
 		font:{fontSize:'16sp'},
 		text: L('birthday') + ':',
-		color:'#333333',
+		color:'#000000',
 		top:'20dp', left:'5%',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
@@ -254,6 +255,62 @@ function accountinfoWindow() {
 	birthdayView.add(bDateText);
 	contentScrollView.add(birthdayView);
 	
+	////////////////   Gender  ///////////////////////
+	var genderView = Ti.UI.createView({
+		width:'100%',
+		height:'50dp',
+		top:'20dp',
+	});
+	
+	var genderTitleText = Ti.UI.createLabel({
+		font:{fontSize:'16sp'},
+		text: L('gender') + ':',
+		color:'#000000',
+		top:'20dp', left:'5%',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+	});
+	
+	var gender = Ti.App.Properties.getInt('gender',0);
+	var gnederSTring = L('none');
+	if(gender == 1){
+		gnederSTring = L('boy');
+	}
+	if(gender == 2){
+		gnederSTring = L('girl');
+	}
+	var genderText = Ti.UI.createLabel({
+		font:{fontSize:'16sp'},
+		text:gnederSTring,
+		color:'#666666',
+		top:'20dp', left:'130dp',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+	});
+	
+	var genderDialog = Titanium.UI.createOptionDialog({
+	    title: L('gender'),
+	    options: [L('boy'),L('girl')]
+	});
+	
+	genderDialog.addEventListener('click', function(e) {
+		if(e.index == 0){
+			Ti.App.Properties.setInt('gender',1);
+            genderText.text = L('boy');
+		}
+		else if(e.index == 1){
+			Ti.App.Properties.setInt('gender',2);
+            genderText.text = L('girl');
+		}
+		else{
+			
+		}
+	});	
+	genderView.addEventListener('click',function(e) {
+		genderDialog.show();
+	});	
+	
+	genderView.add(genderTitleText);
+	genderView.add(genderText);
+	contentScrollView.add(genderView);
 	///////////////    school  ////////////////////////////
 	var schoolView = Titanium.UI.createView({
 		height:Titanium.UI.SIZE,width:'100%',layout: 'vertical'

@@ -174,6 +174,12 @@ function createNormalFeed(viewobj,category){
 				}	
 				for(var i = 0 ; i <= feedData.length -1; i++) {
 					feeditem.push(feedData[i]);
+					if(category == 'myfeed'){
+						if(nexttime > feedData[i]['starttime']){
+							nexttime = feedData[i]['starttime'];
+						}
+						
+					}
 					var feedRow = Ti.UI.createTableViewRow({
 				        backgroundSelectedColor:'#dddddd',
 				        backgroundColor:'#dddddd'
@@ -202,12 +208,14 @@ function createNormalFeed(viewobj,category){
                 
                 if(category == 'myfeed'){
 					Ti.App.Properties.setString('myfeed',JSON.stringify({'data':feeditem}));
+					
 				}
 				else{
 					Ti.App.Properties.setString(category.toString(),JSON.stringify({'data':feeditem}));
+					nexttime = feedData[(feedData.length -1)]['lastupdate'];
 				}
 				
-				nexttime = feedData[(feedData.length -1)]['lastupdate'];
+				
 			}
 			viewobj.forwardView.visible = false;
 			
@@ -351,6 +359,8 @@ function createNormalFeed(viewobj,category){
         distance = getDistance();
 		limitcount = parseInt(Ti.App.Properties.getInt('limitcount',5));
 		if(category == 'myfeed'){
+			latitude = getLat();
+			longitude = getLon();
 			querymyevent(limitcount, nexttime, parseFeed);
 		}
 		else{
@@ -359,7 +369,7 @@ function createNormalFeed(viewobj,category){
 			
 			
 			var sorttype =  Ti.App.Properties.getString('sorttype','');
-			if(sorttype == 'time'){
+			if(sorttype == 'time' || sorttype ==''){
 				queryevent([longitude,latitude], distance, [category], limitcount,'time', nexttime, 0,parseFeed);
 			}
 			else{
@@ -383,7 +393,7 @@ function createNormalFeed(viewobj,category){
 			
 			
 			var sorttype =  Ti.App.Properties.getString('sorttype','');
-			if(sorttype == 'time'){
+			if(sorttype == 'time' || sorttype ==''){
 				queryevent([longitude,latitude], distance, [category], limitcount,'time', nexttime, 0,parseFeed);
 			}
 			else{

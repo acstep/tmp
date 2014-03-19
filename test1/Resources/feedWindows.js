@@ -260,7 +260,7 @@ function feedWindow() {
 			    	'title': 'club',
 			    	'titlehinttext':'activitytitle',
 			    	'grouphinttext':'groupname',
-			    	'deshinttext':L('addactivitycontent'),
+			    	'deshinttext':'addactivitycontent',
 			    	'category':1001
 			    };
 			    Template1PostWindow = require('template1PostWindows');
@@ -298,7 +298,7 @@ function feedWindow() {
 			case 4:
 			    var data = {
 			    	'title': 'news',
-			    	'hinttext':L('addnewscontent'),
+			    	'hinttext':'addnewscontent',
 			    	'category':1000
 			    };
 			    BasePostWindow = require('basePostWindows');
@@ -653,10 +653,19 @@ function feedWindow() {
 			    break;	
 			case 2:
 			    //logout
+			    var devicetoken = Ti.App.Properties.getString('googletoken','');
+				if(devicetoken != ''){
+					logout(devicetoken);
+					Ti.App.Properties.setString('googletoken','');
+				}
 			    Ti.App.Properties.setString('userid','');
 				Ti.App.Properties.setString('token','');
 				Ti.App.Properties.setString('useremail','');
 				Ti.App.Properties.setString('locklocation','false');
+				Ti.App.Properties.setInt('gender',0);
+				
+				
+				Ti.App.Properties.setList('category',[1000,1001,1002,1003,1004,1005,1006]);
 				self.close();
 				LoginWindow = require('loginWindows');
 				new LoginWindow().open();
@@ -898,7 +907,8 @@ function feedWindow() {
 		category = Ti.App.Properties.getList('category','none');
 		limitcount = parseInt(Ti.App.Properties.getInt('limitcount',5));
 		var sorttype =  Ti.App.Properties.getString('sorttype','');
-		if(sorttype == 'time'){
+		Ti.API.info('getNewFeed sorttype: ' + sorttype);
+		if(sorttype == 'time' || sorttype ==''){
 			queryevent([longitude,latitude], distance, category, limitcount,'time', nexttime, 0,parseFeed);
 		}
 		else{
@@ -914,7 +924,7 @@ function feedWindow() {
     	latitude = getLat();
 		longitude = getLon();
     	var sorttype =  Ti.App.Properties.getString('sorttype','');
-		if(sorttype == 'time'){
+		if(sorttype == 'time' || sorttype ==''){
 			queryevent([longitude,latitude], distance, category, limitcount,'time', nexttime, 0,parseFeed);
 		}
 		else{
@@ -1027,7 +1037,8 @@ function feedWindow() {
 	        // if user move than 500m update the postion to server
 	    	if(distance > 0.5){
 	    		var data = {
-					'pos':[e.coords.longitude,e.coords.latitude]
+					'pos':[e.coords.longitude,e.coords.latitude],
+					'geoapp':'true'
 				};
 		    
 			    datastring = JSON.stringify(data);

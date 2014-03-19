@@ -2,7 +2,7 @@ Ti.include("common_net.js");
 Ti.include("common_util.js");
 
 
-function joinWindow(data) {
+function joinWindow(data,stringData) {
 	//load component dependencies
 	var self = createNormalWin(true);
 	var backgroundView = self.backgroundView;
@@ -24,7 +24,7 @@ function joinWindow(data) {
 	
 	var TitleText = Ti.UI.createLabel({
 		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
-		text:L('lineup'),
+		text:L(stringData.title),
 		color:'#ffffff',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
   		left:'50dp'
