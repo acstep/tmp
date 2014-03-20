@@ -119,4 +119,6 @@
 	<string name="join">參加</string>
 	<string name="joinlist">參加名單</string>
 	<string name="leavemsg">留個言給版主或介紹一下自己</string>
+	<string name="nearppl">附近的人</string>
+	<string name="title">請輸入訊息標題</string>
 </resources>

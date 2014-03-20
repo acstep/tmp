@@ -43,9 +43,15 @@ function feedWindow() {
 	});	
 	
 	var setupImg = Titanium.UI.createImageView({
-		image:'setup.png',
+		image:'humannear.png',
 		top: '10dp', right:'10dp', height: '30dp', width: '30dp'
 	});
+	
+	setupImg.addEventListener('click',function(e)
+	{
+		nearbyWindow = require('nearPeopleWindows');
+		new nearbyWindow().open(); 
+	});	
 	
 	var titleCenterView = Ti.UI.createView({
 		
@@ -653,19 +659,7 @@ function feedWindow() {
 			    break;	
 			case 2:
 			    //logout
-			    var devicetoken = Ti.App.Properties.getString('googletoken','');
-				if(devicetoken != ''){
-					logout(devicetoken);
-					Ti.App.Properties.setString('googletoken','');
-				}
-			    Ti.App.Properties.setString('userid','');
-				Ti.App.Properties.setString('token','');
-				Ti.App.Properties.setString('useremail','');
-				Ti.App.Properties.setString('locklocation','false');
-				Ti.App.Properties.setInt('gender',0);
-				
-				
-				Ti.App.Properties.setList('category',[1000,1001,1002,1003,1004,1005,1006]);
+			    clearProperty();
 				self.close();
 				LoginWindow = require('loginWindows');
 				new LoginWindow().open();

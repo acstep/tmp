@@ -31,10 +31,35 @@ function createBaseFeedView(view, data){
 	    top:'10dp'
 	});
 	
+	/////////////   title  ///////////////////////
+	if(data.info['title'] != ''){
+		var titleView = Titanium.UI.createView({
+			left:'5%',backgroundColor:'transparent',
+			height: Ti.UI.SIZE,width: '90%',
+
+		});
+		var titleImg = Titanium.UI.createImageView({
+	        height: '15dp', width: '15dp',image:'title.png',left:'0dp'
+		});
+		
+		if(data.info['title'].length > 50 ){
+			data.info['title'] = data.info['title'].substr(0,50) + '...';
+		}
+		var titleText = Ti.UI.createLabel({
+			font:{fontSize:'14sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+			text: data.info['title'],textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+			color:'#2c3e50',left:'10dp',left:'30dp',horizontalWrap:'false'
+		});
+		titleView.add(titleImg);
+		titleView.add(titleText);
+		middleView.add(titleView);
+	}
+	
+	
 
 	var desText = Ti.UI.createLabel({
-		font:{fontSize:'15sp',fontFamily:'Helvetica Neue'},
-		text: getStringlimit(data.info['des'],50,100),
+		font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
+		text: getStringlimit(data.info['des'],100,150).replace(/\n\s*\n/g, '\n'),
 		color:'#666666',
 		top:'10dp',
 		left:'20dp',right:'20dp', height: Ti.UI.SIZE,

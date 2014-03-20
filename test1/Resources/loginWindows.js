@@ -68,17 +68,25 @@ function LoginWindow() {
 	function loginCallback(result, data){
 		if(result == true){
 			Ti.API.info('login success.');
-			Ti.App.Properties.setString('userid',data['id']);
-			Ti.App.Properties.setString('token',data['token']);
-			Ti.App.Properties.setString('headfile',data['photo']);
-            Ti.App.Properties.setString('useremail',data['email']);
-            Ti.App.Properties.setString('username',data['name']);
-            Ti.App.Properties.setString('userdata',JSON.stringify(data));
-            Ti.App.Properties.setString('school',data['school']);
-            Ti.App.Properties.setString('intro',data['des']);
-            Ti.App.Properties.setString('work',data['job']);
-            Ti.App.Properties.setInt('birthday',data['birthday']);
-            Ti.App.Properties.setInt('gender',data['sex']);
+			
+            try{
+            	Ti.App.Properties.setString('userid',data['id']);
+				Ti.App.Properties.setString('token',data['token']);
+				Ti.App.Properties.setString('headfile',data['photo']);
+	            Ti.App.Properties.setString('useremail',data['email']);
+	            Ti.App.Properties.setString('username',data['name']);
+	            Ti.App.Properties.setString('userdata',JSON.stringify(data));
+	            Ti.App.Properties.setString('school',data['school']);
+	            Ti.App.Properties.setString('intro',data['des']);
+	            Ti.App.Properties.setString('work',data['job']);
+	            Ti.App.Properties.setInt('birthday',data['birthday']);
+				Ti.App.Properties.setInt('gender',data['sex']);
+				
+			}
+			catch(err){
+				
+			}
+           
             Ti.API.info('user data : '  + JSON.stringify(data));
 			forwardView.visible = false;
 			feedWindow = require('feedWindows');

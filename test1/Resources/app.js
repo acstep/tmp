@@ -63,7 +63,11 @@ if (Ti.version < 1.8 ) {
 	
 	var gender = Ti.App.Properties.getInt('gender',0);
 	if(gender == 0){
-		Ti.App.Properties.getInt('gender',0);
+		Ti.App.Properties.setInt('gender',0);
+	}
+	var birthday = Ti.App.Properties.getInt('birthday',0);
+	if(birthday == 0){
+		Ti.App.Properties.setInt('birthday',946656000);
 	}
 	
 	var LoginWindow;

@@ -280,6 +280,22 @@ function BasePostWindow(data) {
 	contentScrollView.add(imageScrollView);
 
     ///////    description and map /////////////
+    
+    var titleTextField = Ti.UI.createTextField({
+	    font: {fontSize:'16sp'},
+	    color:'#333333',
+	    textAlign: 'left',
+	    hintText:L('title'),
+	    top: '30dp',
+	    width: '90%', 
+	    height : 'auto',
+	    left: '5%',
+	    backgroundColor:'#ffffff',
+	    borderColor:'#666666',
+	    borderWidth:'1dp',borderRadius:10,
+	});
+	
+	
     var desTextArea = Ti.UI.createTextArea({
 	    font: {fontSize:'16sp'},
 	    color:'#333333',
@@ -293,7 +309,8 @@ function BasePostWindow(data) {
 	    borderColor:'#666666',
 	    borderWidth:'1dp'
 	});
-
+    
+    contentScrollView.add(titleTextField);
 	contentScrollView.add(desTextArea);
      
 
@@ -447,7 +464,7 @@ function BasePostWindow(data) {
 			'photos':uploadimg,
 			'des':desTextArea.value,
 			'pos':[parseFloat(Ti.App.Properties.getDouble('userchooselongitude',0)),parseFloat(Ti.App.Properties.getDouble('userchooselatitude',0))],
-			'title':'',
+			'title':titleTextField.value,
 			'extime':extime,
 			'category':data.category
 		};

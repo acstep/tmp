@@ -119,4 +119,6 @@
 	<string name="join">Join</string>
 	<string name="joinlist">List of people</string>
 	<string name="leavemsg">Leave a message or introduce yourself.</string>
+	<string name="nearppl">People Nearby</string>
+	<string name="title">Please input event title</string>
 </resources>

@@ -183,7 +183,7 @@ function updatepos(data){
 function createvent(data, callbackf){
 	id = Ti.App.Properties.getString('userid','');
     token = Ti.App.Properties.getString('token','');
-	url = getServerAddr()+'createvent?' + 'id=' + id + '&token=' + token + '&data=' + data;
+	url = getServerAddr()+'createvent?' + 'id=' + id + '&token=' + token ;
 	Ti.API.info('url : ' + url);
 	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
@@ -205,8 +205,8 @@ function createvent(data, callbackf){
     xhr.onerror = function(e){
     	callbackf(false,'network error');
     };
-    xhr.open("GET",url);
-    xhr.send(); 
+    xhr.open("POST",url);
+    xhr.send({'data':data}); 
 	
 };
 
@@ -408,7 +408,7 @@ function likeevent(eventid, sourceobj, callbackf){
 function commentevt(eventid, data, callbackf){
 	id = Ti.App.Properties.getString('userid','');
     token = Ti.App.Properties.getString('token','');
-	url = getServerAddr()+'commentevent?' + 'id=' + id + '&token=' + token + '&data=' + data ;
+	url = getServerAddr()+'commentevent?' + 'id=' + id + '&token=' + token ;
 	Ti.API.info('url : ' + url);
 	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
@@ -429,8 +429,8 @@ function commentevt(eventid, data, callbackf){
     xhr.onerror = function(e){
     	callbackf(false,'network error');
     };
-    xhr.open("GET",url);
-    xhr.send(); 
+    xhr.open("POST",url);
+    xhr.send({'data':data}); 
 	
 };
 
@@ -496,9 +496,8 @@ function queryjoinlist(eventid, starttime, callbackf){
 
 
 function querypplnear(data, callbackf){
-	id = Ti.App.Properties.getString('userid','');
-    token = Ti.App.Properties.getString('token','');
-	url = getServerAddr()+'querypeoplenear?' + 'id=' + id + '&token=' + token + '&data=' + data ;
+
+	url = getServerAddr()+'querypeoplenear?' +'&data=' + data ;
 	Ti.API.info('url : ' + url);
 	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
@@ -507,7 +506,7 @@ function querypplnear(data, callbackf){
     	if(result.result == 'ok')
     	{
     		
-    		callbackf(true,result.result);
+    		callbackf(true,result.data);
     	}
     	else{
     		if(checkTokneError(result.result)){
@@ -693,7 +692,7 @@ function sendmsg( roomid, msgdata ,callbackf){
     id = Ti.App.Properties.getString('userid','');
     token = Ti.App.Properties.getString('token','');
     
-    url = getServerAddr()+'sendmsg?' + 'id=' + id + '&token=' + token + '&roomid=' + roomid+ '&msgdata=' + msgdata ;
+    url = getServerAddr()+'sendmsg?' + 'id=' + id + '&token=' + token + '&roomid=' + roomid;
 
 	
 	Ti.API.info('url : ' + url);
@@ -716,8 +715,8 @@ function sendmsg( roomid, msgdata ,callbackf){
     xhr.onerror = function(e){
     	callbackf(false,'network error');
     };
-    xhr.open("GET",url);
-    xhr.send(); 
+    xhr.open("POST",url);
+    xhr.send({'msgdata':msgdata}); 
 	
 };
 

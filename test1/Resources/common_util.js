@@ -27,6 +27,36 @@ function getLon(){
 	return parseFloat(Ti.App.Properties.getDouble('longitude',-1));
 }
 
+function clearProperty(){
+	var devicetoken = Ti.App.Properties.getString('googletoken','');
+	if(devicetoken != ''){
+		logout(devicetoken);
+		Ti.App.Properties.setString('googletoken','');
+	}
+    Ti.App.Properties.setString('userid','');
+	Ti.App.Properties.setString('token','');
+	Ti.App.Properties.setString('useremail','');
+	Ti.App.Properties.setString('locklocation','false');
+	Ti.App.Properties.setInt('gender',0);
+	Ti.App.Properties.setList('category',[1000,1001,1002,1003,1004,1005,1006]);
+	Ti.App.Properties.setString('username','');
+	Ti.App.Properties.setString('school','');
+	Ti.App.Properties.setString('intro','');
+	Ti.App.Properties.setString('work','');
+	Ti.App.Properties.setInt('birthday',946656000);
+	Ti.App.Properties.setString('sorttype','time');
+	Ti.App.Properties.setInt('distance',5);
+	Ti.App.Properties.setString('locationsrc','network');
+	Ti.App.Properties.setString('roominfo','{}');
+	Ti.App.Properties.setString('savedChatroomData','[]');
+	Ti.App.Properties.setString('TalkRoomID','');
+	Ti.App.Properties.setString('useremail','');
+	Ti.App.Properties.setInt('notifynum',0);
+	Ti.App.Properties.setInt('talknum',0);
+	Ti.App.Properties.setDouble('userchooselatitude',-1);
+	Ti.App.Properties.setDouble('userchooselongitude',-1);
+}
+
 function createNormalWin(title){
 	var self = Ti.UI.createWindow({
 		backgroundColor:'#ffffff',
