@@ -48,7 +48,7 @@ function createBaseFeedView(view, data){
 		var titleText = Ti.UI.createLabel({
 			font:{fontSize:'14sp',fontFamily:'Marker Felt',fontWeight:'bold'},
 			text: data.info['title'],textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
-			color:'#2c3e50',left:'10dp',left:'30dp',horizontalWrap:'false'
+			color:'#2c3e50',left:'30dp',horizontalWrap:'false'
 		});
 		titleView.add(titleImg);
 		titleView.add(titleText);

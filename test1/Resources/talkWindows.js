@@ -97,7 +97,7 @@ function talkWindow(id, toid,roomdata) {
 	});
 	
 	var sendMsgButton = Titanium.UI.createButton({
-	    title: L('send'),
+	    title: L('sendmsg'),
 	    top: '10dp',
 	    bottom:'10dp',
 	    width:'23%',

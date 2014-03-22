@@ -441,16 +441,21 @@ function feedWindow() {
 	});
 	
 	
+	function baseAppWindow(index){
+	    baseAppWindow = require('baseAppWindows');
+		new baseAppWindow(categoryMenu[index]).open(); 
+		switchBackgroundView();
+	}
 	
 	var categoryMenu = [
  
-		{ leftImage:'group.png', title:'club',category:1001 },
-		{ leftImage:'sale1.png', title:'sale',category:1003 },
-		{ leftImage:'help.png', title:'needhelp',category:1002 },
-		{ leftImage:'love.png', title:'dating',category:1006 },
-		{ leftImage:'news.png', title:'news',category:1000 },
-		{ leftImage:'used.png', title:'used',category:1004 },
-		{ leftImage:'teambuy.png', title:'teambuying',category:1005 },
+		{ leftImage:'group.png', title:'club',category:1001 , 'appfunction':baseAppWindow},
+		{ leftImage:'sale1.png', title:'sale',category:1003 , 'appfunction':baseAppWindow},
+		{ leftImage:'help.png', title:'needhelp',category:1002 , 'appfunction':baseAppWindow},
+		{ leftImage:'love.png', title:'dating',category:1006 , 'appfunction':baseAppWindow},
+		{ leftImage:'news.png', title:'news',category:1000 , 'appfunction':baseAppWindow},
+		{ leftImage:'used.png', title:'used',category:1004 , 'appfunction':baseAppWindow},
+		{ leftImage:'teambuy.png', title:'teambuying',category:1005 , 'appfunction':baseAppWindow},
 	]; 
 	
 	
@@ -545,47 +550,7 @@ function feedWindow() {
 	});  
 	
 	memuTableView.addEventListener('click',function(e) {
-		switch(e.index){
-			case 0:
-			    activityAppWindow = require('activityAppWindows');
-				new activityAppWindow().open(); 
-				switchBackgroundView();
-				break;
-			case 1:
-			    slaesAppWindow = require('salesAppWindows');
-				new slaesAppWindow().open(); 
-				switchBackgroundView();
-				break;	
-			case 2:
-			    helpAppWindow = require('helpAppWindows');
-				new helpAppWindow().open(); 
-				switchBackgroundView();
-				break;	
-			case 3:
-			    socialAppWindow = require('socialAppWindows');
-				new socialAppWindow().open(); 
-				switchBackgroundView();
-				break;	
-			case 4:
-			    newsAppWindow = require('newsAppWindows');
-				new newsAppWindow().open(); 
-				switchBackgroundView();
-				break;	
-			case 5:
-			    usedAppWindow = require('usedAppWindows');
-				new usedAppWindow().open(); 
-				switchBackgroundView();
-				break;
-			case 6:
-			    teambuyAppWindow = require('teambuyAppWindows');
-				new teambuyAppWindow().open(); 
-				switchBackgroundView();
-				break;							
-			default:
-				
-		}
-		   
-
+		categoryMenu[e.index]['appfunction'](e.index);
 	});
 	
 	var menuParentView = Ti.UI.createView({

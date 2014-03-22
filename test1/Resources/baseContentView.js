@@ -111,6 +111,26 @@ function drawBaseContnet(contentView,data){
 		}	
 	}
 	
+	/////////////////////  title ///////////////////////////
+	if(data['title'] != ''){
+		var titleView = Titanium.UI.createView({
+			left:'5%',backgroundColor:'transparent',
+			height: Ti.UI.SIZE,width: '90%',top:'10dp'
+
+		});
+		
+		
+		
+		var titleText = Ti.UI.createLabel({
+			font:{fontSize:'18sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+			text: data['title'],textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+			color:'#2c3e50',horizontalWrap:'false'
+		});
+
+		titleView.add(titleText);
+
+	}
+	
 	////////////////  description ////////////////////////////////////////////
 	var desView = Ti.UI.createView({
 	    backgroundColor: '#ffffff',
@@ -238,6 +258,10 @@ function drawBaseContnet(contentView,data){
 	
 	if(imageList.length > 0){
 		contentView.add(imageScrollView);
+		contentView.add(createHSepLine('90%','20dp','0dp'));
+	}
+	if(data['title'] != ''){
+		contentView.add(titleView);
 		contentView.add(createHSepLine('90%','20dp','0dp'));
 	}
 	contentView.add(topView);

@@ -14,7 +14,7 @@
 	<string name="dating">交友聯誼</string>
 	<string name="news">周邊新聞</string>
 	<string name="used">二手交易</string>
-	<string name="teambuying">團購</string>
+	<string name="teambuying">即時合購</string>
 	<string name="sortorder">排序方式</string>
 	<string name="postnew">張貼文章</string>
 	<string name="choosecategory">選擇類別</string>
@@ -43,6 +43,7 @@
 	<string name="back">返回</string>
 	<string name="requestnextrow">載入更多的留言...</string>
 	<string name="send">發布</string>
+	<string name="sendmsg">發送</string>
 	<string name="notify">通知</string>
 	<string name="comment">留言</string>
 	<string name="uhavecomment">您有一則新的留言.</string>
