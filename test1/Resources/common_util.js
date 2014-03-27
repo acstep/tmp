@@ -38,7 +38,7 @@ function clearProperty(){
 	Ti.App.Properties.setString('useremail','');
 	Ti.App.Properties.setString('locklocation','false');
 	Ti.App.Properties.setInt('gender',0);
-	Ti.App.Properties.setList('category',[1000,1001,1002,1003,1004,1005,1006]);
+	Ti.App.Properties.setList('category',[1000,1001,1002,1003,1004,1005,1006,1007]);
 	Ti.App.Properties.setString('username','');
 	Ti.App.Properties.setString('school','');
 	Ti.App.Properties.setString('intro','');
@@ -172,14 +172,14 @@ function createNormalFeed(viewobj,category){
 	};
 	
 	layoutDataDes = {
-		'1000': {'layouttype':'base','title': 'news','color':'#2ecc71','catimage':'news.png'},
-		'1001': {'layouttype':'template1','title':'club','color':'#f39c12','catimage':'group.png'},
+		'1000': {'layouttype':'base','title': 'news','color':'#2ecc71','catimage':'newsicon.png'},
+		'1001': {'layouttype':'template1','title':'club','color':'#f39c12','catimage':'groupicon.png'},
 		'1002': {'layouttype':'base','title':'needhelp','color':'#ff0000','catimage':'help2.png'},
 		'1003': {'layouttype':'base','title':'sale','color':'#ff0000','catimage':'sale2.png'},
-		'1004': {'layouttype':'base','title':'used','color':'#bdc3c7','catimage':'used.png'},
-		'1005': {'layouttype':'base','title':'teambuying','color':'#9b59b6','catimage':'teambuy.png'},
-		'1006': {'layouttype':'template2','title':'dating','color':'#e667af','catimage':'love.png'},
-		
+		'1004': {'layouttype':'base','title':'used','color':'#bdc3c7','catimage':'usedicon.png'},
+		'1005': {'layouttype':'base','title':'teambuying','color':'#9b59b6','catimage':'teambuyicon.png'},
+		'1006': {'layouttype':'template2','title':'dating','color':'#e667af','catimage':'loveicon.png'},
+		'1007': {'layouttype':'base','title':'gossip','color':'#e667af','catimage':'gossipicon.png'},
 	};
 	
 	
@@ -1066,4 +1066,9 @@ function createAddPhoto(contentScrollView,imageList){
 	imageScrollView.dialog = dialog;
 	contentScrollView.add(imageScrollView);
 	
+}
+
+function openPeopleInfoWin(id,distance,difftime){
+	PersonInfoWindow = require('personInfoWindows');
+	new PersonInfoWindow(id,distance,difftime).open();
 }

@@ -102,6 +102,7 @@ function nearPeopleWindow() {
 			///////////////distance ///////////////
 			var distance = nearbyData[i]['distance'] ;
 			var distanceStr = '';
+			nearbyRow.distance = distance;
 			if(distance < 1){
 				distance =  parseInt(distance * 1000);
 				distanceStr = '   '+distance+ ' '+L('m')+ '   ';
@@ -133,6 +134,7 @@ function nearPeopleWindow() {
 			eventtime = new Date(nearbyData[i]['time']);
 			currenttime =  new Date().getTime()/1000;
 			difftime = currenttime - eventtime;
+			nearbyRow.difftime = difftime;
 			var timeString = '';
 			if(difftime < 60){
 				timeString = parseInt(difftime) + ' ' + L('beforesec');
@@ -192,7 +194,16 @@ function nearPeopleWindow() {
 			});
 			genderView.add(yearText);
 			contentView.add(genderView);
-			
+ 
+            if(nearbyData[i]['des'] != undefined && nearbyData[i]['des'] != ''){
+            	var desText = Ti.UI.createLabel({
+					font:{fontSize:'14sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+					text: getStringlimit(nearbyData[i]['des'],50,100),
+					color:'#333333',left:'10dp',top:'5dp'
+				});	
+				contentView.add(desText);	
+            }
+            	
 
 			nearbyRow.add(itemView);
 			nearbyRow.add(contentView);
@@ -209,23 +220,24 @@ function nearPeopleWindow() {
 	}	
 	
 	nearbyTableView.addEventListener('click', function(e){
-		var myid = Ti.App.Properties.getString('userid','');
-		Ti.API.info('e.source.ownerid : ' + e.row.ownerid);
-		Ti.API.info('myid : ' + myid);
-		if(myid == e.row.ownerid){
-			return;
-		}
-	    Ti.API.info('postView click.');
-        TalkWindow = require('talkWindows');
-        tmpRoomData = {
-            'roomid':'',
-            'memberid':[],
-            'lasttime':parseInt(new Date().getTime()/1000),
-            'host':'',
-            'lastmsg':'',
-            'memdata':[]  
-        };
-        new TalkWindow(Ti.App.Properties.getString('userid',''), e.row.ownerid,tmpRoomData).open(); 	
+		openPeopleInfoWin(e.row.ownerid, e.row.distance, e.row.difftime);
+		//var myid = Ti.App.Properties.getString('userid','');
+		//Ti.API.info('e.source.ownerid : ' + e.row.ownerid);
+		//Ti.API.info('myid : ' + myid);
+		//if(myid == e.row.ownerid){
+		//	return;
+		//}
+	    //Ti.API.info('postView click.');
+        //TalkWindow = require('talkWindows');
+        //tmpRoomData = {
+        //    'roomid':'',
+        //    'memberid':[],
+        //    'lasttime':parseInt(new Date().getTime()/1000),
+        //    'host':'',
+        //    'lastmsg':'',
+        //    'memdata':[]  
+        //};
+        //new TalkWindow(Ti.App.Properties.getString('userid',''), e.row.ownerid,tmpRoomData).open(); 	
     });
    
     var LoadingRow = Ti.UI.createTableViewRow({

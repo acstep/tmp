@@ -17,8 +17,11 @@ function imageListWindow(imagelist,index) {
     var imageViewList = [];
 
     for(var i=0 ; i< imagelist.length; i++){
-    	var imgWrapper = Ti.UI.createScrollView({
-            backgroundColor:'#000000',maxZoomScale:5.0
+    	var imgWrapperh = Ti.UI.createScrollView({
+            backgroundColor:'#000000',scrollType:'vertical',contentHeight:'auto',contentWidth:'auto'
+		});
+		var imgWrapperv = Ti.UI.createScrollView({
+            backgroundColor:'#000000',scrollType:'horizontal',contentHeight:'auto',contentWidth:'auto'
 		});
 		
 		var imgWrapper2 = Ti.UI.createView({
@@ -61,7 +64,9 @@ function imageListWindow(imagelist,index) {
 		});
 		
 		imgView.image = getFeedImgAddr() +'feedimgl/' + imagelist[i].replace('.jpg','-l.jpg');
-
+        imgView.vscroll = imgWrapperv;
+        imgView.hscroll = imgWrapperh;
+        
         var pageText = Ti.UI.createLabel({
 			font:{fontSize:'30sp',fontFamily:'Helvetica Neue'},      
 			text: (i+1) + '/' + imagelist.length,
@@ -72,19 +77,37 @@ function imageListWindow(imagelist,index) {
 		});
 		
 		imgView.addEventListener('pinch', function(e) {
+			Ti.API.info('pinch : ' + e.scale);
+			this.vscroll.scrollingEnabled = false;
+		    this.hscroll.scrollingEnabled = false;
 		    this.height = baseHeight * e.scale;
 		    this.width = baseWidth * e.scale;
-
-		   
+		    
 		});
+		
+
 		imgView.addEventListener('touchstart', function(e) {
+			Ti.API.info('touchstart  ' );
 		    baseHeight = this.height;
 		    baseWidth = this.width;
+
+		    
+		    
 		});
-	    imgWrapper2.add(imgView);
-		imgWrapper.add(imgWrapper2);
-		imgWrapper.add(pageText);
-		imageViewList.push(imgWrapper);
+		imgView.addEventListener('touchend', function(e) {
+			Ti.API.info('touchend  ' );
+		    this.vscroll.scrollingEnabled = true;
+		    this.hscroll.scrollingEnabled = true;
+		    
+		});
+
+
+
+	    imgWrapperv.add(imgView);
+	    imgWrapperv.add(pageText);
+		//imgWrapperv.add(imgWrapper2);
+		imgWrapperh.add(imgWrapperv);
+		imageViewList.push(imgWrapperh);
     }
 
 	
@@ -92,6 +115,10 @@ function imageListWindow(imagelist,index) {
 	    showPagingControl:true,
 	    views:imageViewList
 	});
+	
+	
+		
+		
 	self.add(photosView);
     photosView.currentPage = index;
 	return self;

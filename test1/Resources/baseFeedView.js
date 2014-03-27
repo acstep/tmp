@@ -206,7 +206,7 @@ function drawtemplate1Event(view, data){
 		var groupNameView = Ti.UI.createView({
 		    backgroundColor: '#ffffff',
 		    width:'90%', height: Ti.UI.SIZE,left:'5%',
-		    top:'0dp'
+		    top:'5dp'
 		});
 	    
 	    var groupNameImg = Titanium.UI.createImageView({
@@ -232,7 +232,7 @@ function drawtemplate1Event(view, data){
 		var startTimeView = Ti.UI.createView({
 		    backgroundColor: '#ffffff',
 		    width:'90%', height: Ti.UI.SIZE,left:'5%',
-		    top:'0dp'
+		    top:'5dp'
 		});
 	    
 	    var startTimeImg = Titanium.UI.createImageView({
@@ -620,7 +620,7 @@ function drawtemplate2Event(view, data){
 		var socialPlaceView = Ti.UI.createView({
 		    backgroundColor: '#ffffff',
 		    width:'90%', height: Ti.UI.SIZE,left:'5%',
-		    top:'0dp'
+		    top:'5dp'
 		});
 	    
 	    var socialImg = Titanium.UI.createImageView({
@@ -646,7 +646,7 @@ function drawtemplate2Event(view, data){
 		var startTimeView = Ti.UI.createView({
 		    backgroundColor: '#ffffff',
 		    width:'90%', height: Ti.UI.SIZE,left:'5%',
-		    top:'0dp'
+		    top:'5dp'
 		});
 	    
 	    var startTimeImg = Titanium.UI.createImageView({

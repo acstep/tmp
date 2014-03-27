@@ -10,7 +10,11 @@ function accountinfoWindow() {
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
  
+    
     var headChange = false;
+    var photoList = [];
+    var needUploadImage = [];
+    var currentUploadPhoto = 0;
     
     var ind=Titanium.UI.createProgressBar({
 	        width:'90%',
@@ -66,7 +70,23 @@ function accountinfoWindow() {
 	
 	doneButton.addEventListener('click',function(e)
 	{
-		updateAccount();
+		for(var i=0; i<accountImageList.length; i++){
+			if(accountImageList[i].filename != ''){
+				photoList.push(accountImageList[i].filename);
+			}
+			else{
+				needUploadImage.push(accountImageList[i].image);
+			}
+		}
+		if(needUploadImage.length == 0){
+			forwardView.visible = true;
+			updateAccount();
+		}
+		else{
+			forwardView.visible = true;
+			uploadPhotos();
+		}
+		
 		
 	});	
 	
@@ -79,6 +99,7 @@ function accountinfoWindow() {
 			Ti.App.Properties.setString('intro',introTextArea.value);
 			Ti.App.Properties.setString('work',workTextField.value);
 			Ti.App.Properties.setInt('birthday',parseInt(birthdayDate.getTime()/1000));
+			Ti.App.Properties.setList('photos',photoList);
 			if(headChange == true){
 				uploadHeadImage();
 			}
@@ -94,6 +115,10 @@ function accountinfoWindow() {
 		}	
     }
 	
+	function uploadPhotos(){
+		currentUploadPhoto = 0;
+		uploadImage();
+	}
 	
 	function updateAccount(){
 		nametext = nameTextField.value;
@@ -112,7 +137,8 @@ function accountinfoWindow() {
 			'school':schooltext,
 			'des':userdestext,
 			'birthday':parseInt(birthdayDate.getTime()/1000),
-			'sex':Ti.App.Properties.getInt('gender',0)
+			'sex':Ti.App.Properties.getInt('gender',0),
+			'photos':photoList
 		};
 		forwardView.visible = true;
 		datastring = JSON.stringify(data);
@@ -124,14 +150,14 @@ function accountinfoWindow() {
 	var contentScrollView = Ti.UI.createScrollView({
 	    contentHeight: Titanium.UI.SIZE,
 	    layout: 'vertical',
-	    backgroundColor:'#eeeeee',
+	    backgroundColor:'#ffffff',
         width:'100%'
 	});
 	
 	///////////////////  head image  ///////////////////////////
 	var headView = Titanium.UI.createView({
 		left:'0dp', 
-		height:'140dp',width:'100%',
+		height:'140dp',width:'100%',backgroundColor:'#ecf0f1'
 	});
 	
 	var headPhotoImg = Titanium.UI.createImageView({
@@ -151,7 +177,7 @@ function accountinfoWindow() {
 	headPhotoImg.image =  getHeadImg(getUserID());  
 	headView.add(headPhotoImg);
 	headView.add(changeImgText);
-	contentScrollView.add(headView);
+
 	
 	///////////////    name  ////////////////////////////
 	var nameView = Titanium.UI.createView({
@@ -161,7 +187,7 @@ function accountinfoWindow() {
 	var nameText = Ti.UI.createLabel({
 		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('name'),
-		color:'#000000',
+		color:'#2980b9',
 		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
   		left:'5%',top: '10dp'
 	});
@@ -189,7 +215,7 @@ function accountinfoWindow() {
 	nameView.add(nameText);
 	nameView.add(nameTextField);
 	
-	contentScrollView.add(nameView);
+
 	
 	/////////////// birthday ///////////////////////////
 	birthdayDate = new Date(); 
@@ -210,7 +236,7 @@ function accountinfoWindow() {
 	var birthdayText = Ti.UI.createLabel({
 		font:{fontSize:'16sp'},
 		text: L('birthday') + ':',
-		color:'#000000',
+		color:'#2980b9',
 		top:'20dp', left:'5%',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
@@ -253,19 +279,19 @@ function accountinfoWindow() {
 	
 	birthdayView.add(birthdayText);
 	birthdayView.add(bDateText);
-	contentScrollView.add(birthdayView);
+
 	
 	////////////////   Gender  ///////////////////////
 	var genderView = Ti.UI.createView({
 		width:'100%',
 		height:'50dp',
-		top:'20dp',
+		top:'10dp',
 	});
 	
 	var genderTitleText = Ti.UI.createLabel({
 		font:{fontSize:'16sp'},
 		text: L('gender') + ':',
-		color:'#000000',
+		color:'#2980b9',
 		top:'20dp', left:'5%',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	});
@@ -310,7 +336,7 @@ function accountinfoWindow() {
 	
 	genderView.add(genderTitleText);
 	genderView.add(genderText);
-	contentScrollView.add(genderView);
+
 	///////////////    school  ////////////////////////////
 	var schoolView = Titanium.UI.createView({
 		height:Titanium.UI.SIZE,width:'100%',layout: 'vertical'
@@ -319,7 +345,7 @@ function accountinfoWindow() {
 	var schoolText = Ti.UI.createLabel({
 		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('school'),
-		color:'#000000',
+		color:'#2980b9',
 		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
   		left:'5%',top: '30dp'
 	});
@@ -345,7 +371,7 @@ function accountinfoWindow() {
 	
 	schoolView.add(schoolText);
 	schoolView.add(schoolTextField);
-	contentScrollView.add(schoolView);
+
 	
 	
 	///////////////    work  ////////////////////////////
@@ -356,7 +382,7 @@ function accountinfoWindow() {
 	var workText = Ti.UI.createLabel({
 		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('work'),
-		color:'#000000',
+		color:'#2980b9',
 		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
   		left:'5%',top: '30dp'
 	});
@@ -381,7 +407,7 @@ function accountinfoWindow() {
 	
 	workView.add(workText);
 	workView.add(workTextField);
-	contentScrollView.add(workView);
+
 	
 	///////////////    intro  ////////////////////////////
 	var introView = Titanium.UI.createView({
@@ -391,7 +417,7 @@ function accountinfoWindow() {
 	var introText = Ti.UI.createLabel({
 		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('intro'),
-		color:'#000000',
+		color:'#2980b9',
 		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
   		left:'5%',top: '30dp'
 	});
@@ -417,13 +443,13 @@ function accountinfoWindow() {
 	
 	introView.add(introText);
 	introView.add(introTextArea);
-	contentScrollView.add(introView);
+
 	
 	var tmpView = Titanium.UI.createView({
 		height:'30dp',width:'100%',layout: 'vertical'
 	});
 	
-	contentScrollView.add(tmpView);
+	
 	/////////////   select image from camera or gallary ///////////////////
 	var dialog = Titanium.UI.createOptionDialog({
     //title of dialog
@@ -562,10 +588,293 @@ function accountinfoWindow() {
 	Ti.App.addEventListener('modifyheadphotodone',getheadphoto);
 	
 	
-	backgroundView.add(contentScrollView);
 	
 	
-	////////////////////////////   upload photo  ///////////////////////
+	
+	///////////////   photos  ////////////////////////////
+	var addPhotosView = Titanium.UI.createView({
+		height:Titanium.UI.SIZE,width:'100%',layout: 'vertical',top: '20dp'
+	});
+	
+	var addPhotosText = Ti.UI.createLabel({
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
+		text: L('addsomephotos'),
+		color:'#e67e22',
+		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+  		left:'5%',top: '10dp'
+	});
+	addPhotosView.add(addPhotosText);
+	
+	var accountImageList = [];
+	
+	
+	var accountimageScrollView = Ti.UI.createScrollView({
+	    contentWidth: 'auto',
+	    contentHeight:'160dp',
+	    layout: 'horizontal',
+	    backgroundColor:'#ffffff',
+        height:'160dp',
+        top:'20dp'
+	});
+	
+	//////   camera  /////////////
+	
+	
+	var accountcameraViewImageView = Ti.UI.createView({
+		backgroundColor:'#dddddd',
+		width:'100dp',
+		height:'100dp',
+		top:'30dp',
+		left:'10dp',
+		layout:'vertical',
+		borderRadius:15,
+		
+	});
+	
+	var accountaddImg = Titanium.UI.createImageView({
+		image:'add.png',
+		height: '30dp', width: '30dp', top:'20dp'
+	});
+	
+	var accountaddPhotoText = Ti.UI.createLabel({
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
+		text: L('addphoto'),
+		color:'#666666',
+		top:'15dp',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+	});
+	
+	
+	/////////////   select image from camera or gallary ///////////////////
+	accountDeleteImageobj = {};
+	var accountDeleteImageDialog = Titanium.UI.createOptionDialog({
+
+	    title: L('deletefile'),
+	    options: [L('delete'),L('cancel')],
+        cancel:1
+	});
+	accountDeleteImageDialog.addEventListener('click', function(e) {
+		if(e.index == 0){
+			position =  accountImageList.indexOf(accountDeleteImageobj);
+            Ti.API.info('remove image list pos : ' + position);
+			if ( ~position ) accountImageList.splice(position, 1);
+			accountimageScrollView.remove(accountDeleteImageobj.imgobj);
+		}
+	});	
+	
+	var accountImgdialog = Titanium.UI.createOptionDialog({
+    //title of dialog
+	    title: L('chooseimage'),
+	    //options
+	    options: [L('camera'),L('photogallery'), L('cancel')],
+	    //index of cancel button
+	    cancel:2
+	});
+	 
+	//add event listener
+	accountImgdialog.addEventListener('click', function(e) {
+	    //if first option was selected
+	    if(e.index == 0)
+	    {
+	        //then we are getting image from camera
+	        Titanium.Media.showCamera({
+	            //we got something
+	            success:function(event)
+	            {
+	                //getting media
+	                var image = event.media;
+	                 
+	                //checking if it is photo
+	                if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO)
+	                {
+	                    //we may create image view with contents from image variable
+	                    //or simply save path to image
+	                  
+	                    var accountAddSelectImg = Titanium.UI.createImageView({
+							image:image,
+							width:'100dp',
+							height:'100dp',
+							top:'30dp',
+							left:'10dp',
+							borderRadius:15
+						});
+						
+						
+						var imageobj = {'filename': '', 'image':image,'imgobj':accountAddSelectImg};
+	                    accountImageList.push(imageobj);
+	                    accountAddSelectImg.imageobj = imageobj;
+	                    accountAddSelectImg.addEventListener('click',function(e)
+						{
+							accountDeleteImageobj = this.imageobj; 
+							accountDeleteImageDialog.show();
+							
+						});	
+	                    
+						accountimageScrollView.contentWidth = ((accountImageList.length+1)*110 + 20)*(Titanium.Platform.displayCaps.dpi / 160);
+						accountimageScrollView.add(accountAddSelectImg);
+	                }
+	            },
+	            cancel:function()
+	            {
+	                //do somehting if user cancels operation
+	            },
+	            error:function(error)
+	            {
+	                //error happend, create alert
+	            
+	                //set message
+	                if (error.code == Titanium.Media.NO_CAMERA)
+	                {
+	                	showAlert('Camera', 'Device does not have camera'); 
+	                    
+	                }
+	                else
+	                {
+	                	showAlert('Camera', 'Unexpected error: ' + error.code);  
+
+	                }
+
+	            },
+	            allowImageEditing:true,
+	            saveToPhotoGallery:true
+	        });
+	    }
+	    else if(e.index == 1)
+	    {
+	        //obtain an image from the gallery
+	        Titanium.Media.openPhotoGallery({
+	            success:function(event)
+	            {
+	                //getting media
+	                var image = event.media;
+	                // set image view
+	                 
+	                //checking if it is photo
+	                if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO)
+	                {
+	                    //we may create image view with contents from image variable
+	                    //or simply save path to image
+	                    
+	                    var accountAddSelectImg = Titanium.UI.createImageView({
+							image:image,
+							width:'100dp',
+							height:'100dp',
+							top:'30dp',
+							left:'10dp',
+							borderRadius:15
+						});
+						
+						
+						var imageobj = {'filename': '', 'image':image,'imgobj':accountAddSelectImg};
+	                    accountImageList.push(imageobj);
+	                    accountAddSelectImg.imageobj = imageobj;
+	                    accountAddSelectImg.addEventListener('click',function(e)
+						{
+							accountDeleteImageobj = this.imageobj; 
+							accountDeleteImageDialog.show();
+						});	
+	                    
+						accountimageScrollView.contentWidth = ((accountImageList.length+1)*110 + 20)*(Titanium.Platform.displayCaps.dpi / 160);
+						accountimageScrollView.add(accountAddSelectImg);
+	                }  
+	            },
+	            cancel:function()
+	            {
+	                //user cancelled the action fron within
+	                //the photo gallery
+	            }
+	        });
+	    }
+	    else
+	    {
+	        //cancel was tapped
+	        //user opted not to choose a photo
+	    }
+	});
+
+    accountcameraViewImageView.addEventListener('click',function(e)
+	{
+		if(accountImageList.length > 8){
+			showAlert('Warning !', 'No more than 8 photos.');
+		}
+		accountImgdialog.show();
+	});	
+
+	accountcameraViewImageView.add(accountaddImg);
+	accountcameraViewImageView.add(accountaddPhotoText);
+	
+	accountimageScrollView.add(accountcameraViewImageView);
+	
+	orginalPhotos = Ti.App.Properties.getList('photos',[]);
+	
+	for(var i=0; i<orginalPhotos.length; i++){
+		var accountImage = Titanium.UI.createImageView({
+			width:'100dp',
+			height:'100dp',
+			top:'30dp',
+			left:'10dp',
+			borderRadius:15,
+		    image: (getFeedImgAddr()+'feedimgm/' + orginalPhotos[i]).replace('.jpg','-m.jpg')
+		});
+		
+		var imageobj = {'filename': orginalPhotos[i], 'image':{},'imgobj':accountImage};
+		accountImageList.push(imageobj);
+		accountImage.imageobj = imageobj;
+		accountImage.addEventListener('click',function(e){
+			accountDeleteImageobj = this.imageobj; 
+			accountDeleteImageDialog.show();
+		});	
+		accountimageScrollView.contentWidth = ((accountImageList.length+1)*110 + 20)*(Titanium.Platform.displayCaps.dpi / 160);
+
+		accountimageScrollView.add(accountImage);
+	}
+	
+
+	//////////////  upload photos //////////////////////
+	function uploadImage(){
+		var data_to_send = { 
+            "file": needUploadImage[currentUploadPhoto], 
+            "id": Ti.App.Properties.getString('userid',''),
+            'token':Ti.App.Properties.getString('token','') 
+        };
+		xhr = Titanium.Network.createHTTPClient();
+        xhr.open("POST",getServerAddr()+"uploadimg");
+        xhr.send(data_to_send); 
+        xhr.onload = function(e) {
+        	currentUploadPhoto = currentUploadPhoto + 1;
+            var result =  JSON.parse(this.responseText);
+            if(result.result == 'ok'){
+            	Ti.API.info('result.filename: ' + result.filename);
+            	photoList.push(result.filename);
+            	
+			}
+			if(currentUploadPhoto == (needUploadImage.length)){
+				
+				ind.value = 90;
+				//  finish image upload, post event to server
+				updateAccount();
+			}
+			else{
+				uploadImage();
+			}
+        };
+        xhr.onerror = function(e){
+        	var alertDlg = Titanium.UI.createAlertDialog({
+				title:'Error !',
+				message:'Server Error. Please try again.'
+			});
+			alertDlg.show();
+			Ti.API.info('Upload image fail.');
+			forwardView.visible = false;
+        	
+        };
+		xhr.onsendstream = function(e) {
+			ind.value = (100/needUploadImage.length)*currentUploadPhoto + (e.progress*100)/needUploadImage.length ;
+			
+			Ti.API.info('upload - PROGRESS: ' + e.progress);
+		};
+	}
+	////////////////////////////   upload head photo  ///////////////////////
 	function uploadHeadImage(){
 		var f = Titanium.Filesystem.getFile(Titanium.Filesystem.externalStorageDirectory,'head.jpg');
 
@@ -602,7 +911,21 @@ function accountinfoWindow() {
 		};
 	}
 	
-	
+	contentScrollView.add(headView);
+	contentScrollView.add(createHSepLine('90%','20dp','0dp'));
+	contentScrollView.add(nameView);
+	contentScrollView.add(birthdayView);
+	contentScrollView.add(genderView);
+	contentScrollView.add(createHSepLine('90%','20dp','0dp'));
+	contentScrollView.add(addPhotosView);
+	contentScrollView.add(accountimageScrollView);
+	contentScrollView.add(createHSepLine('90%','20dp','0dp'));
+	contentScrollView.add(schoolView);
+	contentScrollView.add(workView);
+	contentScrollView.add(introView);
+
+	contentScrollView.add(tmpView);
+	backgroundView.add(contentScrollView);
 	return self;
 }
 

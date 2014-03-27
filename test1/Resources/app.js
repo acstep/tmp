@@ -58,7 +58,7 @@ if (Ti.version < 1.8 ) {
 	
 	var category = Ti.App.Properties.getList('category','');
 	if(category == ''){
-		Ti.App.Properties.setList('category',[1000,1001,1002,1003,1004,1005,1006]);
+		Ti.App.Properties.setList('category',[1000,1001,1002,1003,1004,1005,1006,1007]);
 	}
 	
 	var gender = Ti.App.Properties.getInt('gender',0);

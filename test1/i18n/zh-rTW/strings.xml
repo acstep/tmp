@@ -14,6 +14,7 @@
 	<string name="dating">交友聯誼</string>
 	<string name="news">周邊新聞</string>
 	<string name="used">二手交易</string>
+	<string name="gossip">心情閒聊</string>
 	<string name="teambuying">即時合購</string>
 	<string name="sortorder">排序方式</string>
 	<string name="postnew">張貼文章</string>
@@ -62,7 +63,8 @@
 	<string name="addsalescontent">您想要發布的優惠... \n\n\n\n\n\n</string>
 	<string name="addteambuycontent">您想要團購的物品... \n\n\n\n\n\n</string>
 	<string name="addsocialcontent">您想要交友聯誼的敘述... \n\n\n\n\n\n</string>
-	<string name="purpose">型態:  例如  吃飯聊天,郊遊</string>
+	<string name="addgossipcontent">您想要閒聊的內容... \n\n\n\n\n\n</string>
+	<string name="purpose">標題:  例如  吃飯聊天,郊遊</string>
 	<string name="preferredtime">首選時間</string>
 	<string name="preferredplace">首選地點: 例如  XX餐廳</string>
 	<string name="preferredppl">想找 : </string>
@@ -122,4 +124,5 @@
 	<string name="leavemsg">留個言給版主或介紹一下自己</string>
 	<string name="nearppl">附近的人</string>
 	<string name="title">請輸入訊息標題</string>
+	<string name="addsomephotos">增加些照片讓大家認識你吧</string>
 </resources>

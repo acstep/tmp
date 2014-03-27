@@ -14,6 +14,7 @@
 	<string name="dating">Social,Dating</string>
 	<string name="news">News</string>
 	<string name="used">Garage Sale</string>
+	<string name="gossip">Gossip</string>
 	<string name="teambuying">Team Buying</string>
 	<string name="sortorder">Sorting</string>
 	<string name="postnew">Post</string>
@@ -62,7 +63,8 @@
 	<string name="addsalescontent">Promotion Content Description... \n\n\n\n\n\n</string>
 	<string name="addteambuycontent">Team Buy Products Description... \n\n\n\n\n\n</string>
 	<string name="addsocialcontent">Your Social or Dating Content... \n\n\n\n\n\n</string>
-	<string name="purpose">Preferred Type: ex. Dinner, Talking</string>
+	<string name="addgossipcontent">Gossip Content... \n\n\n\n\n\n</string>
+	<string name="purpose">Title: ex. Dinner, Have a coffee together</string>
 	<string name="preferredtime">Preferred Time</string>
 	<string name="preferredplace">Preferred Place: ex. XX restaurant</string>
 	<string name="preferredppl">Looking for : </string>
@@ -122,4 +124,5 @@
 	<string name="leavemsg">Leave a message or introduce yourself.</string>
 	<string name="nearppl">People Nearby</string>
 	<string name="title">Please input event title</string>
+	<string name="addsomephotos">Add some photos to show yourself.</string>
 </resources>

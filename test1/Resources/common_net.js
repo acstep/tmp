@@ -163,6 +163,64 @@ function updateaccount(data, callbackf){
 	
 };
 
+function querymyself(callbackf){
+    id = Ti.App.Properties.getString('userid','');
+    token = Ti.App.Properties.getString('token','');
+	url = getServerAddr()+'queryself?' + 'id=' + id + '&token=' + token ;
+	Ti.API.info('url : ' + url);
+	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.data);
+    	}
+    	else{
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'network error');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
+
+
+function querypeople(id, callbackf){
+
+	url = getServerAddr()+'querypeople?' + 'id=' + id ;
+	Ti.API.info('url : ' + url);
+	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.data);
+    	}
+    	else{
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'network error');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
+
 function updatepos(data){
 	id = Ti.App.Properties.getString('userid','');
     token = Ti.App.Properties.getString('token','');

@@ -81,7 +81,7 @@ function LoginWindow() {
 	            Ti.App.Properties.setString('work',data['job']);
 	            Ti.App.Properties.setInt('birthday',data['birthday']);
 				Ti.App.Properties.setInt('gender',data['sex']);
-				
+				Ti.App.Properties.setList('photos',data['photos']);
 			}
 			catch(err){
 				
