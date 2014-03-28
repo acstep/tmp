@@ -149,7 +149,7 @@ function setupWindow() {
 			}
             Ti.API.info('user data : '  + JSON.stringify(data));
 			forwardView.visible = false;
-			AccountInfoWindow = require('accountInfoWindows');
+			var AccountInfoWindow = require('accountInfoWindows');
 			new AccountInfoWindow().open();
 		}
 		
@@ -166,11 +166,11 @@ function setupWindow() {
 			    locationsrcDialog.show();
 			    break;	
 			case 2:
-			    JumpWindow = require('jumpWindows');
+			    var JumpWindow = require('jumpWindows');
 				new JumpWindow().open(); 
 				break;
 			case 3:
-			    passWindow = require('changePassWindows');
+			    var passWindow = require('changePassWindows');
 				new passWindow().open(); 
 				break;	
 			default:

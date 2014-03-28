@@ -293,7 +293,7 @@ function createNormalFeed(viewobj,category){
 	}
 	
 	feedTableView.addEventListener('click', function(e){
-    	FeedContentWindow = require('feedContentWindows');
+    	var FeedContentWindow = require('feedContentWindows');
 		new FeedContentWindow(e.row.eventid, true).open(); 
     });
     
@@ -759,13 +759,13 @@ function createCardBottom(feedView, data){
 		e.cancelBubble = true;
         if(e.source.name == 'img' || e.source.name == 'text'){
         	Ti.API.info('postView click.');
-	        FeedContentWindow = require('feedContentWindows');
+	        var FeedContentWindow = require('feedContentWindows');
 	  		new FeedContentWindow(e.source.getParent().eventid, false).open(); 
         	
         }
         else{
         	Ti.API.info('postView click.');
-	        FeedContentWindow = require('feedContentWindows');
+	        var FeedContentWindow = require('feedContentWindows');
 	  		new FeedContentWindow(e.source.eventid, false).open(); 
             
         }
@@ -1069,6 +1069,6 @@ function createAddPhoto(contentScrollView,imageList){
 }
 
 function openPeopleInfoWin(id){
-	PersonInfoWindow = require('personInfoWindows');
+	var PersonInfoWindow = require('personInfoWindows');
 	new PersonInfoWindow(id).open();
 }

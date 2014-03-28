@@ -68,7 +68,7 @@ function createAccountWindow() {
 			}
 			else{
 				forwardView.visible = false;
-				feedWindow = require('feedWindows');
+				var feedWindow = require('feedWindows');
 				new feedWindow().open();
 				self.close();
 			}
@@ -475,7 +475,7 @@ function createAccountWindow() {
             	Ti.App.Properties.setString('headfile',result.filename);
 
 				forwardView.visible = false;
-				feedWindow = require('feedWindows');
+				var feedWindow = require('feedWindows');
 				new feedWindow().open();
 				self.close();
             	
@@ -487,7 +487,7 @@ function createAccountWindow() {
 			showAlert('Error !', 'Upload image error. Please reset in setup menu.');
 			Ti.API.info('Upload image fail.');
 			forwardView.visible = false;
-			feedWindow = require('feedWindows');
+			var feedWindow = require('feedWindows');
 			new feedWindow().open();
 			self.close();
         	

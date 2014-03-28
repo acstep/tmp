@@ -496,7 +496,7 @@ function Template2PostWindows(data) {
 	
 	mapforgroundView.addEventListener('click',function(e)
 	{
-	     mapWindow = require('mapWindows');
+	     var mapWindow = require('mapWindows');
 	     var map = new mapWindow();
 	     map.latitude = latitude;
 	     map.longitude = longitude;

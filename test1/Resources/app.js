@@ -81,17 +81,17 @@ if (Ti.version < 1.8 ) {
 	//new Window().open();
 	
 	if(userid == ''){
-		LoginWindow = require('loginWindows');
+		var LoginWindow = require('loginWindows');
 		new LoginWindow().open();
 		
 	}else{
 
 		if(usertoken == ''){
-			LoginWindow = require('loginWindows');
+			var LoginWindow = require('loginWindows');
 			new LoginWindow().open();
 		}
 		else{
-			feedWindow = require('feedWindows');
+			var feedWindow = require('feedWindows');
 			new feedWindow().open();
 		}
 		

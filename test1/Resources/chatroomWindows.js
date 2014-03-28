@@ -231,7 +231,7 @@ function chatroomWindow() {
 		Ti.API.info('postView click.');
 		switch(e.index){
 			case 0:
-			    talkWindow = require('talkWindows');
+			    var talkWindow = require('talkWindows');
 	    		new talkWindow(Ti.App.Properties.getString('userid',''), '', chatroomDialog.roomdata).open(); 	 
 				break;
 			case 1:
@@ -253,7 +253,7 @@ function chatroomWindow() {
 			Ti.App.Properties.setString('roominfo',JSON.stringify(roominfo));
 			Ti.API.info(' roominfo delete result ' + JSON.stringify(roominfo));
 		}
-		talkWindow = require('talkWindows');
+		var talkWindow = require('talkWindows');
 	    new talkWindow(Ti.App.Properties.getString('userid',''), '', e.row.roomdata).open(); 
 
     });

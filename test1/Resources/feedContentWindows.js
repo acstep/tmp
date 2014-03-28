@@ -243,7 +243,7 @@ function feedContentWindow(eventid, fullcontent) {
 					return;
 				}
 			    Ti.API.info('postView click.');
-		        TalkWindow = require('talkWindows');
+		        var TalkWindow = require('talkWindows');
 		        tmpRoomData = {
 		            'roomid':'',
 		            'memberid':[],

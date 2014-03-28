@@ -54,7 +54,7 @@ function feedWindow() {
 	
 	setupImg.addEventListener('click',function(e)
 	{
-		nearbyWindow = require('nearPeopleWindows');
+		var nearbyWindow = require('nearPeopleWindows');
 		new nearbyWindow().open(); 
 	});	
 	
@@ -97,7 +97,7 @@ function feedWindow() {
 		eventnumText.visible = false;
 		Ti.App.Properties.setInt('notifynum',0);
         
-		NotifyWindow = require('notifyWindows');
+		var NotifyWindow = require('notifyWindows');
 		new NotifyWindow().open();  
 
 	});	
@@ -136,7 +136,7 @@ function feedWindow() {
         talknumText.text =  0  ;
         talknumText.visible = false;
         Ti.App.Properties.setInt('talknum',0);
-		chatroomWindow = require('chatroomWindows');
+		var chatroomWindow = require('chatroomWindows');
 		new chatroomWindow().open();  
 
 	});	
@@ -274,7 +274,7 @@ function feedWindow() {
 			    	'deshinttext':'addactivitycontent',
 			    	'category':1001
 			    };
-			    Template1PostWindow = require('template1PostWindows');
+			    var Template1PostWindow = require('template1PostWindows');
 				new Template1PostWindow(data).open(); 
 				break;
 			case 1:
@@ -283,7 +283,7 @@ function feedWindow() {
 			    	'hinttext':'addsalescontent',
 			    	'category':1003
 			    };
-			    BasePostWindow = require('basePostWindows');
+			    var BasePostWindow = require('basePostWindows');
 				new BasePostWindow(data).open(); 
 				break;	
 			case 2:
@@ -292,7 +292,7 @@ function feedWindow() {
 			    	'hinttext':'addhelpcontent',
 			    	'category':1002
 			    };
-			    BasePostWindow = require('basePostWindows');
+			    var BasePostWindow = require('basePostWindows');
 				new BasePostWindow(data).open(); 
 				break;	
 			case 3:
@@ -303,7 +303,7 @@ function feedWindow() {
 			    	'deshinttext':'addsocialcontent',
 			    	'category':1006
 			    };
-			    Template1PostWindow = require('template2PostWindows');
+			    var Template1PostWindow = require('template2PostWindows');
 				new Template1PostWindow(data).open(); 
 				break;		
 			case 4:
@@ -312,7 +312,7 @@ function feedWindow() {
 			    	'hinttext':'addnewscontent',
 			    	'category':1000
 			    };
-			    BasePostWindow = require('basePostWindows');
+			    var BasePostWindow = require('basePostWindows');
 				new BasePostWindow(data).open(); 
 				break;	
 			case 5:
@@ -321,7 +321,7 @@ function feedWindow() {
 			    	'hinttext':'addusedcontent',
 			    	'category':1004
 			    };
-			    BasePostWindow = require('basePostWindows');
+			    var BasePostWindow = require('basePostWindows');
 				new BasePostWindow(data).open(); 
 				break;
 			case 6:
@@ -330,7 +330,7 @@ function feedWindow() {
 			    	'hinttext':'addteambuycontent',
 			    	'category':1005
 			    };
-			    BasePostWindow = require('basePostWindows');
+			    var BasePostWindow = require('basePostWindows');
 				new BasePostWindow(data).open(); 
 				break;	
 			case 7:
@@ -339,7 +339,7 @@ function feedWindow() {
 			    	'hinttext':'addgossipcontent',
 			    	'category':1007
 			    };
-			    BasePostWindow = require('basePostWindows');
+			    var BasePostWindow = require('basePostWindows');
 				new BasePostWindow(data).open(); 
 				break;								
 			default:
@@ -426,7 +426,7 @@ function feedWindow() {
 	});
 	
 	menuTopView.addEventListener('click',function(e) {
-	    myFeedWindow = require('myFeedWindows');
+	    var myFeedWindow = require('myFeedWindows');
 		new myFeedWindow().open(); 
 		switchBackgroundView(true);
 	});
@@ -456,7 +456,7 @@ function feedWindow() {
 	
 	
 	function baseAppWindow(index){
-	    baseAppWindow = require('baseAppWindows');
+	    var baseAppWindow = require('baseAppWindows');
 		new baseAppWindow(categoryMenu[index]).open(); 
 		switchBackgroundView(true);
 	}
@@ -633,7 +633,7 @@ function feedWindow() {
 			break;		
 			case 1:
 			    // set location 
-				JumpWindow = require('jumpWindows');
+				var JumpWindow = require('jumpWindows');
 				new JumpWindow().open(); 
 				switchBackgroundView(true);
 			    break;	
@@ -641,7 +641,7 @@ function feedWindow() {
 			    //logout
 			    clearProperty();
 				self.close();
-				LoginWindow = require('loginWindows');
+				var LoginWindow = require('loginWindows');
 				new LoginWindow().open();
 				break;
 			default:
@@ -782,7 +782,7 @@ function feedWindow() {
 	}
 	
 	feedTableView.addEventListener('click', function(e){
-    	FeedContentWindow = require('feedContentWindows');
+    	var FeedContentWindow = require('feedContentWindows');
 		new FeedContentWindow(e.row.eventid, true).open(); 
     });
     
@@ -1060,7 +1060,7 @@ function feedWindow() {
 		tmpdata = JSON.parse(pendingData.msg);
 		if(tmpdata.type == 'comment'){
 			
-			FeedContentWindow = require('feedContentWindows');
+			var FeedContentWindow = require('feedContentWindows');
 			new FeedContentWindow(tmpdata.eventid, true).open(); 
 		}
 		if(tmpdata.type == 'talk'){

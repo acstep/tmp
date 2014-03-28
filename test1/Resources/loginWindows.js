@@ -89,7 +89,7 @@ function LoginWindow() {
            
             Ti.API.info('user data : '  + JSON.stringify(data));
 			forwardView.visible = false;
-			feedWindow = require('feedWindows');
+			var feedWindow = require('feedWindows');
 			new feedWindow().open(); 
 		}
 		else{
@@ -121,7 +121,7 @@ function LoginWindow() {
 	
 	createAccountButton.addEventListener('click',function(e)
 	{
-	    createAccountWindow = require('createAccountWindows');
+	    var createAccountWindow = require('createAccountWindows');
 		new createAccountWindow().open();
 	    
 	   

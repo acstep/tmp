@@ -459,13 +459,13 @@ function drawtemplate1Event(view, data){
 		e.cancelBubble = true;
         if(e.source.name == 'img' || e.source.name == 'text'){
         	Ti.API.info('postView click.');
-	        FeedContentWindow = require('feedContentWindows');
+	        var FeedContentWindow = require('feedContentWindows');
 	  		new FeedContentWindow(e.source.getParent().eventid, false).open(); 
         	
         }
         else{
         	Ti.API.info('postView click.');
-	        FeedContentWindow = require('feedContentWindows');
+	        var FeedContentWindow = require('feedContentWindows');
 	  		new FeedContentWindow(e.source.eventid, false).open(); 
             
         }

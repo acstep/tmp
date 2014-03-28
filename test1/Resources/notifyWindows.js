@@ -223,12 +223,12 @@ function notifyWindow() {
     notifyTableView.addEventListener('click', function(e){
     	switch(e.row.type){
 				case 'comment':
-				    FeedContentWindow = require('feedContentWindows');
+				    var FeedContentWindow = require('feedContentWindows');
 				    new FeedContentWindow(e.row.eventid, true).open(); 	
 		            break;	
 		        case 'systemad':  
 		            var data = {'url':e.row.url};
-		          	SystemADWindow = require('systemADWindows');
+		          	var SystemADWindow = require('systemADWindows');
 				    new SystemADWindow(data).open(); 	
 		            break;	
 		}		

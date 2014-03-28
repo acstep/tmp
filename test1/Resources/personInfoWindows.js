@@ -219,7 +219,7 @@ function personInfoWindow(id) {
 				return;
 			}
 		  
-	        TalkWindow = require('talkWindows');
+	        var TalkWindow = require('talkWindows');
 	        tmpRoomData = {
 	            'roomid':'',
 	            'memberid':[],
@@ -296,7 +296,7 @@ function personInfoWindow(id) {
 				});
 				
 				feedImage.addEventListener('click', function(){
-					FeedImageListWindow = require('imagelistWindows');
+					var FeedImageListWindow = require('imagelistWindows');
 					new FeedImageListWindow(data['photos'],this.index).open(); 
 				});
 				feedImage.image = (getFeedImgAddr()+'feedimgm/' + data['photos'][i]).replace('.jpg','-m.jpg');

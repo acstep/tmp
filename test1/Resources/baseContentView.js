@@ -38,7 +38,7 @@ function drawBaseContnet(contentView,data){
 			this.visible = true;
 		});
 		feedImage.addEventListener('click', function(){
-			FeedImageListWindow = require('imagelistWindows');
+			var FeedImageListWindow = require('imagelistWindows');
 			new FeedImageListWindow(imageList,0).open(); 
 		});
 		imageScrollView.add(feedImage);
@@ -101,7 +101,7 @@ function drawBaseContnet(contentView,data){
 			});
 			
 			feedImage.addEventListener('click', function(){
-				FeedImageListWindow = require('imagelistWindows');
+				var FeedImageListWindow = require('imagelistWindows');
 				new FeedImageListWindow(imageList,this.index).open(); 
 			});
 			feedImage.image = (getFeedImgAddr()+'feedimgm/' + imageList[i]).replace('.jpg','-m.jpg');
@@ -315,7 +315,7 @@ function drawtemplate1Contnet(contentView,data){
 			this.visible = true;
 		});
 		feedImage.addEventListener('click', function(){
-			topImageListWindow = require('imagelistWindows');
+			var topImageListWindow = require('imagelistWindows');
 			new topImageListWindow(imageList,0).open(); 
 		});
 		imageScrollView.add(feedImage);
@@ -379,7 +379,7 @@ function drawtemplate1Contnet(contentView,data){
 			});
 			
 			feedImage.addEventListener('click', function(){
-				topImageListWindow = require('imagelistWindows');
+				var topImageListWindow = require('imagelistWindows');
 				new topImageListWindow(imageList,this.index).open(); 
 			});
 			feedImage.image = (getFeedImgAddr()+'feedimgm/' + imageList[i]).replace('.jpg','-m.jpg');
@@ -703,7 +703,7 @@ function drawtemplate1Contnet(contentView,data){
 	
 	joinNumberView.addEventListener('click',function(e){
 	
-		JoinListWindow = require('joinMsgWindows');
+		var JoinListWindow = require('joinMsgWindows');
 		var stringData = {'title':'joinlist'};
 		new JoinListWindow(data['eventid'],stringData).open(); 
 	});	
@@ -730,7 +730,7 @@ function drawtemplate1Contnet(contentView,data){
 	
 	joinBottomView.addEventListener('click',function(e){
 	
-		JoinWindow = require('joinWindows');
+		var JoinWindow = require('joinWindows');
 		var stringData = {'title':'join'};
 		new JoinWindow(data,stringData).open(); 
 	});	
@@ -798,7 +798,7 @@ function drawtemplate2Contnet(contentView,data){
 			
 		});
 		feedImage.addEventListener('click', function(){
-			FeedImageListWindow = require('imagelistWindows');
+			var FeedImageListWindow = require('imagelistWindows');
 			new FeedImageListWindow(imageList,0).open(); 
 		});
 		imageScrollView.add(feedImage);
@@ -864,7 +864,7 @@ function drawtemplate2Contnet(contentView,data){
 			});
 			
 			feedImage.addEventListener('click', function(){
-				FeedImageListWindow = require('imagelistWindows');
+				var FeedImageListWindow = require('imagelistWindows');
 				new FeedImageListWindow(imageList,this.index).open(); 
 			});
 			feedImage.image = (getFeedImgAddr()+'feedimgm/' + imageList[i]).replace('.jpg','-m.jpg');
@@ -1017,7 +1017,7 @@ function drawtemplate2Contnet(contentView,data){
 	
 	joinNumberView.addEventListener('click',function(e){
 	
-		JoinListWindow = require('joinMsgWindows');
+		var JoinListWindow = require('joinMsgWindows');
 		var stringData = {'title':'lineuplist'};
 		new JoinListWindow(data['eventid'],stringData).open(); 
 	});	
@@ -1044,7 +1044,7 @@ function drawtemplate2Contnet(contentView,data){
 	
 	joinBottomView.addEventListener('click',function(e){
 	
-		JoinWindow = require('joinWindows');
+		var JoinWindow = require('joinWindows');
 		var stringData = {'title':'lineup'};
 		new JoinWindow(data,stringData).open(); 
 	});	
