@@ -1068,7 +1068,7 @@ function createAddPhoto(contentScrollView,imageList){
 	
 }
 
-function openPeopleInfoWin(id,distance,difftime){
+function openPeopleInfoWin(id){
 	PersonInfoWindow = require('personInfoWindows');
-	new PersonInfoWindow(id,distance,difftime).open();
+	new PersonInfoWindow(id).open();
 }

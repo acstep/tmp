@@ -12,7 +12,7 @@ function nearPeopleWindow() {
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
-	currentdate = new Date(); 
+	var currentdate = new Date(); 
 	
 	var reqData = {
 		'geo':[Ti.App.Properties.getDouble('longitude'),Ti.App.Properties.getDouble('latitude')],
@@ -54,6 +54,9 @@ function nearPeopleWindow() {
     	Ti.API.info(' nearbyData data : ' + JSON.stringify(nearbyData));
     	forwardView.visible = false;
     	dataLoading = false;
+    	if(result == false){
+    		return;
+    	}
     	try{
     		nearbyTableView.deleteRow(LoadingRow);
     	}	
@@ -220,7 +223,7 @@ function nearPeopleWindow() {
 	}	
 	
 	nearbyTableView.addEventListener('click', function(e){
-		openPeopleInfoWin(e.row.ownerid, e.row.distance, e.row.difftime);
+		openPeopleInfoWin(e.row.ownerid);
 		//var myid = Ti.App.Properties.getString('userid','');
 		//Ti.API.info('e.source.ownerid : ' + e.row.ownerid);
 		//Ti.API.info('myid : ' + myid);
@@ -273,7 +276,7 @@ function nearPeopleWindow() {
 
 				nearbyTableView.appendRow(LoadingRow);
 				reqData.nextstarttime = starttime;
-				datastring = JSON.stringify(reqData);
+				var datastring = JSON.stringify(reqData);
 				querypplnear(datastring, parseNearbyMsg);
 					
 			}    
@@ -294,7 +297,7 @@ function nearPeopleWindow() {
 		currentdate = new Date(); 
 		starttime = parseInt(currentdate.getTime()/1000);
 		reqData.nextstarttime = starttime;
-		datastring = JSON.stringify(reqData);
+		var datastring = JSON.stringify(reqData);
 		querypplnear(datastring, parseNearbyMsg);
 	}
 	

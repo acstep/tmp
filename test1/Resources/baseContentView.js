@@ -202,23 +202,24 @@ function drawBaseContnet(contentView,data){
 	
 	nameText.addEventListener('click',function(e) {
 		//  enter talk window
-		var myid = Ti.App.Properties.getString('userid','');
-		Ti.API.info('e.source.ownerid : ' + e.source.ownerid);
-		Ti.API.info('myid : ' + myid);
-		if(myid == e.source.ownerid){
-			return;
-		}
-	    Ti.API.info('postView click.');
-        TalkWindow = require('talkWindows');
-        tmpRoomData = {
-            'roomid':'',
-            'memberid':[],
-            'lasttime':parseInt(new Date().getTime()/1000),
-            'host':'',
-            'lastmsg':'',
-            'memdata':[]  
-        };
-        new TalkWindow(Ti.App.Properties.getString('userid',''), e.source.ownerid,tmpRoomData).open(); 
+		openPeopleInfoWin(e.source.ownerid);
+		//var myid = Ti.App.Properties.getString('userid','');
+		//Ti.API.info('e.source.ownerid : ' + e.source.ownerid);
+		//Ti.API.info('myid : ' + myid);
+		//if(myid == e.source.ownerid){
+		//	return;
+		//}
+	    //Ti.API.info('postView click.');
+        //TalkWindow = require('talkWindows');
+        //tmpRoomData = {
+        //    'roomid':'',
+        //    'memberid':[],
+        //    'lasttime':parseInt(new Date().getTime()/1000),
+        //    'host':'',
+        //    'lastmsg':'',
+        //    'memdata':[]  
+        //};
+        //new TalkWindow(Ti.App.Properties.getString('userid',''), e.source.ownerid,tmpRoomData).open(); 
 	});
 	
 	
@@ -571,21 +572,22 @@ function drawtemplate1Contnet(contentView,data){
 	
 	nameText.addEventListener('click',function(e) {
 		//  enter talk window
-		var myid = Ti.App.Properties.getString('userid','');
-		if(myid == e.source.ownerid){
-			return;
-		}
-	    Ti.API.info('postView click.');
-        TalkWindow = require('talkWindows');
-        tmpRoomData = {
-            'roomid':'',
-            'memberid':[],
-            'lasttime':parseInt(new Date().getTime()/1000),
-            'host':'',
-            'lastmsg':'',
-            'memdata':[]  
-        };
-        new TalkWindow(Ti.App.Properties.getString('userid',''), e.source.ownerid,tmpRoomData).open(); 
+		openPeopleInfoWin(e.source.ownerid);
+		//var myid = Ti.App.Properties.getString('userid','');
+		//if(myid == e.source.ownerid){
+		//	return;
+		//}
+	    //Ti.API.info('postView click.');
+        //TalkWindow = require('talkWindows');
+        //tmpRoomData = {
+        //    'roomid':'',
+        //    'memberid':[],
+        //    'lasttime':parseInt(new Date().getTime()/1000),
+        //    'host':'',
+        //    'lastmsg':'',
+         //   'memdata':[]  
+        //};
+        //new TalkWindow(Ti.App.Properties.getString('userid',''), e.source.ownerid,tmpRoomData).open(); 
 	});
 	
 	
@@ -1126,21 +1128,22 @@ function drawtemplate2Contnet(contentView,data){
 	
 	nameText.addEventListener('click',function(e) {
 		//  enter talk window
-		var myid = Ti.App.Properties.getString('userid','');
-		if(myid == e.source.ownerid){
-			return;
-		}
-	    Ti.API.info('postView click.');
-        TalkWindow = require('talkWindows');
-        tmpRoomData = {
-            'roomid':'',
-            'memberid':[],
-            'lasttime':parseInt(new Date().getTime()/1000),
-            'host':'',
-            'lastmsg':'',
-            'memdata':[]  
-        };
-        new TalkWindow(Ti.App.Properties.getString('userid',''), e.source.ownerid,tmpRoomData).open(); 
+		openPeopleInfoWin(e.source.ownerid);
+		//var myid = Ti.App.Properties.getString('userid','');
+		//if(myid == e.source.ownerid){
+		//	return;
+		//}
+	    //Ti.API.info('postView click.');
+        //TalkWindow = require('talkWindows');
+        //tmpRoomData = {
+        //    'roomid':'',
+        //    'memberid':[],
+        //    'lasttime':parseInt(new Date().getTime()/1000),
+        //    'host':'',
+        //    'lastmsg':'',
+        //    'memdata':[]  
+        //};
+       // new TalkWindow(Ti.App.Properties.getString('userid',''), e.source.ownerid,tmpRoomData).open(); 
 	});
 	
 	

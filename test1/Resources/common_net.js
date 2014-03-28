@@ -193,9 +193,9 @@ function querymyself(callbackf){
 };
 
 
-function querypeople(id, callbackf){
+function querypeople(data, callbackf){
 
-	url = getServerAddr()+'querypeople?' + 'id=' + id ;
+	url = getServerAddr()+'querypeople?' + 'data=' + data ;
 	Ti.API.info('url : ' + url);
 	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {

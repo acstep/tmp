@@ -3,10 +3,9 @@ Ti.include("common_net.js");
 Ti.include("common_util.js");
 
 
-function personInfoWindow(id,distance,difftime) {
+function personInfoWindow(id) {
 	
-	Ti.API.info('personInfoWindow distance : ' + distance);
-	Ti.API.info('personInfoWindow difftime : ' + difftime);
+
 	
 	//load component dependencies
 	var self = createNormalWin(true);
@@ -147,6 +146,9 @@ function personInfoWindow(id,distance,difftime) {
 	        height: '15dp', width: '15dp',image:'sorttime.png'
 		});
 		var timeString = '';
+		eventtime = new Date(data['lastupdate']);
+		currenttime =  new Date().getTime()/1000;
+		var difftime = currenttime - eventtime;
 		if(difftime < 60){
 			timeString = parseInt(difftime) + ' ' + L('beforesec');
 		}
@@ -167,7 +169,7 @@ function personInfoWindow(id,distance,difftime) {
 		
 		timeView.add(clockImg);
 		timeView.add(timeText);
-		
+		var distance = data['distance'];
 		var distanceStr = '';
 		if(distance < 1){
 			distance =  parseInt(distance * 1000);
@@ -398,7 +400,13 @@ function personInfoWindow(id,distance,difftime) {
 		
 	};
     
-    querypeople(id,querypplCallback);
+    var data = {
+		'geo':[Ti.App.Properties.getDouble('longitude'),Ti.App.Properties.getDouble('latitude')],
+		'id':id
+	};
+	datastring = JSON.stringify(data);
+	Ti.API.info('datastring : ' + datastring);
+    querypeople(datastring,querypplCallback);
 
     
 

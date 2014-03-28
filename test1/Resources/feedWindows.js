@@ -16,18 +16,18 @@ function feedWindow() {
 		top: '10dp', left:'10dp', height: '30dp', width: '30dp'
 	});
 	
-	var feedPos = false;
-	function switchBackgroundView()	{
+	var menuclose = false;
+	function switchBackgroundView(close)	{
 		Ti.API.info('switchBackgroundView'); 
-		if(feedPos == true){ 
-			feedPos = false;
+		if(close == true){ 
+			menuclose = true;
 			var animation = Titanium.UI.createAnimation();
 			animation.left = '0%';
 			animation.duration = 300;
 	        backgroundView.animate(animation);
 		}
 		else{
-			feedPos = true;
+			menuclose = false;
 			var animation = Titanium.UI.createAnimation();
 			animation.left = '80%';
 			animation.duration = 300;
@@ -37,8 +37,13 @@ function feedWindow() {
 	};
 	listappImg.addEventListener('click',function(e)
 	{
+		if(menuclose == true){
+			switchBackgroundView(false);
+		}
+		else{
+			switchBackgroundView(true);
+		}
 		
-		switchBackgroundView();
 	    
 	});	
 	
@@ -423,7 +428,7 @@ function feedWindow() {
 	menuTopView.addEventListener('click',function(e) {
 	    myFeedWindow = require('myFeedWindows');
 		new myFeedWindow().open(); 
-		switchBackgroundView();
+		switchBackgroundView(true);
 	});
 	
 	
@@ -453,7 +458,7 @@ function feedWindow() {
 	function baseAppWindow(index){
 	    baseAppWindow = require('baseAppWindows');
 		new baseAppWindow(categoryMenu[index]).open(); 
-		switchBackgroundView();
+		switchBackgroundView(true);
 	}
 	
 	var categoryMenu = [
@@ -624,13 +629,13 @@ function feedWindow() {
 			case 0:
 				SetupWindow = require('setupWindows');
 				new SetupWindow().open(); 
-				switchBackgroundView();
+				switchBackgroundView(true);
 			break;		
 			case 1:
 			    // set location 
 				JumpWindow = require('jumpWindows');
 				new JumpWindow().open(); 
-				switchBackgroundView();
+				switchBackgroundView(true);
 			    break;	
 			case 2:
 			    //logout
@@ -1025,7 +1030,7 @@ function feedWindow() {
     
     self.addEventListener('android:back', function(e) {
 	    e.cancelBubble = true;
-	
+	    switchBackgroundView(true);
 	    Ti.App.fireEvent('android_back_button');
 	});
     

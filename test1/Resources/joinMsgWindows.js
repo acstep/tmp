@@ -190,23 +190,24 @@ function joinMsgWindow(eventid,stringData) {
 	});
 	
 	joinMsgTableView.addEventListener('click', function(e){
-	    var myid = Ti.App.Properties.getString('userid','');
-	    Ti.API.info('myid: ' + myid);
-	    Ti.API.info('e.rowData.ownerid : ' + e.rowData.ownerid);
-		if(myid == e.rowData.ownerid){
-			return;
-		}
-	    Ti.API.info('postView click.');
-        TalkWindow = require('talkWindows');
-        tmpRoomData = {
-            'roomid':'',
-            'memberid':[],
-            'lasttime':parseInt(new Date().getTime()/1000),
-            'host':'',
-            'lastmsg':'',
-            'memdata':[]  
-        };
-        new TalkWindow(Ti.App.Properties.getString('userid',''), e.rowData.ownerid,tmpRoomData).open(); 
+		openPeopleInfoWin(e.rowData.ownerid);
+	    //var myid = Ti.App.Properties.getString('userid','');
+	    //Ti.API.info('myid: ' + myid);
+	    //Ti.API.info('e.rowData.ownerid : ' + e.rowData.ownerid);
+		//if(myid == e.rowData.ownerid){
+		//	return;
+		//}
+	    //Ti.API.info('postView click.');
+        //TalkWindow = require('talkWindows');
+        //tmpRoomData = {
+        //    'roomid':'',
+        //    'memberid':[],
+        //    'lasttime':parseInt(new Date().getTime()/1000),
+        //    'host':'',
+        //    'lastmsg':'',
+        //    'memdata':[]  
+        //};
+        //new TalkWindow(Ti.App.Properties.getString('userid',''), e.rowData.ownerid,tmpRoomData).open(); 
 	    // the example above would print your name
 	});
 	    

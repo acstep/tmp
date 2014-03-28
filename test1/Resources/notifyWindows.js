@@ -134,15 +134,81 @@ function notifyWindow() {
 					timeView.add(clockImg);
 					timeView.add(timeText);
 					contentView.add(timeView);
-
-				  break;
-  
+                    notifyRow.type = 'comment';
+				  	break;
+                case 'systemad':
+                    var itemView = Titanium.UI.createView({
+						backgroundColor:'transparent',
+						width:Ti.UI.SIZE ,height: Ti.UI.SIZE,left:'10dp',top:'0dp'
+					});
+					var headPhotoImg = Titanium.UI.createImageView({
+				        borderRadius:15,height: '60dp', width: '60dp',top:'10dp',bottom:'10dp',backgroundImage:'headphoto.png'
+					});
+					
+					
+					headPhotoImg.image = getHeadImg(notifyData[i]['senderid']);
+			
+					itemView.add(headPhotoImg);
+					
+					var contentView = Titanium.UI.createView({
+						left:'80dp',backgroundColor:'transparent',
+						height: Ti.UI.SIZE,top:'10dp',bottom:'10dp',
+						layout: 'vertical'
+					});
+					var mdgTitleText = Ti.UI.createLabel({
+						font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
+						text: notifyData[i]['title'] ,
+						color:'#ff0000',left:'10dp',right:'10dp'
+					});
+					contentView.add(mdgTitleText);
+					
+					var contentText = Ti.UI.createLabel({
+						font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
+						text: getStringlimit(notifyData[i]['content'],50,100) ,
+						color:'#333333',left:'10dp',right:'10dp'
+					});
+					contentView.add(contentText);
+					
+					var timeView = Titanium.UI.createView({
+						left:'10dp',backgroundColor:'transparent',
+						height: Ti.UI.SIZE,
+						layout: 'horizontal'
+					});
+					var clockImg = Titanium.UI.createImageView({
+				        height: '10dp', width: '10dp',image:'sorttime.png'
+					});
+					eventtime = new Date(notifyData[i]['time']);
+					currenttime =  new Date().getTime()/1000;
+					difftime = currenttime - eventtime;
+					var timeString = '';
+					if(difftime < 60){
+						timeString = parseInt(difftime) + ' ' + L('beforesec');
+					}
+					else if(difftime >=60 &&  difftime < 3600){
+						timeString = parseInt(difftime/60) + ' ' + L('beforemin');
+					}
+					else if(difftime >=3600 &&  difftime < 86400){
+						timeString = parseInt(difftime/3600) + ' ' + L('beforehour');
+					}
+					else{
+						timeString = parseInt(difftime/86400) + ' ' + L('beforeday');
+					}
+					var timeText = Ti.UI.createLabel({
+						font:{fontSize:'12sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
+						text: timeString,
+						color:'#aaaaaa',left:'10dp'
+					});
+					timeView.add(clockImg);
+					timeView.add(timeText);
+					contentView.add(timeView);
+					notifyRow.type = 'systemad';
+					notifyRow.url = notifyData[i]['url'];
+                    break;
 			};
 			notifyRow.add(itemView);
 			notifyRow.add(contentView);
 		    notifyDataItems.push(notifyRow);
 		    savedNotifyData.push(notifyData[i]);
-		    notifyRow.type = 'comment';
 		    notifyRow.eventid = notifyData[i]['eventid'];
 		    starttime = notifyData[i]['time'];
     	};
@@ -157,9 +223,14 @@ function notifyWindow() {
     notifyTableView.addEventListener('click', function(e){
     	switch(e.row.type){
 				case 'comment':
-				  FeedContentWindow = require('feedContentWindows');
-				  new FeedContentWindow(e.row.eventid, true).open(); 	
-		          break;		
+				    FeedContentWindow = require('feedContentWindows');
+				    new FeedContentWindow(e.row.eventid, true).open(); 	
+		            break;	
+		        case 'systemad':  
+		            var data = {'url':e.row.url};
+		          	SystemADWindow = require('systemADWindows');
+				    new SystemADWindow(data).open(); 	
+		            break;	
 		}		
     });
     
