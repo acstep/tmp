@@ -88,7 +88,7 @@ function chatroomWindow() {
 				
 			}
 			else{
-				userid = Ti.App.Properties.getString('userid','');
+				var userid = Ti.App.Properties.getString('userid','');
 				
 				if(chatroomData[i]['memdata'][0]['id'] == userid){
 					toidIndex = 1;
@@ -126,7 +126,7 @@ function chatroomWindow() {
 			});
 			contentView.add(nameText);
 			
-			lastmsg = '';
+			var lastmsg = '';
 			if(chatroomData[i]['lastmsg']['type'] == 'string'){
 				lastmsg = chatroomData[i]['lastmsg']['string'];
 			}
@@ -145,9 +145,9 @@ function chatroomWindow() {
 			var clockImg = Titanium.UI.createImageView({
 		        height: '10dp', width: '10dp',image:'sorttime.png'
 			});
-			eventtime = new Date(chatroomData[i]['lasttime']);
-			currenttime =  new Date().getTime()/1000;
-			difftime = currenttime - eventtime;
+			var eventtime = new Date(chatroomData[i]['lasttime']);
+			var currenttime =  new Date().getTime()/1000;
+			var difftime = currenttime - eventtime;
 			var timeString = '';
 			if(difftime < 60){
 				timeString = parseInt(difftime) + ' ' + L('beforesec');
@@ -321,7 +321,7 @@ function chatroomWindow() {
 		forwardView.visible = true;
 		chatroomDataItems = [];
 		savedChatroomData = [];
-		currentdate = new Date(); 
+		var currentdate = new Date(); 
 		starttime = parseInt(currentdate.getTime()/1000);
 		querychatroom( starttime, 10, false,parseChatroom);
 		
@@ -331,7 +331,7 @@ function chatroomWindow() {
 	///////////////  receive message  /////////////
 	
 	var getupdatechatroom = function(e) {
-		talkingRoomID = Ti.App.Properties.getString('TalkRoomID','');
+		var talkingRoomID = Ti.App.Properties.getString('TalkRoomID','');
 	
 		if(talkingRoomID == e.roomid){
 			return;

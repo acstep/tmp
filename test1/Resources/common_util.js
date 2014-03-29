@@ -120,8 +120,8 @@ function createNormalWin(title){
 function createNormalFeed(viewobj,category){
 	/////////  feed  ///////////////////
 	
-	lat = getLat();
-	lon = getLon();
+	var lat = getLat();
+	var lon = getLon();
     var feedView = Ti.UI.createView({
 		backgroundColor:'#dddddd',
 		width:'100%',
@@ -133,7 +133,7 @@ function createNormalFeed(viewobj,category){
 	
 	Ti.API.info('category backup  ' + category + ' : ' + Ti.App.Properties.getString(category.toString(),{'data':[]}));
 	/////////////   scroll feed  ////////////////////////////
-	var feedtableItems = [];
+	feedtableItems = [];
 	var feedTableView = Ti.UI.createTableView({
 		showVerticalScrollIndicator:false,
         backgroundSelectedColor:'#dddddd',
@@ -159,19 +159,20 @@ function createNormalFeed(viewobj,category){
 	// get current position and render fee
 
 	var lastposupdate = 0;
-	currentdate = new Date(); 
+	var currentdate = new Date(); 
 	var nexttime = parseInt(currentdate.getTime()/1000);
 	var nextlike = 0;
 	var firstFeed = true;
 	//////////////////   Draw feeds  /////////////////////////
 	var feeditem = [];
+	var oldfeeditems = {};
 	var drawFunction = {	   
 		    'base':createBaseFeedView ,
 		    'template1':drawtemplate1Event ,
 		    'template2':drawtemplate2Event
 	};
 	
-	layoutDataDes = {
+	var layoutDataDes = {
 		'1000': {'layouttype':'base','title': 'news','color':'#2ecc71','catimage':'newsicon.png'},
 		'1001': {'layouttype':'template1','title':'club','color':'#f39c12','catimage':'groupicon.png'},
 		'1002': {'layouttype':'base','title':'needhelp','color':'#ff0000','catimage':'help2.png'},
@@ -217,6 +218,8 @@ function createNormalFeed(viewobj,category){
 				    });
 				    //drawFunction[feedData[i].category.toString()](feedData[i]);
 				    try{
+				    	var latitude = getLat();
+						var longitude = getLon();
 				    	var data = {'info':feedData[i],
 				    	            'lat':latitude,
 				    	            'lon':longitude, 
@@ -382,12 +385,14 @@ function createNormalFeed(viewobj,category){
 		feedTableView.data = [];
 		feedTableView.appendRow(refleshRow);
 		viewobj.forwardView.visible = true;
-		currentdate = new Date(); 
+		var currentdate = new Date(); 
 		nexttime = parseInt(currentdate.getTime()/1000);
 		firstFeed = true;
         nextlike = 0;
-        distance = getDistance();
-		limitcount = parseInt(Ti.App.Properties.getInt('limitcount',5));
+        var latitude = 0;
+        var longitude = 0;
+        var distance = getDistance();
+		var limitcount = parseInt(Ti.App.Properties.getInt('limitcount',5));
 		if(category == 'myfeed'){
 			latitude = getLat();
 			longitude = getLon();
@@ -413,7 +418,10 @@ function createNormalFeed(viewobj,category){
 
     function getNextFeed(){
     	Ti.API.info('getNextFeed ');
-    	distance = getDistance();
+    	var distance = getDistance();
+    	var latitude = 0;
+        var longitude = 0;
+        var limitcount = parseInt(Ti.App.Properties.getInt('limitcount',5));
     	if(category == 'myfeed'){
 			querymyevent(limitcount, nexttime, parseFeed);
 		}
@@ -535,12 +543,12 @@ function getStringlimit(orgstring,start,end){
 	if(orgstring.length < start){
 		return orgstring;
 	}
-	stringindex = -1;
-	desString = '';
-    firstSpaceIndex = orgstring.indexOf(" ",start);
-    firstlinebreakIndex = orgstring.indexOf("\n",start);
-    firstdotIndex = orgstring.indexOf(".",start);
-    firstcommaIndex = orgstring.indexOf(",",start);
+	var stringindex = -1;
+	var desString = '';
+    var firstSpaceIndex = orgstring.indexOf(" ",start);
+    var firstlinebreakIndex = orgstring.indexOf("\n",start);
+    var firstdotIndex = orgstring.indexOf(".",start);
+    var firstcommaIndex = orgstring.indexOf(",",start);
     if(firstSpaceIndex > 0 && firstSpaceIndex < end){
     	stringindex = firstSpaceIndex;
     }
@@ -596,8 +604,8 @@ function createMapView(mapView,data){
 	
 	mapView.addressText = addressText;
 	
-	latitude = data['loc']['coordinates'][1];
-	longitude = data['loc']['coordinates'][0];
+	var latitude = data['loc']['coordinates'][1];
+	var longitude = data['loc']['coordinates'][0];
 	
 	
 	
@@ -821,9 +829,9 @@ function createFeedTop(feedView, data, lon, lat){
 	});
 	
 	
-	eventtime = new Date(data['lastupdate']);
-	currenttime =  new Date().getTime()/1000;
-	difftime = currenttime - eventtime;
+	var eventtime = new Date(data['lastupdate']);
+	var currenttime =  new Date().getTime()/1000;
+	var difftime = currenttime - eventtime;
 	var timeString = '';
 	if(difftime < 60){
 		timeString = parseInt(difftime) + ' ' + L('beforesec');
@@ -850,6 +858,7 @@ function createFeedTop(feedView, data, lon, lat){
 
 	
 	var feeddistance = GetDistance(lat, lon, data.loc['coordinates'][1], data['loc']['coordinates'][0], 'K');
+	var feedDistanceStr = ''; 
 	if(feeddistance < 1){
 		feeddistance =  parseInt(feeddistance * 1000);
 		feedDistanceStr = '   '+feeddistance+ ' '+L('m')+ '   ';

@@ -42,8 +42,8 @@ function HeadWindow(cropimage,mode) {
 	
 	//////////////////   handle crop image /////////////////////////
 
-    width = cropimage.width;
-    height = cropimage.height;
+    var width = cropimage.width;
+    var height = cropimage.height;
    
 	
 	var headImg = Titanium.UI.createImageView({
@@ -54,7 +54,7 @@ function HeadWindow(cropimage,mode) {
 
 	
 	
-	dpratio = (Titanium.Platform.displayCaps.dpi / 160);
+	var dpratio = (Titanium.Platform.displayCaps.dpi / 160);
 	
 	var baseWidth = 100, baseHeight = 100;
 	var halfWidth = 50, halfHeight = 50;
@@ -116,8 +116,8 @@ function HeadWindow(cropimage,mode) {
 	headImg.addEventListener('touchmove', function(e) {
 	    
         
-	    tmptop =  orgin.y + e.y/dpratio  - orgindiff.y;  
-	    tmpleft =  orgin.x + e.x/dpratio  - orgindiff.x;    
+	    var tmptop =  orgin.y + e.y/dpratio  - orgindiff.y;  
+	    var tmpleft =  orgin.x + e.x/dpratio  - orgindiff.x;    
 	   
     	
     	if(tmptop < headImg.rect.y){
@@ -157,14 +157,14 @@ function HeadWindow(cropimage,mode) {
 	cropDoneButton.addEventListener('click',function(e)
 	{
 		forwardView.visible = true; 
-	    imageWidth = cropimage.width;
-	    imageHeight = cropimage.height;
-	    ratioX = imageWidth / headImg.rect.width;
-	    ratioY = imageHeight / headImg.rect.height;
-	    realX = (cropView.rect.x  - headImg.rect.x)* ratioX;
-	    realY = (cropView.rect.y - headImg.rect.y)* ratioY;
-	    realWidth = cropView.rect.width * ratioX;
-	    realHeight = cropView.rect.height * ratioY;
+	    var imageWidth = cropimage.width;
+	    var imageHeight = cropimage.height;
+	    var ratioX = imageWidth / headImg.rect.width;
+	    var ratioY = imageHeight / headImg.rect.height;
+	    var realX = (cropView.rect.x  - headImg.rect.x)* ratioX;
+	    var realY = (cropView.rect.y - headImg.rect.y)* ratioY;
+	    var realWidth = cropView.rect.width * ratioX;
+	    var realHeight = cropView.rect.height * ratioY;
 
 	    var f = Titanium.Filesystem.getFile(Titanium.Filesystem.externalStorageDirectory,'head.jpg');
 	    

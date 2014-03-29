@@ -78,9 +78,9 @@ function changePassWindow() {
 	
 	
 	function updatePass(){
-		oldpasstext = oldpassTextField.value;
-		newpasstext  = newpassTextField.value;
-		vnewpasstext  = vnewpassTextField.value;
+		var oldpasstext = oldpassTextField.value;
+		var newpasstext  = newpassTextField.value;
+		var vnewpasstext  = vnewpassTextField.value;
         if(oldpasstext == '' || newpasstext == '' || vnewpasstext == '' ){
         	showAlert('Error !', L('passempty'));
             return;
@@ -99,7 +99,7 @@ function changePassWindow() {
 			'newpasswd': newpasstext
 		};
 		forwardView.visible = true;
-		datastring = JSON.stringify(data);
+		var datastring = JSON.stringify(data);
 		updateaccount(datastring, updateCallback);
 	}
 	

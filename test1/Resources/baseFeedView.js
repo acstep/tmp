@@ -110,7 +110,7 @@ function createBaseFeedView(view, data){
 			}
 			if(imgwidth != 0 && imgwidth < platwidth){
 		
-				ratio = (platwidth / parseFloat(imgwidth));
+				var ratio = (platwidth / parseFloat(imgwidth));
 		
 				e.source.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
 				e.source.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
@@ -240,7 +240,7 @@ function drawtemplate1Event(view, data){
 			height: '15dp', width: '15dp', left:'10dp'
 		});
 		
-		startTime = new Date(data.info['pdata']['starttime']*1000);
+		var startTime = new Date(data.info['pdata']['starttime']*1000);
 		var minutes = startTime.getMinutes();
 		if(minutes < 10){
 			minutes = '0'+minutes;
@@ -313,7 +313,7 @@ function drawtemplate1Event(view, data){
 			}
 			if(imgwidth != 0 && imgwidth < platwidth){
 		
-				ratio = (platwidth / parseFloat(imgwidth));
+				var ratio = (platwidth / parseFloat(imgwidth));
 		
 				e.source.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
 				e.source.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
@@ -654,7 +654,7 @@ function drawtemplate2Event(view, data){
 			height: '15dp', width: '15dp', left:'10dp'
 		});
 		
-		startTime = new Date(data.info['pdata']['time']*1000);
+		var startTime = new Date(data.info['pdata']['time']*1000);
 		var minutes = startTime.getMinutes();
 		if(minutes < 10){
 			minutes = '0'+minutes;
@@ -724,7 +724,7 @@ function drawtemplate2Event(view, data){
 		
 			if(imgwidth != 0 && imgwidth < platwidth){
 		
-				ratio = (platwidth / parseFloat(imgwidth));
+				var ratio = (platwidth / parseFloat(imgwidth));
 		
 				e.source.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
 				e.source.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);

@@ -104,7 +104,6 @@ function personInfoWindow(id) {
 		
 		var yearString = ' ';
 		if(data['birthday'] != undefined){
-			currenttime =  new Date() ;
 			yearString =  new Date().getFullYear() - new Date(data['birthday']*1000).getFullYear();
 			
 		}
@@ -146,8 +145,8 @@ function personInfoWindow(id) {
 	        height: '15dp', width: '15dp',image:'sorttime.png'
 		});
 		var timeString = '';
-		eventtime = new Date(data['lastupdate']);
-		currenttime =  new Date().getTime()/1000;
+		var eventtime = new Date(data['lastupdate']);
+		var currenttime =  new Date().getTime()/1000;
 		var difftime = currenttime - eventtime;
 		if(difftime < 60){
 			timeString = parseInt(difftime) + ' ' + L('beforesec');
@@ -220,7 +219,7 @@ function personInfoWindow(id) {
 			}
 		  
 	        var TalkWindow = require('talkWindows');
-	        tmpRoomData = {
+	        var tmpRoomData = {
 	            'roomid':'',
 	            'memberid':[],
 	            'lasttime':parseInt(new Date().getTime()/1000),
@@ -277,12 +276,12 @@ function personInfoWindow(id) {
 						imgheight = tmpimage.height;
 					}
 					if(imgwidth < imgheight){
-						ratio = (80 / parseFloat(imgwidth));
+						var ratio = (80 / parseFloat(imgwidth));
 						this.width = (imgwidth * ratio) ;
 						this.height = (imgheight * ratio) ;
 					}
 					else{
-						ratio = (80 / parseFloat(imgheight));
+						var ratio = (80 / parseFloat(imgheight));
 						this.width = (imgwidth * ratio) ;
 						this.height = (imgheight * ratio) ;
 					}
@@ -404,7 +403,7 @@ function personInfoWindow(id) {
 		'geo':[Ti.App.Properties.getDouble('longitude'),Ti.App.Properties.getDouble('latitude')],
 		'id':id
 	};
-	datastring = JSON.stringify(data);
+	var datastring = JSON.stringify(data);
 	Ti.API.info('datastring : ' + datastring);
     querypeople(datastring,querypplCallback);
 

@@ -110,9 +110,9 @@ function notifyWindow() {
 					var clockImg = Titanium.UI.createImageView({
 				        height: '10dp', width: '10dp',image:'sorttime.png'
 					});
-					eventtime = new Date(notifyData[i]['time']);
-					currenttime =  new Date().getTime()/1000;
-					difftime = currenttime - eventtime;
+					var eventtime = new Date(notifyData[i]['time']);
+					var currenttime =  new Date().getTime()/1000;
+					var difftime = currenttime - eventtime;
 					var timeString = '';
 					if(difftime < 60){
 						timeString = parseInt(difftime) + ' ' + L('beforesec');
@@ -177,9 +177,9 @@ function notifyWindow() {
 					var clockImg = Titanium.UI.createImageView({
 				        height: '10dp', width: '10dp',image:'sorttime.png'
 					});
-					eventtime = new Date(notifyData[i]['time']);
-					currenttime =  new Date().getTime()/1000;
-					difftime = currenttime - eventtime;
+					var eventtime = new Date(notifyData[i]['time']);
+					var currenttime =  new Date().getTime()/1000;
+					var difftime = currenttime - eventtime;
 					var timeString = '';
 					if(difftime < 60){
 						timeString = parseInt(difftime) + ' ' + L('beforesec');
@@ -279,7 +279,7 @@ function notifyWindow() {
     var starttime = 0;
 	function requestNotify(){
 		forwardView.visible = true;
-		currentdate = new Date(); 
+		var currentdate = new Date(); 
 		savedNotifyData = [];
 		notifyDataItems = [];
 		starttime = parseInt(currentdate.getTime()/1000);

@@ -134,9 +134,9 @@ function nearPeopleWindow() {
 			var clockImg = Titanium.UI.createImageView({
 		        height: '10dp', width: '10dp',image:'sorttime.png'
 			});
-			eventtime = new Date(nearbyData[i]['time']);
-			currenttime =  new Date().getTime()/1000;
-			difftime = currenttime - eventtime;
+			var eventtime = new Date(nearbyData[i]['time']);
+			var currenttime =  new Date().getTime()/1000;
+			var difftime = currenttime - eventtime;
 			nearbyRow.difftime = difftime;
 			var timeString = '';
 			if(difftime < 60){
@@ -186,7 +186,7 @@ function nearPeopleWindow() {
 			var yearString = ' ';
 			if(nearbyData[i]['birthday'] != undefined){
 				
-				currenttime =  new Date() ;
+				var currenttime =  new Date() ;
 				yearString =  new Date().getFullYear() - new Date(nearbyData[i]['birthday']*1000).getFullYear();
 				
 			}
@@ -294,7 +294,7 @@ function nearPeopleWindow() {
 	function requestNearbyList(){
 		forwardView.visible = true;
 		nearbyItems = [];
-		currentdate = new Date(); 
+		var currentdate = new Date(); 
 		starttime = parseInt(currentdate.getTime()/1000);
 		reqData.nextstarttime = starttime;
 		var datastring = JSON.stringify(reqData);

@@ -62,13 +62,13 @@ function joinWindow(data,stringData) {
 	
 	doneButton.addEventListener('click',function(e)
 	{
-		data = {
+		var data = {
 	    	'name': Ti.App.Properties.getString('username',''),
 	    	'content':desTextArea.value,
 	    	'eventid':data['eventid']
     	};
                       
-    	datastring = JSON.stringify(data);
+    	var datastring = JSON.stringify(data);
     	forwardView.visible = true;
     	joinevt(datastring, sendJoinCB);
 

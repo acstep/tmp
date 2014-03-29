@@ -79,7 +79,7 @@ function feedContentWindow(eventid, fullcontent) {
     
     /////////////  event info ////////////////////////
     	
-	contentDataDes = {
+	var contentDataDes = {
 		'1000': {'layouttype':'base'},
 		'1001': {'layouttype':'template1'},
 		'1002': {'layouttype':'base'},
@@ -127,7 +127,7 @@ function feedContentWindow(eventid, fullcontent) {
 		}
 		else{
 			Ti.API.info('drawFeedContentFunction.');
-			myid =  Ti.App.Properties.getString('userid','');
+			var myid =  Ti.App.Properties.getString('userid','');
 			if(data['ownerid'] == myid){
 				doneButton.visible = true;
 			}
@@ -244,7 +244,7 @@ function feedContentWindow(eventid, fullcontent) {
 				}
 			    Ti.API.info('postView click.');
 		        var TalkWindow = require('talkWindows');
-		        tmpRoomData = {
+		        var tmpRoomData = {
 		            'roomid':'',
 		            'memberid':[],
 		            'lasttime':parseInt(new Date().getTime()/1000),
@@ -257,9 +257,9 @@ function feedContentWindow(eventid, fullcontent) {
 			
 			
 	
-			eventtime = new Date(data[i]['time']);
-			currenttime =  new Date().getTime()/1000;
-			difftime = currenttime - eventtime;
+			var eventtime = new Date(data[i]['time']);
+			var currenttime =  new Date().getTime()/1000;
+			var difftime = currenttime - eventtime;
 			var timeString = '';
 			if(difftime < 60){
 				timeString = parseInt(difftime) + ' ' + L('beforesec');
@@ -356,14 +356,14 @@ function feedContentWindow(eventid, fullcontent) {
 		var headimage = Ti.App.Properties.getString('headfile',''); 
 		if(commentTextArea.value == '')
 			return;
-	    data = {
+	    var data = {
 	    	'headphoto':headimage,
 	    	'name': Ti.App.Properties.getString('username',''),
 	    	'content':commentTextArea.value,
 	    	'eventid':eventid
     	};
                       
-    	datastring = JSON.stringify(data);
+    	var datastring = JSON.stringify(data);
     	forwardView.visible = true;
     	commentevt(eventid, datastring, sendCommentCB);
 	});

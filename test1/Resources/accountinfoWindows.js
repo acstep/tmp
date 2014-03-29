@@ -121,10 +121,10 @@ function accountinfoWindow() {
 	}
 	
 	function updateAccount(){
-		nametext = nameTextField.value;
-		schooltext  = schoolTextField.value;
-		worktext  = workTextField.value;
-		userdestext  = introTextArea.value;
+		var nametext = nameTextField.value;
+		var schooltext  = schoolTextField.value;
+		var worktext  = workTextField.value;
+		var userdestext  = introTextArea.value;
 		
 		if(nametext == ''){
 			showAlert('Error !', 'Name empty.');
@@ -207,7 +207,7 @@ function accountinfoWindow() {
 	    borderWidth:'1dp',borderRadius:10,
 	});
 	
-	hintname = Ti.App.Properties.getString('username','');
+	var hintname = Ti.App.Properties.getString('username','');
 	if(hintname != ''){
 		nameTextField.value = hintname;
 	}
@@ -218,8 +218,8 @@ function accountinfoWindow() {
 
 	
 	/////////////// birthday ///////////////////////////
-	birthdayDate = new Date(); 
-	saveBirthdat = Ti.App.Properties.getInt('birthday',0)*1000;
+	var birthdayDate = new Date(); 
+	var saveBirthdat = Ti.App.Properties.getInt('birthday',0)*1000;
 	if(saveBirthdat != 0){
 		birthdayDate.setTime(saveBirthdat);
 	}
@@ -364,7 +364,7 @@ function accountinfoWindow() {
 	    borderWidth:'1dp',borderRadius:10,
 	});
 	
-	hintschool = Ti.App.Properties.getString('school','');
+	var hintschool = Ti.App.Properties.getString('school','');
 	if(hintschool != ''){
 		schoolTextField.value = hintschool;
 	}
@@ -400,7 +400,7 @@ function accountinfoWindow() {
 	    borderColor:'#666666',
 	    borderWidth:'1dp',borderRadius:10,
 	});
-	hintwork = Ti.App.Properties.getString('work','');
+	var hintwork = Ti.App.Properties.getString('work','');
 	if(hintwork != ''){
 		workTextField.value = hintschool;
 	}
@@ -436,7 +436,7 @@ function accountinfoWindow() {
         maxLength:500
 	});
 	
-	hintintro = Ti.App.Properties.getString('intro','');
+	var hintintro = Ti.App.Properties.getString('intro','');
 	if(hintintro != ''){
 		introTextArea.value = hintintro;
 	}
@@ -484,13 +484,13 @@ function accountinfoWindow() {
 	                    newimage = image;
 	                    if(image.width >  image.height){
 	                    	if(image.width > 1000){
-	                    		ratio = image.width / 1000.0;
+	                    		var ratio = image.width / 1000.0;
 	                    		newimage = image.imageAsResized(image.width/ratio,image.height/ratio);
 	                    	}
 	                    }
 	                    else{
 	                    	if(image.height > 1000){
-	                    		ratio = image.height / 1000.0;
+	                    		var ratio = image.height / 1000.0;
 	                    		newimage = image.imageAsResized(image.width/ratio,image.height/ratio);
 	                    	}
 	                    }
@@ -542,13 +542,13 @@ function accountinfoWindow() {
 	                    newimage = image;
 	                    if(image.width >  image.height){
 	                    	if(image.width > 1000){
-	                    		ratio = image.width / 1000.0;
+	                    		var ratio = image.width / 1000.0;
 	                    		newimage = image.imageAsResized(image.width/ratio,image.height/ratio);
 	                    	}
 	                    }
 	                    else{
 	                    	if(image.height > 1000){
-	                    		ratio = image.height / 1000.0;
+	                    		var ratio = image.height / 1000.0;
 	                    		newimage = image.imageAsResized(image.width/ratio,image.height/ratio);
 	                    	}
 	                    }
@@ -646,7 +646,7 @@ function accountinfoWindow() {
 	
 	
 	/////////////   select image from camera or gallary ///////////////////
-	accountDeleteImageobj = {};
+	var accountDeleteImageobj = {};
 	var accountDeleteImageDialog = Titanium.UI.createOptionDialog({
 
 	    title: L('deletefile'),
@@ -805,7 +805,7 @@ function accountinfoWindow() {
 	
 	accountimageScrollView.add(accountcameraViewImageView);
 	
-	orginalPhotos = Ti.App.Properties.getList('photos',[]);
+	var orginalPhotos = Ti.App.Properties.getList('photos',[]);
 	
 	for(var i=0; i<orginalPhotos.length; i++){
 		var accountImage = Titanium.UI.createImageView({

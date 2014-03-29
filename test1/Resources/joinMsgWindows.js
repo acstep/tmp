@@ -98,9 +98,9 @@ function joinMsgWindow(eventid,stringData) {
 			var clockImg = Titanium.UI.createImageView({
 		        height: '10dp', width: '10dp',image:'sorttime.png'
 			});
-			eventtime = new Date(joinMsgData[i]['time']);
-			currenttime =  new Date().getTime()/1000;
-			difftime = currenttime - eventtime;
+			var eventtime = new Date(joinMsgData[i]['time']);
+			var currenttime =  new Date().getTime()/1000;
+			var difftime = currenttime - eventtime;
 			var timeString = '';
 			if(difftime < 60){
 				timeString = parseInt(difftime) + ' ' + L('beforesec');

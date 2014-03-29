@@ -126,7 +126,7 @@ function Template1PostWindows(data) {
 	
 	
 	/////////////   select image from camera or gallary ///////////////////
-	deleteImageobj = {};
+	var deleteImageobj = {};
 	var deleteImageDialog = Titanium.UI.createOptionDialog({
 
 	    title: L('deletefile'),
@@ -135,7 +135,7 @@ function Template1PostWindows(data) {
 	});
 	deleteImageDialog.addEventListener('click', function(e) {
 		if(e.index == 0){
-			position = imageList.indexOf(deleteImageobj.image);
+			var position = imageList.indexOf(deleteImageobj.image);
             Ti.API.info('remove image list pos : ' + position);
 			if ( ~position ) imageList.splice(position, 1);
 			imageScrollView.remove(deleteImageobj);
@@ -303,8 +303,8 @@ function Template1PostWindows(data) {
 	
 	
 	
-	startTime = new Date(); 
-    endTime = new Date(startTime); 
+	var startTime = new Date(); 
+    var endTime = new Date(startTime); 
     endTime.setHours(startTime.getHours()+1);
 	
 	function adjTimeText(start){
@@ -604,7 +604,7 @@ function Template1PostWindows(data) {
             "id": Ti.App.Properties.getString('userid',''),
             'token':Ti.App.Properties.getString('token','') 
         };
-		xhr = Titanium.Network.createHTTPClient();
+		var xhr = Titanium.Network.createHTTPClient();
         xhr.open("POST",getServerAddr()+"uploadimg");
         xhr.send(data_to_send); 
         xhr.onload = function(e) {
@@ -658,8 +658,8 @@ function Template1PostWindows(data) {
 	};
 	
 	function postTemplate1Event(){
-		currentdate = new Date(); 
-		extime = parseInt(currentdate.getTime()/1000)+Ti.App.Properties.getInt('defaultexpiretime',0);
+		var currentdate = new Date(); 
+		var extime = parseInt(currentdate.getTime()/1000)+Ti.App.Properties.getInt('defaultexpiretime',0);
 		
 		var postdata = {
 			'name': Ti.App.Properties.getString('username'),
@@ -676,7 +676,7 @@ function Template1PostWindows(data) {
 			}
 		};
 	    
-	    datastring = JSON.stringify(postdata);
+	    var datastring = JSON.stringify(postdata);
 	    Ti.API.info('datastring : ' + datastring);
 		createvent(datastring ,template1PostCallback);
 	}

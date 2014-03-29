@@ -132,7 +132,7 @@ function talkWindow(id, toid,roomdata) {
 		if(msgTextArea.value == '')
 			return;
 		
-		data = {
+		var data = {
 	    	'type':'string',
 	    	'string': msgTextArea.value,
 	    	'roomid':roomdata['roomid'],
@@ -140,7 +140,7 @@ function talkWindow(id, toid,roomdata) {
 	    	'name':Ti.App.Properties.getString('username')
     	};
                       
-    	datastring = JSON.stringify(data);
+    	var datastring = JSON.stringify(data);
     		
 		if(roomdata['roomid'] == ''){
 			needSendMsg = datastring;
@@ -170,7 +170,7 @@ function talkWindow(id, toid,roomdata) {
 				roomdata = data;
 				Ti.App.Properties.setString('TalkRoomID',roomdata['roomid']);
 				parseHeadPhoto(data);
-				tmpRow = createTextRow(id, msgTextArea.value);
+				var tmpRow = createTextRow(id, msgTextArea.value);
 		    	talkDataItems.push(tmpRow);
 		    	talkTableView.appendRow(tmpRow);
 		    	talkTableView.scrollToIndex(talkDataItems.length-1);
@@ -233,7 +233,7 @@ function talkWindow(id, toid,roomdata) {
 	});	
 	
 	
-	headimage = {};
+	var headimage = {};
 	
 	function parseHeadPhoto(data){
 		for(var i=0 ; i< data['memdata'].length  ; i++){
@@ -312,7 +312,7 @@ function talkWindow(id, toid,roomdata) {
 	
 			for(var i = 0 ; i <= data.length -1; i++){
 				
-				tmpRow = createTextRow(data[i]['owner'], data[i]['data']['string']);
+				var tmpRow = createTextRow(data[i]['owner'], data[i]['data']['string']);
 				talkDataItems.unshift(tmpRow);
 				talkTableView.insertRowBefore(0,tmpRow);
 				lastMsgTime = data[i]['time'];
@@ -348,8 +348,8 @@ function talkWindow(id, toid,roomdata) {
 			else{
 				roomdata = data;
 				parseHeadPhoto(data);
-				currentdate = new Date(); 
-				starttime = parseInt(currentdate.getTime()/1000);
+				var currentdate = new Date(); 
+				var starttime = parseInt(currentdate.getTime()/1000);
 				Ti.API.info('roomid : ' + roomdata['roomid']);
 				Ti.App.Properties.setString('TalkRoomID',roomdata['roomid']);
 				Ti.API.info('roomdata1 : ' + JSON.stringify({'data':roomdata}));
@@ -370,7 +370,7 @@ function talkWindow(id, toid,roomdata) {
 	var getgcm = function(e) {
 		if(e.owner == id || e.roomid != roomdata['roomid'] || messageLock == true)
 			return;
-	    tmpRow = createTextRow(e.owner, e.content.string);
+	    var tmpRow = createTextRow(e.owner, e.content.string);
     	talkDataItems.push(tmpRow);
     	talkTableView.appendRow(tmpRow);
     	talkTableView.scrollToIndex(talkDataItems.length-1);
@@ -410,8 +410,8 @@ function talkWindow(id, toid,roomdata) {
         self.activity.addEventListener('resume', function(e) {
         	if(roomdata['roomid'] != ''){
         		Ti.API.info('resume and query msg');
-        		currentdate = new Date(); 
-				starttime = parseInt(currentdate.getTime()/1000);
+        		var currentdate = new Date(); 
+				var starttime = parseInt(currentdate.getTime()/1000);
 				talkDataItems = [];
 				talkTableView.data = [];
 				recordText = [];

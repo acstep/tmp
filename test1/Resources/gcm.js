@@ -16,7 +16,7 @@
 		// - after all, its max value is 1.159.597.289
 
 		var str = '',
-		now = new Date();
+	    now = new Date();
 
 		var hours = now.getHours(),
 		minutes = now.getMinutes(),
@@ -56,8 +56,8 @@
 
 	// create notification
 	var pintent = Ti.Android.createPendingIntent({intent: launcherIntent});
-	titlestr = '';
-	messagestr = '';
+	var titlestr = '';
+	var messagestr = '';
 	if(msgdata.type != undefined){
 		switch(msgdata.type)
 		{

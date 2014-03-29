@@ -60,9 +60,9 @@ function getHeadImg(id){
 
 function login(email, pass, callbackf){
 	
-	url = getServerAddr()+'login';
+	var url = getServerAddr()+'login';
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -87,11 +87,11 @@ function login(email, pass, callbackf){
 
 
 function logout(devicetoken){
-	id = Ti.App.Properties.getString('userid','');
-    token = Ti.App.Properties.getString('token','');
-	url = getServerAddr()+'logout?'+ 'id=' + id + '&token=' + token +'&devicetoken='+devicetoken;
+	var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'logout?'+ 'id=' + id + '&token=' + token +'&devicetoken='+devicetoken;
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
     };
@@ -106,9 +106,9 @@ function logout(devicetoken){
 
 function createAccount(data, callbackf){
 	
-	url = getServerAddr()+'createaccount?' + 'data=' + data ;
+	var url = getServerAddr()+'createaccount?' + 'data=' + data ;
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -133,11 +133,11 @@ function createAccount(data, callbackf){
 
 
 function updateaccount(data, callbackf){
-	id = Ti.App.Properties.getString('userid','');
-    token = Ti.App.Properties.getString('token','');
-	url = getServerAddr()+'updateaccount?'+ 'id=' + id + '&token=' + token  ;
+	var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'updateaccount?'+ 'id=' + id + '&token=' + token  ;
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -164,11 +164,11 @@ function updateaccount(data, callbackf){
 };
 
 function querymyself(callbackf){
-    id = Ti.App.Properties.getString('userid','');
-    token = Ti.App.Properties.getString('token','');
-	url = getServerAddr()+'queryself?' + 'id=' + id + '&token=' + token ;
+    var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'queryself?' + 'id=' + id + '&token=' + token ;
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -195,9 +195,9 @@ function querymyself(callbackf){
 
 function querypeople(data, callbackf){
 
-	url = getServerAddr()+'querypeople?' + 'data=' + data ;
+	var url = getServerAddr()+'querypeople?' + 'data=' + data ;
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -222,11 +222,11 @@ function querypeople(data, callbackf){
 };
 
 function updatepos(data){
-	id = Ti.App.Properties.getString('userid','');
-    token = Ti.App.Properties.getString('token','');
-	url = getServerAddr()+'updatepos?'+ 'id=' + id + '&token=' + token ;
+	var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'updatepos?'+ 'id=' + id + '&token=' + token ;
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
     };
@@ -239,11 +239,11 @@ function updatepos(data){
 
 
 function createvent(data, callbackf){
-	id = Ti.App.Properties.getString('userid','');
-    token = Ti.App.Properties.getString('token','');
-	url = getServerAddr()+'createvent?' + 'id=' + id + '&token=' + token ;
+	var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'createvent?' + 'id=' + id + '&token=' + token ;
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -270,11 +270,11 @@ function createvent(data, callbackf){
 
 
 function deleteevent(eventid, callbackf){
-	id = Ti.App.Properties.getString('userid','');
-    token = Ti.App.Properties.getString('token','');
-	url = getServerAddr()+'removeevent?' + 'id=' + id + '&token=' + token + '&eventid=' + eventid;
+	var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'removeevent?' + 'id=' + id + '&token=' + token + '&eventid=' + eventid;
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -302,9 +302,9 @@ function deleteevent(eventid, callbackf){
 
 function queryeventbyid(eventid,callbackf){
 	
-	url = getServerAddr()+'queryeventbyid?' + 'eventid=' + eventid ;
+	var url = getServerAddr()+'queryeventbyid?' + 'eventid=' + eventid ;
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -327,7 +327,9 @@ function queryeventbyid(eventid,callbackf){
 
 
 function queryevent(geo, distance, category, limitcount,sorttype, nexttime, nextlikecount, callbackf){
-
+    var url = '';
+    var data = {};
+    var datastring = '';
     if(sorttype == 'time' || sorttype ==''){
     	data = {
 	    	'geo':geo,
@@ -366,7 +368,7 @@ function queryevent(geo, distance, category, limitcount,sorttype, nexttime, next
     
     
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -393,17 +395,17 @@ function queryevent(geo, distance, category, limitcount,sorttype, nexttime, next
 
 function querymyevent(limitcount, nexttime, callbackf){
 
-    id = Ti.App.Properties.getString('userid','');
-    token = Ti.App.Properties.getString('token','');
-    data = {
+    var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+    var data = {
     	'limit':limitcount,
     	'nextstarttime':nexttime,
     };
     
-    datastring = JSON.stringify(data);
-	url = getServerAddr()+'querymyevent?' + 'id=' + id + '&token=' + token + '&data=' + datastring;
+    var datastring = JSON.stringify(data);
+	var url = getServerAddr()+'querymyevent?' + 'id=' + id + '&token=' + token + '&data=' + datastring;
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
     	
@@ -431,11 +433,11 @@ function querymyevent(limitcount, nexttime, callbackf){
 
 
 function likeevent(eventid, sourceobj, callbackf){
-	id = Ti.App.Properties.getString('userid','');
-    token = Ti.App.Properties.getString('token','');
-	url = getServerAddr()+'likeevent?' + 'id=' + id + '&token=' + token + '&eventid=' + eventid;
+	var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'likeevent?' + 'id=' + id + '&token=' + token + '&eventid=' + eventid;
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -464,11 +466,11 @@ function likeevent(eventid, sourceobj, callbackf){
 
 
 function commentevt(eventid, data, callbackf){
-	id = Ti.App.Properties.getString('userid','');
-    token = Ti.App.Properties.getString('token','');
-	url = getServerAddr()+'commentevent?' + 'id=' + id + '&token=' + token ;
+	var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'commentevent?' + 'id=' + id + '&token=' + token ;
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -494,11 +496,11 @@ function commentevt(eventid, data, callbackf){
 
 
 function joinevt(data, callbackf){
-	id = Ti.App.Properties.getString('userid','');
-    token = Ti.App.Properties.getString('token','');
-	url = getServerAddr()+'joinevent?' + 'id=' + id + '&token=' + token + '&data=' + data ;
+	var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'joinevent?' + 'id=' + id + '&token=' + token + '&data=' + data ;
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -523,7 +525,7 @@ function joinevt(data, callbackf){
 };
 
 function queryjoinlist(eventid, starttime, callbackf){
-
+    var url = '';
     if(starttime == 0){
     	url = getServerAddr()+'queryjoinlist?' + 'eventid=' + eventid ;
     }
@@ -532,7 +534,7 @@ function queryjoinlist(eventid, starttime, callbackf){
     }
 	
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -555,9 +557,9 @@ function queryjoinlist(eventid, starttime, callbackf){
 
 function querypplnear(data, callbackf){
 
-	url = getServerAddr()+'querypeoplenear?' +'&data=' + data ;
+	var url = getServerAddr()+'querypeoplenear?' +'&data=' + data ;
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -582,7 +584,7 @@ function querypplnear(data, callbackf){
 };
 
 function querycomment(eventid, starttime, callbackf){
-
+    var url = '';
     if(starttime == 0){
     	url = getServerAddr()+'queryeventcomment?' + 'eventid=' + eventid ;
     }
@@ -591,7 +593,7 @@ function querycomment(eventid, starttime, callbackf){
     }
 	
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -614,14 +616,14 @@ function querycomment(eventid, starttime, callbackf){
 
 
 function querynotify( starttime, limitcount, callbackf){
-    id = Ti.App.Properties.getString('userid','');
-    token = Ti.App.Properties.getString('token','');
+    var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
 
-    url = getServerAddr()+'querynotify?' + 'id=' + id + '&token=' + token + '&starttime=' + starttime + '&limitcount=' + limitcount ;
+    var url = getServerAddr()+'querynotify?' + 'id=' + id + '&token=' + token + '&starttime=' + starttime + '&limitcount=' + limitcount ;
 
 	
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -646,14 +648,14 @@ function querynotify( starttime, limitcount, callbackf){
 };
 
 function createchatroom( id, toid, check, callbackf){
-    id = Ti.App.Properties.getString('userid','');
-    token = Ti.App.Properties.getString('token','');
+    var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
     
-    url = getServerAddr()+'createchatroom?' + 'id=' + id + '&token=' + token+'&toid=' +toid +'&check=' +check;
+    var url = getServerAddr()+'createchatroom?' + 'id=' + id + '&token=' + token+'&toid=' +toid +'&check=' +check;
 
 	
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -679,14 +681,14 @@ function createchatroom( id, toid, check, callbackf){
 
 
 function quitchatroom( roomid, callbackf){
-    id = Ti.App.Properties.getString('userid','');
-    token = Ti.App.Properties.getString('token','');
+    var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
     
-    url = getServerAddr()+'quitchatroom?' + 'id=' + id + '&token=' + token+'&chatroomid=' +roomid;
+    var url = getServerAddr()+'quitchatroom?' + 'id=' + id + '&token=' + token+'&chatroomid=' +roomid;
 
 	
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -712,9 +714,9 @@ function quitchatroom( roomid, callbackf){
 
 
 function querychatroom( starttime, limitcount,onlytime ,callbackf){
-    id = Ti.App.Properties.getString('userid','');
-    token = Ti.App.Properties.getString('token','');
-    lasttimeString = '';
+    var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+    var lasttimeString = '';
     if(onlytime == true){
     	lasttimeString = '&onlyupdate=0';
     }
@@ -722,7 +724,7 @@ function querychatroom( starttime, limitcount,onlytime ,callbackf){
 
 	
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -747,14 +749,14 @@ function querychatroom( starttime, limitcount,onlytime ,callbackf){
 };
 
 function sendmsg( roomid, msgdata ,callbackf){
-    id = Ti.App.Properties.getString('userid','');
-    token = Ti.App.Properties.getString('token','');
+    var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
     
-    url = getServerAddr()+'sendmsg?' + 'id=' + id + '&token=' + token + '&roomid=' + roomid;
+    var url = getServerAddr()+'sendmsg?' + 'id=' + id + '&token=' + token + '&roomid=' + roomid;
 
 	
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -780,14 +782,14 @@ function sendmsg( roomid, msgdata ,callbackf){
 
 
 function querymsg( roomid, starttime, limitcount ,callbackf){
-    id = Ti.App.Properties.getString('userid','');
-    token = Ti.App.Properties.getString('token','');
+    var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
     
-    url = getServerAddr()+'querymsg?' + 'id=' + id + '&token=' + token + '&roomid=' + roomid+ '&starttime=' + starttime + '&limitcount=' + limitcount ;
+    var url = getServerAddr()+'querymsg?' + 'id=' + id + '&token=' + token + '&roomid=' + roomid+ '&starttime=' + starttime + '&limitcount=' + limitcount ;
 
 	
 	Ti.API.info('url : ' + url);
-	xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);

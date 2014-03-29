@@ -49,7 +49,7 @@ function imageListWindow(imagelist,index) {
 			Ti.API.info('imgheight ' + imgheight);
 			if(imgwidth != 0 && imgwidth < platwidth){
 		
-				ratio = (platwidth / parseFloat(imgwidth));
+				var ratio = (platwidth / parseFloat(imgwidth));
 		       
 				e.source.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
 				e.source.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);

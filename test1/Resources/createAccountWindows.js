@@ -466,7 +466,7 @@ function createAccountWindow() {
             "id": Ti.App.Properties.getString('userid',''),
             'token':Ti.App.Properties.getString('token','')
         };
-		xhr = Titanium.Network.createHTTPClient();
+		var xhr = Titanium.Network.createHTTPClient();
         xhr.open("POST",getServerAddr()+"uploadheadimg");
         xhr.send(data_to_send); 
         xhr.onload = function(e) {

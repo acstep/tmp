@@ -591,9 +591,9 @@ function drawtemplate1Contnet(contentView,data){
 	});
 	
 	
-	eventtime = new Date(data['lastupdate']);
-	currenttime =  new Date().getTime()/1000;
-	difftime = currenttime - eventtime;
+	var eventtime = new Date(data['lastupdate']);
+	var currenttime =  new Date().getTime()/1000;
+	var difftime = currenttime - eventtime;
 	var timeString = '';
 	if(difftime < 60){
 		timeString = parseInt(difftime) + ' ' + L('beforesec');
@@ -790,7 +790,7 @@ function drawtemplate2Contnet(contentView,data){
 				imgheight = tmpimage.height;
 			}
 			if(imgwidth < platwidth){
-				ratio = (platwidth / parseFloat(imgwidth));
+				var ratio = (platwidth / parseFloat(imgwidth));
 				this.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
 				this.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
 			}
@@ -945,7 +945,7 @@ function drawtemplate2Contnet(contentView,data){
 			height: '15dp', width: '15dp', left:'10dp'
 		});
 		
-		startTime = new Date(data['pdata']['time']*1000);
+		var startTime = new Date(data['pdata']['time']*1000);
 		var minutes = startTime.getMinutes();
 		if(minutes < 10){
 			minutes = '0'+minutes;
@@ -1147,9 +1147,9 @@ function drawtemplate2Contnet(contentView,data){
 	});
 	
 	
-	eventtime = new Date(data['lastupdate']);
-	currenttime =  new Date().getTime()/1000;
-	difftime = currenttime - eventtime;
+	var eventtime = new Date(data['lastupdate']);
+	var currenttime =  new Date().getTime()/1000;
+	var difftime = currenttime - eventtime;
 	var timeString = '';
 	if(difftime < 60){
 		timeString = parseInt(difftime) + ' ' + L('beforesec');

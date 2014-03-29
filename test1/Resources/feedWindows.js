@@ -627,7 +627,7 @@ function feedWindow() {
 	memuCommandTableView.addEventListener('click',function(e) {
 		switch(e.index){
 			case 0:
-				SetupWindow = require('setupWindows');
+				var SetupWindow = require('setupWindows');
 				new SetupWindow().open(); 
 				switchBackgroundView(true);
 			break;		
@@ -665,7 +665,7 @@ function feedWindow() {
 	var latitude = 0;
 	var longitude = 0;
 	var lastposupdate = 0;
-	currentdate = new Date(); 
+	var currentdate = new Date(); 
 	var nexttime = parseInt(currentdate.getTime()/1000);
 	var nextlike = 0;
 	var firstFeed = true;
@@ -678,7 +678,7 @@ function feedWindow() {
 		    'template2':drawtemplate2Event
 	};
 	
-	layoutDataDes = {
+	var layoutDataDes = {
 		'1000': {'layouttype':'base','title': 'news','color':'#2ecc71','catimage':'newsicon.png'},
 		'1001': {'layouttype':'template1','title':'club','color':'#f39c12','catimage':'groupicon.png'},
 		'1002': {'layouttype':'base','title':'needhelp','color':'#ff0000','catimage':'help2.png'},
@@ -750,7 +750,7 @@ function feedWindow() {
 			forwardView.visible = false;
 			if(feedData == 'network error' && firstFeed == true){
 				firstFeed = false;
-				oldfeeditems = JSON.parse(Ti.App.Properties.getString('feed',{'data':[]}));
+				var oldfeeditems = JSON.parse(Ti.App.Properties.getString('feed',{'data':[]}));
 				for(var i = 0 ; i <= oldfeeditems.data.length -1; i++) {
 					
 					latitude = getLat();
@@ -871,15 +871,15 @@ function feedWindow() {
 		feedTableView.data = [];
 		feedTableView.appendRow(refleshRow);
 		forwardView.visible = true;
-		currentdate = new Date(); 
+		var currentdate = new Date(); 
 		nexttime = parseInt(currentdate.getTime()/1000);
 		nextlike = 0;
 		firstFeed = true;
-		distance = getDistance();
-        latitude = getLat();
-		longitude = getLon();
-		category = Ti.App.Properties.getList('category','none');
-		limitcount = parseInt(Ti.App.Properties.getInt('limitcount',5));
+		var distance = getDistance();
+        var latitude = getLat();
+		var longitude = getLon();
+		var category = Ti.App.Properties.getList('category','none');
+		var limitcount = parseInt(Ti.App.Properties.getInt('limitcount',5));
 		var sorttype =  Ti.App.Properties.getString('sorttype','');
 		Ti.API.info('getNewFeed sorttype: ' + sorttype);
 		if(sorttype == 'time' || sorttype ==''){
@@ -894,10 +894,11 @@ function feedWindow() {
 
     function getNextFeed(){
     	Ti.API.info('getNextFeed ');
-    	distance = getDistance();
-    	latitude = getLat();
-		longitude = getLon();
+    	var distance = getDistance();
+    	var latitude = getLat();
+		var longitude = getLon();
     	var sorttype =  Ti.App.Properties.getString('sorttype','');
+    	var limitcount = parseInt(Ti.App.Properties.getInt('limitcount',5));
 		if(sorttype == 'time' || sorttype ==''){
 			queryevent([longitude,latitude], distance, category, limitcount,'time', nexttime, 0,parseFeed);
 		}
@@ -1003,8 +1004,8 @@ function feedWindow() {
 	    } 
 	    else {
 	    	
-	    	oldlatitude = Ti.App.Properties.getDouble('latitude',e.coords.latitude);
-	    	oldlongitude = Ti.App.Properties.getDouble('longitude',e.coords.longitude);
+	    	var oldlatitude = Ti.App.Properties.getDouble('latitude',e.coords.latitude);
+	    	var oldlongitude = Ti.App.Properties.getDouble('longitude',e.coords.longitude);
 			Ti.API.info('lat lot : ' + oldlatitude +'  ' +e.coords.latitude+'  '+ oldlongitude +'  '+ e.coords.longitude);
 			var distance = GetDistance(oldlatitude, oldlongitude, e.coords.latitude, e.coords.longitude, 'K');
 			Ti.API.info('distance : ' + distance);
@@ -1015,7 +1016,7 @@ function feedWindow() {
 					'geoapp':'true'
 				};
 		    
-			    datastring = JSON.stringify(data);
+			    var datastring = JSON.stringify(data);
 			    Ti.API.info('datastring : ' + datastring);
 		    	updatepos(datastring);
 	    	}
@@ -1057,7 +1058,7 @@ function feedWindow() {
 		// and the app WAS NOT running
 		// (don't worry, we'll see more of this later)
 		
-		tmpdata = JSON.parse(pendingData.msg);
+		var tmpdata = JSON.parse(pendingData.msg);
 		if(tmpdata.type == 'comment'){
 			
 			var FeedContentWindow = require('feedContentWindows');
@@ -1072,7 +1073,7 @@ function feedWindow() {
 	gcm.registerForPushNotifications({
 		success: function (ev) {
 			
-	        oldGoogleToken = Ti.App.Properties.getString('googletoken','');
+	        var oldGoogleToken = Ti.App.Properties.getString('googletoken','');
 	        if(oldGoogleToken == ev.deviceToken){
 	        	
 	        }
@@ -1080,7 +1081,7 @@ function feedWindow() {
 	        	var data = {
 					'msgtoken': {'type':'a', 'token':ev.deviceToken}
 				};
-	        	datastring = JSON.stringify(data);
+	        	var datastring = JSON.stringify(data);
 	        	Ti.App.Properties.setString('googletoken',ev.deviceToken);
 	   	    	updateaccount(datastring,gcmUpdateCallback);
 	        }
@@ -1095,7 +1096,7 @@ function feedWindow() {
 		callback: function (data) {
 			
 			// when a gcm notification is received WHEN the app IS IN FOREGROUND
-			tmpdata = JSON.parse(data.data);
+			var tmpdata = JSON.parse(data.data);
 			if(tmpdata.type == 'comment'){
 				Ti.API.info('get comment notify');
 				var notifynum = Ti.App.Properties.getInt('notifynum',0);
@@ -1107,7 +1108,7 @@ function feedWindow() {
 
 			}
 			if(tmpdata.type == 'talk'){
-				talkingRoomID = Ti.App.Properties.getString('TalkRoomID','');
+				var talkingRoomID = Ti.App.Properties.getString('TalkRoomID','');
 				var userid = Ti.App.Properties.getString('userid','');
 				if(talkingRoomID == tmpdata.roomid){
 					Ti.App.fireEvent('updattalk',tmpdata);
@@ -1116,8 +1117,8 @@ function feedWindow() {
 				if(tmpdata.owner != userid){
 					var roominfo = JSON.parse(Ti.App.Properties.getString('roominfo','{}'));
 					if(typeof(roominfo[tmpdata.roomid] )== 'undefined'){
-						currentdate = new Date(); 
-						starttime = parseInt(currentdate.getTime()/1000);
+						var currentdate = new Date(); 
+						var starttime = parseInt(currentdate.getTime()/1000);
 						roominfo[tmpdata.roomid] = {'number':1,'time':starttime};
 						Ti.API.info(' roominfo bbb' + JSON.stringify(roominfo));
 					}
@@ -1146,7 +1147,7 @@ function feedWindow() {
 		},
 		data: function (data) {
 
-			tmpdata = JSON.parse(data.msg);
+			var tmpdata = JSON.parse(data.msg);
 
 			if(tmpdata.type == 'comment'){
 				var notifynum = Ti.App.Properties.getInt('notifynum',0);
@@ -1157,7 +1158,7 @@ function feedWindow() {
 			
 			if(tmpdata.type == 'talk'){
 				
-				talkingRoomID = Ti.App.Properties.getString('TalkRoomID','');
+				var talkingRoomID = Ti.App.Properties.getString('TalkRoomID','');
 
 				if(talkingRoomID == tmpdata.roomid){
 					Ti.App.fireEvent('updattalk',tmpdata);
@@ -1218,8 +1219,8 @@ function feedWindow() {
         });
     });
 	
-	tmplatitude = getLat();
-	tmplongitude = getLon();
+	var tmplatitude = getLat();
+	var tmplongitude = getLon();
 	if(tmplatitude == -1 || tmplongitude == -1){
 		Titanium.Geolocation.getCurrentPosition(function(e){
 		    // エラー時はコールバック関數の引數のerrorプロパティがセットされます

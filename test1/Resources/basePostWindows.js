@@ -133,7 +133,7 @@ function BasePostWindow(data) {
 	
 	
 	/////////////   select image from camera or gallary ///////////////////
-	deleteImageobj = {};
+	var deleteImageobj = {};
 	var deleteImageDialog = Titanium.UI.createOptionDialog({
 
 	    title: L('deletefile'),
@@ -142,7 +142,7 @@ function BasePostWindow(data) {
 	});
 	deleteImageDialog.addEventListener('click', function(e) {
 		if(e.index == 0){
-			position = imageList.indexOf(deleteImageobj.image);
+			var position = imageList.indexOf(deleteImageobj.image);
             Ti.API.info('remove image list pos : ' + position);
 			if ( ~position ) imageList.splice(position, 1);
 			imageScrollView.remove(deleteImageobj);
