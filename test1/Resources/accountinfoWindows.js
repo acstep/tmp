@@ -79,6 +79,7 @@ function accountinfoWindow() {
 			}
 		}
 		if(needUploadImage.length == 0){
+			ind.visible = false;
 			forwardView.visible = true;
 			updateAccount();
 		}

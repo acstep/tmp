@@ -718,6 +718,8 @@ function feedWindow() {
 				    });
 				    //drawFunction[feedData[i].category.toString()](feedData[i]);
 				    try{
+				    	latitude = getLat();
+						longitude = getLon();
 				    	var data = {'info':feedData[i],
 				    	            'lat':latitude,
 				    	            'lon':longitude, 

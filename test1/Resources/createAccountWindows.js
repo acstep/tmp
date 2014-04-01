@@ -67,6 +67,7 @@ function createAccountWindow() {
 				uploadHeadImage();
 			}
 			else{
+				
 				forwardView.visible = false;
 				var feedWindow = require('feedWindows');
 				new feedWindow().open();

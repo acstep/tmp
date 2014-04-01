@@ -41,12 +41,13 @@ function nearPeopleWindow() {
 
 	
 	//////////////   middle   table view  //////////////////////
-	var nearbyItems = [];
-
+	//var nearbyItems = [];
+    
 	var nearbyTableView = Ti.UI.createTableView({
 	    
-	    data:nearbyItems
+	    data:[]
 	});
+
 		
 	backgroundView.add(nearbyTableView);
 	
@@ -214,33 +215,18 @@ function nearPeopleWindow() {
 		    nearbyRow.ownerid = nearbyData[i]['ownerid'];
 		    Ti.API.info('oinMsgRow.ownerid : ' + nearbyRow.ownerid);
 		    
-		    nearbyItems.push(nearbyRow);
+		    //nearbyItems.push(nearbyRow);
+		    nearbyTableView.appendRow(nearbyRow);
 		    starttime = nearbyData[i]['time'];
 
     	};
     	
-    	nearbyTableView.data = nearbyItems;
+    	//nearbyTableView.data = nearbyItems;
 	}	
 	
 	nearbyTableView.addEventListener('click', function(e){
 		openPeopleInfoWin(e.row.ownerid);
-		//var myid = Ti.App.Properties.getString('userid','');
-		//Ti.API.info('e.source.ownerid : ' + e.row.ownerid);
-		//Ti.API.info('myid : ' + myid);
-		//if(myid == e.row.ownerid){
-		//	return;
-		//}
-	    //Ti.API.info('postView click.');
-        //TalkWindow = require('talkWindows');
-        //tmpRoomData = {
-        //    'roomid':'',
-        //    'memberid':[],
-        //    'lasttime':parseInt(new Date().getTime()/1000),
-        //    'host':'',
-        //    'lastmsg':'',
-        //    'memdata':[]  
-        //};
-        //new TalkWindow(Ti.App.Properties.getString('userid',''), e.row.ownerid,tmpRoomData).open(); 	
+		
     });
    
     var LoadingRow = Ti.UI.createTableViewRow({
@@ -267,13 +253,13 @@ function nearPeopleWindow() {
     var dataLoading = false;
     nearbyTableView.addEventListener('scroll', function(e)
 	{
-		Ti.API.info(' source ' + e.firstVisibleItem+ ', ' + e.visibleItemCount );
+		Ti.API.info(' source ' + e.firstVisibleItem+ ', ' + e.visibleItemCount + ', ' + nearbyTableView.data[0].rowCount);
 		
-		if((e.firstVisibleItem + e.visibleItemCount) == nearbyItems.length){
+		if((e.firstVisibleItem + e.visibleItemCount) == nearbyTableView.data[0].rowCount){
 			if(dataLoading == false){
 				dataLoading =  true;
 			    
-
+                Ti.API.info('dataLoading =  true');
 				nearbyTableView.appendRow(LoadingRow);
 				reqData.nextstarttime = starttime;
 				var datastring = JSON.stringify(reqData);
@@ -293,7 +279,8 @@ function nearPeopleWindow() {
     var starttime = 0;
 	function requestNearbyList(){
 		forwardView.visible = true;
-		nearbyItems = [];
+		nearbyTableView.data = [];
+		//nearbyItems = [];
 		var currentdate = new Date(); 
 		starttime = parseInt(currentdate.getTime()/1000);
 		reqData.nextstarttime = starttime;

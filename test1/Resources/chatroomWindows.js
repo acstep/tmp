@@ -39,11 +39,11 @@ function chatroomWindow() {
 
 	
 	//////////////   middle   table view  //////////////////////
-	var chatroomDataItems = [];
+	//var chatroomDataItems = [];
 	var savedChatroomData = [];
 	var chatroomTableView = Ti.UI.createTableView({
 	    
-	    data:chatroomDataItems
+	    data:[]
 	});
 		
 	backgroundView.add(chatroomTableView);
@@ -57,6 +57,11 @@ function chatroomWindow() {
     	}	
     	catch(e){}
     	if(result == false){
+    		
+    		if(chatroomTableView.data[0].rowCount != undefined){
+    			return;
+    		}
+    		
     		Ti.API.info('result false. savedChatroomData : ' + JSON.stringify(savedChatroomData));
     		if(savedChatroomData.length == 0){
     			// if savedChatroomData is empty, it means we enter chatroom at first time
@@ -199,13 +204,14 @@ function chatroomWindow() {
 		    chatroomRow.roomdata = chatroomData[i];
 		    chatroomRow.newMsgView = newMsgView;
 		    chatroomRow.newMsgText = newMsgText;
-		    chatroomDataItems.push(chatroomRow);
+		    //chatroomDataItems.push(chatroomRow);
+		    chatroomTableView.appendRow(chatroomRow);
 		    starttime = chatroomData[i]['lasttime'];
 		    savedChatroomData.push(chatroomData[i]);
     	};
     	Ti.API.info('roomdata save:  ' + JSON.stringify(savedChatroomData));
     	Ti.App.Properties.setString('savedChatroomData',JSON.stringify(savedChatroomData));
-    	chatroomTableView.data = chatroomDataItems;
+    	//chatroomTableView.data = chatroomDataItems;
 	    chatroomLock = false;
     	
 		
@@ -301,7 +307,7 @@ function chatroomWindow() {
 	{
 		Ti.API.info(' source ' + e.firstVisibleItem+ ', ' + e.visibleItemCount );
 		
-		if((e.firstVisibleItem + e.visibleItemCount) == chatroomDataItems.length){
+		if((e.firstVisibleItem + e.visibleItemCount) == chatroomTableView.data[0].rowCount){
 			if(chatroomLoading == false){
 				chatroomLoading =  true;
 			    
@@ -319,7 +325,8 @@ function chatroomWindow() {
     var starttime = 0;
 	function requestChatroom(){
 		forwardView.visible = true;
-		chatroomDataItems = [];
+		//chatroomDataItems = [];
+		chatroomTableView.data = [];
 		savedChatroomData = [];
 		var currentdate = new Date(); 
 		starttime = parseInt(currentdate.getTime()/1000);
@@ -340,16 +347,16 @@ function chatroomWindow() {
 		if(chatroomLock == false){
 			var getRoom = false;
 			var roominfo = JSON.parse(Ti.App.Properties.getString('roominfo','{}'));
-			Ti.API.info(' chatroomDataItems.length :' + chatroomDataItems.length);
+			//Ti.API.info(' chatroomDataItems.length :' + chatroomDataItems.length);
 			Ti.API.info(' e.roomid :' + e.roomid);
 			
-			for(var i=0 ; i<chatroomDataItems.length ; i++){
+			for(var i=0 ; i<chatroomTableView.data[0].rowCount ; i++){
 				
-				if(e.roomid == chatroomDataItems[i].roomid){
+				if(e.roomid == chatroomTableView.data[0].rows[i].roomid){
 					getRoom = true;
-					Ti.API.info(' chatroomDataItems[i].roomid :'+ i+ ' : ' + chatroomDataItems[i].roomid);
-					chatroomDataItems[i].newMsgView.visible = true;
-					chatroomDataItems[i].newMsgText.text = roominfo[e.roomid]['number'];
+					//Ti.API.info(' chatroomDataItems[i].roomid :'+ i+ ' : ' + chatroomDataItems[i].roomid);
+					chatroomTableView.data[0].rows[i].newMsgView.visible = true;
+					chatroomTableView.data[0].rows[i].newMsgText.text = roominfo[e.roomid]['number'];
 				}
 			}
 			if(getRoom == false){

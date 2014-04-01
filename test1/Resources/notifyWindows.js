@@ -33,25 +33,32 @@ function notifyWindow() {
 	titleView.add(notifyTitleText);
 	
 	//////////////   middle   table view  //////////////////////
-	var notifyDataItems = [];
+	//var notifyDataItems = [];
 	var savedNotifyData = [];
 	var notifyTableView = Ti.UI.createTableView({
 	    
-	    data:notifyDataItems
+	    data:[]
 	});
 		
 	backgroundView.add(notifyTableView);
 	
     function parseNotify(result, notifyData){
     	
-    	if(notifyLoading == true){
-    		notifyLoading = false;
-    		notifyDataItems.pop();
-    	}
+    	forwardView.visible = false;
+    	notifyLoading = false;
+    	
+    	try{
+    		notifyTableView.deleteRow(notifyLoadingRow);
+    	}	
+    	catch(e){}
     	
     	
     	
     	if(result == false){
+    		if(notifyTableView.data[0].rowCount != undefined){
+    			return;
+    		}
+    		
     		Ti.API.info('result false. savedNotifyData : ' + JSON.stringify(savedNotifyData));
     		if(savedNotifyData.length == 0){
     			// if savedChatroomData is empty, it means we enter chatroom at first time
@@ -207,16 +214,17 @@ function notifyWindow() {
 			};
 			notifyRow.add(itemView);
 			notifyRow.add(contentView);
-		    notifyDataItems.push(notifyRow);
+		    //notifyDataItems.push(notifyRow);
 		    savedNotifyData.push(notifyData[i]);
 		    notifyRow.eventid = notifyData[i]['eventid'];
+		    notifyTableView.appendRow(notifyRow);
 		    starttime = notifyData[i]['time'];
     	};
     	
     	Ti.API.info('notify data save:  ' + JSON.stringify(savedNotifyData));
     	Ti.App.Properties.setString('savedNotifyData',JSON.stringify(savedNotifyData));
     	forwardView.visible = false;
-    	notifyTableView.data = notifyDataItems;
+    	//notifyTableView.data = notifyDataItems;
 
 	}	
 	
@@ -260,13 +268,12 @@ function notifyWindow() {
 	{
 		Ti.API.info(' source ' + e.firstVisibleItem+ ', ' + e.visibleItemCount );
 		
-		if((e.firstVisibleItem + e.visibleItemCount) == notifyDataItems.length){
+		if((e.firstVisibleItem + e.visibleItemCount) == notifyTableView.data[0].rowCount){
 			if(notifyLoading == false){
 				notifyLoading =  true;
-			    
-
-				notifyDataItems.push(notifyLoadingRow);
-				notifyTableView.data = notifyDataItems;
+				//notifyDataItems.push(notifyLoadingRow);
+				notifyTableView.appendRow(notifyLoadingRow);
+				//notifyTableView.data = notifyDataItems;
 				querynotify( starttime, 10, parseNotify);
 					
 			}    
@@ -280,8 +287,9 @@ function notifyWindow() {
 	function requestNotify(){
 		forwardView.visible = true;
 		var currentdate = new Date(); 
+		notifyTableView.data = [];
 		savedNotifyData = [];
-		notifyDataItems = [];
+		//notifyDataItems = [];
 		starttime = parseInt(currentdate.getTime()/1000);
 		querynotify( starttime, 10, parseNotify);
 		

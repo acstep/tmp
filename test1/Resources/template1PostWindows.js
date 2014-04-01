@@ -66,6 +66,7 @@ function Template1PostWindows(data) {
 	    uploadimg = [];
 		forwardView.visible = true; 
 		if(totalUploadImg == 0){
+			ind.visible = false;
 			postTemplate1Event();
 		}
 		else{

@@ -72,6 +72,7 @@ function BasePostWindow(data) {
 	    uploadimg = [];
 		forwardView.visible = true; 
 		if(totalUploadImg == 0){
+			ind.visible = false;
 			postBaseEvent();
 		}
 		else{

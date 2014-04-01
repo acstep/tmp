@@ -283,7 +283,7 @@ function talkWindow(id, toid,roomdata) {
 			triangleImg.image = 'triangleleft.png';
 			
 			var headPhotoImg = Titanium.UI.createImageView({
-		        borderRadius:5 ,height: '40dp', width: '40dp',top:'10dp'
+		        borderRadius:5 ,height: '40dp', width: '40dp',top:'10dp',backgroundImage:'headphoto.png'
 			});
 			
 
