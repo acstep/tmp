@@ -106,7 +106,7 @@ function logout(devicetoken){
 
 function createAccount(data, callbackf){
 	
-	var url = getServerAddr()+'createaccount?' + 'data=' + data ;
+	var url = getServerAddr()+'createaccount';
 	Ti.API.info('url : ' + url);
 	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
@@ -126,13 +126,13 @@ function createAccount(data, callbackf){
     xhr.onerror = function(e){
     	callbackf(false,'network error');
     };
-    xhr.open("GET",url);
-    xhr.send(); 
+    xhr.open("POST",url);
+    xhr.send({'data':data}); 
 	
 };
 
 
-function updateaccount(data, callbackf){
+function updateGroup(data, callbackf){
 	var id = Ti.App.Properties.getString('userid','');
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'updateaccount?'+ 'id=' + id + '&token=' + token  ;
@@ -151,6 +151,59 @@ function updateaccount(data, callbackf){
     		if(checkTokneError(result.result)){
     			return;
     		}
+    		callbackf(false,result.result);
+    	}
+
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'network error');
+    };
+    xhr.open("POST",url);
+    xhr.send({'data':data}); 
+	
+};
+
+function createGroup(data, callbackf){
+	var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'creategroup?'+ 'id=' + id + '&token=' + token;
+	Ti.API.info('url : ' + url);
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		callbackf(true,result);
+    	}
+    	else{
+    		callbackf(false,result.result);
+    	}
+
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'network error');
+    };
+    xhr.open("POST",url);
+    xhr.send({'data':data}); 
+	
+};
+
+
+function updateGroup(data, callbackf){
+	var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'creategroup?'+ 'id=' + id + '&token=' + token;
+	Ti.API.info('url : ' + url);
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		callbackf(true,result.result);
+    	}
+    	else{
     		callbackf(false,result.result);
     	}
 

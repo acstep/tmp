@@ -125,4 +125,13 @@
 	<string name="nearppl">附近的人</string>
 	<string name="title">請輸入訊息標題</string>
 	<string name="addsomephotos">增加些照片讓大家認識你吧</string>
+	<string name="creategroup">成立社團</string>
+	<string name="basicinfo">基本資料</string>
+	<string name="groupname">社團名稱</string>
+	<string name="phone">電話</string>
+	<string name="groupintro">社團介紹</string>
+	<string name="inputgroupintro">請輸入社團的介紹</string>
+	<string name="address">社團地址位置</string>
+	<string name="weblink">社團網址</string>
+	<string name="addgroupphotos">增加些照片讓大家認識社團吧</string>
 </resources>

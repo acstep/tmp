@@ -55,6 +55,7 @@ function clearProperty(){
 	Ti.App.Properties.setInt('talknum',0);
 	Ti.App.Properties.setDouble('userchooselatitude',-1);
 	Ti.App.Properties.setDouble('userchooselongitude',-1);
+	Ti.App.Properties.setList('photos',[]);
 }
 
 function createNormalWin(title){

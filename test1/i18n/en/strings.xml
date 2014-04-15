@@ -125,4 +125,13 @@
 	<string name="nearppl">People Nearby</string>
 	<string name="title">Please input event title</string>
 	<string name="addsomephotos">Add some photos to show yourself.</string>
+	<string name="creategroup">Create Group</string>
+	<string name="basicinfo">Basic Information</string>
+	<string name="groupname">Group Name</string>
+	<string name="phone">Phone Number</string>
+	<string name="groupintro">Group Intro</string>
+	<string name="inputgroupintro">Please Input Group Desctirion</string>
+	<string name="address">Group Address</string>
+	<string name="weblink">Web URL</string>
+	<string name="addgroupphotos">Add Some Photos to Show the Group</string>
 </resources>
