@@ -5,7 +5,7 @@ Ti.include("common_util.js");
 
 
 
-function nearPeopleWindow() {
+function groupsWindow() {
 	//load component dependencies
 	
     var self = createNormalWin(true);
@@ -30,44 +30,44 @@ function nearPeopleWindow() {
 	    self.close();
 	});	
 	
-	var nearbyTitleText = Ti.UI.createLabel({
+	var windowTitleText = Ti.UI.createLabel({
 		font:{fontSize:'24sp',fontFamily:'Marker Felt',fontWeight:'bold'},
-		text: L('nearppl'),
+		text: L('neargroups'),
 		color:'#ffffff'
 	});
 	
 	titleView.add(backImg);
-	titleView.add(nearbyTitleText);
+	titleView.add(windowTitleText);
 
 	
 	//////////////   middle   table view  //////////////////////
-	var nearbyItems = [];
+	var listItems = [];
     
-	var nearbyTableView = Ti.UI.createTableView({
+	var tableListView = Ti.UI.createTableView({
 	    
 	    data:[]
 	});
 
 		
-	backgroundView.add(nearbyTableView);
+	backgroundView.add(tableListView);
 	
-    function parseNearbyMsg(result, nearbyData){
-    	Ti.API.info(' nearbyData data : ' + JSON.stringify(nearbyData));
+    function parseListMsg(result, listData){
+    	Ti.API.info(' listData data : ' + JSON.stringify(listData));
     	forwardView.visible = false;
     	dataLoading = false;
     	if(result == false){
     		return;
     	}
     	try{
-    		nearbyTableView.deleteRow(LoadingRow);
+    		tableListView.deleteRow(LoadingRow);
     	}	
     	catch(e){}
     	if(result == false){
     		
      		
     	}
-    	for(var i = 0 ; i < nearbyData.length ; i++){
-    		var nearbyRow = Ti.UI.createTableViewRow({
+    	for(var i = 0 ; i < listData.length ; i++){
+    		var listRow = Ti.UI.createTableViewRow({
 		        backgroundSelectedColor:'#3f9ddd',
 		        backgroundColor:'#ffffff',
 		        //ownerid:MsgData[i]['ownerid']
@@ -80,7 +80,7 @@ function nearPeopleWindow() {
 		        borderRadius:15,height: '70dp', width: '70dp',top:'10dp',bottom:'10dp',backgroundImage:'headphoto.png'
 			});
 			
-			headPhotoImg.image = getHeadImg(nearbyData[i]['ownerid']);
+			headPhotoImg.image = getHeadImg(listData[i]['gid']);
             
 		
 			itemView.add(headPhotoImg);
@@ -98,15 +98,15 @@ function nearPeopleWindow() {
 			  
 			var nameText = Ti.UI.createLabel({
 				font:{fontSize:'16sp',fontFamily:'Marker Felt',fontWeight:'bold'},
-				text: nearbyData[i]['name'],
+				text: listData[i]['name'],
 				color:'#333333',left:'0dp'
 			});
 			topView.add(nameText);
 			
 			///////////////distance ///////////////
-			var distance = nearbyData[i]['distance'] ;
+			var distance = listData[i]['distance'] ;
 			var distanceStr = '';
-			nearbyRow.distance = distance;
+			listRow.distance = distance;
 			if(distance < 1){
 				distance =  parseInt(distance * 1000);
 				distanceStr = '   '+distance+ ' '+L('m')+ '   ';
@@ -135,10 +135,10 @@ function nearPeopleWindow() {
 			var clockImg = Titanium.UI.createImageView({
 		        height: '10dp', width: '10dp',image:'sorttime.png'
 			});
-			var eventtime = new Date(nearbyData[i]['time']);
+			var eventtime = new Date(listData[i]['lastupdate']);
 			var currenttime =  new Date().getTime()/1000;
 			var difftime = currenttime - eventtime;
-			nearbyRow.difftime = difftime;
+			listRow.difftime = difftime;
 			var timeString = '';
 			if(difftime < 60){
 				timeString = parseInt(difftime) + ' ' + L('beforesec');
@@ -163,68 +163,33 @@ function nearPeopleWindow() {
 			contentView.add(topView);
 			contentView.add(timeView);
 			
-			////////////////// gender /////////////////////
-			var genderView = Titanium.UI.createView({
-				left:'10dp',backgroundColor:'transparent',
-				height: Ti.UI.SIZE,width: Ti.UI.SIZE,top:'5dp',
-				layout: 'horizontal',borderRadius:10
-			});
-			
-			var gerder =  nearbyData[i]['sex'];
-			var genderImg = Titanium.UI.createImageView({
-		        height: '15dp', width: '15dp',left:'10dp'
-			});
-			if(nearbyData[i]['sex'] == 1){
-				genderImg.image = 'man.png';
-				genderView.backgroundColor = '#3498db';
-			}
-			if(nearbyData[i]['sex'] == 2){
-				genderImg.image = 'girl.png';
-				genderView.backgroundColor = '#FF80EE';
-			}
-			genderView.add(genderImg);
-			
-			var yearString = ' ';
-			if(nearbyData[i]['birthday'] != undefined){
-				
-				var currenttime =  new Date() ;
-				yearString =  new Date().getFullYear() - new Date(nearbyData[i]['birthday']*1000).getFullYear();
-				
-			}
-			var yearText = Ti.UI.createLabel({
-				font:{fontSize:'10sp',fontFamily:'Marker Felt',fontWeight:'bold'},
-				text: yearString,
-				color:'#ffffff',left:'10dp',right:'10dp'
-			});
-			genderView.add(yearText);
-			contentView.add(genderView);
- 
-            if(nearbyData[i]['des'] != undefined && nearbyData[i]['des'] != ''){
+			 
+            if(listData[i]['des'] != undefined && listData[i]['des'] != ''){
             	var desText = Ti.UI.createLabel({
 					font:{fontSize:'14sp',fontFamily:'Marker Felt',fontWeight:'bold'},
-					text: getStringlimit(nearbyData[i]['des'],50,100),
-					color:'#333333',left:'10dp',top:'5dp'
+					text: getStringlimit(listData[i]['des'],50,100),
+					color:'#333333',left:'10dp',top:'5dp',right:'10dp'
 				});	
 				contentView.add(desText);	
             }
             	
 
-			nearbyRow.add(itemView);
-			nearbyRow.add(contentView);
+			listRow.add(itemView);
+			listRow.add(contentView);
 		   
-		    nearbyRow.ownerid = nearbyData[i]['ownerid'];
-		    Ti.API.info('oinMsgRow.ownerid : ' + nearbyRow.ownerid);
+		    listRow.ownerid = listData[i]['gid'];
+		    Ti.API.info('gid : ' + listRow.gid);
 		    
-		    nearbyItems.push(nearbyRow);
-		    nearbyTableView.appendRow(nearbyRow);
-		    starttime = nearbyData[i]['time'];
+		    listItems.push(listRow);
+		    tableListView.appendRow(listRow);
+		    starttime = listData[i]['lastupdate'];
 
     	};
     	
-    	//nearbyTableView.data = nearbyItems;
+    	//tableListView.data = listItems;
 	}	
 	
-	nearbyTableView.addEventListener('click', function(e){
+	tableListView.addEventListener('click', function(e){
 		openPeopleInfoWin(e.row.ownerid);
 		
     });
@@ -251,19 +216,19 @@ function nearPeopleWindow() {
 	
 
     var dataLoading = false;
-    nearbyTableView.addEventListener('scroll', function(e)
+    tableListView.addEventListener('scroll', function(e)
 	{
-		Ti.API.info(' source ' + e.firstVisibleItem+ ', ' + e.visibleItemCount + ', ' + nearbyTableView.data[0].rowCount);
+		Ti.API.info(' source ' + e.firstVisibleItem+ ', ' + e.visibleItemCount + ', ' + tableListView.data[0].rowCount);
 		
-		if((e.firstVisibleItem + e.visibleItemCount) == nearbyTableView.data[0].rowCount){
+		if((e.firstVisibleItem + e.visibleItemCount) == tableListView.data[0].rowCount){
 			if(dataLoading == false){
 				dataLoading =  true;
 			    
                 Ti.API.info('dataLoading =  true');
-				nearbyTableView.appendRow(LoadingRow);
+				tableListView.appendRow(LoadingRow);
 				reqData.nextstarttime = starttime;
 				var datastring = JSON.stringify(reqData);
-				querypplnear(datastring, parseNearbyMsg);
+				querypplnear(datastring, parseListMsg);
 					
 			}    
 		}
@@ -271,7 +236,7 @@ function nearPeopleWindow() {
 		
 	});
 	
-	nearbyTableView.addEventListener('click', function(e){
+	tableListView.addEventListener('click', function(e){
 	    
 	    // the example above would print your name
 	});
@@ -279,13 +244,13 @@ function nearPeopleWindow() {
     var starttime = 0;
 	function requestNearbyList(){
 		forwardView.visible = true;
-		nearbyTableView.data = [];
-		//nearbyItems = [];
+		tableListView.data = [];
+		//listItems = [];
 		var currentdate = new Date(); 
 		starttime = parseInt(currentdate.getTime()/1000);
 		reqData.nextstarttime = starttime;
 		var datastring = JSON.stringify(reqData);
-		querypplnear(datastring, parseNearbyMsg);
+		querygroupnear(datastring, parseListMsg);
 	}
 	
 	
@@ -296,4 +261,4 @@ function nearPeopleWindow() {
 }
 
 //make constructor function the public component interface
-module.exports = nearPeopleWindow;
+module.exports = groupsWindow;

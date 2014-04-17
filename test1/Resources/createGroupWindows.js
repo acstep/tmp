@@ -16,6 +16,10 @@ function createGroupWindow(type,groupid) {
     var needUploadImage = [];
     var currentUploadPhoto = 0;
     
+    if(type == 'new'){
+    	headChange = true;
+    }
+    
     var ind=Titanium.UI.createProgressBar({
 	        width:'90%',
 	        min:0,

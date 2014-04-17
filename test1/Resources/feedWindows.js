@@ -577,6 +577,7 @@ function feedWindow() {
 	
 	////////////////////////main menu command  ////////////////////////
 	var mainMenuList = [
+	    { leftImage:'ppl.png', title:'groups' },
         { leftImage:'add.png', title:'creategroup' },
 		{ leftImage:'setupm.png', title:'setup' },
 		{ leftImage:'jumpm.png', title:'jump' },
@@ -627,22 +628,27 @@ function feedWindow() {
 	memuCommandTableView.addEventListener('click',function(e) {
 		switch(e.index){
 			case 0:
-				var SetupWindow = require('createGroupWindows');
+				var SetupWindow = require('groupsWindows');
 				new SetupWindow('new','').open(); 
 				switchBackgroundView(true);
 			break;	
 			case 1:
+				var SetupWindow = require('createGroupWindows');
+				new SetupWindow('new','').open(); 
+				switchBackgroundView(true);
+			break;	
+			case 2:
 				var SetupWindow = require('setupWindows');
 				new SetupWindow().open(); 
 				switchBackgroundView(true);
 			break;		
-			case 2:
+			case 3:
 			    // set location 
 				var JumpWindow = require('jumpWindows');
 				new JumpWindow().open(); 
 				switchBackgroundView(true);
 			    break;	
-			case 3:
+			case 4:
 			    //logout
 			    clearProperty();
 				self.close();

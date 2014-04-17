@@ -134,4 +134,6 @@
 	<string name="address">社團地址位置</string>
 	<string name="weblink">社團網址</string>
 	<string name="addgroupphotos">增加些照片讓大家認識社團吧</string>
+	<string name="groups">社團</string>
+	<string name="neargroups">附近的社團</string>
 </resources>

@@ -134,4 +134,6 @@
 	<string name="address">Group Address</string>
 	<string name="weblink">Web URL</string>
 	<string name="addgroupphotos">Add Some Photos to Show the Group</string>
+	<string name="groups">Groups</string>
+	<string name="neargroups">Groups Nearby</string>
 </resources>
