@@ -24,7 +24,7 @@ function notifyWindow() {
 	});	
 	
 	var notifyTitleText = Ti.UI.createLabel({
-		font:{fontSize:'24sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
+		font:{fontSize:'20sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 		text: L('notify'),
 		color:'#ffffff'
 	});

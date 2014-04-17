@@ -31,7 +31,7 @@ function nearPeopleWindow() {
 	});	
 	
 	var nearbyTitleText = Ti.UI.createLabel({
-		font:{fontSize:'24sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+		font:{fontSize:'20sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 		text: L('nearppl'),
 		color:'#ffffff'
 	});
@@ -97,7 +97,7 @@ function nearPeopleWindow() {
 			});
 			  
 			var nameText = Ti.UI.createLabel({
-				font:{fontSize:'16sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+				font:{fontSize:'16sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 				text: nearbyData[i]['name'],
 				color:'#333333',left:'0dp'
 			});
@@ -153,7 +153,7 @@ function nearPeopleWindow() {
 				timeString = parseInt(difftime/86400) + ' ' + L('beforeday');
 			}
 			var timeText = Ti.UI.createLabel({
-				font:{fontSize:'10sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+				font:{fontSize:'10sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 				text: timeString,
 				color:'#aaaaaa',left:'10dp',right:'10dp'
 			});
@@ -192,7 +192,7 @@ function nearPeopleWindow() {
 				
 			}
 			var yearText = Ti.UI.createLabel({
-				font:{fontSize:'10sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+				font:{fontSize:'10sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 				text: yearString,
 				color:'#ffffff',left:'10dp',right:'10dp'
 			});
@@ -201,7 +201,7 @@ function nearPeopleWindow() {
  
             if(nearbyData[i]['des'] != undefined && nearbyData[i]['des'] != ''){
             	var desText = Ti.UI.createLabel({
-					font:{fontSize:'14sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+					font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 					text: getStringlimit(nearbyData[i]['des'],50,100),
 					color:'#333333',left:'10dp',top:'5dp'
 				});	

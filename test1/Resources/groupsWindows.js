@@ -13,11 +13,17 @@ function groupsWindow() {
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
 	var currentdate = new Date(); 
+	var groupType = 0;
 	
-	var reqData = {
+	var reqNearGroupData = {
 		'geo':[Ti.App.Properties.getDouble('longitude'),Ti.App.Properties.getDouble('latitude')],
 		'distance': Ti.App.Properties.getInt('distance',10),
-		'limitcount':parseInt(Ti.App.Properties.getInt('limitcount',5)),
+		'limitcount':parseInt(Ti.App.Properties.getInt('limitcount',10)),
+		'nextstarttime':parseInt(currentdate.getTime()/1000)
+	};
+	
+	var reqMyGroupData = {
+		'limitcount':parseInt(Ti.App.Properties.getInt('limitcount',10)),
 		'nextstarttime':parseInt(currentdate.getTime()/1000)
 	};
 	
@@ -31,14 +37,50 @@ function groupsWindow() {
 	});	
 	
 	var windowTitleText = Ti.UI.createLabel({
-		font:{fontSize:'24sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+		font:{fontSize:'20sp',fontFamily:'Marker Felt',fontWeight:'bold'},
 		text: L('neargroups'),
 		color:'#ffffff'
 	});
 	
+	var listButtonImg = Titanium.UI.createImageView({
+		image:'list.png',
+		top: '10dp', right:'15dp', height: '30dp', width: '30dp'
+	});
+	
+	var groupTypeDialog = Titanium.UI.createOptionDialog({
+        selectedIndex: groupType,
+	    title: L(''),
+	    options: [L('neargroups'),L('mygroups'),L('myjoingroups')]
+	});
+	
+	groupTypeDialog.addEventListener('click', function(e) {
+		if(e.index == 0){
+			if(groupType != 0){
+				groupType = 0;
+				windowTitleText.text = L('neargroups');
+				requestNearbyList();
+			}
+		}
+		else if(e.index == 1){
+			if(groupType != 1){
+				groupType = 1;
+				windowTitleText.text = L('mygroups');
+				requestNearbyList();
+			}
+		}
+		else{
+			
+		}
+	});	
+	
+	
+	listButtonImg.addEventListener('click',function(e){
+	    groupTypeDialog.show();
+	});	
+	
 	titleView.add(backImg);
 	titleView.add(windowTitleText);
-
+    titleView.add(listButtonImg);
 	
 	//////////////   middle   table view  //////////////////////
 	var listItems = [];
@@ -104,20 +146,24 @@ function groupsWindow() {
 			topView.add(nameText);
 			
 			///////////////distance ///////////////
-			var distance = listData[i]['distance'] ;
-			var distanceStr = '';
-			listRow.distance = distance;
-			if(distance < 1){
-				distance =  parseInt(distance * 1000);
-				distanceStr = '   '+distance+ ' '+L('m')+ '   ';
+			
+			var lat = getLat();
+			var lon = getLon();
+			var feeddistance = GetDistance(lat, lon, listData[i]['loc']['coordinates'][1], listData[i]['loc']['coordinates'][0], 'K');
+			var feedDistanceStr = ''; 
+			if(feeddistance < 1){
+				feeddistance =  parseInt(feeddistance * 1000);
+				feedDistanceStr = '   '+feeddistance+ ' '+L('m')+ '   ';
 			}
 			else{
-				distance =  parseInt(distance);
-				distanceStr = '   '+distance+ ' '+ L('km')+ '   ';
+				feeddistance =  parseInt(feeddistance);
+				feedDistanceStr = '   '+feeddistance+ ' '+ L('km')+ '   ';
 			} 
+			
+			
 			var distanceText = Ti.UI.createLabel({
 				font:{fontSize:'10sp',fontFamily:'Helvetica Neue'},
-				text: distanceStr,
+				text: feedDistanceStr,
 				color:'#ffffff',
 				right:'10dp',
 				backgroundColor:'#f1c40f',
@@ -127,46 +173,30 @@ function groupsWindow() {
 	        topView.add(distanceText);
 	
 			
-			var timeView = Titanium.UI.createView({
+			var likeView = Titanium.UI.createView({
 				left:'10dp',backgroundColor:'transparent',
 				height: Ti.UI.SIZE,width: Ti.UI.SIZE,
 				layout: 'horizontal'
 			});
-			var clockImg = Titanium.UI.createImageView({
-		        height: '10dp', width: '10dp',image:'sorttime.png'
+			var likeImg = Titanium.UI.createImageView({
+		        height: '16dp', width: '16dp',image:'groupname.png'
 			});
-			var eventtime = new Date(listData[i]['lastupdate']);
-			var currenttime =  new Date().getTime()/1000;
-			var difftime = currenttime - eventtime;
-			listRow.difftime = difftime;
-			var timeString = '';
-			if(difftime < 60){
-				timeString = parseInt(difftime) + ' ' + L('beforesec');
-			}
-			else if(difftime >=60 &&  difftime < 3600){
-				timeString = parseInt(difftime/60) + ' ' + L('beforemin');
-			}
-			else if(difftime >=3600 &&  difftime < 86400){
-				timeString = parseInt(difftime/3600) + ' ' + L('beforehour');
-			}
-			else{
-				timeString = parseInt(difftime/86400) + ' ' + L('beforeday');
-			}
-			var timeText = Ti.UI.createLabel({
-				font:{fontSize:'10sp',fontFamily:'Marker Felt',fontWeight:'bold'},
-				text: timeString,
-				color:'#aaaaaa',left:'10dp',right:'10dp'
+			
+			var likeText = Ti.UI.createLabel({
+				font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
+				text: listData[i]['like'],
+				color:'#666666',left:'10dp',right:'10dp'
 			});
-			timeView.add(clockImg);
-			timeView.add(timeText);
+			likeView.add(likeImg);
+			likeView.add(likeText);
 	
 			contentView.add(topView);
-			contentView.add(timeView);
+			contentView.add(likeView);
 			
 			 
             if(listData[i]['des'] != undefined && listData[i]['des'] != ''){
             	var desText = Ti.UI.createLabel({
-					font:{fontSize:'14sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+					font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 					text: getStringlimit(listData[i]['des'],50,100),
 					color:'#333333',left:'10dp',top:'5dp',right:'10dp'
 				});	
@@ -177,7 +207,7 @@ function groupsWindow() {
 			listRow.add(itemView);
 			listRow.add(contentView);
 		   
-		    listRow.ownerid = listData[i]['gid'];
+		    listRow.gid = listData[i]['gid'];
 		    Ti.API.info('gid : ' + listRow.gid);
 		    
 		    listItems.push(listRow);
@@ -190,7 +220,7 @@ function groupsWindow() {
 	}	
 	
 	tableListView.addEventListener('click', function(e){
-		openPeopleInfoWin(e.row.ownerid);
+		
 		
     });
    
@@ -226,9 +256,7 @@ function groupsWindow() {
 			    
                 Ti.API.info('dataLoading =  true');
 				tableListView.appendRow(LoadingRow);
-				reqData.nextstarttime = starttime;
-				var datastring = JSON.stringify(reqData);
-				querypplnear(datastring, parseListMsg);
+				queryGroupType();
 					
 			}    
 		}
@@ -246,13 +274,28 @@ function groupsWindow() {
 		forwardView.visible = true;
 		tableListView.data = [];
 		//listItems = [];
+		starttime = 0;
 		var currentdate = new Date(); 
 		starttime = parseInt(currentdate.getTime()/1000);
-		reqData.nextstarttime = starttime;
-		var datastring = JSON.stringify(reqData);
-		querygroupnear(datastring, parseListMsg);
+		queryGroupType();
 	}
 	
+	
+	function queryGroupType(){
+		if(groupType == 0){
+			reqNearGroupData.nextstarttime = starttime;
+            var datastring = JSON.stringify(reqNearGroupData);
+			querygroupnear(datastring, parseListMsg);
+		}
+		else if(groupType == 1){
+			reqMyGroupData.nextstarttime = starttime;
+            var datastring = JSON.stringify(reqMyGroupData);
+			queryidgroup(datastring, parseListMsg);
+		}
+		else{
+			
+		}
+	}
 	
 	requestNearbyList();
 

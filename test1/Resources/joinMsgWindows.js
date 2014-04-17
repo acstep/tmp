@@ -26,7 +26,7 @@ function joinMsgWindow(eventid,stringData) {
 	});	
 	
 	var joinMsgTitleText = Ti.UI.createLabel({
-		font:{fontSize:'24sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+		font:{fontSize:'20sp',fontFamily:'Marker Felt',fontWeight:'bold'},
 		text: L(stringData.title),
 		color:'#ffffff'
 	});

@@ -136,4 +136,6 @@
 	<string name="addgroupphotos">Add Some Photos to Show the Group</string>
 	<string name="groups">Groups</string>
 	<string name="neargroups">Groups Nearby</string>
+	<string name="mygroups">My Groups</string>
+	<string name="myjoingroups">Favorite Groups</string>
 </resources>

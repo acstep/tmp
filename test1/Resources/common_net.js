@@ -244,6 +244,35 @@ function querygroupnear(data, callbackf){
 	
 };
 
+function queryidgroup(data, callbackf){
+    var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'queryidgroup?'+ 'id=' + id + '&token=' + token +'&data=' + data ;
+	Ti.API.info('url : ' + url);
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.data);
+    	}
+    	else{
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'network error');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
+
 
 function querymyself(callbackf){
     var id = Ti.App.Properties.getString('userid','');
@@ -457,15 +486,15 @@ function queryevent(geo, distance, category, limitcount,sorttype, nexttime, next
     	if(result.result == 'ok')
     	{
     		
-    		callbackf(true,result.data);
+    		callbackf(true,result.data,0);
     	}
     	else{
-    		callbackf(false,result.result);
+    		callbackf(false,result.result,0);
     	}
 
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'network error',0);
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -495,17 +524,17 @@ function querymyevent(limitcount, nexttime, callbackf){
     	if(result.result == 'ok')
     	{
     		
-    		callbackf(true,result.data);
+    		callbackf(true,result.data,result.nexttime);
     	}
     	else{
     		if(checkTokneError(result.result)){
     			return;
     		}
-    		callbackf(false,result.result);
+    		callbackf(false,result.result,0);
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'network error',0);
     };
     xhr.open("GET",url);
     xhr.send(); 

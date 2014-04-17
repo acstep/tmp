@@ -185,7 +185,7 @@ function createNormalFeed(viewobj,category){
 	};
 	
 	
-	function parseFeed(result, feedData){
+	function parseFeed(result, feedData,nextstarttime){
 		feedLoading = false;
 		try{
 			feedRowstatus = 'none';
@@ -242,7 +242,7 @@ function createNormalFeed(viewobj,category){
                 
                 if(category == 'myfeed'){
 					Ti.App.Properties.setString('myfeed',JSON.stringify({'data':feeditem}));
-					
+					nexttime = nextstarttime;
 				}
 				else{
 					Ti.App.Properties.setString(category.toString(),JSON.stringify({'data':feeditem}));

@@ -136,4 +136,6 @@
 	<string name="addgroupphotos">增加些照片讓大家認識社團吧</string>
 	<string name="groups">社團</string>
 	<string name="neargroups">附近的社團</string>
+	<string name="mygroups">我的社團</string>
+	<string name="myjoingroups">我參加的社團</string>
 </resources>
