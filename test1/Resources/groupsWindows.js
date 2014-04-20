@@ -47,35 +47,37 @@ function groupsWindow() {
 		top: '10dp', right:'15dp', height: '30dp', width: '30dp'
 	});
 	
-	var groupTypeDialog = Titanium.UI.createOptionDialog({
-        selectedIndex: groupType,
-	    title: L(''),
-	    options: [L('neargroups'),L('mygroups'),L('myjoingroups')]
-	});
 	
-	groupTypeDialog.addEventListener('click', function(e) {
-		if(e.index == 0){
-			if(groupType != 0){
-				groupType = 0;
-				windowTitleText.text = L('neargroups');
-				requestNearbyList();
-			}
-		}
-		else if(e.index == 1){
-			if(groupType != 1){
-				groupType = 1;
-				windowTitleText.text = L('mygroups');
-				requestNearbyList();
-			}
-		}
-		else{
-			
-		}
-	});	
+	
+	
 	
 	
 	listButtonImg.addEventListener('click',function(e){
-	    groupTypeDialog.show();
+		var opts = {
+		    selectedIndex: groupType,
+	    	options: [L('neargroups'),L('mygroups'),L('myjoingroups')]
+		};
+		var groupTypeDialog = Titanium.UI.createOptionDialog(opts);
+	    groupTypeDialog.addEventListener('click', function(e) {
+			if(e.index == 0){
+				if(groupType != 0){
+					groupType = 0;
+					windowTitleText.text = L('neargroups');
+					requestNearbyList();
+				}
+			}
+			else if(e.index == 1){
+				if(groupType != 1){
+					groupType = 1;
+					windowTitleText.text = L('mygroups');
+					requestNearbyList();
+				}
+			}
+			else{
+				
+			}
+		});	
+		groupTypeDialog.show();
 	});	
 	
 	titleView.add(backImg);
@@ -220,32 +222,16 @@ function groupsWindow() {
 	}	
 	
 	tableListView.addEventListener('click', function(e){
-		
+		openGroupInfoWin(e.row.gid);
 		
     });
    
-    var LoadingRow = Ti.UI.createTableViewRow({
-        backgroundSelectedColor:'#3f9ddd',
-        backgroundColor:'#ffffff'
-        
-    });
-    var itemView = Titanium.UI.createView({
-		backgroundColor:'transparent',
-		width:Ti.UI.SIZE ,height: Ti.UI.SIZE,width: Ti.UI.SIZE,top:'10dp',bottom:'10dp'
-	});
-	var loginIndicator = Ti.UI.createActivityIndicator({
-		  font: {fontFamily:'Helvetica Neue', fontSize:18, fontWeight:'bold'},
-		  style:Titanium.UI.ActivityIndicatorStyle.DARK,
-		  message: L('loading')
-	});
-
-	itemView.add(loginIndicator);
-	loginIndicator.show();
-	LoadingRow.add(itemView);
+    
 	
 	
 
     var dataLoading = false;
+    var LoadingRow;
     tableListView.addEventListener('scroll', function(e)
 	{
 		Ti.API.info(' source ' + e.firstVisibleItem+ ', ' + e.visibleItemCount + ', ' + tableListView.data[0].rowCount);
@@ -253,6 +239,25 @@ function groupsWindow() {
 		if((e.firstVisibleItem + e.visibleItemCount) == tableListView.data[0].rowCount){
 			if(dataLoading == false){
 				dataLoading =  true;
+			    
+			    LoadingRow = Ti.UI.createTableViewRow({
+			        backgroundSelectedColor:'#3f9ddd',
+			        backgroundColor:'#ffffff'
+			        
+			    });
+			    var itemView = Titanium.UI.createView({
+					backgroundColor:'transparent',
+					width:Ti.UI.SIZE ,height: Ti.UI.SIZE,width: Ti.UI.SIZE,top:'10dp',bottom:'10dp'
+				});
+				var loginIndicator = Ti.UI.createActivityIndicator({
+					  font: {fontFamily:'Helvetica Neue', fontSize:18, fontWeight:'bold'},
+					  style:Titanium.UI.ActivityIndicatorStyle.DARK,
+					  message: L('loading')
+				});
+			
+				itemView.add(loginIndicator);
+				loginIndicator.show();
+				LoadingRow.add(itemView);
 			    
                 Ti.API.info('dataLoading =  true');
 				tableListView.appendRow(LoadingRow);

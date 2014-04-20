@@ -104,25 +104,30 @@ function setupWindow() {
 		defaultIndex = 1;
 	}
 	
-	var locationsrcDialog = Titanium.UI.createOptionDialog({
-        selectedIndex: defaultIndex,
-	    title: L('locationsrc'),
-	    options: [L('fromgps'),L('fromnetwork'),L('cancel')]
-	});
-	
-	locationsrcDialog.addEventListener('click', function(e) {
-		if(e.index == 0){
-			Ti.App.Properties.setString('locationsrc','gps');
-            Ti.App.fireEvent('changelocationsrc');
-		}
-		else if(e.index == 1){
-			Ti.App.Properties.setString('locationsrc','network');
-            Ti.App.fireEvent('changelocationsrc');
-		}
-		else{
-			
-		}
-	});	
+	function showLocDialog(){
+		var locationsrcDialog = Titanium.UI.createOptionDialog({
+	        selectedIndex: defaultIndex,
+		    title: L('locationsrc'),
+		    options: [L('fromgps'),L('fromnetwork'),L('cancel')]
+		});
+		
+		locationsrcDialog.addEventListener('click', function(e) {
+			if(e.index == 0){
+				defaultIndex = 0;
+				Ti.App.Properties.setString('locationsrc','gps');
+	            Ti.App.fireEvent('changelocationsrc');
+			}
+			else if(e.index == 1){
+				defaultIndex = 1;
+				Ti.App.Properties.setString('locationsrc','network');
+	            Ti.App.fireEvent('changelocationsrc');
+			}
+			else{
+				
+			}
+		});	
+		return locationsrcDialog;
+	}
 	
 	function queryselfCallback(result, data){
 		if(result == true){
@@ -163,7 +168,8 @@ function setupWindow() {
 			    
 				break;		
 			case 1:
-			    locationsrcDialog.show();
+			    var locDlg = showLocDialog();
+			    locDlg.show();
 			    break;	
 			case 2:
 			    var JumpWindow = require('jumpWindows');

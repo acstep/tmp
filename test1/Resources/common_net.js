@@ -132,7 +132,7 @@ function createAccount(data, callbackf){
 };
 
 
-function updateGroup(data, callbackf){
+function updateaccount(data, callbackf){
 	var id = Ti.App.Properties.getString('userid','');
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'updateaccount?'+ 'id=' + id + '&token=' + token  ;
@@ -219,6 +219,34 @@ function updateGroup(data, callbackf){
 function querygroupnear(data, callbackf){
 
 	var url = getServerAddr()+'querygroupnear?' +'&data=' + data ;
+	Ti.API.info('url : ' + url);
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.data);
+    	}
+    	else{
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'network error');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
+
+
+function querygroup(gid, callbackf){
+	var url = getServerAddr()+'querygroup?'+ 'id=' + gid ;
 	Ti.API.info('url : ' + url);
 	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {

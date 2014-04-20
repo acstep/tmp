@@ -69,14 +69,21 @@ function notifyWindow() {
      		
     	}
     	
+    	var preEventId = '';
     	for(var i = 0 ; i <= notifyData.length -1; i++){
+    		if(preEventId == notifyData[i]['eventid'] && notifyData[i].type == 'comment' && notifyTableView.sections[0].rows.length>7){
+    			starttime = notifyData[i]['time'];
+		    	continue;
+		    }
     		var notifyRow = Ti.UI.createTableViewRow({
 		        backgroundSelectedColor:'#3f9ddd',
 		        backgroundColor:'#ffffff'
 		        
 		    });
+		    
 		    switch(notifyData[i].type){
 				case 'comment':
+				    
                     var itemView = Titanium.UI.createView({
 						backgroundColor:'transparent',
 						width:Ti.UI.SIZE ,height: Ti.UI.SIZE,left:'10dp',top:'0dp'
@@ -217,6 +224,7 @@ function notifyWindow() {
 		    //notifyDataItems.push(notifyRow);
 		    savedNotifyData.push(notifyData[i]);
 		    notifyRow.eventid = notifyData[i]['eventid'];
+		    preEventId = notifyData[i]['eventid'];
 		    notifyTableView.appendRow(notifyRow);
 		    starttime = notifyData[i]['time'];
     	};
@@ -242,25 +250,7 @@ function notifyWindow() {
 		}		
     });
     
-    var notifyLoadingRow = Ti.UI.createTableViewRow({
-        backgroundSelectedColor:'#3f9ddd',
-        backgroundColor:'#ffffff'
-        
-    });
-    var itemView = Titanium.UI.createView({
-		backgroundColor:'transparent',
-		width:Ti.UI.SIZE ,height: Ti.UI.SIZE,width: Ti.UI.SIZE,top:'10dp',bottom:'10dp'
-	});
-	var loginIndicator = Ti.UI.createActivityIndicator({
-		  font: {fontFamily:'Helvetica Neue', fontSize:18, fontWeight:'bold'},
-		  style:Titanium.UI.ActivityIndicatorStyle.DARK,
-		  message: L('loading')
-	});
-
-	itemView.add(loginIndicator);
-	loginIndicator.show();
-	notifyLoadingRow.add(itemView);
-	
+    var notifyLoadingRow ={};
 	
 
     var notifyLoading = false;
@@ -271,6 +261,25 @@ function notifyWindow() {
 		if((e.firstVisibleItem + e.visibleItemCount) == notifyTableView.data[0].rowCount){
 			if(notifyLoading == false){
 				notifyLoading =  true;
+				
+				notifyLoadingRow = Ti.UI.createTableViewRow({
+			        backgroundSelectedColor:'#3f9ddd',
+			        backgroundColor:'#ffffff'
+			        
+			    });
+			    var itemView = Titanium.UI.createView({
+					backgroundColor:'transparent',
+					width:Ti.UI.SIZE ,height: Ti.UI.SIZE,width: Ti.UI.SIZE,top:'10dp',bottom:'10dp'
+				});
+				var loginIndicator = Ti.UI.createActivityIndicator({
+					  font: {fontFamily:'Helvetica Neue', fontSize:18, fontWeight:'bold'},
+					  style:Titanium.UI.ActivityIndicatorStyle.DARK,
+					  message: L('loading')
+				});
+			
+				itemView.add(loginIndicator);
+				loginIndicator.show();
+				notifyLoadingRow.add(itemView);
 				//notifyDataItems.push(notifyLoadingRow);
 				notifyTableView.appendRow(notifyLoadingRow);
 				//notifyTableView.data = notifyDataItems;

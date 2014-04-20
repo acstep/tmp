@@ -147,7 +147,7 @@ function talkWindow(id, toid,roomdata) {
 			createchatroom(id, toid, 'false', reSendMsg);
 		}	
 	    else{
-	    	tmpRow = createTextRow(id, msgTextArea.value);
+	    	var tmpRow = createTextRow(id, msgTextArea.value);
 	    	talkDataItems.push(tmpRow);
 	    	talkTableView.appendRow(tmpRow);
 

@@ -799,24 +799,7 @@ function feedWindow() {
 		new FeedContentWindow(e.row.eventid, true).open(); 
     });
     
-    var loadRow = Ti.UI.createTableViewRow({
-        backgroundSelectedColor:'#dddddd',
-        backgroundColor:'#dddddd'
-        
-    });
-    var itemView = Titanium.UI.createView({
-		backgroundColor:'transparent',
-		width:Ti.UI.SIZE ,height: Ti.UI.SIZE,width: Ti.UI.SIZE,top:'10dp',bottom:'10dp'
-	});
-	var loginIndicator = Ti.UI.createActivityIndicator({
-		  font: {fontFamily:'Helvetica Neue', fontSize:18, fontWeight:'bold'},
-		  style:Titanium.UI.ActivityIndicatorStyle.DARK,
-		  message: L('loading')
-	});
-
-	itemView.add(loginIndicator);
-	loginIndicator.show();
-	loadRow.add(itemView);
+    var loadRow = {};
 	
 	
 	var refleshRow = Ti.UI.createTableViewRow({
@@ -837,6 +820,26 @@ function feedWindow() {
 				feedLoading =  true;
 			    
 				feedRowstatus = 'loading';
+				
+				loadRow = Ti.UI.createTableViewRow({
+			        backgroundSelectedColor:'#dddddd',
+			        backgroundColor:'#dddddd'
+			        
+			    });
+			    var itemView = Titanium.UI.createView({
+					backgroundColor:'transparent',
+					width:Ti.UI.SIZE ,height: Ti.UI.SIZE,width: Ti.UI.SIZE,top:'10dp',bottom:'10dp'
+				});
+				var loginIndicator = Ti.UI.createActivityIndicator({
+					  font: {fontFamily:'Helvetica Neue', fontSize:18, fontWeight:'bold'},
+					  style:Titanium.UI.ActivityIndicatorStyle.DARK,
+					  message: L('loading')
+				});
+			
+				itemView.add(loginIndicator);
+				loginIndicator.show();
+				loadRow.add(itemView);
+				
 				feedTableView.appendRow(loadRow);
 				getNextFeed();
 					

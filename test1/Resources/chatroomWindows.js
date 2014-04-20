@@ -281,26 +281,7 @@ function chatroomWindow() {
     });
     
     
-    var chatroomLoadingRow = Ti.UI.createTableViewRow({
-        backgroundSelectedColor:'#3f9ddd',
-        backgroundColor:'#ffffff'
-        
-    });
-    var itemView = Titanium.UI.createView({
-		backgroundColor:'transparent',
-		width:Ti.UI.SIZE ,height: Ti.UI.SIZE,width: Ti.UI.SIZE,top:'10dp',bottom:'10dp'
-	});
-	var loginIndicator = Ti.UI.createActivityIndicator({
-		  font: {fontFamily:'Helvetica Neue', fontSize:18, fontWeight:'bold'},
-		  style:Titanium.UI.ActivityIndicatorStyle.DARK,
-		  message: L('loading')
-	});
-
-	itemView.add(loginIndicator);
-	loginIndicator.show();
-	chatroomLoadingRow.add(itemView);
-	
-	
+    var chatroomLoadingRow = {};
 
     var chatroomLoading = false;
     chatroomTableView.addEventListener('scroll', function(e)
@@ -311,6 +292,24 @@ function chatroomWindow() {
 			if(chatroomLoading == false){
 				chatroomLoading =  true;
 			    
+                chatroomLoadingRow = Ti.UI.createTableViewRow({
+			        backgroundSelectedColor:'#3f9ddd',
+			        backgroundColor:'#ffffff'
+			        
+			    });
+			    var itemView = Titanium.UI.createView({
+					backgroundColor:'transparent',
+					width:Ti.UI.SIZE ,height: Ti.UI.SIZE,width: Ti.UI.SIZE,top:'10dp',bottom:'10dp'
+				});
+				var loginIndicator = Ti.UI.createActivityIndicator({
+					  font: {fontFamily:'Helvetica Neue', fontSize:18, fontWeight:'bold'},
+					  style:Titanium.UI.ActivityIndicatorStyle.DARK,
+					  message: L('loading')
+				});
+			
+				itemView.add(loginIndicator);
+				loginIndicator.show();
+				chatroomLoadingRow.add(itemView);
 
 				chatroomTableView.appendRow(chatroomLoadingRow);
 				querychatroom( starttime, 10, false, parseChatroom);
