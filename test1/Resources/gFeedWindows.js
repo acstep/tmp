@@ -40,6 +40,18 @@ function gFeedWindow(id) {
 		self.close();
 	});
 	
+	var addPostImg = Titanium.UI.createImageView({
+		image:'addw.png',
+		top: '10dp', right:'15dp', height: '30dp', width: '30dp'
+	});
+	
+	addPostImg.addEventListener('click',function(e){
+		showPostDialog(id);
+	});	
+	
+	titleView.add(addPostImg);
+	
+	
 	var contentScrollView = Ti.UI.createScrollView({
 	    contentHeight: Titanium.UI.SIZE,
 	    layout: 'vertical',
@@ -112,13 +124,13 @@ function gFeedWindow(id) {
 		
 		////////////////  join  /////////////////////////////////////////////////
 		var joinView = Ti.UI.createView({
-		    backgroundColor: '#transparent',
+		    backgroundColor: 'transparent',
 		    height: Ti.UI.SIZE,layout: 'horizontal',
 		    top:'20dp',left:'0dp',width:'100%',height:'50dp'
 		});
 		
 		var joinNumberView = Ti.UI.createView({
-		    backgroundColor: '#transparent',
+		    backgroundColor: 'transparent',
 		    height: Ti.UI.SIZE,
 		    top:'0dp',left:'0dp',width:'50%'
 		});
@@ -151,7 +163,7 @@ function gFeedWindow(id) {
 		});
 	
 		var joinBottomView = Ti.UI.createView({
-		    backgroundColor: '#transparent',
+		    backgroundColor: 'transparent',
 		    height: Ti.UI.SIZE,
 		    top:'0dp',left:'0dp',width:'48%'
 		});

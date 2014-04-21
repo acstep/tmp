@@ -467,7 +467,7 @@ function createGroupWindow(type,groupid) {
 	
 	var mapParentView = Titanium.UI.createView({
 		
-		height: '200dp', width: '90%', top:'20dp',bottom:'30dp',backgroundColor:'#transparent'
+		height: '200dp', width: '90%', top:'20dp',bottom:'30dp',backgroundColor:'transparent'
 	});
 	
     var Map = require('ti.map');    

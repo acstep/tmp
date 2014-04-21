@@ -202,31 +202,7 @@ function drawtemplate1Event(view, data){
 	    middleView.add(titlenameView);
 	};
 	
-	if(data.info['pdata'] != undefined && data.info['pdata']['gname'] != undefined && data.info['pdata']['gname'] != ''){
-		var groupNameView = Ti.UI.createView({
-		    backgroundColor: '#ffffff',
-		    width:'90%', height: Ti.UI.SIZE,left:'5%',
-		    top:'5dp'
-		});
-	    
-	    var groupNameImg = Titanium.UI.createImageView({
-	        image:'groupname.png',
-			height: '15dp', width: '15dp', left:'10dp'
-		});
-		
-		var groupNameText = Ti.UI.createLabel({
-			font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
-			text: data.info['pdata']['gname'],
-			color:'#3498db',
-			left:'35dp', right:'10dp', height: Ti.UI.SIZE,
-	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
-		});
-		
-	    groupNameView.add(groupNameImg);
-	    groupNameView.add(groupNameText);
 	
-	    middleView.add(groupNameView);
-	};
 	
 	if(data.info['pdata'] != undefined && data.info['pdata']['starttime'] != undefined && data.info['pdata']['starttime'] != ''){
 		var startTimeView = Ti.UI.createView({

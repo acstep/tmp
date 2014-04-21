@@ -206,12 +206,7 @@ function createNormalFeed(viewobj,category){
 				}	
 				for(var i = 0 ; i <= feedData.length -1; i++) {
 					feeditem.push(feedData[i]);
-					if(category == 'myfeed'){
-						if(nexttime > feedData[i]['starttime']){
-							nexttime = feedData[i]['starttime'];
-						}
-						
-					}
+					
 					var feedRow = Ti.UI.createTableViewRow({
 				        backgroundSelectedColor:'#dddddd',
 				        backgroundColor:'#dddddd'
@@ -263,8 +258,11 @@ function createNormalFeed(viewobj,category){
 					oldfeeditems = JSON.parse(Ti.App.Properties.getString(category.toString(),{'data':[]}));
 					
 				}
-				else{
+				else if(category == 'myfeed'){
 					oldfeeditems = JSON.parse(Ti.App.Properties.getString('myfeed',{'data':[]}));
+				}
+				else{
+					return;
 				}
 				
 				for(var i = 0 ; i <= oldfeeditems.data.length -1; i++) {
@@ -616,7 +614,7 @@ function createMapView(mapView,data){
 	mapView.add(addressText);
 	
 	var mapParentView = Titanium.UI.createView({
-		height: '200dp', width: '100%',backgroundColor:'#transparent',
+		height: '200dp', width: '100%',backgroundColor:'transparent',
 		top:'10dp'
 		
 	});
@@ -810,8 +808,13 @@ function createFeedTop(feedView, data, lon, lat){
 		height: '60dp', width: '60dp', top:'15dp', left:'10dp'
 	});
 	
+	if(data['gid'] != ''){
+		headPhotoImg.image = getHeadImg(data['gid']);
+	}
+	else{
+		headPhotoImg.image = getHeadImg(data['ownerid']);
+	}
 	
-	headPhotoImg.image = getHeadImg(data['ownerid']);
 
 	
 	var topinfoView = Ti.UI.createView({
@@ -831,7 +834,12 @@ function createFeedTop(feedView, data, lon, lat){
 		left:'10dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
 	});
-	
+	if(data['gid'] == undefined){
+		data['gid'] = '';
+	}
+	if(data['gid'] != ''){
+		nameText.text = data['gname'];
+	}
 	
 	var eventtime = new Date(data['lastupdate']);
 	var currenttime =  new Date().getTime()/1000;
@@ -1091,3 +1099,107 @@ function openGroupInfoWin(id){
 	new GroupInfoWindow(id).open();
 }
 
+function showPostDialog(gid){
+	var postDialog = Titanium.UI.createOptionDialog({
+    //title of dialog
+	    title: L('choosecategory'),
+	    //options
+	    options: [L('club'),L('sale'), L('needhelp'), L('dating'), L('news'), L('used'), L('teambuying'), L('gossip')],
+	    //index of cancel button
+	});
+	
+	postDialog.addEventListener('click', function(e) {
+		Ti.API.info('postView click.');
+		switch(e.index){
+			case 0:
+			   var data = {
+			    	'title': 'club',
+			    	'titlehinttext':'activitytitle',
+			    	'grouphinttext':'groupname',
+			    	'deshinttext':'addactivitycontent',
+			    	'category':1001,
+			    	'gid':gid
+			    };
+			    var Template1PostWindow = require('template1PostWindows');
+				new Template1PostWindow(data).open(); 
+				break;
+			case 1:
+			    var data = {
+			    	'title':'sale',
+			    	'hinttext':'addsalescontent',
+			    	'category':1003,
+			    	'gid':gid
+			    };
+			    var BasePostWindow = require('basePostWindows');
+				new BasePostWindow(data).open(); 
+				break;	
+			case 2:
+			    var data = {
+			    	'title':'needhelp',
+			    	'hinttext':'addhelpcontent',
+			    	'category':1002,
+			    	'gid':gid
+			    };
+			    var BasePostWindow = require('basePostWindows');
+				new BasePostWindow(data).open(); 
+				break;	
+			case 3:
+			    var data = {
+			    	'title': 'dating',
+			    	'titlehinttext':'purpose',
+			    	'placehinttext':'preferredplace',
+			    	'deshinttext':'addsocialcontent',
+			    	'category':1006,
+			    	'gid':gid
+			    };
+			    var Template1PostWindow = require('template2PostWindows');
+				new Template1PostWindow(data).open(); 
+				break;		
+			case 4:
+			    var data = {
+			    	'title': 'news',
+			    	'hinttext':'addnewscontent',
+			    	'category':1000,
+			    	'gid':gid
+			    };
+			    var BasePostWindow = require('basePostWindows');
+				new BasePostWindow(data).open(); 
+				break;	
+			case 5:
+			    var data = {
+			    	'title': 'used',
+			    	'hinttext':'addusedcontent',
+			    	'category':1004,
+			    	'gid':gid
+			    };
+			    var BasePostWindow = require('basePostWindows');
+				new BasePostWindow(data).open(); 
+				break;
+			case 6:
+			    var data = {
+			    	'title': 'teambuying',
+			    	'hinttext':'addteambuycontent',
+			    	'category':1005,
+			    	'gid':gid
+			    };
+			    var BasePostWindow = require('basePostWindows');
+				new BasePostWindow(data).open(); 
+				break;	
+			case 7:
+			    var data = {
+			    	'title': 'gossip',
+			    	'hinttext':'addgossipcontent',
+			    	'category':1007,
+			    	'gid':gid
+			    };
+			    var BasePostWindow = require('basePostWindows');
+				new BasePostWindow(data).open(); 
+				break;								
+			default:
+				
+		}
+        
+	});
+
+	postDialog.show();
+}

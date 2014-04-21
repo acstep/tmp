@@ -177,8 +177,13 @@ function drawBaseContnet(contentView,data){
 		height: '60dp', width: '60dp', top:'10dp', left:'0dp'
 	});
 	
-
-	headPhotoImg.image = getHeadImg(data['ownerid']);
+    if(data['gid'] != ''){
+		headPhotoImg.image = getHeadImg(data['gid']);
+	}
+	else{
+		headPhotoImg.image = getHeadImg(data['ownerid']);
+	}
+	
 	
 	var topinfoView = Ti.UI.createView({
 	    backgroundColor: 'white',
@@ -198,11 +203,29 @@ function drawBaseContnet(contentView,data){
 		left:'20dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
 	});
-	nameText.ownerid = data['ownerid'];
+	if(data['gid'] == undefined){
+		data['gid'] = '';
+	}
+	if(data['gid'] != ''){
+		nameText.text = data['gname'];
+		nameText.ownerid = data['gid'];
+		nameText.type = 'group';
+	}
+	else{
+		nameText.ownerid = data['ownerid'];
+		nameText.type = 'people';
+	}
+	
 	
 	nameText.addEventListener('click',function(e) {
 		//  enter talk window
-		openPeopleInfoWin(e.source.ownerid);
+		if(e.source.type == 'group'){
+			openGroupInfoWin(e.source.ownerid);
+		}
+		else{
+			openPeopleInfoWin(e.source.ownerid);
+		}
+
 		//var myid = Ti.App.Properties.getString('userid','');
 		//Ti.API.info('e.source.ownerid : ' + e.source.ownerid);
 		//Ti.API.info('myid : ' + myid);
@@ -548,8 +571,13 @@ function drawtemplate1Contnet(contentView,data){
 		height: '60dp', width: '60dp', top:'10dp', left:'0dp'
 	});
 	
+    if(data['gid'] != ''){
+		headPhotoImg.image = getHeadImg(data['gid']);
+	}
+	else{
+		headPhotoImg.image = getHeadImg(data['ownerid']);
+	}
 
-	headPhotoImg.image = getHeadImg(data['ownerid']) ;
 	
 	var topinfoView = Ti.UI.createView({
 	    backgroundColor: 'white',
@@ -568,11 +596,30 @@ function drawtemplate1Contnet(contentView,data){
 		left:'20dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
 	});
-	nameText.ownerid = data['ownerid'];
+	if(data['gid'] == undefined){
+		data['gid'] = '';
+	}
+	if(data['gid'] != ''){
+		nameText.text = data['gname'];
+		nameText.ownerid = data['gid'];
+		nameText.type = 'group';
+	}
+	else{
+		nameText.ownerid = data['ownerid'];
+		nameText.type = 'people';
+	}
+	
+	
 	
 	nameText.addEventListener('click',function(e) {
 		//  enter talk window
-		openPeopleInfoWin(e.source.ownerid);
+		if(e.source.type == 'group'){
+			openGroupInfoWin(e.source.ownerid);
+		}
+		else{
+			openPeopleInfoWin(e.source.ownerid);
+		}
+		
 		//var myid = Ti.App.Properties.getString('userid','');
 		//if(myid == e.source.ownerid){
 		//	return;
@@ -641,29 +688,7 @@ function drawtemplate1Contnet(contentView,data){
 		titleGroupNameView.add(titleText);
 		titleGroupNameView.exist = true;
 	}
-	if(data['pdata']['gname'] != undefined && data['pdata']['gname'] != ''){
-		var groupNameView = Ti.UI.createView({
-		    backgroundColor: 'white',
-		    layout: 'horizontal',
-		    width:'100%', height: Ti.UI.SIZE,
-		    top:'10dp',left:'0dp'
-		});
-		var nameText = Ti.UI.createLabel({
-			font:{fontSize:'18sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
-			text: data['pdata']['gname'],
-			color:'#3498db',
-			left:'10dp',
-	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
-		});
-		var groupNameImg = Titanium.UI.createImageView({
-	        image:'groupname.png',
-			height: '20dp', width: '20dp', left:'0dp'
-		});
-		groupNameView.add(groupNameImg);
-		groupNameView.add(nameText);
-		titleGroupNameView.add(groupNameView);
-		titleGroupNameView.exist = true;
-	}
+	
 
     
     if(imageList.length != 0){
@@ -1103,8 +1128,13 @@ function drawtemplate2Contnet(contentView,data){
 		height: '60dp', width: '60dp', top:'10dp', left:'0dp'
 	});
 	
+    if(data['gid'] != ''){
+		headPhotoImg.image = getHeadImg(data['gid']);
+	}
+	else{
+		headPhotoImg.image = getHeadImg(data['ownerid']);
+	}
 
-	headPhotoImg.image = getHeadImg(data['ownerid']);
 	
 	var topinfoView = Ti.UI.createView({
 	    backgroundColor: 'white',
@@ -1124,11 +1154,29 @@ function drawtemplate2Contnet(contentView,data){
 		left:'20dp',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
 	});
-	nameText.ownerid = data['ownerid'];
+	if(data['gid'] == undefined){
+		data['gid'] = '';
+	}
+	if(data['gid'] != ''){
+		nameText.text = data['gname'];
+		nameText.ownerid = data['gid'];
+		nameText.type = 'group';
+	}
+	else{
+		nameText.ownerid = data['ownerid'];
+		nameText.type = 'people';
+	}
+
 	
 	nameText.addEventListener('click',function(e) {
 		//  enter talk window
-		openPeopleInfoWin(e.source.ownerid);
+		if(e.source.type == 'group'){
+			openGroupInfoWin(e.source.ownerid);
+		}
+		else{
+			openPeopleInfoWin(e.source.ownerid);
+		}
+
 		//var myid = Ti.App.Properties.getString('userid','');
 		//if(myid == e.source.ownerid){
 		//	return;

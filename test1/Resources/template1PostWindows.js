@@ -289,18 +289,7 @@ function Template1PostWindows(data) {
 	    borderWidth:'1dp',borderRadius:10,
 	});
 	
-	var groupTextField = Ti.UI.createTextField({
-	    font: {fontSize:'16sp'},
-	    color:'#333333',
-	    textAlign: 'left',
-	    hintText:L(data.grouphinttext),
-	    top: '10dp',
-	    width: '90%', 
-	    height : 'auto',
-	    left: '5%',backgroundColor:'#ffffff',
-	    borderColor:'#666666',
-	    borderWidth:'1dp',borderRadius:10,
-	});
+	
 	
 	
 	
@@ -518,7 +507,7 @@ function Template1PostWindows(data) {
 	});
     
     contentScrollView.add(titleTextField);
-    contentScrollView.add(groupTextField);
+
     contentScrollView.add(startTimeView);
     contentScrollView.add(endTimeView);
 	contentScrollView.add(desTextArea);
@@ -552,7 +541,7 @@ function Template1PostWindows(data) {
 	
 	var mapParentView = Titanium.UI.createView({
 		
-		height: '200dp', width: '90%', top:'20dp',bottom:'30dp',backgroundColor:'#transparent'
+		height: '200dp', width: '90%', top:'20dp',bottom:'30dp',backgroundColor:'transparent'
 	});
 	
     var Map = require('ti.map');    
@@ -671,12 +660,14 @@ function Template1PostWindows(data) {
 			'extime':extime,
 			'category':data.category,
 			'pdata':{
-				 'gname':groupTextField.value,
+
 				 'starttime':parseInt(startTime.getTime()/1000),
 				 'endtime':parseInt(endTime.getTime()/1000)
 			}
 		};
-	    
+	    if(data.gid != ''){
+	    	postdata['gid'] = data.gid;
+	    }
 	    var datastring = JSON.stringify(postdata);
 	    Ti.API.info('datastring : ' + datastring);
 		createvent(datastring ,template1PostCallback);

@@ -197,29 +197,30 @@ function feedWindow() {
 	sortView.add(sortImg);
 	sortView.add(sortText);
 	
-	var sortDialog = Titanium.UI.createOptionDialog({
-
-	    title: L('sorttype'),
-	    options: [L('sorttime'),L('sortlike')],
-	});
 	
-	sortDialog.addEventListener('click', function(e) {
-		var orgsorttype = Ti.App.Properties.getString('sorttype','');
-		if(e.index == 0){
-			sorttype = 'time';
-			Ti.App.Properties.setString('sorttype','time');
-		}
-		else{
-			sorttype = 'like';
-			Ti.App.Properties.setString('sorttype','like');
-		}
-		getNewFeed();
-
-			
-	});	
 	
 	sortView.addEventListener('click',function(e) {
 	    Ti.API.info('sortView click.');
+	    var sortDialog = Titanium.UI.createOptionDialog({
+
+		    title: L('sorttype'),
+		    options: [L('sorttime'),L('sortlike')],
+		});
+		
+		sortDialog.addEventListener('click', function(e) {
+			var orgsorttype = Ti.App.Properties.getString('sorttype','');
+			if(e.index == 0){
+				sorttype = 'time';
+				Ti.App.Properties.setString('sorttype','time');
+			}
+			else{
+				sorttype = 'like';
+				Ti.App.Properties.setString('sorttype','like');
+			}
+			getNewFeed();
+	
+				
+		});	
 	    sortDialog.show();
 	});
 	
@@ -253,104 +254,11 @@ function feedWindow() {
 	});
 	postView.add(postImg);
 	
-	var postDialog = Titanium.UI.createOptionDialog({
-    //title of dialog
-	    title: L('choosecategory'),
-	    //options
-	    options: [L('club'),L('sale'), L('needhelp'), L('dating'), L('news'), L('used'), L('teambuying'), L('gossip')],
-	    //index of cancel button
-	});
 	
-	
-	
-	postDialog.addEventListener('click', function(e) {
-		Ti.API.info('postView click.');
-		switch(e.index){
-			case 0:
-			   var data = {
-			    	'title': 'club',
-			    	'titlehinttext':'activitytitle',
-			    	'grouphinttext':'groupname',
-			    	'deshinttext':'addactivitycontent',
-			    	'category':1001
-			    };
-			    var Template1PostWindow = require('template1PostWindows');
-				new Template1PostWindow(data).open(); 
-				break;
-			case 1:
-			    var data = {
-			    	'title':'sale',
-			    	'hinttext':'addsalescontent',
-			    	'category':1003
-			    };
-			    var BasePostWindow = require('basePostWindows');
-				new BasePostWindow(data).open(); 
-				break;	
-			case 2:
-			    var data = {
-			    	'title':'needhelp',
-			    	'hinttext':'addhelpcontent',
-			    	'category':1002
-			    };
-			    var BasePostWindow = require('basePostWindows');
-				new BasePostWindow(data).open(); 
-				break;	
-			case 3:
-			    var data = {
-			    	'title': 'dating',
-			    	'titlehinttext':'purpose',
-			    	'placehinttext':'preferredplace',
-			    	'deshinttext':'addsocialcontent',
-			    	'category':1006
-			    };
-			    var Template1PostWindow = require('template2PostWindows');
-				new Template1PostWindow(data).open(); 
-				break;		
-			case 4:
-			    var data = {
-			    	'title': 'news',
-			    	'hinttext':'addnewscontent',
-			    	'category':1000
-			    };
-			    var BasePostWindow = require('basePostWindows');
-				new BasePostWindow(data).open(); 
-				break;	
-			case 5:
-			    var data = {
-			    	'title': 'used',
-			    	'hinttext':'addusedcontent',
-			    	'category':1004
-			    };
-			    var BasePostWindow = require('basePostWindows');
-				new BasePostWindow(data).open(); 
-				break;
-			case 6:
-			    var data = {
-			    	'title': 'teambuying',
-			    	'hinttext':'addteambuycontent',
-			    	'category':1005
-			    };
-			    var BasePostWindow = require('basePostWindows');
-				new BasePostWindow(data).open(); 
-				break;	
-			case 7:
-			    var data = {
-			    	'title': 'gossip',
-			    	'hinttext':'addgossipcontent',
-			    	'category':1007
-			    };
-			    var BasePostWindow = require('basePostWindows');
-				new BasePostWindow(data).open(); 
-				break;								
-			default:
-				
-		}
-        
-	});
-	
+
 	postView.addEventListener('click',function(e)
 	{
-		postDialog.show();
+		showPostDialog('');
 	});	
 	
 	

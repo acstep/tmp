@@ -471,7 +471,7 @@ function Template2PostWindows(data) {
 	
 	var mapParentView = Titanium.UI.createView({
 		
-		height: '200dp', width: '90%', top:'20dp',bottom:'30dp',backgroundColor:'#transparent'
+		height: '200dp', width: '90%', top:'20dp',bottom:'30dp',backgroundColor:'transparent'
 	});
 	
     var Map = require('ti.map');    
@@ -602,7 +602,9 @@ function Template2PostWindows(data) {
 				 
 			}
 		};
-	    
+	    if(data.gid != ''){
+	    	postdata['gid'] = data.gid;
+	    }
 	    var datastring = JSON.stringify(postdata);
 	    Ti.API.info('datastring : ' + datastring);
 		createvent(datastring ,template2PostCallback);

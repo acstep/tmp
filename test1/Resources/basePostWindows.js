@@ -343,7 +343,7 @@ function BasePostWindow(data) {
 	
 	var mapParentView = Titanium.UI.createView({
 		
-		height: '200dp', width: '90%', top:'20dp',bottom:'30dp',backgroundColor:'#transparent'
+		height: '200dp', width: '90%', top:'20dp',bottom:'30dp',backgroundColor:'transparent'
 	});
 	
     var Map = require('ti.map');    
@@ -467,8 +467,12 @@ function BasePostWindow(data) {
 			'pos':[parseFloat(Ti.App.Properties.getDouble('userchooselongitude',0)),parseFloat(Ti.App.Properties.getDouble('userchooselatitude',0))],
 			'title':titleTextField.value,
 			'extime':extime,
-			'category':data.category
+			'category':data.category,
+			
 		};
+	    if(data.gid != ''){
+	    	postdata['gid'] = data.gid;
+	    }
 	    
 	    datastring = JSON.stringify(postdata);
 	    Ti.API.info('datastring : ' + datastring);
