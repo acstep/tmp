@@ -130,11 +130,12 @@ function createNormalFeed(viewobj,category){
 		top:'0dp',
 		layout:'vertical'
 	});
-	
+	var pageRow = {};
+	var limitcount = parseInt(Ti.App.Properties.getInt('limitcount',5));
 	
 	Ti.API.info('category backup  ' + category + ' : ' + Ti.App.Properties.getString(category.toString(),{'data':[]}));
 	/////////////   scroll feed  ////////////////////////////
-	feedtableItems = [];
+
 	var feedTableView = Ti.UI.createTableView({
 		showVerticalScrollIndicator:false,
         backgroundSelectedColor:'#dddddd',
@@ -143,7 +144,7 @@ function createNormalFeed(viewobj,category){
 	    layout: 'vertical',
 	    backgroundColor:'#dddddd',
         separatorColor:'#dddddd',
-		data:feedtableItems
+		data:[]
     });
 	
 	
@@ -223,10 +224,16 @@ function createNormalFeed(viewobj,category){
 				    	            'color':layoutDataDes[feedData[i]['category']].color,
 				    	            'image':layoutDataDes[feedData[i]['category']].catimage,
 				    	};
-				    	drawFunction[layoutDataDes[feedData[i]['category']].layouttype](feedRow,data);
+				    	var tmpfeed = {
+				    		draw : drawFunction[layoutDataDes[feedData[i]['category']].layouttype]
+				    	};
+				    	
+				    	//drawFunction[layoutDataDes[feedData[i]['category']].layouttype];
+				    	tmpfeed.draw(feedRow,data);
+				    	//drawFunction[layoutDataDes[feedData[i]['category']].layouttype](feedRow,data);
 
 					    feedRow.eventid = feedData[i]['eventid']; 
-					    feedtableItems.push(feedRow);
+
 					    feedTableView.appendRow(feedRow);
 				    }
 				    catch(e){
@@ -237,13 +244,11 @@ function createNormalFeed(viewobj,category){
                 
                 if(category == 'myfeed'){
 					Ti.App.Properties.setString('myfeed',JSON.stringify({'data':feeditem}));
-					nexttime = nextstarttime;
 				}
 				else{
 					Ti.App.Properties.setString(category.toString(),JSON.stringify({'data':feeditem}));
-					nexttime = feedData[(feedData.length -1)]['lastupdate'];
 				}
-				
+				nexttime = nextstarttime;
 				
 			}
 			viewobj.forwardView.visible = false;
@@ -277,7 +282,7 @@ function createNormalFeed(viewobj,category){
 				    try{
 					    drawFunction[oldfeeditems.data[i]['category']](feedRow, oldfeeditems.data[i],lon,lat);
 					    feedRow.eventid = oldfeeditems.data[i]['eventid'];
-					    feedtableItems.push(feedRow);
+
 					    feedTableView.appendRow(feedRow);
 					}
 				    catch(e){
@@ -315,7 +320,7 @@ function createNormalFeed(viewobj,category){
     feedTableView.addEventListener('scroll', function(e)
 	{
 
-		if((e.firstVisibleItem + e.visibleItemCount) == feedtableItems.length){
+		if((e.firstVisibleItem + e.visibleItemCount) == feedTableView.data[0].rowCount){
 			if(feedLoading == false){
 				feedLoading =  true;
 			    
@@ -381,9 +386,10 @@ function createNormalFeed(viewobj,category){
 		Ti.API.info('tttt : ' + e.x + '  ' + e.y);
 	});
 	
+	
+	
 	function getNewFeed(){
 		Ti.API.info('getNewFeed ');
-		feedtableItems = [];
 		feedTableView.data = [];
 		feedTableView.appendRow(refleshRow);
 		viewobj.forwardView.visible = true;
@@ -394,11 +400,17 @@ function createNormalFeed(viewobj,category){
         var latitude = 0;
         var longitude = 0;
         var distance = getDistance();
-		var limitcount = parseInt(Ti.App.Properties.getInt('limitcount',5));
+		
 		if(category == 'myfeed'){
 			latitude = getLat();
 			longitude = getLon();
 			querymyevent(limitcount, nexttime, parseFeed);
+		}
+		else if(category == 'group'){
+			pageRow = Ti.UI.createTableViewRow({
+		        backgroundSelectedColor:'#dddddd', backgroundColor:'#dddddd', layout:'vertical', height: Ti.UI.SIZE
+		    });
+			createPage(pageRow,viewobj.gid);
 		}
 		else{
 			latitude = getLat();
@@ -423,9 +435,12 @@ function createNormalFeed(viewobj,category){
     	var distance = getDistance();
     	var latitude = 0;
         var longitude = 0;
-        var limitcount = parseInt(Ti.App.Properties.getInt('limitcount',5));
+        
     	if(category == 'myfeed'){
 			querymyevent(limitcount, nexttime, parseFeed);
+		}
+		else if(category == 'group'){
+			queryGroupevent(viewobj.gid,limitcount, nexttime, parseFeed);
 		}
 		else{
 			latitude = getLat();
@@ -449,8 +464,27 @@ function createNormalFeed(viewobj,category){
         getNewFeed();
 	});
 	
+	function queryGroupCallback(result, data){
+		if(result == true){
+             drawInfo(pageRow, data);
+             feedTableView.appendRow(pageRow);
+             
+             queryGroupevent(viewobj.gid,limitcount, nexttime, parseFeed);
+		}
+		else{
+			viewobj.forwardView.visible = false;
+			showAlert('Error !', data);
+		}
+		
+	};
+    
+	function createPage(viewobj,gid){
+		querygroup(gid,queryGroupCallback);
+	}
+	
 	viewobj.getNewFeed = getNewFeed;
 	viewobj.getNextFeed = getNextFeed;
+	
 }
 
 
@@ -1203,3 +1237,221 @@ function showPostDialog(gid){
 
 	postDialog.show();
 }
+
+
+function drawInfo(viewobj, data){
+
+    	/////////////////   head photo  ///////////////////
+		var topView = Ti.UI.createView({
+		    backgroundColor: 'transparent',
+		    width:'90%', height: '120dp',
+		    top:'10dp',left:'5%'
+		});
+		
+		
+		///////////////////////  head photo  //////////////
+		var headPhotoImg = Titanium.UI.createImageView({
+	        borderRadius:15,backgroundImage:'headphoto.png',
+			height: '100dp', width: '100dp', top:'10dp', left:'0dp'
+		});
+		headPhotoImg.image = getHeadImg(data['gid']);
+		
+		var contentView = Titanium.UI.createView({
+			left:'120dp',backgroundColor:'transparent',
+			height: Ti.UI.SIZE,top:'10dp',bottom:'10dp',
+			layout: 'vertical'
+		});
+		
+	
+		  
+		var nameText = Ti.UI.createLabel({
+			font:{fontSize:'20sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+			text: data['name'],
+			color:'#333333',left:'0dp',top:'10dp'
+		});
+		contentView.add(nameText);
+		
+		var phoneNumView = Titanium.UI.createView({
+			left:'0dp',backgroundColor:'transparent',
+			height: Ti.UI.SIZE,width: Ti.UI.SIZE,top:'20dp',
+			layout: 'horizontal',borderRadius:10
+		});
+		
+		
+		var phoneNumImg = Titanium.UI.createImageView({
+	        height: '20dp', width: '20dp',image:'info.png'
+		});
+		
+
+		phoneNumView.add(phoneNumImg);
+		
+		
+		var phoneNumText = Ti.UI.createLabel({
+			font:{fontSize:'18sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+			color:'#3498db',left:'10dp',right:'10dp',
+			text :data['phone']
+		});
+		phoneNumView.add(phoneNumText);
+		contentView.add(phoneNumView);
+		
+		var desText = Ti.UI.createLabel({
+			font:{fontSize:'16sp'},
+			text: data['des'],
+			color:'#666666',
+			top:'10dp', left:'5%', width:'90%', height:Ti.UI.SIZE,
+	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+		});
+		
+		////////////////  join  /////////////////////////////////////////////////
+		var joinView = Ti.UI.createView({
+		    backgroundColor: 'transparent',
+		    height: Ti.UI.SIZE,layout: 'horizontal',
+		    top:'20dp',left:'0dp',width:'100%',height:'50dp'
+		});
+		
+		var joinNumberView = Ti.UI.createView({
+		    backgroundColor: 'transparent',
+		    height: Ti.UI.SIZE,
+		    top:'0dp',left:'0dp',width:'50%'
+		});
+		
+		var joinNumber = 0;
+		if(data['like'] != undefined){
+			joinNumber = data['like'];
+		}
+		
+		var joinNumberText = Ti.UI.createLabel({
+			font:{fontSize:'30sp',fontFamily:'Helvetica Neue'},
+			text:joinNumber,
+			color:'#34495e',
+	  		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
+		});
+		
+		joinNumberView.addEventListener('click',function(e){
+		
+			//var JoinListWindow = require('joinMsgWindows');
+			//var stringData = {'title':'joinlist'};
+			//new JoinListWindow(data['eventid'],stringData).open(); 
+		});	
+		
+		joinNumberView.add(joinNumberText);	
+		
+		var SepView = Ti.UI.createView({
+		    backgroundColor: '#bbbbbb',
+		    height: '50dp',width:'1dp'
+	
+		});
+	
+		var joinBottomView = Ti.UI.createView({
+		    backgroundColor: 'transparent',
+		    height: Ti.UI.SIZE,
+		    top:'0dp',left:'0dp',width:'48%'
+		});
+		
+		var joinBottomButton = Titanium.UI.createButton({
+		    title: L('join'),
+		    width:'60%',
+		    backgroundColor:'#3498db',borderRadius:10
+		});
+		
+		joinBottomView.addEventListener('click',function(e){
+		
+			//var JoinWindow = require('joinWindows');
+			//var stringData = {'title':'join'};
+			//new JoinWindow(data,stringData).open(); 
+		});	
+		
+		joinBottomView.add(joinBottomButton);
+		
+		
+		joinView.add(joinNumberView);
+		joinView.add(SepView);
+		joinView.add(joinBottomView);
+	    
+	    
+	    /////////////////    photos  ///////////////////////////
+	    if(data['photos'] != undefined){
+
+		    var imageScrollView = Ti.UI.createScrollView({
+			    contentWidth: (data['photos'].length*100 + 20)*(Titanium.Platform.displayCaps.dpi / 160),
+			    contentHeight:'100dp',
+			    layout: 'horizontal',
+			    backgroundColor:'#ffffff',
+		        height:'100dp',scrollType:'horizontal'
+			});
+			
+		 
+			for(var i=0; i<data['photos'].length; i++){
+				var imageContentView = Titanium.UI.createView({
+				  	backgroundColor: '#ffffff',
+				    top: '10dp', bottom:'10dp',
+				    borderRadius:15,
+				    width:'80dp',height:'80dp',left:'10dp',
+				    name:'imagecontentview'
+				});  
+				Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgm/' + data['photos'][0]).replace('.jpg','-m.jpg'));
+				var feedImage = Titanium.UI.createImageView({
+				    backgroundColor: '#ffffff',
+				    visible : false,
+				    name:'image'
+				});
+			    feedImage.index = i;
+				feedImage.addEventListener('load', function()
+				{
+					var imgwidth = this.size.width;
+					var imgheight = this.size.height;
+	                if(imgwidth == 0 || imgheight == 0){
+						var tmpimage = this.toBlob();
+						imgwidth = tmpimage.width;
+						imgheight = tmpimage.height;
+					}
+					if(imgwidth < imgheight){
+						var ratio = (80 / parseFloat(imgwidth));
+						this.width = (imgwidth * ratio) ;
+						this.height = (imgheight * ratio) ;
+					}
+					else{
+						var ratio = (80 / parseFloat(imgheight));
+						this.width = (imgwidth * ratio) ;
+						this.height = (imgheight * ratio) ;
+					}
+	
+					this.visible = true;
+					this.addEventListener('click',function(e) {
+				        Ti.API.info('photo view click.');
+				        
+					});
+		
+				});
+				
+				feedImage.addEventListener('click', function(){
+					var FeedImageListWindow = require('imagelistWindows');
+					new FeedImageListWindow(data['photos'],this.index).open(); 
+				});
+				feedImage.image = (getFeedImgAddr()+'feedimgm/' + data['photos'][i]).replace('.jpg','-m.jpg');
+				imageContentView.add(feedImage);
+	
+				imageScrollView.add(imageContentView);
+			}
+		}
+		
+		
+		
+		topView.add(headPhotoImg);
+		topView.add(contentView);
+		viewobj.add(topView);
+		if(data['des'] != ''){
+			viewobj.add(desText);
+		}
+		
+		viewobj.add(createHSepLine('90%','20dp','0dp'));
+		if(data['photos'] != undefined){
+			viewobj.add(imageScrollView);
+			viewobj.add(createHSepLine('90%','20dp','0dp'));
+		}
+		
+		viewobj.add(joinView);
+		viewobj.add(createHSepLine('90%','20dp','0dp'));
+
+    }
+
