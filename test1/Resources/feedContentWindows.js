@@ -6,7 +6,9 @@ Ti.include("baseContentView.js");
 function feedContentWindow(eventid, fullcontent) {
 	//load component dependencies
 	
-	var self = createNormalWin(true);
+	var winobj = {};
+	winobj.createNormalWin = createNormalWin;
+	var self = winobj.createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
@@ -128,7 +130,8 @@ function feedContentWindow(eventid, fullcontent) {
 		else{
 			Ti.API.info('drawFeedContentFunction.');
 			var myid =  Ti.App.Properties.getString('userid','');
-			if(data['ownerid'] == myid){
+			
+			if(data['ownerid'] == myid || data['gownerid'] == myid){
 				doneButton.visible = true;
 			}
 			categoryText.text = L(titleString[data['category'].toString()]);

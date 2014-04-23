@@ -120,6 +120,7 @@
 	<string name="lineup">Line Up</string>
 	<string name="lineuplist">Line Up List</string>
 	<string name="join">Join</string>
+	<string name="leave">Leave</string>
 	<string name="joinlist">List of people</string>
 	<string name="leavemsg">Leave a message or introduce yourself.</string>
 	<string name="nearppl">People Nearby</string>
@@ -138,4 +139,7 @@
 	<string name="neargroups">Groups Nearby</string>
 	<string name="mygroups">My Groups</string>
 	<string name="myjoingroups">Favorite Groups</string>
+	<string name="deletegroup">Delete Group</string>
+	<string name="groupsmember">Group Members</string>
+	<string name="swinfo">SoftWare Information</string>
 </resources>

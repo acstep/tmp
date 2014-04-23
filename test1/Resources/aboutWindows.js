@@ -1,9 +1,9 @@
-//systemAD Component Constructor
+//usedAppWindow Component Constructor
 Ti.include("common_net.js");
 Ti.include("common_util.js");
 
 
-function systemADWindow(data) {
+function aboutWindow() {
 	//load component dependencies
 	var winobj = {};
 	winobj.createNormalWin = createNormalWin;
@@ -12,7 +12,7 @@ function systemADWindow(data) {
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
     backgroundView.forwardView = forwardView;
-  
+
     
     var backImg = Titanium.UI.createImageView({
 		image:'backward.png',
@@ -27,7 +27,7 @@ function systemADWindow(data) {
 	
 	var TitleText = Ti.UI.createLabel({
 		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
-		text:'',
+		text:L('swinfo'),
 		color:'#ffffff',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
   		left:'50dp'
@@ -35,14 +35,25 @@ function systemADWindow(data) {
 	
 	titleView.add(TitleText);
 	
+	var infoText = Ti.UI.createLabel({
+		font:{fontSize:'20sp',fontFamily:'Helvetica Neue'},
+		text:'Version Beta 1.0',
+		color:'#333333',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+  		top:'100dp'
+	});
+	
+	
+	
 	TitleText.addEventListener('click',function(e){
 		self.close();
 	});
 	
-	var webview = Titanium.UI.createWebView({url:data.url});
-    backgroundView.add(webview);
+    backgroundView.add(infoText);
+	
+
 	return self;
 }
 
 //make constructor function the public component interface
-module.exports = systemADWindow;
+module.exports = aboutWindow;

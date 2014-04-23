@@ -5,7 +5,7 @@ Ti.include("common_util.js");
 
 
 
-function nearPeopleWindow() {
+function groupPeopleWindow(gid) {
 	//load component dependencies
 	
     var winobj = {};
@@ -17,8 +17,7 @@ function nearPeopleWindow() {
 	var currentdate = new Date(); 
 	
 	var reqData = {
-		'geo':[Ti.App.Properties.getDouble('longitude'),Ti.App.Properties.getDouble('latitude')],
-		'distance': Ti.App.Properties.getInt('distance',10),
+		'gid':gid,
 		'limitcount':parseInt(Ti.App.Properties.getInt('limitcount',10)),
 		'nextstarttime':parseInt(currentdate.getTime()/1000)
 	};
@@ -32,46 +31,47 @@ function nearPeopleWindow() {
 	    self.close();
 	});	
 	
-	var nearbyTitleText = Ti.UI.createLabel({
+	var groupPeopleTitleText = Ti.UI.createLabel({
 		font:{fontSize:'20sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
-		text: L('nearppl'),
+		text: L('groupsmember'),
 		color:'#ffffff'
 	});
 	
 	titleView.add(backImg);
-	titleView.add(nearbyTitleText);
+	titleView.add(groupPeopleTitleText);
 
 	
 	//////////////   middle   table view  //////////////////////
-   
-	var nearbyTableView = Ti.UI.createTableView({
+	var itemsList = [];
+    
+	var itemTableView = Ti.UI.createTableView({
 	    
 	    data:[]
 	});
 
 		
-	backgroundView.add(nearbyTableView);
+	backgroundView.add(itemTableView);
 	
-    function parseNearbyMsg(result, nearbyData){
-    	Ti.API.info(' nearbyData data : ' + JSON.stringify(nearbyData));
+    function parseitemMsg(result, itemData, nexttime){
+    	Ti.API.info(' itemData  : ' + JSON.stringify(itemData));
     	forwardView.visible = false;
     	dataLoading = false;
     	if(result == false){
     		return;
     	}
     	try{
-    		nearbyTableView.deleteRow(LoadingRow);
+    		itemTableView.deleteRow(LoadingRow);
     	}	
     	catch(e){}
     	if(result == false){
     		
      		
     	}
-    	for(var i = 0 ; i < nearbyData.length ; i++){
-    		var nearbyRow = Ti.UI.createTableViewRow({
+    	for(var i = 0 ; i < itemData.length ; i++){
+    		var itemRow = Ti.UI.createTableViewRow({
 		        backgroundSelectedColor:'#3f9ddd',
 		        backgroundColor:'#ffffff',
-		        //ownerid:MsgData[i]['ownerid']
+
 		    });
 			var itemView = Titanium.UI.createView({
 				backgroundColor:'transparent',
@@ -81,7 +81,7 @@ function nearPeopleWindow() {
 		        borderRadius:15,height: '70dp', width: '70dp',top:'10dp',bottom:'10dp',backgroundImage:'headphoto.png'
 			});
 			
-			headPhotoImg.image = getHeadImg(nearbyData[i]['ownerid']);
+			headPhotoImg.image = getHeadImg(itemData[i]['id']);
             
 		
 			itemView.add(headPhotoImg);
@@ -99,91 +99,30 @@ function nearPeopleWindow() {
 			  
 			var nameText = Ti.UI.createLabel({
 				font:{fontSize:'16sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
-				text: nearbyData[i]['name'],
+				text: itemData[i]['name'],
 				color:'#333333',left:'0dp'
 			});
 			topView.add(nameText);
-			
-			///////////////distance ///////////////
-			var distance = nearbyData[i]['distance'] ;
-			var distanceStr = '';
-			nearbyRow.distance = distance;
-			if(distance < 1){
-				distance =  parseInt(distance * 1000);
-				distanceStr = '   '+distance+ ' '+L('m')+ '   ';
-			}
-			else{
-				distance =  parseInt(distance);
-				distanceStr = '   '+distance+ ' '+ L('km')+ '   ';
-			} 
-			var distanceText = Ti.UI.createLabel({
-				font:{fontSize:'10sp',fontFamily:'Helvetica Neue'},
-				text: distanceStr,
-				color:'#ffffff',
-				right:'10dp',
-				backgroundColor:'#f1c40f',
-				borderRadius:10,
-		  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
-			});
-	        topView.add(distanceText);
-	
-			
-			var timeView = Titanium.UI.createView({
-				left:'10dp',backgroundColor:'transparent',
-				height: Ti.UI.SIZE,width: Ti.UI.SIZE,
-				layout: 'horizontal'
-			});
-			var clockImg = Titanium.UI.createImageView({
-		        height: '10dp', width: '10dp',image:'sorttime.png'
-			});
-			var eventtime = new Date(nearbyData[i]['time']);
-			var currenttime =  new Date().getTime()/1000;
-			var difftime = currenttime - eventtime;
-			nearbyRow.difftime = difftime;
-			var timeString = '';
-			if(difftime < 60){
-				timeString = parseInt(difftime) + ' ' + L('beforesec');
-			}
-			else if(difftime >=60 &&  difftime < 3600){
-				timeString = parseInt(difftime/60) + ' ' + L('beforemin');
-			}
-			else if(difftime >=3600 &&  difftime < 86400){
-				timeString = parseInt(difftime/3600) + ' ' + L('beforehour');
-			}
-			else{
-				timeString = parseInt(difftime/86400) + ' ' + L('beforeday');
-			}
-			var timeText = Ti.UI.createLabel({
-				font:{fontSize:'10sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
-				text: timeString,
-				color:'#aaaaaa',left:'10dp',right:'10dp'
-			});
-			timeView.add(clockImg);
-			timeView.add(timeText);
-	
 			contentView.add(topView);
-			contentView.add(timeView);
-			
+
 			////////////////// gender /////////////////////
-			if(nearbyData[i]['sex'] != '' || nearbyData[i]['birthday'] != ''){
-				
+			if(itemData[i]['sex'] != '' || itemData[i]['birthday'] != ''){
 				var genderView = Titanium.UI.createView({
 					left:'10dp',backgroundColor:'transparent',
 					height: Ti.UI.SIZE,width: Ti.UI.SIZE,top:'5dp',
 					layout: 'horizontal',borderRadius:10
 				});
 				
-				if(nearbyData[i]['sex'] != undefined){
-					var gerder =  nearbyData[i]['sex'];
-					Ti.API.info(' gerder : ' + gerder);
+				if(itemData[i]['sex'] != undefined){
+					var gerder =  itemData[i]['sex'];
 					var genderImg = Titanium.UI.createImageView({
 				        height: '15dp', width: '15dp',left:'10dp'
 					});
-					if(gerder == 1){
+					if(itemData[i]['sex'] == 1){
 						genderImg.image = 'man.png';
 						genderView.backgroundColor = '#3498db';
 					}
-					else if(gerder == 2){
+					else if(itemData[i]['sex'] == 2){
 						genderImg.image = 'girl.png';
 						genderView.backgroundColor = '#FF80EE';
 					}
@@ -193,13 +132,13 @@ function nearPeopleWindow() {
 					genderView.add(genderImg);
 				}
 				
-				if(nearbyData[i]['birthday'] != undefined && nearbyData[i]['birthday'] != ""){
+				if(itemData[i]['birthday'] != undefined && itemData[i]['birthday'] != ""){
 					var yearString = ' ';
 
-					if(nearbyData[i]['birthday'] != undefined){
+					if(itemData[i]['birthday'] != undefined){
 						
 						var currenttime =  new Date() ;
-						yearString =  new Date().getFullYear() - new Date(nearbyData[i]['birthday']*1000).getFullYear();
+						yearString =  new Date().getFullYear() - new Date(itemData[i]['birthday']*1000).getFullYear();
 						
 					}
 					var yearText = Ti.UI.createLabel({
@@ -211,34 +150,33 @@ function nearPeopleWindow() {
 				}	
 				contentView.add(genderView);
 			}
-			
  
-            if(nearbyData[i]['des'] != undefined && nearbyData[i]['des'] != ''){
+            if(itemData[i]['des'] != undefined && itemData[i]['des'] != ''){
             	var desText = Ti.UI.createLabel({
 					font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
-					text: getStringlimit(nearbyData[i]['des'],50,100),
+					text: getStringlimit(itemData[i]['des'],50,100),
 					color:'#333333',left:'10dp',top:'5dp'
 				});	
 				contentView.add(desText);	
             }
             	
 
-			nearbyRow.add(itemView);
-			nearbyRow.add(contentView);
+			itemRow.add(itemView);
+			itemRow.add(contentView);
 		   
-		    nearbyRow.ownerid = nearbyData[i]['ownerid'];
-		    Ti.API.info('oinMsgRow.ownerid : ' + nearbyRow.ownerid);
+		    itemRow.ownerid = itemData[i]['id'];
+		    Ti.API.info('oinMsgRow.ownerid : ' + itemRow.ownerid);
 		    
 
-		    nearbyTableView.appendRow(nearbyRow);
-		    starttime = nearbyData[i]['time'];
+		    itemTableView.appendRow(itemRow);
+		    starttime = nexttime;
 
     	};
     	
-    	//nearbyTableView.data = nearbyItems;
+    	//itemTableView.data = nearbyItems;
 	}	
 	
-	nearbyTableView.addEventListener('click', function(e){
+	itemTableView.addEventListener('click', function(e){
 		openPeopleInfoWin(e.row.ownerid);
 		
     });
@@ -249,11 +187,11 @@ function nearPeopleWindow() {
 	
 
     var dataLoading = false;
-    nearbyTableView.addEventListener('scroll', function(e)
+    itemTableView.addEventListener('scroll', function(e)
 	{
-		Ti.API.info(' source ' + e.firstVisibleItem+ ', ' + e.visibleItemCount + ', ' + nearbyTableView.data[0].rowCount);
+		Ti.API.info(' source ' + e.firstVisibleItem+ ', ' + e.visibleItemCount + ', ' + itemTableView.data[0].rowCount);
 		
-		if((e.firstVisibleItem + e.visibleItemCount) == nearbyTableView.data[0].rowCount){
+		if((e.firstVisibleItem + e.visibleItemCount) == itemTableView.data[0].rowCount){
 			if(dataLoading == false){
 				dataLoading =  true;
 			    
@@ -278,10 +216,10 @@ function nearPeopleWindow() {
 			    
 			    
                 Ti.API.info('dataLoading =  true');
-				nearbyTableView.appendRow(LoadingRow);
+				itemTableView.appendRow(LoadingRow);
 				reqData.nextstarttime = starttime;
 				var datastring = JSON.stringify(reqData);
-				querypplnear(datastring, parseNearbyMsg);
+				queryGroupPpl(datastring, parseitemMsg);
 					
 			}    
 		}
@@ -289,29 +227,29 @@ function nearPeopleWindow() {
 		
 	});
 	
-	nearbyTableView.addEventListener('click', function(e){
+	itemTableView.addEventListener('click', function(e){
 	    
 	    // the example above would print your name
 	});
 	    
     var starttime = 0;
-	function requestNearbyList(){
+	function requestGroupPplList(){
 		forwardView.visible = true;
-		nearbyTableView.data = [];
+		itemTableView.data = [];
 		//nearbyItems = [];
 		var currentdate = new Date(); 
 		starttime = parseInt(currentdate.getTime()/1000);
 		reqData.nextstarttime = starttime;
 		var datastring = JSON.stringify(reqData);
-		querypplnear(datastring, parseNearbyMsg);
+		queryGroupPpl(datastring, parseitemMsg);
 	}
 	
 	
-	requestNearbyList();
+	requestGroupPplList();
 
 	
 	return self;
 }
 
 //make constructor function the public component interface
-module.exports = nearPeopleWindow;
+module.exports = groupPeopleWindow;

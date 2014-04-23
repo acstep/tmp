@@ -4,7 +4,9 @@ Ti.include("common_util.js");
 function LoginWindow() {
 	//load component dependencies
 	
-	var self = createNormalWin(false);
+	var winobj = {};
+	winobj.createNormalWin = createNormalWin;
+	var self = winobj.createNormalWin(false);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;

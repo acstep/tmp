@@ -4,7 +4,9 @@ Ti.include("common_util.js");
 
 function joinWindow(data,stringData) {
 	//load component dependencies
-	var self = createNormalWin(true);
+	var winobj = {};
+	winobj.createNormalWin = createNormalWin;
+	var self = winobj.createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
@@ -56,19 +58,20 @@ function joinWindow(data,stringData) {
 			return;
 		}
 		else{
+	
 			self.close();
 		}
 	}
 	
 	doneButton.addEventListener('click',function(e)
 	{
-		var data = {
+		var tmpdata = {
 	    	'name': Ti.App.Properties.getString('username',''),
 	    	'content':desTextArea.value,
 	    	'eventid':data['eventid']
     	};
                       
-    	var datastring = JSON.stringify(data);
+    	var datastring = JSON.stringify(tmpdata);
     	forwardView.visible = true;
     	joinevt(datastring, sendJoinCB);
 

@@ -3,7 +3,8 @@ Ti.include("common_util.js");
 
 function drawBaseContnet(contentView,data){
 	
-	Ti.API.info('enter drawTeambuyContnet.');
+	Ti.API.info('enter drawTeambuyContnet.: data:  ' + JSON.stringify(data));
+	
 	var imageList = data['photos'];
 	//////////////////   image list /////////////////////////
 	if(imageList.length == 1){
@@ -226,23 +227,6 @@ function drawBaseContnet(contentView,data){
 			openPeopleInfoWin(e.source.ownerid);
 		}
 
-		//var myid = Ti.App.Properties.getString('userid','');
-		//Ti.API.info('e.source.ownerid : ' + e.source.ownerid);
-		//Ti.API.info('myid : ' + myid);
-		//if(myid == e.source.ownerid){
-		//	return;
-		//}
-	    //Ti.API.info('postView click.');
-        //TalkWindow = require('talkWindows');
-        //tmpRoomData = {
-        //    'roomid':'',
-        //    'memberid':[],
-        //    'lasttime':parseInt(new Date().getTime()/1000),
-        //    'host':'',
-        //    'lastmsg':'',
-        //    'memdata':[]  
-        //};
-        //new TalkWindow(Ti.App.Properties.getString('userid',''), e.source.ownerid,tmpRoomData).open(); 
 	});
 	
 	
@@ -620,21 +604,7 @@ function drawtemplate1Contnet(contentView,data){
 			openPeopleInfoWin(e.source.ownerid);
 		}
 		
-		//var myid = Ti.App.Properties.getString('userid','');
-		//if(myid == e.source.ownerid){
-		//	return;
-		//}
-	    //Ti.API.info('postView click.');
-        //TalkWindow = require('talkWindows');
-        //tmpRoomData = {
-        //    'roomid':'',
-        //    'memberid':[],
-        //    'lasttime':parseInt(new Date().getTime()/1000),
-        //    'host':'',
-        //    'lastmsg':'',
-         //   'memdata':[]  
-        //};
-        //new TalkWindow(Ti.App.Properties.getString('userid',''), e.source.ownerid,tmpRoomData).open(); 
+
 	});
 	
 	
@@ -768,6 +738,8 @@ function drawtemplate1Contnet(contentView,data){
 	joinView.add(joinBottomView);
 
 
+    
+    
 	contentView.add(ownerView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
 	contentView.add(eventTimeView);
@@ -1176,22 +1148,7 @@ function drawtemplate2Contnet(contentView,data){
 		else{
 			openPeopleInfoWin(e.source.ownerid);
 		}
-
-		//var myid = Ti.App.Properties.getString('userid','');
-		//if(myid == e.source.ownerid){
-		//	return;
-		//}
-	    //Ti.API.info('postView click.');
-        //TalkWindow = require('talkWindows');
-        //tmpRoomData = {
-        //    'roomid':'',
-        //    'memberid':[],
-        //    'lasttime':parseInt(new Date().getTime()/1000),
-        //    'host':'',
-        //    'lastmsg':'',
-        //    'memdata':[]  
-        //};
-       // new TalkWindow(Ti.App.Properties.getString('userid',''), e.source.ownerid,tmpRoomData).open(); 
+ 
 	});
 	
 	

@@ -6,7 +6,9 @@
 function HeadWindow(cropimage,mode) {
 	//load component dependencies
 	
-	var self = createNormalWin(true);
+	var winobj = {};
+	winobj.createNormalWin = createNormalWin;
+	var self = winobj.createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;

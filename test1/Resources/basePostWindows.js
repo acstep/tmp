@@ -9,7 +9,9 @@ Ti.include("common_util.js");
 function BasePostWindow(data) {
 	//load component dependencies
 	
-	var self = createNormalWin(true);
+	var winobj = {};
+	winobj.createNormalWin = createNormalWin;
+	var self = winobj.createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
@@ -457,8 +459,8 @@ function BasePostWindow(data) {
 	};
 	
 	function postBaseEvent(){
-		currentdate = new Date(); 
-		extime = parseInt(currentdate.getTime()/1000)+Ti.App.Properties.getInt('defaultexpiretime',0);
+		var currentdate = new Date(); 
+		var extime = parseInt(currentdate.getTime()/1000)+Ti.App.Properties.getInt('defaultexpiretime',0);
 		
 		var postdata = {
 			'name': Ti.App.Properties.getString('username'),
@@ -474,7 +476,7 @@ function BasePostWindow(data) {
 	    	postdata['gid'] = data.gid;
 	    }
 	    
-	    datastring = JSON.stringify(postdata);
+	    var datastring = JSON.stringify(postdata);
 	    Ti.API.info('datastring : ' + datastring);
 		createvent(datastring ,basePostCallback);
 	}

@@ -56,6 +56,7 @@ function clearProperty(){
 	Ti.App.Properties.setDouble('userchooselatitude',-1);
 	Ti.App.Properties.setDouble('userchooselongitude',-1);
 	Ti.App.Properties.setList('photos',[]);
+
 }
 
 function createNormalWin(title){
@@ -300,6 +301,9 @@ function createNormalFeed(viewobj,category){
 	}
 	
 	feedTableView.addEventListener('click', function(e){
+		if(e.row.eventid == ''){
+			return;
+		}
     	var FeedContentWindow = require('feedContentWindows');
 		new FeedContentWindow(e.row.eventid, true).open(); 
     });
@@ -408,8 +412,9 @@ function createNormalFeed(viewobj,category){
 		}
 		else if(category == 'group'){
 			pageRow = Ti.UI.createTableViewRow({
-		        backgroundSelectedColor:'#dddddd', backgroundColor:'#dddddd', layout:'vertical', height: Ti.UI.SIZE
+		        backgroundSelectedColor:'#dddddd', backgroundColor:'#ffffff', layout:'vertical', height: Ti.UI.SIZE
 		    });
+		    
 			createPage(pageRow,viewobj.gid);
 		}
 		else{
@@ -466,7 +471,14 @@ function createNormalFeed(viewobj,category){
 	
 	function queryGroupCallback(result, data){
 		if(result == true){
-             drawInfo(pageRow, data);
+			 
+			 viewobj.drawInfoFunc(pageRow, data);
+			 var myid = Ti.App.Properties.getString('userid','');
+			 if(myid == data['ownerid']){
+			 	 viewobj.addButton.visible = true;
+			 }
+             
+             pageRow.eventid = '';
              feedTableView.appendRow(pageRow);
              
              queryGroupevent(viewobj.gid,limitcount, nexttime, parseFeed);
@@ -677,7 +689,7 @@ function createMapView(mapView,data){
 	
 	mapforgroundView.addEventListener('click',function(e)
 	{
-	     var intent = Ti.Android.createIntent({
+	    var intent = Ti.Android.createIntent({
             action : Ti.Android.ACTION_VIEW,
             data : 'geo:' + latitude +',' + longitude + '?q=' + latitude +',' + longitude
         });
@@ -1292,20 +1304,26 @@ function drawInfo(viewobj, data){
 			text :data['phone']
 		});
 		phoneNumView.add(phoneNumText);
+		
+		phoneNumView.addEventListener('click',function(e){
+			Ti.API.info('phoneNumView click.');
+		    Ti.Platform.openURL('tel:' + data['phone']);
+		});	
+		
 		contentView.add(phoneNumView);
 		
 		var desText = Ti.UI.createLabel({
 			font:{fontSize:'16sp'},
 			text: data['des'],
-			color:'#666666',
-			top:'10dp', left:'5%', width:'90%', height:Ti.UI.SIZE,
+			color:'#666666',backgroundColor:'#ffffff',
+			top:'10dp', left:'3%', width:'94%', height:Ti.UI.SIZE,
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});
 		
 		////////////////  join  /////////////////////////////////////////////////
 		var joinView = Ti.UI.createView({
 		    backgroundColor: 'transparent',
-		    height: Ti.UI.SIZE,layout: 'horizontal',
+		    layout: 'horizontal',
 		    top:'20dp',left:'0dp',width:'100%',height:'50dp'
 		});
 		
@@ -1327,11 +1345,11 @@ function drawInfo(viewobj, data){
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
 		});
 		
+		
 		joinNumberView.addEventListener('click',function(e){
 		
-			//var JoinListWindow = require('joinMsgWindows');
-			//var stringData = {'title':'joinlist'};
-			//new JoinListWindow(data['eventid'],stringData).open(); 
+			var JoinListWindow = require('groupPeopleWindows');
+			new JoinListWindow( data['gid']).open(); 
 		});	
 		
 		joinNumberView.add(joinNumberText);	
@@ -1354,11 +1372,49 @@ function drawInfo(viewobj, data){
 		    backgroundColor:'#3498db',borderRadius:10
 		});
 		
-		joinBottomView.addEventListener('click',function(e){
+		var liked = data['liked'];
+		if(liked == 1){
+			joinBottomButton.title = L('leave');
+			joinBottomButton.backgroundColor = '#e74c3c';
+		}
 		
-			//var JoinWindow = require('joinWindows');
-			//var stringData = {'title':'join'};
-			//new JoinWindow(data,stringData).open(); 
+		function likeCB(result, resultText){
+			if(result == true){
+				joinBottomButton.title = L('leave');
+				joinBottomButton.backgroundColor = '#e74c3c';
+				joinNumber = joinNumber + 1;
+				joinNumberText.text = joinNumber;
+				liked = 1;
+	        }
+	        else{
+	        	
+	        } 
+		}
+		
+		function leaveCB(result, resultText){
+			if(result == true){
+				joinBottomButton.title = L('join');
+				joinBottomButton.backgroundColor = '#3498db';
+				joinNumber = joinNumber - 1;
+				joinNumberText.text = joinNumber;
+				liked = 0;
+	        }
+	        else{
+	        	joinBottomButton.title = L('join');
+				joinBottomButton.backgroundColor = '#3498db';
+				liked = 0;
+	        	
+	        } 
+		}
+		
+		joinBottomView.addEventListener('click',function(e){
+			if(liked == 1){
+				leavegroup(data['gid'], leaveCB);
+			}
+			else{
+				likegroup(data['gid'], likeCB);
+			}
+  			
 		});	
 		
 		joinBottomView.add(joinBottomButton);
@@ -1435,7 +1491,108 @@ function drawInfo(viewobj, data){
 			}
 		}
 		
+		///////////   address view /////////////////
+		var addressViewBack = Ti.UI.createView({
+		    backgroundColor: '#dddddd',
+		    height: Ti.UI.SIZE,
+		    top:'20dp',left:'0dp',width:'100%'
+		});
+		var addressView = Ti.UI.createView({
+		    backgroundColor: '#ffffff',
+		    height: Ti.UI.SIZE,borderRadius:10,
+		    top:'20dp',left:'3%',width:'94%'
+		});
 		
+		var addressImg = Titanium.UI.createImageView({
+			image:'location.png',
+			backgroundColor:'transparent',left:'10dp',
+			height: '30dp', width: '30dp'
+		});
+		
+		var addressString = L('address');
+		if(data['address'] != ''){
+			addressString = data['address'];
+			addressString = getStringlimit(addressString,50,100) + '...';
+		}  
+		var addressText = Ti.UI.createLabel({
+			font:{fontSize:'18sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
+			text: addressString,
+			backgroundColor:'transparent',
+			color:'#777777',
+			left:'50dp', right:'40dp',
+			top:'10dp',bottom:'10dp',
+	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+		});
+		
+		var addressArrowImg = Titanium.UI.createImageView({
+			image:'next.png',
+			backgroundColor:'transparent',right:'10dp',
+			height: '20dp', width: '20dp'
+		});
+		addressView.add(addressImg);
+		addressView.add(addressText);
+		addressView.add(addressArrowImg);
+		var lat = data['loc']['coordinates'][1];
+		var lon = data['loc']['coordinates'][0];
+		addressView.addEventListener('click', function(){
+			var intent = Ti.Android.createIntent({
+	            action : Ti.Android.ACTION_VIEW,
+	            data : 'geo:' + lat +',' + lon + '?q=' + lat +',' + lon
+	        });
+	        Ti.Android.currentActivity.startActivity(intent);	
+		});
+		
+		addressViewBack.add(addressView);
+		
+		if(data['web'] != ''){
+			var webViewBack = Ti.UI.createView({
+			    backgroundColor: '#dddddd',
+			    height: Ti.UI.SIZE,
+			    top:'0dp',left:'0dp',width:'100%'
+			});
+			var webView = Ti.UI.createView({
+			    backgroundColor: '#ffffff',
+			    height: Ti.UI.SIZE,borderRadius:10,
+			    top:'20dp',left:'3%',width:'94%'
+			});
+			
+			var webImg = Titanium.UI.createImageView({
+				image:'web.png',
+				backgroundColor:'transparent',left:'10dp',
+				height: '30dp', width: '30dp'
+			});
+			
+			var webText = Ti.UI.createLabel({
+				font:{fontSize:'18sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
+				text: L('weblink'),
+				backgroundColor:'transparent',
+				color:'#777777',
+				left:'50dp', right:'40dp',
+				top:'10dp',bottom:'10dp',
+		  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+			});
+			
+			var webArrowImg = Titanium.UI.createImageView({
+				image:'next.png',
+				backgroundColor:'transparent',right:'10dp',
+				height: '20dp', width: '20dp'
+			});
+			webView.add(webImg);
+			webView.add(webText);
+			webView.add(webArrowImg);
+			
+			webView.addEventListener('click', function(){
+				var intent = Ti.Android.createIntent({
+				    action: Ti.Android.ACTION_VIEW,
+				    className: 'com.android.browser.BrowserActivity',
+    				packageName: 'com.android.browser',
+				    data: data['web']
+				});
+				Ti.Android.currentActivity.startActivity(intent);
+			});
+			
+			webViewBack.add(webView);
+		}
 		
 		topView.add(headPhotoImg);
 		topView.add(contentView);
@@ -1451,7 +1608,11 @@ function drawInfo(viewobj, data){
 		}
 		
 		viewobj.add(joinView);
-		viewobj.add(createHSepLine('90%','20dp','0dp'));
+		viewobj.add(addressViewBack);
+		
+		if(data['web'] != ''){
+			viewobj.add(webViewBack);
+		}	
 
     }
 

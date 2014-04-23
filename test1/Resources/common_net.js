@@ -49,11 +49,15 @@ function checkTokneError(result){
 
 function getHeadImg(id){
 	var cache= new Date().getTime();
+	var myid = Ti.App.Properties.getString('userid','');
 	var expirecache = Ti.App.Properties.getDouble('expirecache',0);
 	//Ti.API.info('cache : ' + cache + '    expirecache : ' + expirecache);
 	if(cache > expirecache+604800000){
 		expirecache = cache;
 		Ti.App.Properties.setDouble('expirecache',expirecache);
+	}
+	if(id == myid){
+		expirecache = cache;
 	}
 	return getHeadImgAddr()+'headphotos/' + id +'.jpg' + '?' + expirecache;
 }
@@ -78,7 +82,7 @@ function login(email, pass, callbackf){
 
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
     xhr.send({'email':email,'pass': Titanium.Utils.md5HexDigest(pass)}); 
@@ -96,7 +100,7 @@ function logout(devicetoken){
     	Ti.API.info('response : ' + this.responseText);
     };
     xhr.onerror = function(e){
-    	
+    	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -124,7 +128,7 @@ function createAccount(data, callbackf){
 
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
     xhr.send({'data':data}); 
@@ -156,7 +160,7 @@ function updateaccount(data, callbackf){
 
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
     xhr.send({'data':data}); 
@@ -182,10 +186,37 @@ function createGroup(data, callbackf){
 
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
     xhr.send({'data':data}); 
+	
+};
+
+
+function deleteGroup(gid, callbackf){
+	var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'deletegroup?'+ 'id=' + id + '&token=' + token+ '&gid=' + gid;
+	Ti.API.info('url : ' + url);
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		callbackf(true,result);
+    	}
+    	else{
+    		callbackf(false,result.result);
+    	}
+
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'networkerror');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
 	
 };
 
@@ -209,12 +240,79 @@ function updateGroup(data, callbackf){
 
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
     xhr.send({'data':data}); 
 	
 };
+
+
+function likegroup(gid, callbackf){
+	var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'likegroup?' + 'id=' + id + '&token=' + token + '&gid=' + gid;
+	Ti.API.info('url : ' + url);
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.result);
+    	}
+    	else{
+    		if(result.result = 'like duplicate'){
+    			
+    		}
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'networkerror');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
+
+
+function leavegroup(gid, callbackf){
+	var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'removelikegroup?' + 'id=' + id + '&token=' + token + '&gid=' + gid;
+	Ti.API.info('url : ' + url);
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.result);
+    	}
+    	else{
+    		if(result.result = 'like duplicate'){
+    			
+    		}
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'networkerror');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
+
 
 function querygroupnear(data, callbackf){
 
@@ -237,7 +335,7 @@ function querygroupnear(data, callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -246,7 +344,9 @@ function querygroupnear(data, callbackf){
 
 
 function querygroup(gid, callbackf){
-	var url = getServerAddr()+'querygroup?'+ 'id=' + gid ;
+	var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'querygroup?'+ 'id=' + id + '&token=' + token + '&gid=' + gid ;
 	Ti.API.info('url : ' + url);
 	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
@@ -265,7 +365,7 @@ function querygroup(gid, callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -294,7 +394,7 @@ function queryidgroup(data, callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -333,12 +433,47 @@ function queryGroupevent(gid,limitcount, nexttime, callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error',0);
+    	callbackf(false,'networkerror',0);
     };
     xhr.open("GET",url);
     xhr.send(); 
 
 };
+
+
+function queryGroupPpl(datastring, callbackf){
+
+    var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+    
+  
+	var url = getServerAddr()+'querygroupppllist?' +'&data=' + datastring;
+	Ti.API.info('url : ' + url);
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+    	
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.data,result.nexttime);
+    	}
+    	else{
+    		if(checkTokneError(result.result)){
+    			return;
+    		}
+    		callbackf(false,result.result,0);
+    	}
+    };
+    xhr.onerror = function(e){
+    	callbackf(false,'networkerror',0);
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+
+};
+
 
 
 function querymyself(callbackf){
@@ -363,7 +498,7 @@ function querymyself(callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -392,7 +527,7 @@ function querypeople(data, callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -409,7 +544,7 @@ function updatepos(data){
     	Ti.API.info('response : ' + this.responseText);
     };
     xhr.onerror = function(e){
-    	
+    	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
     xhr.send({'data':data}); 
@@ -439,7 +574,7 @@ function createvent(data, callbackf){
 
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
     xhr.send({'data':data}); 
@@ -470,7 +605,7 @@ function deleteevent(eventid, callbackf){
 
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -497,7 +632,7 @@ function queryeventbyid(eventid,callbackf){
 
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -561,7 +696,7 @@ function queryevent(geo, distance, category, limitcount,sorttype, nexttime, next
 
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error',0);
+    	callbackf(false,'networkerror',0);
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -601,7 +736,7 @@ function querymyevent(limitcount, nexttime, callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error',0);
+    	callbackf(false,'networkerror',0);
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -635,7 +770,7 @@ function likeevent(eventid, sourceobj, callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -665,7 +800,7 @@ function commentevt(eventid, data, callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
     xhr.send({'data':data}); 
@@ -695,7 +830,7 @@ function joinevt(data, callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -725,7 +860,7 @@ function queryjoinlist(eventid, starttime, callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -754,7 +889,7 @@ function querypplnear(data, callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -785,7 +920,7 @@ function querycomment(eventid, starttime, callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -818,7 +953,7 @@ function querynotify( starttime, limitcount, callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -850,7 +985,7 @@ function createchatroom( id, toid, check, callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -883,7 +1018,7 @@ function quitchatroom( roomid, callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -919,7 +1054,7 @@ function querychatroom( starttime, limitcount,onlytime ,callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
     xhr.send(); 
@@ -951,7 +1086,7 @@ function sendmsg( roomid, msgdata ,callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
     xhr.send({'msgdata':msgdata}); 
@@ -984,7 +1119,7 @@ function querymsg( roomid, starttime, limitcount ,callbackf){
     	}
     };
     xhr.onerror = function(e){
-    	callbackf(false,'network error');
+    	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
     xhr.send(); 

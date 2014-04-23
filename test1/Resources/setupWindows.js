@@ -5,7 +5,9 @@ Ti.include("common_util.js");
 
 function setupWindow() {
 	//load component dependencies
-	var self = createNormalWin(true);
+	var winobj = {};
+	winobj.createNormalWin = createNormalWin;
+	var self = winobj.createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
@@ -179,6 +181,11 @@ function setupWindow() {
 			    var passWindow = require('changePassWindows');
 				new passWindow().open(); 
 				break;	
+			case 4:
+				var aboutWindow = require('aboutWindows');
+					new aboutWindow().open(); 
+					break;	
+			    	
 			default:
 					
 		}

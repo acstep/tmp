@@ -8,7 +8,9 @@ Ti.include("common_util.js");
 function groupsWindow() {
 	//load component dependencies
 	
-    var self = createNormalWin(true);
+    var winobj = {};
+	winobj.createNormalWin = createNormalWin;
+	var self = winobj.createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
@@ -226,7 +228,38 @@ function groupsWindow() {
 		
     });
    
-    
+    function deleteGroupCB(result, resultText){
+		if(result == true){
+			requestNearbyList();
+        }
+        else{
+        	showAlert('Error !', resultText);
+        } 
+	}
+   
+    tableListView.addEventListener('longclick', function(e){
+    	var tmpgid = e.row.gid;
+	    if(groupType == 1){
+	    	var groupDeletedialog = Titanium.UI.createOptionDialog({
+		    //title of dialog
+			    title: L('deletegroup') ,
+			    //options
+			    options: [L('done'), L('cancel')],
+			    //index of cancel button
+			    cancel:1
+			});
+			
+			groupDeletedialog.addEventListener('click', function(e) {
+			    //if first option was selected
+			    if(e.index == 0){
+			    	deleteGroup(tmpgid,deleteGroupCB);
+			    	
+			    }	
+           });
+           groupDeletedialog.show();
+       }  
+	    // the example above would print your name
+	});
 	
 	
 
@@ -269,10 +302,7 @@ function groupsWindow() {
 		
 	});
 	
-	tableListView.addEventListener('click', function(e){
-	    
-	    // the example above would print your name
-	});
+
 	    
     var starttime = 0;
 	function requestNearbyList(){

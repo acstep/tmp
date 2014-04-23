@@ -8,13 +8,16 @@ function gFeedWindow(id) {
 
 	
 	//load component dependencies
-	var self = createNormalWin(true);
+	var winobj = {};
+	winobj.createNormalWin = createNormalWin;
+	var self = winobj.createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
+	var feedFunc = createNormalFeed;
     backgroundView.forwardView = forwardView;
     backgroundView.backgroundColor = '#ffffff';
-    
+    backgroundView.drawInfoFunc = drawInfo;
     var backImg = Titanium.UI.createImageView({
 		image:'backward.png',
 		top: '10dp', left:'15dp', height: '30dp', width: '30dp'
@@ -41,7 +44,7 @@ function gFeedWindow(id) {
 	});
 	
 	var addPostImg = Titanium.UI.createImageView({
-		image:'addw.png',
+		image:'addw.png', visible:false,
 		top: '10dp', right:'15dp', height: '30dp', width: '30dp'
 	});
 	
@@ -54,8 +57,9 @@ function gFeedWindow(id) {
     
     forwardView.visible = true;
     
-    backgroundView.gid = id; 
-    createNormalFeed(backgroundView, 'group');
+    backgroundView.gid = id;
+    backgroundView.addButton = addPostImg;
+    feedFunc(backgroundView, 'group');
     backgroundView.getNewFeed();
 
 
