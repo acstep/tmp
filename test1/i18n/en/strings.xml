@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 	<string name="category">Category</string>
-	<string name="welcome">Welcome to %s!</string>
 	<string name="login">Login</string>
+	<string name="loginerror">Email or Password are not Correct. Please Try again.</string>
 	<string name="signup">Sign Up</string>
 	<string name="name">Name</string>
 	<string name="email">Email</string>
@@ -142,4 +142,5 @@
 	<string name="deletegroup">Delete Group</string>
 	<string name="groupsmember">Group Members</string>
 	<string name="swinfo">SoftWare Information</string>
+	<string name="networkerror">Please Connect to Internet!</string>
 </resources>

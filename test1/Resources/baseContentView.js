@@ -724,10 +724,16 @@ function drawtemplate1Contnet(contentView,data){
 	});
 	
 	joinBottomView.addEventListener('click',function(e){
-	
-		var JoinWindow = require('joinWindows');
-		var stringData = {'title':'join'};
-		new JoinWindow(data,stringData).open(); 
+	    if(eventjoined == 0){
+	    	var JoinWindow = require('joinWindows');
+			var stringData = {'title':'join'};
+			var type = 'join';
+			new JoinWindow(data,stringData,type).open(); 
+	    }
+	    else{
+	    	leaveevent(data['eventid'],leaveEventCB);
+	    }
+		
 	});	
 	
 	joinBottomView.add(joinBottomButton);
@@ -736,8 +742,42 @@ function drawtemplate1Contnet(contentView,data){
 	joinView.add(joinNumberView);
 	joinView.add(SepView);
 	joinView.add(joinBottomView);
+	
+	var eventjoined = 0;
+	Ti.App.addEventListener('joinevent',function(e) {
+		eventjoined = 1;
+		joinNumber = joinNumber + 1;
+    	Ti.API.info('receive event joinevent ');
+        joinBottomButton.title = L('leave');
+        joinNumberText.text = joinNumber;
+    	joinBottomButton.backgroundColor = '#e74c3c';
+	});
+	
+	function leaveEventCB(result, joined){
+    	if(result == true){
+   			eventjoined = 0;
+   			joinNumber = joinNumber - 1;
+   			joinBottomButton.title = L('join');
+   			joinNumberText.text = joinNumber;
+    		joinBottomButton.backgroundColor = '#3498db';
+    	}
+    }
 
-
+    function queryJoinCB(result, joined){
+    	if(result == true){
+    		if(joined == 0){
+    			eventjoined = 0;
+    		}
+    		else{
+    			eventjoined = 1;
+    			joinBottomButton.title = L('leave');
+    			joinBottomButton.backgroundColor = '#e74c3c';
+    			
+    		}
+    	}
+    }
+    
+    queryjoinevent(data['eventid'], queryJoinCB);
     
     
 	contentView.add(ownerView);
@@ -1040,10 +1080,17 @@ function drawtemplate2Contnet(contentView,data){
 	});
 	
 	joinBottomView.addEventListener('click',function(e){
+
+		if(eventjoined == 0){
+	    	var JoinWindow = require('joinWindows');
+			var stringData = {'title':'lineup'};
+			var type = 'lineup';
+			new JoinWindow(data,stringData,type).open(); 
+	    }
+	    else{
+	    	leaveevent(data['eventid'],leaveEventCB);
+	    }
 	
-		var JoinWindow = require('joinWindows');
-		var stringData = {'title':'lineup'};
-		new JoinWindow(data,stringData).open(); 
 	});	
 	
 	joinBottomView.add(joinBottomButton);
@@ -1052,6 +1099,44 @@ function drawtemplate2Contnet(contentView,data){
 	joinView.add(joinNumberView);
 	joinView.add(SepView);
 	joinView.add(joinBottomView);
+	
+	
+	var eventjoined = 0;
+	Ti.App.addEventListener('lineupevent',function(e) {
+		eventjoined = 1;
+		joinNumber = joinNumber + 1;
+    	Ti.API.info('receive event joinevent ');
+        joinBottomButton.title = L('leave');
+        joinNumberText.text = joinNumber;
+    	joinBottomButton.backgroundColor = '#e74c3c';
+	});
+	
+	function leaveEventCB(result, joined){
+    	if(result == true){
+   			eventjoined = 0;
+   			joinNumber = joinNumber - 1;
+   			joinBottomButton.title = L('lineup');
+   			joinNumberText.text = joinNumber;
+    		joinBottomButton.backgroundColor = '#3498db';
+    	}
+    }
+
+    function queryJoinCB(result, joined){
+    	if(result == true){
+    		if(joined == 0){
+    			eventjoined = 0;
+    		}
+    		else{
+    			eventjoined = 1;
+    			joinBottomButton.title = L('leave');
+    			joinBottomButton.backgroundColor = '#e74c3c';
+    			
+    		}
+    	}
+    }
+    
+    queryjoinevent(data['eventid'], queryJoinCB);
+	
 	
 	////////////////  description ////////////////////////////////////////////
 	var desView = Ti.UI.createView({

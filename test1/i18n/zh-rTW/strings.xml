@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-	<string name="welcome">Welcome to %s!</string>
 	<string name="login">登入</string>
+	<string name="loginerror">帳號或密碼錯誤  請再試一次</string>
 	<string name="signup">註冊</string>
 	<string name="name">姓名</string>
 	<string name="email">電子信箱</string>
@@ -142,4 +142,5 @@
 	<string name="deletegroup">刪除社團</string>
 	<string name="groupsmember">社團成員</string>
 	<string name="swinfo">軟體資訊</string>
+	<string name="networkerror">請連接網路!</string>
 </resources>

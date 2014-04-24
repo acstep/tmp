@@ -6,9 +6,7 @@ Ti.include("baseContentView.js");
 function feedContentWindow(eventid, fullcontent) {
 	//load component dependencies
 	
-	var winobj = {};
-	winobj.createNormalWin = createNormalWin;
-	var self = winobj.createNormalWin(true);
+	var self = createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
@@ -107,7 +105,7 @@ function feedContentWindow(eventid, fullcontent) {
     	'1004':'used',
     	'1005':'teambuying',
     	'1006':'dating',
-    	'1006':'gossip',
+    	'1007':'gossip',
     };
     
     var contentView = Ti.UI.createView({

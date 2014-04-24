@@ -9,9 +9,7 @@ Ti.include("common_util.js");
 function BasePostWindow(data) {
 	//load component dependencies
 	
-	var winobj = {};
-	winobj.createNormalWin = createNormalWin;
-	var self = winobj.createNormalWin(true);
+	var self = createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
@@ -420,11 +418,8 @@ function BasePostWindow(data) {
 			}
         };
         xhr.onerror = function(e){
-        	var alertDlg = Titanium.UI.createAlertDialog({
-				title:'Error !',
-				message:'Server Error. Please try again.'
-			});
-			alertDlg.show();
+        	showAlert('Error !','networkerror');
+        	
 			Ti.API.info('Upload image fail.');
 			forwardView.visible = false;
         	
@@ -446,12 +441,8 @@ function BasePostWindow(data) {
 
 		}
 		else{
-			var alertDlg = Titanium.UI.createAlertDialog({
-				title:'Error !',
-				message:resultmsg
-			});
+			
 			forwardView.visible = false;
-			alertDlg.show();
 			Ti.API.info('Post event false.');
 			
 			

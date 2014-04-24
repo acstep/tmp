@@ -5,9 +5,7 @@ Ti.include("common_util.js");
 
 function createGroupWindow(type,groupid) {
 	//load component dependencies
-	var winobj = {};
-	winobj.createNormalWin = createNormalWin;
-	var self = winobj.createNormalWin(true);
+	var self = createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
@@ -130,7 +128,7 @@ function createGroupWindow(type,groupid) {
 		var userdestext  = introTextArea.value;
 		
 		if(nametext == ''){
-			showAlert('Error !', 'Name empty.');
+			showAlert('Error !', 'nameempty');
 			return;
 		}
 
@@ -358,15 +356,15 @@ function createGroupWindow(type,groupid) {
 	            error:function(error)
 	            {
 	                //error happend, create alert
-	                var a = Titanium.UI.createAlertDialog({title:'Camera'});
 	                //set message
 	                if (error.code == Titanium.Media.NO_CAMERA)
 	                {
-	                    a.setMessage('Device does not have camera');
+	                	showAlert('Error !','Device does not have camera');
 	                }
 	                else
 	                {
-	                    a.setMessage('Unexpected error: ' + error.code);
+	                	showAlert('Error !','Unexpected error: ' + error.code);
+
 	                }
 	 
 	                // show alert

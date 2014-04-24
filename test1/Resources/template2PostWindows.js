@@ -5,9 +5,7 @@ Ti.include("common_util.js");
 
 function Template2PostWindows(data) {
 	//load component dependencies
-	var winobj = {};
-	winobj.createNormalWin = createNormalWin;
-	var self = winobj.createNormalWin(true);
+	var self = createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
@@ -548,7 +546,7 @@ function Template2PostWindows(data) {
 			}
         };
         xhr.onerror = function(e){
-			showAlert('Error !', 'Server Error. Please try again.');
+			showAlert('Error !', 'networkerror');
 			Ti.API.info('Upload image fail.');
 			forwardView.visible = false;
         	

@@ -29,7 +29,7 @@ function checkTokneError(result){
 	    Ti.App.Properties.setString('useremail','');
 		var alertDlg = Titanium.UI.createAlertDialog({
 			title:'Error !',
-			message:L('tokenerror')
+			message:'tokenerror'
 		});
 		alertDlg.show();
 		alertDlg.addEventListener('click', function(e){
@@ -82,6 +82,7 @@ function login(email, pass, callbackf){
 
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
@@ -100,6 +101,7 @@ function logout(devicetoken){
     	Ti.API.info('response : ' + this.responseText);
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -128,6 +130,7 @@ function createAccount(data, callbackf){
 
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
@@ -152,7 +155,7 @@ function updateaccount(data, callbackf){
     		callbackf(true,result);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
@@ -160,6 +163,7 @@ function updateaccount(data, callbackf){
 
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
@@ -186,6 +190,7 @@ function createGroup(data, callbackf){
 
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
@@ -213,6 +218,7 @@ function deleteGroup(gid, callbackf){
 
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -240,6 +246,7 @@ function updateGroup(data, callbackf){
 
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
@@ -266,13 +273,14 @@ function likegroup(gid, callbackf){
     		if(result.result = 'like duplicate'){
     			
     		}
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -299,13 +307,14 @@ function leavegroup(gid, callbackf){
     		if(result.result = 'like duplicate'){
     			
     		}
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -328,13 +337,14 @@ function querygroupnear(data, callbackf){
     		callbackf(true,result.data);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -358,13 +368,14 @@ function querygroup(gid, callbackf){
     		callbackf(true,result.data);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -387,13 +398,14 @@ function queryidgroup(data, callbackf){
     		callbackf(true,result.data);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -426,13 +438,14 @@ function queryGroupevent(gid,limitcount, nexttime, callbackf){
     		callbackf(true,result.data,result.nexttime);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result,0);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror',0);
     };
     xhr.open("GET",url);
@@ -460,13 +473,14 @@ function queryGroupPpl(datastring, callbackf){
     		callbackf(true,result.data,result.nexttime);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result,0);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror',0);
     };
     xhr.open("GET",url);
@@ -491,13 +505,14 @@ function querymyself(callbackf){
     		callbackf(true,result.data);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -520,13 +535,14 @@ function querypeople(data, callbackf){
     		callbackf(true,result.data);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -544,6 +560,7 @@ function updatepos(data){
     	Ti.API.info('response : ' + this.responseText);
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
@@ -566,7 +583,7 @@ function createvent(data, callbackf){
     		callbackf(true,result.result);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
@@ -574,6 +591,7 @@ function createvent(data, callbackf){
 
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
@@ -597,7 +615,7 @@ function deleteevent(eventid, callbackf){
     		callbackf(true,result.result);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
@@ -605,6 +623,7 @@ function deleteevent(eventid, callbackf){
 
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -632,6 +651,7 @@ function queryeventbyid(eventid,callbackf){
 
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -696,6 +716,7 @@ function queryevent(geo, distance, category, limitcount,sorttype, nexttime, next
 
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror',0);
     };
     xhr.open("GET",url);
@@ -729,13 +750,14 @@ function querymyevent(limitcount, nexttime, callbackf){
     		callbackf(true,result.data,result.nexttime);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result,0);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror',0);
     };
     xhr.open("GET",url);
@@ -763,13 +785,14 @@ function likeevent(eventid, sourceobj, callbackf){
     		if(result.result = 'like duplicate'){
     			
     		}
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result,sourceobj);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -793,13 +816,14 @@ function commentevt(eventid, data, callbackf){
     		callbackf(true,result.result);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
@@ -823,13 +847,76 @@ function joinevt(data, callbackf){
     		callbackf(true,result.result);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
+    	callbackf(false,'networkerror');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
+
+
+function leaveevent(eventid, callbackf){
+	var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'leaveevent?' + 'id=' + id + '&token=' + token + '&eventid=' + eventid ;
+	Ti.API.info('url : ' + url);
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.result);
+    	}
+    	else{
+    		if(checkTokenError(result.result)){
+    			return;
+    		}
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
+    	callbackf(false,'networkerror');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
+
+
+function queryjoinevent(eventid, callbackf){
+	var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'queryjoinevent?' + 'id=' + id + '&token=' + token + '&eventid=' + eventid ;
+	Ti.API.info('url : ' + url);
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.join);
+    	}
+    	else{
+    		if(checkTokenError(result.result)){
+    			return;
+    		}
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -860,6 +947,7 @@ function queryjoinlist(eventid, starttime, callbackf){
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -882,13 +970,14 @@ function querypplnear(data, callbackf){
     		callbackf(true,result.data);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -920,6 +1009,7 @@ function querycomment(eventid, starttime, callbackf){
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -946,13 +1036,14 @@ function querynotify( starttime, limitcount, callbackf){
     		callbackf(true,result.data);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -978,13 +1069,14 @@ function createchatroom( id, toid, check, callbackf){
     		callbackf(true,result.data);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -1011,13 +1103,14 @@ function quitchatroom( roomid, callbackf){
     		callbackf(true,result.result);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -1047,13 +1140,14 @@ function querychatroom( starttime, limitcount,onlytime ,callbackf){
     		callbackf(true,result.data);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);
@@ -1079,13 +1173,14 @@ function sendmsg( roomid, msgdata ,callbackf){
     		callbackf(true,result.data);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
@@ -1112,13 +1207,14 @@ function querymsg( roomid, starttime, limitcount ,callbackf){
     		callbackf(true,result.data);
     	}
     	else{
-    		if(checkTokneError(result.result)){
+    		if(checkTokenError(result.result)){
     			return;
     		}
     		callbackf(false,result.result);
     	}
     };
     xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("GET",url);

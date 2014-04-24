@@ -4,9 +4,7 @@ Ti.include("common_util.js");
 function LoginWindow() {
 	//load component dependencies
 	
-	var winobj = {};
-	winobj.createNormalWin = createNormalWin;
-	var self = winobj.createNormalWin(false);
+	var self = createNormalWin(false);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
@@ -97,7 +95,10 @@ function LoginWindow() {
 		else{
 			
 			forwardView.visible = false;
-			showAlert('Error !', 'Email or Password is not correct. Please try again.');
+			if(data != 'networkerror'){
+				showAlert('Error !', 'loginerror');
+			}
+			
 			
 			Ti.API.info('login false.');
 			

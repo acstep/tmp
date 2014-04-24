@@ -14,9 +14,7 @@ function talkWindow(id, toid,roomdata) {
  
 	//load component dependencies
 	
-	var winobj = {};
-	winobj.createNormalWin = createNormalWin;
-	var self = winobj.createNormalWin(true);
+	var self = createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;

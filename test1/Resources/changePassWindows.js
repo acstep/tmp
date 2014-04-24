@@ -4,9 +4,7 @@ Ti.include("common_util.js");
 
 
 function changePassWindow() {
-	var winobj = {};
-	winobj.createNormalWin = createNormalWin;
-	var self = winobj.createNormalWin(true);
+	var self = createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
@@ -89,9 +87,7 @@ function changePassWindow() {
         }
         
         if(newpasstext != vnewpasstext){
-        	var error = Titanium.UI.createAlertDialog({title:'Camera'});
             showAlert('Error !', L('passverifyerror'));
-            error.show();
             return;
         }
 		

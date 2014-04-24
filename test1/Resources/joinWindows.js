@@ -2,11 +2,9 @@ Ti.include("common_net.js");
 Ti.include("common_util.js");
 
 
-function joinWindow(data,stringData) {
+function joinWindow(data,stringData,type) {
 	//load component dependencies
-	var winobj = {};
-	winobj.createNormalWin = createNormalWin;
-	var self = winobj.createNormalWin(true);
+	var self = createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
@@ -58,7 +56,12 @@ function joinWindow(data,stringData) {
 			return;
 		}
 		else{
-	
+			if(type == 'join'){
+				Ti.App.fireEvent('joinevent');
+			}
+	        if(type == 'lineup'){
+				Ti.App.fireEvent('lineupevent');
+			}
 			self.close();
 		}
 	}

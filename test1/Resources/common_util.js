@@ -501,9 +501,33 @@ function createNormalFeed(viewobj,category){
 
 
 function showAlert(title, message){
+	var msgString = '';
+	var titleString = '';
+	switch(message){
+		case 'networkerror':
+		    msgString = L('networkerror');
+			break;
+		case 'nameempty':
+		    
+			break;	
+		case 'passempty':
+			msgString = L('passempty');	
+			break;
+		case 'passverifyerror':
+			msgString = L('passverifyerror');	
+			break;	
+		case 'loginerror':
+			msgString = L('loginerror');	
+			break;		
+			
+			
+		default:
+	}
+	
+	
 	var alertDlg = Titanium.UI.createAlertDialog({
 		title:title,
-		message:message
+		message:msgString
 	});
 	alertDlg.show();
 }
