@@ -67,6 +67,14 @@ function BasePostWindow(data) {
 	
 	doneButton.addEventListener('click',function(e)
 	{
+		Ti.API.info('desTextArea.value.lengh : '+desTextArea.value.length);
+		Ti.API.info('titleTextField.value.length.: ' + titleTextField.value.length);
+		
+		if(desTextArea.value.length == 0 || titleTextField.value.length == 0){
+			showAlert('Error !', 'fieldempty');
+			return;
+		}
+
 	    totalUploadImg = imageList.length;
 	    currentUploadImg = 0;
 	    uploadimg = [];

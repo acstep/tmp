@@ -6,7 +6,7 @@
 	<string name="signup">Sign Up</string>
 	<string name="name">Name</string>
 	<string name="email">Email</string>
-	<string name="passwd">Password</string>
+	<string name="passwd">Password (8-16 Characters)</string>
 	<string name="passwdagain">Password Verify</string>
 	<string name="club">Club Activities</string>
 	<string name="sale">Promotions</string>
@@ -114,8 +114,6 @@
 	<string name="inputnewpass">Please input your new password</string>
 	<string name="newpassagain">Verify password</string>
 	<string name="inputnewpassagain">Please input your new password again</string>
-	<string name="passempty">Password empty</string>
-	<string name="passverifyerror">Password verify error</string>
 	<string name="tokenerror">Your password has been changed. Please login again.</string>
 	<string name="lineup">Line Up</string>
 	<string name="lineuplist">Line Up List</string>
@@ -143,4 +141,10 @@
 	<string name="groupsmember">Group Members</string>
 	<string name="swinfo">SoftWare Information</string>
 	<string name="networkerror">Please Connect to Internet!</string>
+	<string name="passempty">Password less than 8 characters!</string>
+	<string name="passverifyerror">Password verify error</string>
+	<string name="emailempty">Email is empty.</string>
+	<string name="nameempty">Name is empty.</string>
+	<string name="fieldempty">Input field is empty.</string>
+	<string name="error">Error !</string>
 </resources>

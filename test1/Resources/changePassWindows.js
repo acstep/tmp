@@ -86,6 +86,11 @@ function changePassWindow() {
             return;
         }
         
+        if(oldpasstext.length <8 == '' || newpasstext.length <8 || vnewpasstext.length <8 ){
+        	showAlert('Error !', L('passempty'));
+            return;
+        }
+        
         if(newpasstext != vnewpasstext){
             showAlert('Error !', L('passverifyerror'));
             return;

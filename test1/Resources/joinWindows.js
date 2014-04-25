@@ -68,6 +68,7 @@ function joinWindow(data,stringData,type) {
 	
 	doneButton.addEventListener('click',function(e)
 	{
+		
 		var tmpdata = {
 	    	'name': Ti.App.Properties.getString('username',''),
 	    	'content':desTextArea.value,

@@ -74,6 +74,12 @@ function createGroupWindow(type,groupid) {
 	
 	doneButton.addEventListener('click',function(e)
 	{
+		
+		if(nameTextField.value.length == 0 || introTextArea.value.length == 0){
+			showAlert('Error !', 'fieldempty');
+			return;
+		}
+		
 		for(var i=0; i<tmpImageList.length; i++){
 			if(tmpImageList[i].filename != ''){
 				photoList.push(tmpImageList[i].filename);

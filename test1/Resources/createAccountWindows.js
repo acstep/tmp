@@ -95,13 +95,27 @@ function createAccountWindow() {
 	    var emailtext = emailField.value;
 	    var passwdtext = passwdField.value;
 	    var passwdVtext = passwdVField.value;
+	    
+	    if(emailtext.length == 0){
+	    	showAlert('Error !', 'emailempty');
+	    	return;
+	    }
+	    if(nametext.length == 0){
+	    	showAlert('Error !', 'nameempty');
+	    	return;
+	    }
+	    if(passwdtext.length <8){
+	    	showAlert('Error !', 'passempty');
+	    	return;
+	    }
+	    
 	    Ti.API.info('nametext :'+ nametext);
 	    Ti.API.info('emailtext :'+ emailtext);
 	    Ti.API.info('passwdtext :'+ passwdtext);
 	    Ti.API.info('passwdVtext :'+ passwdVtext);
 	    var headfile = Ti.App.Properties.getString('headfile','');
-	    if(passwdtext.length == 0 ||passwdtext != passwdVtext){
-	   	    showAlert('Error !', 'Password empty or not the same.');
+	    if(passwdtext != passwdVtext){
+	   	    showAlert('Error !', 'passverifyerror');
 			
 			passwdField.value = '';
 			passwdVtext.value = '';

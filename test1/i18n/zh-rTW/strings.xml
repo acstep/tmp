@@ -5,7 +5,7 @@
 	<string name="signup">註冊</string>
 	<string name="name">姓名</string>
 	<string name="email">電子信箱</string>
-	<string name="passwd">密碼</string>
+	<string name="passwd">密碼 (8-16 字元)</string>
 	<string name="passwdagain">再次輸入密碼</string>
 	<string name="category">應用分類</string>
 	<string name="club">社團活動</string>
@@ -114,8 +114,6 @@
 	<string name="inputnewpass">請輸入新密碼</string>
 	<string name="newpassagain">確認新密碼</string>
 	<string name="inputnewpassagain">請再次輸入新密碼</string>
-	<string name="passempty">密碼不能空白</string>
-	<string name="passverifyerror">密碼不同</string>
 	<string name="tokenerror">您的密碼已經被更改過 請重新登入</string>
 	<string name="lineup">排隊</string>
 	<string name="lineuplist">排隊名單</string>
@@ -143,4 +141,10 @@
 	<string name="groupsmember">社團成員</string>
 	<string name="swinfo">軟體資訊</string>
 	<string name="networkerror">請連接網路!</string>
+	<string name="passverifyerror">密碼不同</string>
+	<string name="passempty">密碼不能少於八個字元</string>
+	<string name="emailempty">電子信箱不能空白</string>
+	<string name="nameempty">姓名不能空白</string>
+	<string name="fieldempty">欄位不能空白</string>
+	<string name="error">錯誤</string>
 </resources>

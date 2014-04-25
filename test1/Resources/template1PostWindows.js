@@ -61,6 +61,11 @@ function Template1PostWindows(data) {
 	
 	doneButton.addEventListener('click',function(e)
 	{
+		if(desTextArea.value.length == 0 || titleTextField.value.length == 0){
+			showAlert('Error !', 'fieldempty');
+			return;
+		}
+
 	    totalUploadImg = imageList.length;
 	    currentUploadImg = 0;
 	    uploadimg = [];

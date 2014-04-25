@@ -70,6 +70,12 @@ function accountinfoWindow() {
 	
 	doneButton.addEventListener('click',function(e)
 	{
+		
+		if(nameTextField.value.length == 0){
+	    	showAlert('Error !', 'nameempty');
+	    	return;
+	    }
+	    
 		for(var i=0; i<accountImageList.length; i++){
 			if(accountImageList[i].filename != ''){
 				photoList.push(accountImageList[i].filename);

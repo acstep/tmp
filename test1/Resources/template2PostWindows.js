@@ -61,6 +61,12 @@ function Template2PostWindows(data) {
 	
 	doneButton.addEventListener('click',function(e)
 	{
+		if(desTextArea.value.length == 0 || purposeTextField.value.length == 0 || placeTextField.value.length == 0){
+			showAlert('Error !', 'fieldempty');
+			return;
+		}
+		
+
 	    totalUploadImg = imageList.length;
 	    currentUploadImg = 0;
 	    uploadimg = [];

@@ -27,6 +27,10 @@ function getLon(){
 	return parseFloat(Ti.App.Properties.getDouble('longitude',-1));
 }
 
+function checkTokenError(result){
+	return;
+}
+
 function clearProperty(){
 	var devicetoken = Ti.App.Properties.getString('googletoken','');
 	if(devicetoken != ''){
@@ -505,23 +509,36 @@ function showAlert(title, message){
 	var titleString = '';
 	switch(message){
 		case 'networkerror':
+		    titleString = L('error');
 		    msgString = L('networkerror');
 			break;
-		case 'nameempty':
-		    
-			break;	
 		case 'passempty':
+			titleString = L('error');
 			msgString = L('passempty');	
 			break;
 		case 'passverifyerror':
+		    titleString = L('error');
 			msgString = L('passverifyerror');	
 			break;	
 		case 'loginerror':
+			titleString = L('error');
 			msgString = L('loginerror');	
 			break;		
-			
+		case 'emailempty':
+			titleString = L('error');
+			msgString = L('emailempty');	
+			break;		
+		case 'nameempty':
+			titleString = L('error');
+			msgString = L('nameempty');	
+			break;	
+		case 'fieldempty':
+		 	titleString = L('error');
+			msgString = L('fieldempty');	
+			break;					
 			
 		default:
+			
 	}
 	
 	
