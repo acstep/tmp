@@ -215,7 +215,7 @@ function nearPeopleWindow() {
             	var desText = Ti.UI.createLabel({
 					font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 					text: getStringlimit(nearbyData[i]['des'],50,100),
-					color:'#333333',left:'10dp',top:'5dp'
+					color:'#333333',left:'10dp',top:'5dp',right:'10dp'
 				});	
 				contentView.add(desText);	
             }

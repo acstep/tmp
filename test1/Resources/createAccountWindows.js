@@ -69,9 +69,11 @@ function createAccountWindow() {
 			else{
 				
 				forwardView.visible = false;
+				
 				var feedWindow = require('feedWindows');
 				new feedWindow().open();
 				self.close();
+				showAlert('', 'goverify');
 			}
 			
 			
@@ -490,10 +492,12 @@ function createAccountWindow() {
             	Ti.App.Properties.setString('headfile',result.filename);
 
 				forwardView.visible = false;
+				
 				var feedWindow = require('feedWindows');
 				new feedWindow().open();
+				
 				self.close();
-            	
+            	showAlert('', 'goverify');
 			}
 			forwardView.visible = false;
         };

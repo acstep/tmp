@@ -2,6 +2,7 @@
 <resources>
 	<string name="category">Category</string>
 	<string name="login">Login</string>
+	<string name="frogetPass">Froget Password?</string>
 	<string name="loginerror">Email or Password are not Correct. Please Try again.</string>
 	<string name="signup">Sign Up</string>
 	<string name="name">Name</string>
@@ -147,4 +148,7 @@
 	<string name="nameempty">Name is empty.</string>
 	<string name="fieldempty">Input field is empty.</string>
 	<string name="error">Error !</string>
+	<string name="emailpassempty">Please input your Email, we will send your password to this Email.</string>
+	<string name="passsend">Password has been sent to your email address.</string>
+	<string name="goverify"> We'll send a verification link to the email address you used to create the account. Click the link in that email to verify that you own this address.</string>
 </resources>

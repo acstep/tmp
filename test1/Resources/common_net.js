@@ -108,6 +108,23 @@ function logout(devicetoken){
     xhr.send(); 
 };
 
+function forgetpwd(email){
+
+	var url = getServerAddr()+'forgetpwd?'+ 'email=' + email ;
+	Ti.API.info('url : ' + url);
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	showAlert('','passsend');
+    	Ti.API.info('response : ' + this.responseText);
+    };
+    xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
+    	//callbackf(false,'networkerror');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+};
+
 
 
 function createAccount(data, callbackf){

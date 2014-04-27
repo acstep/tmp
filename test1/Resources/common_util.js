@@ -91,14 +91,7 @@ function createNormalWin(title){
 		zIndex:15
 	});
 	
-	var loginIndicator = Ti.UI.createActivityIndicator({
-		  font: {fontFamily:'Helvetica Neue', fontSize:14, fontWeight:'bold'},
-		  style:Titanium.UI.ActivityIndicatorStyle.BIG,
 	
-	});
-	
-	forwardView.add(loginIndicator);
-	loginIndicator.show();
 	
 	////  title  //////
 	if(title == true){
@@ -118,6 +111,14 @@ function createNormalWin(title){
 	
 	self.backgroundView = backgroundView;
 	self.forwardView = forwardView;
+	var loginIndicator = Ti.UI.createActivityIndicator({
+		  font: {fontFamily:'Helvetica Neue', fontSize:14, fontWeight:'bold'},
+		  style:Titanium.UI.ActivityIndicatorStyle.BIG,
+	
+	});
+	
+	forwardView.add(loginIndicator);
+	loginIndicator.show();
 	
 	return self;
 }
@@ -536,7 +537,18 @@ function showAlert(title, message){
 		 	titleString = L('error');
 			msgString = L('fieldempty');	
 			break;					
-			
+		case 'emailpassempty':
+		 	titleString = L('');
+			msgString = L('emailpassempty');	
+			break;		
+		case 'passsend':
+		 	titleString = L('');
+			msgString = L('passsend');	
+			break;	
+		case 'goverify':
+		 	titleString = L('');
+			msgString = L('goverify');	
+			break;					
 		default:
 			
 	}

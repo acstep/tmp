@@ -54,6 +54,24 @@ function LoginWindow() {
 
 	});
 	
+	var forgetPassText = Ti.UI.createLabel({
+		font:{fontSize:'18sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
+		text: L('frogetPass'),
+		color:'#ffffff', top:'20dp',right:'10%',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT,
+	});
+	
+	forgetPassText.addEventListener('click',function(e){
+		if(emailText.value.length == 0){
+			showAlert('', 'emailpassempty');
+		}
+		else{
+			forgetpwd(emailText.value);
+		}
+		
+	
+	});
+	
 	var createAccountButton = Titanium.UI.createButton({
 	    title: L('signup'),
 	    bottom:'20dp',
@@ -134,6 +152,8 @@ function LoginWindow() {
 	backgroundView.add(emailText);
 	backgroundView.add(passText);
 	backgroundView.add(loginBotton);
+	backgroundView.add(forgetPassText);
+	
 	self.add(createAccountButton);
 
 	return self;

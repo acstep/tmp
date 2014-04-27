@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 	<string name="login">登入</string>
+	<string name="frogetPass">忘記密碼?</string>
 	<string name="loginerror">帳號或密碼錯誤  請再試一次</string>
 	<string name="signup">註冊</string>
 	<string name="name">姓名</string>
@@ -147,4 +148,7 @@
 	<string name="nameempty">姓名不能空白</string>
 	<string name="fieldempty">欄位不能空白</string>
 	<string name="error">錯誤</string>
+	<string name="emailpassempty">請輸入電子郵件，我們將會把密碼寄到您的信箱</string>
+	<string name="passsend">密碼已經寄到您的信箱</string>
+	<string name="goverify">我們已經寄信到您的信箱，請到您的信箱啟動帳號，才能使用全部功能</string>
 </resources>
