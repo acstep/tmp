@@ -3,7 +3,7 @@ Ti.include("common_net.js");
 Ti.include("common_util.js");
 
 
-function accountinfoWindow() {
+function accountinfoWindow(selfdata) {
 	//load component dependencies
 	var self = createNormalWin(true);
 	var backgroundView = self.backgroundView;
@@ -179,6 +179,41 @@ function accountinfoWindow() {
   		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
   		bottom:'20dp',width:'100dp', left:'20dp',height:Titanium.UI.SIZE
 	});
+	
+	if(selfdata['verified'] == 0){
+		var notVerifiedText = Ti.UI.createLabel({
+			font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
+			text: L('notverified'),
+			color:'#e74c3c',
+			textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT,
+	  		right:'5%',top: '20dp'
+		});
+		var resendButton = Titanium.UI.createButton({
+		    title: ' '+L('resendv')+' ',
+		    top: '70dp',
+		    height: '30dp',
+		    right:'5%',
+		    color:'#ffffff',
+		    borderRadius:10,
+		    backgroundColor:'#e74c3c'
+		});
+		
+		resendButton.addEventListener('click',function(e){
+			resendVEmail(resendVEmailCB);
+		});
+		
+		headView.add(notVerifiedText);
+		headView.add(resendButton);
+	}
+	
+	function resendVEmailCB(result, data){
+		if(result == true){
+			showAlert('','vsent');
+		}
+		else{
+			
+		}	
+    }
 	
 	headPhotoImg.image =  getHeadImg(getUserID());  
 	headView.add(headPhotoImg);
@@ -577,10 +612,12 @@ function accountinfoWindow() {
 	    }
 	});
 
-    headView.addEventListener('click',function(e)
+    headPhotoImg.addEventListener('click',function(e)
 	{
 		dialog.show();
 	});
+	
+	
 	
 	var getheadphoto = function(e) {
 		Ti.API.info('receive event headphotodone ');

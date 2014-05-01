@@ -108,6 +108,9 @@
 	<string name="boy">Boy</string>
 	<string name="girl">Girl</string>
 	<string name="none">---</string>
+	<string name="notverified">Not Verified</string>
+	<string name="resendv">Resend Email</string>
+	<string name="vsent">A confirmation email has been sent to you.</string>
 	<string name="changepass">Change Password</string>
 	<string name="orgpass">Old Password</string>
 	<string name="inputorgpass">Please input your old password</string>

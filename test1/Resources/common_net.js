@@ -188,6 +188,38 @@ function updateaccount(data, callbackf){
 	
 };
 
+
+function resendVEmail(callbackf){
+	var id = Ti.App.Properties.getString('userid','');
+    var token = Ti.App.Properties.getString('token','');
+	var url = getServerAddr()+'resendvemail?' + 'id=' + id + '&token=' + token ;
+	Ti.API.info('url : ' + url);
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+    xhr.onload = function(e) {
+    	Ti.API.info('response : ' + this.responseText);
+        var result =  JSON.parse(this.responseText);
+    	if(result.result == 'ok')
+    	{
+    		
+    		callbackf(true,result.result);
+    	}
+    	else{
+    		if(checkTokenError(result.result)){
+    			return;
+    		}
+    		callbackf(false,result.result);
+    	}
+    };
+    xhr.onerror = function(e){
+    	showAlert('Error','networkerror');
+    	callbackf(false,'networkerror');
+    };
+    xhr.open("GET",url);
+    xhr.send(); 
+	
+};
+
+
 function createGroup(data, callbackf){
 	var id = Ti.App.Properties.getString('userid','');
     var token = Ti.App.Properties.getString('token','');

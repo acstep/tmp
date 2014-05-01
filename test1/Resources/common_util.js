@@ -70,6 +70,8 @@ function createNormalWin(title){
 
 	});
 	
+	self.orientationModes = [Titanium.UI.PORTRAIT];
+	
 	var backgroundView = Ti.UI.createView({
 		width:'100%',
 		height:'100%',
@@ -548,7 +550,11 @@ function showAlert(title, message){
 		case 'goverify':
 		 	titleString = L('');
 			msgString = L('goverify');	
-			break;					
+			break;	
+		case 'vsent':
+		 	titleString = L('');
+			msgString = L('vsent');	
+			break;						
 		default:
 			
 	}

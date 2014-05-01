@@ -35,7 +35,7 @@ function aboutWindow() {
 	
 	var infoText = Ti.UI.createLabel({
 		font:{fontSize:'20sp',fontFamily:'Helvetica Neue'},
-		text:'Version Beta 1.0',
+		text:'Version Beta 1.01',
 		color:'#333333',
   		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
   		top:'100dp'

@@ -13,11 +13,25 @@ function LoginWindow() {
 	backgroundView.backgroundColor = '#4aa3df';
 	backgroundView.height='80%';
 	
+	var titleText = Ti.UI.createLabel({
+		font:{fontSize:'50sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
+		text: 'NexBBS',
+		color:'#ffffff', top:'15%',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+	});
+	
+	var smalltitleText = Ti.UI.createLabel({
+		font:{fontSize:'14sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
+		text: 'Next Generation Bulletin Board System',
+		color:'#ffffff', top:'3dp',
+  		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+	});
+	
 	var emailText= Titanium.UI.createTextField({
 		editable: true,
 		hintText:'Email',
 		width:'80%',
-		top:'35%',
+		top:'50dp',
 		font:{fontSize:'20sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 		color:'#333333',
 		textAlign:'left',
@@ -148,7 +162,8 @@ function LoginWindow() {
 	   
 	});	
 	
-	
+	backgroundView.add(titleText);
+	backgroundView.add(smalltitleText);
 	backgroundView.add(emailText);
 	backgroundView.add(passText);
 	backgroundView.add(loginBotton);

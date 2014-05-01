@@ -155,7 +155,7 @@ function setupWindow() {
             Ti.API.info('user data : '  + JSON.stringify(data));
 			forwardView.visible = false;
 			var AccountInfoWindow = require('accountInfoWindows');
-			new AccountInfoWindow().open();
+			new AccountInfoWindow(data).open();
 		}
 		
 	};
