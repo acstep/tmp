@@ -536,13 +536,13 @@ function feedWindow() {
 	memuCommandTableView.addEventListener('click',function(e) {
 		switch(e.index){
 			case 0:
-				var SetupWindow = require('groupsWindows');
-				new SetupWindow('new','').open(); 
+				var groupListWindow = require('groupsWindows');
+				new groupListWindow('new','').open(); 
 				switchBackgroundView(true);
 			break;	
 			case 1:
-				var SetupWindow = require('createGroupWindows');
-				new SetupWindow('new','').open(); 
+				var createGroupWindow = require('createGroupWindows');
+				new createGroupWindow('new','','').open(); 
 				switchBackgroundView(true);
 			break;	
 			case 2:

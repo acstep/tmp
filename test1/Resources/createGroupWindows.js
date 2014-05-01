@@ -3,7 +3,7 @@ Ti.include("common_net.js");
 Ti.include("common_util.js");
 
 
-function createGroupWindow(type,groupid) {
+function createGroupWindow(type,groupid,selfdata) {
 	//load component dependencies
 	var self = createNormalWin(true);
 	var backgroundView = self.backgroundView;
@@ -53,6 +53,10 @@ function createGroupWindow(type,groupid) {
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
   		left:'50dp'
 	});
+	
+	if(type == 'edit'){
+		TitleText.text = L('editgroup');
+	}
 	
 	TitleText.addEventListener('click',function(e){
 		self.close();
@@ -258,6 +262,7 @@ function createGroupWindow(type,groupid) {
 	    hintText:L('weblink'),
 	});
 	
+	
 		
 	nameView.add(nameTextView);
 	nameView.add(nameTextField);
@@ -300,6 +305,16 @@ function createGroupWindow(type,groupid) {
 	introView.add(introText);
 	
 	introView.add(introTextArea);
+
+    // set orginal data 
+    if(type == 'edit' && selfdata != 'name'){
+		nameTextField.value = selfdata['name'];
+		phoneTextField.value = selfdata['phone'];
+		addressTextField.value = selfdata['address'];
+		weburlTextField.value = selfdata['web'];
+		introTextArea.value = selfdata['des'];
+		headPhotoImg.image = getHeadImg(selfdata['gid']);
+	}
 
 	
 	var tmpView = Titanium.UI.createView({
@@ -465,9 +480,14 @@ function createGroupWindow(type,groupid) {
 
 	var latitude = 0;
 	var longitude = 0;
-
+  
 	latitude = getLat();
 	longitude = getLon();
+	
+	if(type == 'edit' && selfdata != 'name'){
+		latitude = selfdata['loc']['coordinates'][1];
+		longitude = selfdata['loc']['coordinates'][0];
+	}
 	Ti.App.Properties.setDouble('userchooselatitude',latitude);
 	Ti.App.Properties.setDouble('userchooselongitude',longitude);
 	
@@ -731,6 +751,10 @@ function createGroupWindow(type,groupid) {
 	
 	var orginalPhotos = [];
 	
+	if(type= 'edit'){
+		orginalPhotos = selfdata['photos'];
+	}
+	
 	for(var i=0; i<orginalPhotos.length; i++){
 		var tmpImageView = Titanium.UI.createImageView({
 			width:'100dp',
@@ -850,22 +874,16 @@ function createGroupWindow(type,groupid) {
 	function queryGroupCallback(result, data){
 		forwardView.visible = false;
 		if(result == true){
-		
+			nameTextField.value;
+			phoneTextField.value;
+			addressTextField.value;
+			weburlTextField.value;
+			introTextArea.value;
            
 		}
 	}
 	
-	
-	if(type == 'new'){
-		
-	}
-	else{
-		forwardView.visible = true;
-		queryGroup(groupid, queryGroupCallback);
-	}
-	
-	
-	
+
 	return self;
 }
 

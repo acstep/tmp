@@ -129,6 +129,7 @@
 	<string name="title">Please input event title</string>
 	<string name="addsomephotos">Add some photos to show yourself.</string>
 	<string name="creategroup">Create Group</string>
+	<string name="editgroup">Edit Group</string>
 	<string name="basicinfo">Basic Information</string>
 	<string name="groupname">Group Name</string>
 	<string name="phone">Phone Number</string>

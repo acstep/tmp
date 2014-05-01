@@ -129,6 +129,7 @@
 	<string name="title">請輸入訊息標題</string>
 	<string name="addsomephotos">增加些照片讓大家認識你吧</string>
 	<string name="creategroup">成立社團</string>
+	<string name="editgroup">編輯社團</string>
 	<string name="basicinfo">基本資料</string>
 	<string name="groupname">社團名稱</string>
 	<string name="phone">電話</string>

@@ -1554,7 +1554,7 @@ function drawInfo(viewobj, data){
 		var addressViewBack = Ti.UI.createView({
 		    backgroundColor: '#dddddd',
 		    height: Ti.UI.SIZE,
-		    top:'20dp',left:'0dp',width:'100%'
+		    top:'0dp',left:'0dp',width:'100%'
 		});
 		var addressView = Ti.UI.createView({
 		    backgroundColor: '#ffffff',
@@ -1653,6 +1653,51 @@ function drawInfo(viewobj, data){
 			webViewBack.add(webView);
 		}
 		
+		if(data['ownerid'] == Ti.App.Properties.getString('userid','')){
+			var gEditViewBack = Ti.UI.createView({
+			    backgroundColor: '#dddddd',
+			    height: Ti.UI.SIZE,
+			    top:'0dp',left:'0dp',width:'100%'
+			});
+			var gEditView = Ti.UI.createView({
+			    backgroundColor: '#ffffff',
+			    height: Ti.UI.SIZE,borderRadius:10,
+			    top:'20dp',left:'3%',width:'94%'
+			});
+			
+			var gEditImg = Titanium.UI.createImageView({
+				image:'edit.png',
+				backgroundColor:'transparent',left:'10dp',
+				height: '30dp', width: '30dp'
+			});
+			
+			var gEditText = Ti.UI.createLabel({
+				font:{fontSize:'18sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
+				text: L('editgroup'),
+				backgroundColor:'transparent',
+				color:'#777777',
+				left:'50dp', right:'40dp',
+				top:'10dp',bottom:'10dp',
+		  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+			});
+			
+			var gEditArrowImg = Titanium.UI.createImageView({
+				image:'next.png',
+				backgroundColor:'transparent',right:'10dp',
+				height: '20dp', width: '20dp'
+			});
+			gEditView.add(gEditImg);
+			gEditView.add(gEditText);
+			gEditView.add(gEditArrowImg);
+			gEditView.selfdata = data;
+			gEditView.addEventListener('click', function(){
+				var EditGroupWindow = require('createGroupWindows');
+				new EditGroupWindow('edit',this.selfdata['gid'],this.selfdata).open(); 
+			});
+			
+			gEditViewBack.add(gEditView);
+		}
+		
 		topView.add(headPhotoImg);
 		topView.add(contentView);
 		viewobj.add(topView);
@@ -1667,8 +1712,20 @@ function drawInfo(viewobj, data){
 		}
 		
 		viewobj.add(joinView);
-		viewobj.add(addressViewBack);
 		
+		var spaceView = Ti.UI.createView({
+		    backgroundColor: 'ffffff',
+		    layout: 'horizontal',
+		    top:'0dp',left:'0dp',width:'100%',height:'20dp'
+		});
+		viewobj.add(spaceView);
+		
+		if(data['ownerid'] == Ti.App.Properties.getString('userid','')){
+			viewobj.add(gEditViewBack);
+		}	
+		if(data['address'] != ''){
+			viewobj.add(addressViewBack);
+		}
 		if(data['web'] != ''){
 			viewobj.add(webViewBack);
 		}	
