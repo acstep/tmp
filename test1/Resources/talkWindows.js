@@ -101,7 +101,7 @@ function talkWindow(id, toid,roomdata) {
 	    top: '10dp',
 	    bottom:'10dp',
 	    width:'23%',
-	    height: '40dp',borderRadius:10,
+	    height: '40dp',borderRadius:3,
 	    right:'2%',backgroundColor:'#3498db'
 	});
 

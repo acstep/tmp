@@ -909,7 +909,7 @@ function createFeedTop(feedView, data, lon, lat){
 	
 	
 	var headPhotoImg = Titanium.UI.createImageView({
-        borderRadius:15,backgroundImage:'headphoto.png',
+        borderRadius:5,backgroundImage:'headphoto.png',
 		height: '60dp', width: '60dp', top:'15dp', left:'10dp'
 	});
 	
@@ -995,7 +995,7 @@ function createFeedTop(feedView, data, lon, lat){
 		font:{fontSize:'10sp',fontFamily:'Helvetica Neue'},
 		color:'#ffffff',
 		left:'10dp',
-		borderRadius:10,
+		borderRadius:3,
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
 	});
 	
@@ -1006,7 +1006,7 @@ function createFeedTop(feedView, data, lon, lat){
 
 		left:'10dp',
 		backgroundColor:'#3498db',
-		borderRadius:10,
+		borderRadius:3,
   		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
 	});
 	
@@ -1051,7 +1051,7 @@ function createAddPhoto(contentScrollView,imageList){
 		top:'30dp',
 		left:'10dp',
 		layout:'vertical',
-		borderRadius:15,
+		borderRadius:5,
 		
 	});
 	
@@ -1106,7 +1106,7 @@ function createAddPhoto(contentScrollView,imageList){
 							height:'100dp',
 							top:'30dp',
 							left:'10dp',
-							borderRadius:15
+							borderRadius:5
 						});
 						imageScrollView.contentWidth = ((imageList.length+1)*110 + 20)*(Titanium.Platform.displayCaps.dpi / 160);
 						imageScrollView.add(addSelectImg);
@@ -1159,7 +1159,7 @@ function createAddPhoto(contentScrollView,imageList){
 							height:'100dp',
 							top:'30dp',
 							left:'10dp',
-							borderRadius:15
+							borderRadius:5
 						});
 						imageScrollView.contentWidth = ((imageList.length+1)*110 + 20)*(Titanium.Platform.displayCaps.dpi / 160);
 						imageScrollView.add(addSelectImg);
@@ -1322,7 +1322,7 @@ function drawInfo(viewobj, data){
 		
 		///////////////////////  head photo  //////////////
 		var headPhotoImg = Titanium.UI.createImageView({
-	        borderRadius:15,backgroundImage:'headphoto.png',
+	        borderRadius:5,backgroundImage:'headphoto.png',
 			height: '100dp', width: '100dp', top:'10dp', left:'0dp'
 		});
 		headPhotoImg.image = getHeadImg(data['gid']);
@@ -1345,7 +1345,7 @@ function drawInfo(viewobj, data){
 		var phoneNumView = Titanium.UI.createView({
 			left:'0dp',backgroundColor:'transparent',
 			height: Ti.UI.SIZE,width: Ti.UI.SIZE,top:'20dp',
-			layout: 'horizontal',borderRadius:10
+			layout: 'horizontal',borderRadius:3
 		});
 		
 		
@@ -1428,7 +1428,7 @@ function drawInfo(viewobj, data){
 		var joinBottomButton = Titanium.UI.createButton({
 		    title: L('join'),
 		    width:'60%',
-		    backgroundColor:'#3498db',borderRadius:10
+		    backgroundColor:'#3498db',borderRadius:3
 		});
 		
 		var liked = data['liked'];
@@ -1500,7 +1500,7 @@ function drawInfo(viewobj, data){
 				var imageContentView = Titanium.UI.createView({
 				  	backgroundColor: '#ffffff',
 				    top: '10dp', bottom:'10dp',
-				    borderRadius:15,
+				    borderRadius:5,
 				    width:'80dp',height:'80dp',left:'10dp',
 				    name:'imagecontentview'
 				});  
@@ -1558,7 +1558,7 @@ function drawInfo(viewobj, data){
 		});
 		var addressView = Ti.UI.createView({
 		    backgroundColor: '#ffffff',
-		    height: Ti.UI.SIZE,borderRadius:10,
+		    height: Ti.UI.SIZE,borderRadius:3,
 		    top:'20dp',left:'3%',width:'94%'
 		});
 		
@@ -1611,7 +1611,7 @@ function drawInfo(viewobj, data){
 			});
 			var webView = Ti.UI.createView({
 			    backgroundColor: '#ffffff',
-			    height: Ti.UI.SIZE,borderRadius:10,
+			    height: Ti.UI.SIZE,borderRadius:3,
 			    top:'20dp',left:'3%',width:'94%'
 			});
 			
@@ -1661,7 +1661,7 @@ function drawInfo(viewobj, data){
 			});
 			var gEditView = Ti.UI.createView({
 			    backgroundColor: '#ffffff',
-			    height: Ti.UI.SIZE,borderRadius:10,
+			    height: Ti.UI.SIZE,borderRadius:3,
 			    top:'20dp',left:'3%',width:'94%'
 			});
 			

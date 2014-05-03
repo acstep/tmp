@@ -89,7 +89,7 @@ function notifyWindow() {
 						width:Ti.UI.SIZE ,height: Ti.UI.SIZE,left:'10dp',top:'0dp'
 					});
 					var headPhotoImg = Titanium.UI.createImageView({
-				        borderRadius:15,height: '60dp', width: '60dp',top:'10dp',bottom:'10dp',backgroundImage:'headphoto.png'
+				        borderRadius:5,height: '60dp', width: '60dp',top:'10dp',bottom:'10dp',backgroundImage:'headphoto.png'
 					});
 					
 					
@@ -156,7 +156,7 @@ function notifyWindow() {
 						width:Ti.UI.SIZE ,height: Ti.UI.SIZE,left:'10dp',top:'0dp'
 					});
 					var headPhotoImg = Titanium.UI.createImageView({
-				        borderRadius:15,height: '60dp', width: '60dp',top:'10dp',bottom:'10dp',backgroundImage:'headphoto.png'
+				        borderRadius:5,height: '60dp', width: '60dp',top:'10dp',bottom:'10dp',backgroundImage:'headphoto.png'
 					});
 					
 					

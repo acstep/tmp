@@ -56,7 +56,7 @@ function Template2PostWindows(data) {
 	    right:'10dp',
 	    color:'#666666',
 	    backgroundColor:'#f1c40f',
-	    borderRadius:10,
+	    borderRadius:3,
 	});
 	
 	doneButton.addEventListener('click',function(e)
@@ -115,7 +115,7 @@ function Template2PostWindows(data) {
 		top:'30dp',
 		left:'10dp',
 		layout:'vertical',
-		borderRadius:15,
+		borderRadius:5,
 		
 	});
 	
@@ -184,7 +184,7 @@ function Template2PostWindows(data) {
 							height:'100dp',
 							top:'30dp',
 							left:'10dp',
-							borderRadius:15
+							borderRadius:5
 						});
 						addSelectImg.addEventListener('click',function(e)
 						{
@@ -243,7 +243,7 @@ function Template2PostWindows(data) {
 							height:'100dp',
 							top:'30dp',
 							left:'10dp',
-							borderRadius:15
+							borderRadius:5
 						});
 						addSelectImg.addEventListener('click',function(e)
 						{
@@ -292,7 +292,7 @@ function Template2PostWindows(data) {
 	    left: '5%',
 	    backgroundColor:'#ffffff',
 	    borderColor:'#666666',
-	    borderWidth:'1dp',borderRadius:10,
+	    borderWidth:'1dp',borderRadius:3,
 	});
 	
 	var placeTextField = Ti.UI.createTextField({
@@ -305,7 +305,7 @@ function Template2PostWindows(data) {
 	    height : Titanium.UI.SIZE,
 	    left: '5%',backgroundColor:'#ffffff',
 	    borderColor:'#666666',
-	    borderWidth:'1dp',borderRadius:10,
+	    borderWidth:'1dp',borderRadius:3,
 	});
 
     ///////////  time //////////////////

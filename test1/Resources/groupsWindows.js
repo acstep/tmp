@@ -121,7 +121,7 @@ function groupsWindow() {
 				width:Ti.UI.SIZE ,height: Ti.UI.SIZE,left:'10dp',top:'0dp'
 			});
 			var headPhotoImg = Titanium.UI.createImageView({
-		        borderRadius:15,height: '70dp', width: '70dp',top:'10dp',bottom:'10dp',backgroundImage:'headphoto.png'
+		        borderRadius:5,height: '70dp', width: '70dp',top:'10dp',bottom:'10dp',backgroundImage:'headphoto.png'
 			});
 			
 			headPhotoImg.image = getHeadImg(listData[i]['gid']);
@@ -169,7 +169,7 @@ function groupsWindow() {
 				color:'#ffffff',
 				right:'10dp',
 				backgroundColor:'#f1c40f',
-				borderRadius:10,
+				borderRadius:3,
 		  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
 			});
 	        topView.add(distanceText);
@@ -331,6 +331,11 @@ function groupsWindow() {
 	}
 	
 	requestNearbyList();
+
+    Ti.App.addEventListener('reloadGroupList',function(e) {
+    	Ti.API.info('receive event reloadGroupList ');
+        requestNearbyList();
+	});
 
 	
 	return self;

@@ -39,7 +39,7 @@ function feedContentWindow(eventid, fullcontent) {
 	    right:'10dp',
 	    color:'#ffffff',
 	    backgroundColor:'#ff0000',
-	    borderRadius:10,
+	    borderRadius:3,
 	    visible:false
 	});
 	
@@ -216,7 +216,7 @@ function feedContentWindow(eventid, fullcontent) {
 			
 						
 		    var headPhotoImg = Titanium.UI.createImageView({
-		        borderRadius:15,backgroundImage:'headphoto.png',
+		        borderRadius:5,backgroundImage:'headphoto.png',
 				height: '50dp', width: '50dp', top:'15dp', left:'10dp'
 			});
 
@@ -335,7 +335,7 @@ function feedContentWindow(eventid, fullcontent) {
 	    bottom:'10dp',
 	    width:'25%',
 	    height: '40dp',
-	    right:'0dp',backgroundColor:'#3498db',borderRadius:10
+	    right:'0dp',backgroundColor:'#3498db',borderRadius:3
 	});
 
 	function sendCommentCB(result, data){

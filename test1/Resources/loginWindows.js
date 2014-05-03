@@ -63,7 +63,7 @@ function LoginWindow() {
 	    width:'80%',
 	    color:'#ffffff',
 	    backgroundColor:'#F7AC43',
-	    borderRadius:10,
+	    borderRadius:3,
 	    font:{fontSize:'22sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 
 	});
@@ -92,7 +92,7 @@ function LoginWindow() {
 	    width:'60%',
 	    color:'#ffffff',
 	    backgroundColor:'#F7AC43',
-	    borderRadius:10,
+	    borderRadius:3,
 	    font:{fontSize:'22sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 
 	});

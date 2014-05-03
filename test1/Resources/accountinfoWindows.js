@@ -63,7 +63,7 @@ function accountinfoWindow(selfdata) {
 	    height: '30dp',
 	    right:'10dp',
 	    color:'#666666',
-	    borderRadius:10,
+	    borderRadius:3,
 	    backgroundColor:'#f1c40f'
 	});
 	
@@ -167,7 +167,7 @@ function accountinfoWindow(selfdata) {
 	});
 	
 	var headPhotoImg = Titanium.UI.createImageView({
-        borderRadius:15,backgroundImage:'headphoto.png',
+        borderRadius:5,backgroundImage:'headphoto.png',
 		height: '100dp', width: '100dp', top:'20dp', left:'20dp'
 	});
 	
@@ -175,7 +175,7 @@ function accountinfoWindow(selfdata) {
 		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
 		text: L('changehead'),
 		color:'#ffffff',
-		backgroundColor:'#000000',borderRadius:15,
+		backgroundColor:'#000000',borderRadius:5,
   		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
   		bottom:'20dp',width:'100dp', left:'20dp',height:Titanium.UI.SIZE
 	});
@@ -194,7 +194,7 @@ function accountinfoWindow(selfdata) {
 		    height: '30dp',
 		    right:'5%',
 		    color:'#ffffff',
-		    borderRadius:10,
+		    borderRadius:3,
 		    backgroundColor:'#e74c3c'
 		});
 		
@@ -245,7 +245,7 @@ function accountinfoWindow(selfdata) {
 	    hintText:L('inputname'),
 	    backgroundColor:'#ffffff',
 	    borderColor:'#666666',
-	    borderWidth:'1dp',borderRadius:10,
+	    borderWidth:'1dp',borderRadius:3,
 	});
 	
 	var hintname = Ti.App.Properties.getString('username','');
@@ -402,7 +402,7 @@ function accountinfoWindow(selfdata) {
 	    hintText:L('inputschool'),
 	    backgroundColor:'#ffffff',
 	    borderColor:'#666666',
-	    borderWidth:'1dp',borderRadius:10,
+	    borderWidth:'1dp',borderRadius:3,
 	});
 	
 	var hintschool = Ti.App.Properties.getString('school','');
@@ -439,7 +439,7 @@ function accountinfoWindow(selfdata) {
 	    hintText:L('inputwork'),
 	    backgroundColor:'#ffffff',
 	    borderColor:'#666666',
-	    borderWidth:'1dp',borderRadius:10,
+	    borderWidth:'1dp',borderRadius:3,
 	});
 	var hintwork = Ti.App.Properties.getString('work','');
 	if(hintwork != ''){
@@ -672,7 +672,7 @@ function accountinfoWindow(selfdata) {
 		top:'30dp',
 		left:'10dp',
 		layout:'vertical',
-		borderRadius:15,
+		borderRadius:5,
 		
 	});
 	
@@ -741,7 +741,7 @@ function accountinfoWindow(selfdata) {
 							height:'100dp',
 							top:'30dp',
 							left:'10dp',
-							borderRadius:15
+							borderRadius:5
 						});
 						
 						
@@ -806,7 +806,7 @@ function accountinfoWindow(selfdata) {
 							height:'100dp',
 							top:'30dp',
 							left:'10dp',
-							borderRadius:15
+							borderRadius:5
 						});
 						
 						
@@ -858,7 +858,7 @@ function accountinfoWindow(selfdata) {
 			height:'100dp',
 			top:'30dp',
 			left:'10dp',
-			borderRadius:15,
+			borderRadius:5,
 		    image: (getFeedImgAddr()+'feedimgm/' + orginalPhotos[i]).replace('.jpg','-m.jpg')
 		});
 		

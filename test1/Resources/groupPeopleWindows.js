@@ -76,7 +76,7 @@ function groupPeopleWindow(gid) {
 				width:Ti.UI.SIZE ,height: Ti.UI.SIZE,left:'10dp',top:'0dp'
 			});
 			var headPhotoImg = Titanium.UI.createImageView({
-		        borderRadius:15,height: '70dp', width: '70dp',top:'10dp',bottom:'10dp',backgroundImage:'headphoto.png'
+		        borderRadius:5,height: '70dp', width: '70dp',top:'10dp',bottom:'10dp',backgroundImage:'headphoto.png'
 			});
 			
 			headPhotoImg.image = getHeadImg(itemData[i]['id']);
@@ -108,7 +108,7 @@ function groupPeopleWindow(gid) {
 				var genderView = Titanium.UI.createView({
 					left:'10dp',backgroundColor:'transparent',
 					height: Ti.UI.SIZE,width: Ti.UI.SIZE,top:'5dp',
-					layout: 'horizontal',borderRadius:10
+					layout: 'horizontal',borderRadius:3
 				});
 				
 				if(itemData[i]['sex'] != undefined){

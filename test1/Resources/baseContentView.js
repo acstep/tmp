@@ -62,7 +62,7 @@ function drawBaseContnet(contentView,data){
 			var imageContentView = Titanium.UI.createView({
 			  	backgroundColor: '#ffffff',
 			    top: '15dp', 
-			    borderRadius:15,
+			    borderRadius:5,
 			    width:'130dp',height:'130dp',left:'10dp',
 			    name:'imagecontentview'
 			});  
@@ -174,7 +174,7 @@ function drawBaseContnet(contentView,data){
 	
 	
 	var headPhotoImg = Titanium.UI.createImageView({
-        borderRadius:15,backgroundImage:'headphoto.png',
+        borderRadius:5,backgroundImage:'headphoto.png',
 		height: '60dp', width: '60dp', top:'10dp', left:'0dp'
 	});
 	
@@ -345,7 +345,7 @@ function drawtemplate1Contnet(contentView,data){
 			var imageContentView = Titanium.UI.createView({
 			  	backgroundColor: '#ffffff',
 			    top: '15dp', 
-			    borderRadius:15,
+			    borderRadius:5,
 			    width:'130dp',height:'130dp',left:'10dp',
 			    name:'imagecontentview'
 			});  
@@ -551,7 +551,7 @@ function drawtemplate1Contnet(contentView,data){
 	
 	
 	var headPhotoImg = Titanium.UI.createImageView({
-        borderRadius:15,backgroundImage:'headphoto.png',
+        borderRadius:5,backgroundImage:'headphoto.png',
 		height: '60dp', width: '60dp', top:'10dp', left:'0dp'
 	});
 	
@@ -720,7 +720,7 @@ function drawtemplate1Contnet(contentView,data){
 	var joinBottomButton = Titanium.UI.createButton({
 	    title: L('join'),
 	    width:'60%',
-	    backgroundColor:'#3498db',borderRadius:10
+	    backgroundColor:'#3498db',borderRadius:3
 	});
 	
 	joinBottomView.addEventListener('click',function(e){
@@ -858,7 +858,7 @@ function drawtemplate2Contnet(contentView,data){
 			var imageContentView = Titanium.UI.createView({
 			  	backgroundColor: '#ffffff',
 			    top: '15dp', 
-			    borderRadius:15,
+			    borderRadius:5,
 			    width:'130dp',height:'130dp',left:'10dp',
 			    name:'imagecontentview'
 			});  
@@ -1076,7 +1076,7 @@ function drawtemplate2Contnet(contentView,data){
 	var joinBottomButton = Titanium.UI.createButton({
 	    title: L('lineup'),
 	    width:'60%',
-	    backgroundColor:'#3498db',borderRadius:10
+	    backgroundColor:'#3498db',borderRadius:3
 	});
 	
 	joinBottomView.addEventListener('click',function(e){
@@ -1181,7 +1181,7 @@ function drawtemplate2Contnet(contentView,data){
 	
 	
 	var headPhotoImg = Titanium.UI.createImageView({
-        borderRadius:15,backgroundImage:'headphoto.png',
+        borderRadius:5,backgroundImage:'headphoto.png',
 		height: '60dp', width: '60dp', top:'10dp', left:'0dp'
 	});
 	

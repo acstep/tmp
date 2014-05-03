@@ -3,13 +3,13 @@ Ti.include("common_net.js");
 Ti.include("common_util.js");
 
 
-function createGroupWindow(type,groupid,selfdata) {
+function createGroupWindow(type,gid,selfdata) {
 	//load component dependencies
 	var self = createNormalWin(true);
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
-    var groupID = '';
+    var groupID = gid;
     
     var headChange = false;
     var photoList = [];
@@ -71,7 +71,7 @@ function createGroupWindow(type,groupid,selfdata) {
 	    height: '30dp',
 	    right:'10dp',
 	    color:'#666666',
-	    borderRadius:10,
+	    borderRadius:3,
 	    backgroundColor:'#f1c40f'
 	});
 	
@@ -95,7 +95,7 @@ function createGroupWindow(type,groupid,selfdata) {
 		if(needUploadImage.length == 0){
 			ind.visible = false;
 			forwardView.visible = true;
-			updateGroup();
+			saveGroup();
 		}
 		else{
 			forwardView.visible = true;
@@ -107,14 +107,17 @@ function createGroupWindow(type,groupid,selfdata) {
 	
 	titleView.add(doneButton);
 	
-	function updateCallback(result, data){
+	function updateCallback(result, gid){
 		if(result == true){
-			groupID = data.id;
+			groupID = gid;
+			Ti.API.info('groupID = ' + groupID);
 			if(headChange == true){
-				uploadHeadImage();
+				uploadHeadImage(groupID);
 			}
 			else{
 				forwardView.visible = false;
+				Ti.App.fireEvent('getnewfeed');
+				Ti.App.fireEvent('reloadGroupList');
 				self.close();
 			}
 		}
@@ -130,20 +133,20 @@ function createGroupWindow(type,groupid,selfdata) {
 		uploadImage();
 	}
 	
-	function updateGroup(){
+	function saveGroup(){
 		var nametext = nameTextField.value;
 		var phonetext  = phoneTextField.value;
 		var addresstext  = addressTextField.value;
 		var weburltext  = weburlTextField.value;
 		var userdestext  = introTextArea.value;
-		
+		Ti.API.info('updateGroup groupID= '+ groupID);
 		if(nametext == ''){
 			showAlert('Error !', 'nameempty');
 			return;
 		}
 
 		var data = {
-			'ownerid':Ti.App.Properties.getString('userid',''),
+			
 			'name': nametext,
 			'phone':phonetext,
 			'des':userdestext,
@@ -155,10 +158,12 @@ function createGroupWindow(type,groupid,selfdata) {
 		forwardView.visible = true;
 		
 		if(groupID == ''){
+			Ti.API.info('creategroup');
 			datastring = JSON.stringify(data);
 			createGroup(datastring, updateCallback);
 		}
 		else{
+			Ti.API.info('updateGroup');
 			data['gid'] = groupID;
 			datastring = JSON.stringify(data);
 			updateGroup(datastring, updateCallback);
@@ -182,7 +187,7 @@ function createGroupWindow(type,groupid,selfdata) {
 	});
 	
 	var headPhotoImg = Titanium.UI.createImageView({
-        borderRadius:15,backgroundImage:'headphoto.png',
+        borderRadius:5,backgroundImage:'headphoto.png',
 		height: '100dp', width: '100dp', top:'20dp', left:'20dp'
 	});
 	
@@ -190,7 +195,7 @@ function createGroupWindow(type,groupid,selfdata) {
 		font:{fontSize:'12sp',fontFamily:'Helvetica Neue'},
 		text: L('changehead'),
 		color:'#ffffff',
-		backgroundColor:'#000000',borderRadius:15,
+		backgroundColor:'#000000',borderRadius:5,
   		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
   		bottom:'20dp',width:'100dp', left:'20dp',height:Titanium.UI.SIZE
 	});
@@ -202,7 +207,7 @@ function createGroupWindow(type,groupid,selfdata) {
 	
 	///////////////    name  ////////////////////////////
 	var nameView = Titanium.UI.createView({
-		height:Titanium.UI.SIZE,width:'90%',layout: 'vertical',borderRadius:15,top:'15dp',backgroundColor:'#ffffff'
+		height:Titanium.UI.SIZE,width:'90%',layout: 'vertical',borderRadius:5,top:'15dp',backgroundColor:'#ffffff'
 	});
 	
 	var nameTextView = Titanium.UI.createView({
@@ -571,7 +576,7 @@ function createGroupWindow(type,groupid,selfdata) {
 		top:'30dp',
 		left:'10dp',
 		layout:'vertical',
-		borderRadius:15,
+		borderRadius:5,
 		
 	});
 	
@@ -640,7 +645,7 @@ function createGroupWindow(type,groupid,selfdata) {
 							height:'100dp',
 							top:'30dp',
 							left:'10dp',
-							borderRadius:15
+							borderRadius:5
 						});
 						
 						
@@ -705,7 +710,7 @@ function createGroupWindow(type,groupid,selfdata) {
 							height:'100dp',
 							top:'30dp',
 							left:'10dp',
-							borderRadius:15
+							borderRadius:5
 						});
 						
 						
@@ -751,7 +756,7 @@ function createGroupWindow(type,groupid,selfdata) {
 	
 	var orginalPhotos = [];
 	
-	if(type= 'edit'){
+	if(type == 'edit'){
 		orginalPhotos = selfdata['photos'];
 	}
 	
@@ -761,7 +766,7 @@ function createGroupWindow(type,groupid,selfdata) {
 			height:'100dp',
 			top:'30dp',
 			left:'10dp',
-			borderRadius:15,
+			borderRadius:5,
 		    image: (getFeedImgAddr()+'feedimgm/' + orginalPhotos[i]).replace('.jpg','-m.jpg')
 		});
 		
@@ -800,7 +805,7 @@ function createGroupWindow(type,groupid,selfdata) {
 				
 				ind.value = 90;
 				//  finish image upload, post event to server
-				updateGroup();
+				saveGroup();
 			}
 			else{
 				uploadImage();
@@ -825,7 +830,7 @@ function createGroupWindow(type,groupid,selfdata) {
 	////////////////////////////   upload head photo  ///////////////////////
 	function uploadHeadImage(){
 		var f = Titanium.Filesystem.getFile(Titanium.Filesystem.externalStorageDirectory,'head.jpg');
-
+        Ti.API.info('Upload image gid = ' + groupID);
 		var data_to_send = { 
             "file": f.read(), 
             "name": 'head.jpg',
@@ -840,6 +845,8 @@ function createGroupWindow(type,groupid,selfdata) {
             var result =  JSON.parse(this.responseText);
             if(result.result == 'ok'){
 				forwardView.visible = false;
+				Ti.App.fireEvent('reloadGFeed');
+				Ti.App.fireEvent('reloadGroupList');
 				self.close();
             	
 			}

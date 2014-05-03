@@ -60,7 +60,12 @@ function gFeedWindow(id) {
     feedFunc(backgroundView, 'group');
     backgroundView.getNewFeed();
 
-
+    
+    Ti.App.addEventListener('reloadGFeed',function(e) {
+    	Ti.API.info('receive event reloadGFeed ');
+        backgroundView.getNewFeed();
+	});
+    
 	return self;
 }
 

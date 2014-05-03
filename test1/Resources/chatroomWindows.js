@@ -82,7 +82,7 @@ function chatroomWindow() {
 				width:Ti.UI.SIZE ,height: Ti.UI.SIZE,left:'10dp',top:'0dp'
 			});
 			var headPhotoImg = Titanium.UI.createImageView({
-		        borderRadius:15,height: '60dp', width: '60dp',top:'10dp',bottom:'10dp',backgroundImage:'headphoto.png'
+		        borderRadius:5,height: '60dp', width: '60dp',top:'10dp',bottom:'10dp',backgroundImage:'headphoto.png'
 			});
 			
 			var toidIndex = 0;
@@ -178,7 +178,7 @@ function chatroomWindow() {
 			var newMsgView = Titanium.UI.createView({
 				backgroundColor:'#e74c3c',
 				height: Ti.UI.SIZE,width: Ti.UI.SIZE,
-				borderRadius:10,top:'20dp',right:'20dp',visible:false
+				borderRadius:3,top:'20dp',right:'20dp',visible:false
 			});
 		    var newMsgText = Ti.UI.createLabel({
 				font:{fontSize:'16sp',fontFamily:'Marker Felt',fontWeight:'bold'},

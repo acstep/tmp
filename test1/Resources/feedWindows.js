@@ -310,7 +310,7 @@ function feedWindow() {
 	
 	
 	var headImg = Titanium.UI.createImageView({
-		image:'head.png',borderRadius:15,backgroundImage:'headphoto.png',
+		image:'head.png',borderRadius:5,backgroundImage:'headphoto.png',
 		left:'0dp', height: '60dp', width: '60dp'
 	});
 	

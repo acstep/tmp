@@ -45,7 +45,7 @@ function jumpWindow() {
 	    height: '30dp',
 	    right:'10dp',
 	    color:'#666666',
-	    borderRadius:10,
+	    borderRadius:3,
 	    backgroundColor:'#f1c40f'
 	});
 	

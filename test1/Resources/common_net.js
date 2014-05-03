@@ -231,7 +231,7 @@ function createGroup(data, callbackf){
         var result =  JSON.parse(this.responseText);
     	if(result.result == 'ok')
     	{
-    		callbackf(true,result);
+    		callbackf(true,result.id);
     	}
     	else{
     		callbackf(false,result.result);
@@ -279,7 +279,7 @@ function deleteGroup(gid, callbackf){
 function updateGroup(data, callbackf){
 	var id = Ti.App.Properties.getString('userid','');
     var token = Ti.App.Properties.getString('token','');
-	var url = getServerAddr()+'creategroup?'+ 'id=' + id + '&token=' + token;
+	var url = getServerAddr()+'updategroup?'+ 'id=' + id + '&token=' + token;
 	Ti.API.info('url : ' + url);
 	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
     xhr.onload = function(e) {
@@ -287,7 +287,7 @@ function updateGroup(data, callbackf){
         var result =  JSON.parse(this.responseText);
     	if(result.result == 'ok')
     	{
-    		callbackf(true,result.result);
+    		callbackf(true,result.id);
     	}
     	else{
     		callbackf(false,result.result);

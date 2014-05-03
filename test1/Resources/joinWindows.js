@@ -44,7 +44,7 @@ function joinWindow(data,stringData,type) {
 	    right:'10dp',
 	    color:'#666666',
 	    backgroundColor:'#f1c40f',
-	    borderRadius:10,
+	    borderRadius:3,
 	});
 	
 	function sendJoinCB(result, data){

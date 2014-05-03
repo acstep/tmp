@@ -52,7 +52,7 @@ function createAccountWindow() {
 	    height: '30dp',
 	    right:'10dp',
 	    color:'#ffffff',
-	    borderRadius:10,
+	    borderRadius:3,
 	    backgroundColor:'#f1c40f'
 	});
 	
@@ -355,7 +355,7 @@ function createAccountWindow() {
 		textAlign:'left',
 		backgroundColor:'#ffffff',
 	    borderColor:'#666666',
-	    borderWidth:'1dp',borderRadius:10,
+	    borderWidth:'1dp',borderRadius:3,
 		hintText:L('inputname'),
         
 	});
@@ -380,7 +380,7 @@ function createAccountWindow() {
 		textAlign:'left',
 		backgroundColor:'#ffffff',
 	    borderColor:'#666666',
-	    borderWidth:'1dp',borderRadius:10,
+	    borderWidth:'1dp',borderRadius:3,
 		hintText:L('inputemail')
 	});
     
@@ -402,7 +402,7 @@ function createAccountWindow() {
 		textAlign:'left',
 		backgroundColor:'#ffffff',
 	    borderColor:'#666666',
-	    borderWidth:'1dp',borderRadius:10,
+	    borderWidth:'1dp',borderRadius:3,
 		passwordMask: true,
 		hintText:L('inputpass')
 	});
@@ -425,7 +425,7 @@ function createAccountWindow() {
 		textAlign:'left',
 		backgroundColor:'#ffffff',
 	    borderColor:'#666666',
-	    borderWidth:'1dp',borderRadius:10,
+	    borderWidth:'1dp',borderRadius:3,
 		passwordMask: true,
 		hintText:L('inputpassagain')
 	});

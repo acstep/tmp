@@ -59,7 +59,7 @@ function personInfoWindow(id) {
 		
 		///////////////////////  head photo  //////////////
 		var headPhotoImg = Titanium.UI.createImageView({
-	        borderRadius:15,backgroundImage:'headphoto.png',
+	        borderRadius:5,backgroundImage:'headphoto.png',
 			height: '100dp', width: '100dp', top:'10dp', left:'0dp'
 		});
 		headPhotoImg.image = getHeadImg(data['id']);
@@ -82,7 +82,7 @@ function personInfoWindow(id) {
 		var genderView = Titanium.UI.createView({
 			left:'0dp',backgroundColor:'transparent',
 			height: Ti.UI.SIZE,width: Ti.UI.SIZE,top:'10dp',
-			layout: 'horizontal',borderRadius:10
+			layout: 'horizontal',borderRadius:3
 		});
 		
 		
@@ -184,7 +184,7 @@ function personInfoWindow(id) {
 			color:'#ffffff',
 		    top:'10dp',
 			backgroundColor:'#f1c40f',
-			borderRadius:10,
+			borderRadius:3,
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
 		});
 		
@@ -206,7 +206,7 @@ function personInfoWindow(id) {
 		var talkBottomButton = Titanium.UI.createButton({
 		    title: L('talk'),
 		    width:'60%',
-		    backgroundColor:'#3498db',borderRadius:10,
+		    backgroundColor:'#3498db',borderRadius:3,
 
 		});
 		
@@ -255,7 +255,7 @@ function personInfoWindow(id) {
 				var imageContentView = Titanium.UI.createView({
 				  	backgroundColor: '#ffffff',
 				    top: '15dp', 
-				    borderRadius:15,
+				    borderRadius:5,
 				    width:'80dp',height:'80dp',left:'10dp',
 				    name:'imagecontentview'
 				});  
