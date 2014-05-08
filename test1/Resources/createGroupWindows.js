@@ -16,6 +16,8 @@ function createGroupWindow(type,gid,selfdata) {
     var needUploadImage = [];
     var currentUploadPhoto = 0;
     
+    tracker.trackScreen('createGroupWindow' );
+    
     if(type == 'new'){
     	headChange = true;
     }
@@ -123,7 +125,7 @@ function createGroupWindow(type,gid,selfdata) {
 		}
 		else{
 			forwardView.visible = false;
-			showAlert('Error !', data);
+			
 			Ti.API.info('update group false.');
 		}	
     }
@@ -829,6 +831,7 @@ function createGroupWindow(type,gid,selfdata) {
 	}
 	////////////////////////////   upload head photo  ///////////////////////
 	function uploadHeadImage(){
+		expireCache();
 		var f = Titanium.Filesystem.getFile(Titanium.Filesystem.externalStorageDirectory,'head.jpg');
         Ti.API.info('Upload image gid = ' + groupID);
 		var data_to_send = { 

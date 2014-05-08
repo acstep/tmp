@@ -14,6 +14,8 @@ function groupPeopleWindow(gid) {
 	var titleView = self.titleView;
 	var currentdate = new Date(); 
 	
+	tracker.trackScreen('groupPeopleWindow' );
+	
 	var reqData = {
 		'gid':gid,
 		'limitcount':parseInt(Ti.App.Properties.getInt('limitcount',10)),

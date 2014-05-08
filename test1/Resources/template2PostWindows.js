@@ -10,6 +10,8 @@ function Template2PostWindows(data) {
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
 
+    tracker.trackScreen('Template2PostWindows' );
+
 	var ind=Titanium.UI.createProgressBar({
 	        width:'90%',
 	        min:0,
@@ -574,8 +576,7 @@ function Template2PostWindows(data) {
 
 		}
 		else{
-			
-			showAlert('Error !', resultmsg);
+
 			forwardView.visible = false;
 			Ti.API.info('Post event false.');
 			

@@ -9,6 +9,8 @@ function mapWindow() {
 		layout: 'vertical',
  	});
  	
+ 	tracker.trackScreen('mapWindow' );
+ 	
  	var titleView = Ti.UI.createView({
 		backgroundColor:'#f39c12',
 		width:'100%',

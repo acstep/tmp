@@ -14,6 +14,13 @@ if (Ti.version < 1.8 ) {
 	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');	  	
 }
 
+///////////  google Analytics //////////////////////
+
+var GA = require('analytics.google');
+GA.localDispatchPeriod = 10;
+var tracker = GA.getTracker("UA-50815409-1");
+
+
 // This is a single context application with multiple windows in a stack
 (function() {
 	//render appropriate components based on the platform and form factor
@@ -41,20 +48,15 @@ if (Ti.version < 1.8 ) {
 		Ti.App.Properties.setString('locationsrc','network');
 	}
 	
+	Ti.App.Properties.setString('serveraddr','http://api.nexbbs.com/api/');
 	var serveraddr = Ti.App.Properties.getString('serveraddr','');
-	if(serveraddr == ''){
-		Ti.App.Properties.setString('serveraddr','http://54.254.208.12/api/');
-	}
-	
+
+	Ti.App.Properties.setString('feedimgaddr','https://s3-ap-southeast-1.amazonaws.com/');
 	var feedimgaddr = Ti.App.Properties.getString('feedimgaddr','');
-	if(feedimgaddr == ''){
-		Ti.App.Properties.setString('feedimgaddr','https://s3-ap-southeast-1.amazonaws.com/');
-	}
-	
+
+	Ti.App.Properties.setString('headimgaddr','https://s3-ap-southeast-1.amazonaws.com/');
 	var headimgaddr = Ti.App.Properties.getString('headimgaddr','');
-	if(headimgaddr == ''){
-		Ti.App.Properties.setString('headimgaddr','https://s3-ap-southeast-1.amazonaws.com/');
-	}
+
 	
 	var category = Ti.App.Properties.getList('category','');
 	if(category == ''){
@@ -72,6 +74,7 @@ if (Ti.version < 1.8 ) {
 	
 	var LoginWindow;
 	var feedWindow;
+	
 	
 	
 	var Window;

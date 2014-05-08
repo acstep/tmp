@@ -16,6 +16,8 @@ function chatroomWindow() {
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
 	
+	tracker.trackScreen('chatroomWindow' );
+	
 	var backImg = Titanium.UI.createImageView({
 		image:'backward.png',
 		top: '10dp', left:'15dp', height: '30dp', width: '30dp'
@@ -228,7 +230,7 @@ function chatroomWindow() {
 			requestChatroom();
 		}
 		else{
-			showAlert('Error !', data); 
+
 		}
 		
 	}

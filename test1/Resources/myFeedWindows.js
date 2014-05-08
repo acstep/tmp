@@ -12,6 +12,8 @@ function myFeedWindow() {
     backgroundView.forwardView = forwardView;
     createNormalFeed(backgroundView, 'myfeed');
     
+    tracker.trackScreen('myFeedWindow' );
+    
     var backImg = Titanium.UI.createImageView({
 		image:'backward.png',
 		top: '10dp', left:'15dp', height: '30dp', width: '30dp'

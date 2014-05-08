@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>com.test.test1</id>
+    <id>com.nexbbs.nexbbs</id>
     <name>NexBBS</name>
     <version>1.0</version>
-    <publisher>matt</publisher>
-    <url>http://</url>
+    <publisher>nexbbs</publisher>
+    <url>http://www.nexbbs.com</url>
     <description>not specified</description>
-    <copyright>2013 by matt</copyright>
+    <copyright>2013 by nexbbs</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
@@ -29,7 +29,7 @@
         </orientations>
     </iphone>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <manifest>
+        <manifest android:versionCode="101" android:versionName="1.0.1">
             <!-- Allows the API to download data from Google Map servers -->
             <uses-permission android:name="android.permission.INTERNET"/>
             <!-- Allows the API to cache data -->
@@ -57,23 +57,17 @@
             <application>
                 <!-- Replace "PASTE YOUR GOOGLE MAPS API KEY HERE" with the Google API key you obtained -->
                 <meta-data
-                    android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyCIP-0TBoNIKpWgcDVWxoilD_1n3vPSmSc"/>
+                    android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyBEcBXw9H7Rox3spHCoZHKb_xMLXeGBKLk"/>
             </application>
         </manifest>
     </android>
-    <mobileweb>
-        <precache/>
-        <splash>
-            <enabled>true</enabled>
-            <inline-css-images>true</inline-css-images>
-        </splash>
-        <theme>default</theme>
-    </mobileweb>
-    <property name="GCM_sender_id" type="string">349549066151 </property>
+    <property name="GCM_sender_id" type="string">293209834618</property>
     <modules>
         <module platform="android">net.iamyellow.gcmjs</module>
         <module platform="android">com.test.module</module>
         <module platform="android" version="2.1.2">ti.map</module>
+        <module platform="android">analytics.google</module>
+        <module platform="iphone">analytics.google</module>
     </modules>
     <deployment-targets>
         <target device="iphone">false</target>

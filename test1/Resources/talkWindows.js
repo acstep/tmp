@@ -19,6 +19,8 @@ function talkWindow(id, toid,roomdata) {
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
 	
+	tracker.trackScreen('talkWindow' );
+	
 	backgroundView.layout = 'composite';
 	Ti.API.info('id: '+ id +'toid : ' + toid);
 	////  title  //////
@@ -117,7 +119,7 @@ function talkWindow(id, toid,roomdata) {
 	function sendMsgCB(result, data){
 		
 		if(result == false){
-			showAlert('Error !', data); 
+
 		}
 		else{
 			
@@ -182,7 +184,7 @@ function talkWindow(id, toid,roomdata) {
 			
 		}
 		else{
-			showAlert('Error !', data); 
+
 		}
 	}
 			
@@ -254,7 +256,7 @@ function talkWindow(id, toid,roomdata) {
 	    var msgView = Titanium.UI.createView({
 			backgroundColor:'#ffffff',
 			height: Ti.UI.SIZE,width: Ti.UI.SIZE,
-			borderRadius:20,top:'10dp',bottom:'10dp'
+			borderRadius:5,top:'10dp',bottom:'10dp'
 		});
 	    var msgText = Ti.UI.createLabel({
 			font:{fontSize:'16sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
@@ -359,7 +361,7 @@ function talkWindow(id, toid,roomdata) {
 			
 		}
 		else{
-			showAlert('Error !', data); 
+
 		}
 		forwardView.visible = false;
 		

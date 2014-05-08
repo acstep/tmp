@@ -11,7 +11,7 @@ function jumpWindow() {
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
 
-
+    tracker.trackScreen('jumpWindow' );
     
     var backImg = Titanium.UI.createImageView({
 		image:'backward.png',

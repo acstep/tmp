@@ -13,6 +13,8 @@ function LoginWindow() {
 	backgroundView.backgroundColor = '#4aa3df';
 	backgroundView.height='80%';
 	
+	tracker.trackScreen('LoginWindow' );
+	
 	var titleText = Ti.UI.createLabel({
 		font:{fontSize:'50sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 		text: 'NexBBS',

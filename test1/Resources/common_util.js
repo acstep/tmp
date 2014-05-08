@@ -60,6 +60,7 @@ function clearProperty(){
 	Ti.App.Properties.setDouble('userchooselatitude',-1);
 	Ti.App.Properties.setDouble('userchooselongitude',-1);
 	Ti.App.Properties.setList('photos',[]);
+	Ti.App.Properties.setString('myfeed',JSON.stringify({'data':[]}));
 
 }
 
@@ -265,7 +266,7 @@ function createNormalFeed(viewobj,category){
 		}
 		else{
 			viewobj.forwardView.visible = false;
-			if(feedData == 'network error' && firstFeed == true){
+			if(feedData == 'networkerror' && firstFeed == true){
 				firstFeed = false;
 				if(category != 'myfeed'){
 					oldfeeditems = JSON.parse(Ti.App.Properties.getString(category.toString(),{'data':[]}));
@@ -554,7 +555,12 @@ function showAlert(title, message){
 		case 'vsent':
 		 	titleString = L('');
 			msgString = L('vsent');	
-			break;						
+			break;	
+		case 'verify_error':
+		 	titleString = L('error');
+			msgString = L('verify_error');	
+			break;	
+								
 		default:
 			
 	}

@@ -155,4 +155,5 @@
 	<string name="emailpassempty">Please input your Email, we will send your password to this Email.</string>
 	<string name="passsend">Password has been sent to your email address.</string>
 	<string name="goverify"> We'll send a verification link to the email address you used to create the account. Click the link in that email to verify that you own this address.</string>
+	<string name="verify_error">Please verify your account to enable all features.</string>
 </resources>

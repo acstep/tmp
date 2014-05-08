@@ -12,6 +12,8 @@ function setupWindow() {
     backgroundView.forwardView = forwardView;
     backgroundView.backgroundColor = '#ffffff';
     
+    tracker.trackScreen('setupWindow' );
+    
     var backImg = Titanium.UI.createImageView({
 		image:'backward.png',
 		top: '10dp', left:'15dp', height: '30dp', width: '30dp'

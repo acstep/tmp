@@ -15,6 +15,8 @@ function groupsWindow() {
 	var currentdate = new Date(); 
 	var groupType = 0;
 	
+	tracker.trackScreen('groupsWindow' );
+	
 	var reqNearGroupData = {
 		'geo':[Ti.App.Properties.getDouble('longitude'),Ti.App.Properties.getDouble('latitude')],
 		'distance': Ti.App.Properties.getInt('distance',10),
@@ -231,7 +233,7 @@ function groupsWindow() {
 			requestNearbyList();
         }
         else{
-        	showAlert('Error !', resultText);
+        	
         } 
 	}
    

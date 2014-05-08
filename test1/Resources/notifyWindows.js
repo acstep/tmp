@@ -12,7 +12,7 @@ function notifyWindow() {
 	var titleView = self.titleView;
 	
 	
-	
+	tracker.trackScreen('notifyWindow' );
 	
 	var backImg = Titanium.UI.createImageView({
 		image:'backward.png',

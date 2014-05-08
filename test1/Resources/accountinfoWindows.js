@@ -10,7 +10,7 @@ function accountinfoWindow(selfdata) {
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
  
-    
+    tracker.trackScreen('accountinfoWindow');
     var headChange = false;
     var photoList = [];
     var needUploadImage = [];
@@ -921,6 +921,7 @@ function accountinfoWindow(selfdata) {
 	}
 	////////////////////////////   upload head photo  ///////////////////////
 	function uploadHeadImage(){
+		expireCache();
 		var f = Titanium.Filesystem.getFile(Titanium.Filesystem.externalStorageDirectory,'head.jpg');
 
 		var data_to_send = { 

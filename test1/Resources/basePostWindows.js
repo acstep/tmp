@@ -14,6 +14,7 @@ function BasePostWindow(data) {
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
 	
+	tracker.trackScreen('BasePostWindow' );
 	
 	var ind=Titanium.UI.createProgressBar({
 	        width:'90%',

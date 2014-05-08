@@ -10,6 +10,7 @@ function feedWindow() {
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
    
+    tracker.trackScreen('feedWindow');
     
 	var listappImg = Titanium.UI.createImageView({
 		image:'list.png',
@@ -54,6 +55,7 @@ function feedWindow() {
 	
 	setupImg.addEventListener('click',function(e)
 	{
+
 		var nearbyWindow = require('nearPeopleWindows');
 		new nearbyWindow().open(); 
 	});	
@@ -668,12 +670,15 @@ function feedWindow() {
 			firstFeed = false;	
 		}
 		else{
+			Ti.API.info('parseFeed result error feedData= ' + feedData);
 			forwardView.visible = false;
-			if(feedData == 'network error' && firstFeed == true){
+			if(feedData == 'networkerror' && firstFeed == true){
+				
 				firstFeed = false;
 				var oldfeeditems = JSON.parse(Ti.App.Properties.getString('feed',{'data':[]}));
+				Ti.API.info('parseFeed oldfeeditems= ' + Ti.App.Properties.getString('feed',{'data':[]}));
 				for(var i = 0 ; i <= oldfeeditems.data.length -1; i++) {
-					
+					Ti.API.info('parseFeed result error drawFunction 0' );
 					latitude = getLat();
 					longitude = getLon();
 				    //drawFunction[feedData[i].category.toString()](feedData[i]);
@@ -683,10 +688,20 @@ function feedWindow() {
 				        
 				    });
 				    try{
-					    drawFunction[oldfeeditems.data[i]['category']](feedRow, oldfeeditems.data[i],longitude,latitude);
+	    
+					    var data = {'info':oldfeeditems.data[i],
+				    	            'lat':latitude,
+				    	            'lon':longitude, 
+				    	            'title':layoutDataDes[oldfeeditems.data[i]['category']].title,
+				    	            'color':layoutDataDes[oldfeeditems.data[i]['category']].color,
+				    	            'image':layoutDataDes[oldfeeditems.data[i]['category']].catimage,
+				    	};
+				    	drawFunction[layoutDataDes[oldfeeditems.data[i]['category']].layouttype](feedRow,data);
 					    feedRow.eventid = oldfeeditems.data[i]['eventid'];
 					    feedtableItems.push(feedRow);
 					    feedTableView.appendRow(feedRow);
+					    
+					    
 					}
 				    catch(e){
 				    	
@@ -790,6 +805,8 @@ function feedWindow() {
 	});
 	
 	function getNewFeed(){
+		
+		tracker.trackEvent({category: "getNewFeed",action: "click",label: "getNewFeed main",value: 1});
 		Ti.API.info('getNewFeed ');
 		feedtableItems = [];
 		feedTableView.data = [];

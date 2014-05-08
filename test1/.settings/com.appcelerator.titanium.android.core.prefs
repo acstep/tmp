@@ -1,6 +1,7 @@
 android/ATTR_PROJECT_NAME=test1
 android/abi=armeabi
 android/distribute_path=E\:\\titanproj\\test1
+android/key_password=
 android/keystore_alias=server
 android/keystore_password=qqqqqqqq
 android/keystore_path=E\:\\titanproj\\test1\\keystore

@@ -9,6 +9,8 @@ function changePassWindow() {
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
  
+    tracker.trackScreen('changePassWindow' );
+ 
     var headChange = false;
     
     var ind=Titanium.UI.createProgressBar({

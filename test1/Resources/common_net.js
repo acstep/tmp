@@ -47,6 +47,11 @@ function checkTokneError(result){
 	
 }
 
+function expireCache(){
+	var cache= new Date().getTime();
+	Ti.App.Properties.setDouble('expirecache',cache);
+}
+
 function getHeadImg(id){
 	var cache= new Date().getTime();
 	var myid = Ti.App.Properties.getString('userid','');
@@ -234,6 +239,7 @@ function createGroup(data, callbackf){
     		callbackf(true,result.id);
     	}
     	else{
+    		showAlert('Error !', result.result);
     		callbackf(false,result.result);
     	}
 
@@ -262,6 +268,7 @@ function deleteGroup(gid, callbackf){
     		callbackf(true,result);
     	}
     	else{
+    		showAlert('Error !', result.result);
     		callbackf(false,result.result);
     	}
 
@@ -290,6 +297,7 @@ function updateGroup(data, callbackf){
     		callbackf(true,result.id);
     	}
     	else{
+    		showAlert('Error !', result.result);
     		callbackf(false,result.result);
     	}
 
@@ -325,6 +333,7 @@ function likegroup(gid, callbackf){
     		if(checkTokenError(result.result)){
     			return;
     		}
+    		showAlert('Error !', result.result);
     		callbackf(false,result.result);
     	}
     };
@@ -359,6 +368,7 @@ function leavegroup(gid, callbackf){
     		if(checkTokenError(result.result)){
     			return;
     		}
+    		showAlert('Error !', result.result);
     		callbackf(false,result.result);
     	}
     };
@@ -623,6 +633,7 @@ function createvent(data, callbackf){
 	var url = getServerAddr()+'createvent?' + 'id=' + id + '&token=' + token ;
 	Ti.API.info('url : ' + url);
 	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -635,15 +646,18 @@ function createvent(data, callbackf){
     		if(checkTokenError(result.result)){
     			return;
     		}
+    		showAlert('Error !', result.result);
     		callbackf(false,result.result);
     	}
 
     };
     xhr.onerror = function(e){
+    	Ti.API.info('response : ' + 'networkerror');
     	showAlert('Error','networkerror');
     	callbackf(false,'networkerror');
     };
     xhr.open("POST",url);
+  
     xhr.send({'data':data}); 
 	
 };
@@ -667,6 +681,7 @@ function deleteevent(eventid, callbackf){
     		if(checkTokenError(result.result)){
     			return;
     		}
+    		showAlert('Error !', result.result);
     		callbackf(false,result.result);
     	}
 
@@ -831,12 +846,13 @@ function likeevent(eventid, sourceobj, callbackf){
     		callbackf(true,result.result,sourceobj);
     	}
     	else{
-    		if(result.result = 'like duplicate'){
+    		if(result.result == 'like duplicate'){
     			
     		}
     		if(checkTokenError(result.result)){
     			return;
     		}
+    		showAlert('Error !', result.result);
     		callbackf(false,result.result,sourceobj);
     	}
     };
@@ -868,6 +884,7 @@ function commentevt(eventid, data, callbackf){
     		if(checkTokenError(result.result)){
     			return;
     		}
+    		showAlert('Error !', result.result);
     		callbackf(false,result.result);
     	}
     };
@@ -899,6 +916,7 @@ function joinevt(data, callbackf){
     		if(checkTokenError(result.result)){
     			return;
     		}
+    		showAlert('Error !', result.result);
     		callbackf(false,result.result);
     	}
     };
@@ -930,6 +948,7 @@ function leaveevent(eventid, callbackf){
     		if(checkTokenError(result.result)){
     			return;
     		}
+    		showAlert('Error !', result.result);
     		callbackf(false,result.result);
     	}
     };
@@ -1121,6 +1140,7 @@ function createchatroom( id, toid, check, callbackf){
     		if(checkTokenError(result.result)){
     			return;
     		}
+    		showAlert('Error !', result.result);
     		callbackf(false,result.result);
     	}
     };
@@ -1155,6 +1175,7 @@ function quitchatroom( roomid, callbackf){
     		if(checkTokenError(result.result)){
     			return;
     		}
+    		showAlert('Error !', result.result);
     		callbackf(false,result.result);
     	}
     };
@@ -1225,6 +1246,7 @@ function sendmsg( roomid, msgdata ,callbackf){
     		if(checkTokenError(result.result)){
     			return;
     		}
+    		showAlert('Error !', result.result);
     		callbackf(false,result.result);
     	}
     };

@@ -11,6 +11,7 @@ function systemADWindow(data) {
 	var titleView = self.titleView;
     backgroundView.forwardView = forwardView;
   
+    tracker.trackScreen('systemADWindow' + data.url);
     
     var backImg = Titanium.UI.createImageView({
 		image:'backward.png',

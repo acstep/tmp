@@ -14,6 +14,8 @@ function nearPeopleWindow() {
 	var titleView = self.titleView;
 	var currentdate = new Date(); 
 	
+	tracker.trackScreen('nearPeopleWindow' );
+	
 	var reqData = {
 		'geo':[Ti.App.Properties.getDouble('longitude'),Ti.App.Properties.getDouble('latitude')],
 		'distance': Ti.App.Properties.getInt('distance',10),

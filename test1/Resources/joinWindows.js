@@ -10,6 +10,7 @@ function joinWindow(data,stringData,type) {
 	var titleView = self.titleView;
     backgroundView.forwardView = forwardView;
   
+    tracker.trackScreen('joinWindow' );
     
     var backImg = Titanium.UI.createImageView({
 		image:'backward.png',
@@ -50,8 +51,7 @@ function joinWindow(data,stringData,type) {
 	function sendJoinCB(result, data){
 		forwardView.visible = false;
 		if(result == false){
-			
-			showAlert('Error !', data);
+
 			Ti.API.info('Post Comment false.');
 			return;
 		}

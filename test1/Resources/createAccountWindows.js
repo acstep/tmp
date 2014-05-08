@@ -8,6 +8,8 @@ function createAccountWindow() {
 	var titleView = self.titleView;
 	var headphotoExist = false;
 	
+	tracker.trackScreen('createAccountWindow' );
+	
     var ind=Titanium.UI.createProgressBar({
 	        width:'90%',
 	        min:0,
@@ -475,6 +477,7 @@ function createAccountWindow() {
 
     ////////////////////////////   upload photo  ///////////////////////
 	function uploadHeadImage(){
+		expireCache();
 		var f = Titanium.Filesystem.getFile(Titanium.Filesystem.externalStorageDirectory,'head.jpg');
 
 		var data_to_send = { 

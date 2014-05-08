@@ -11,6 +11,7 @@ function feedContentWindow(eventid, fullcontent) {
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
 	
+    tracker.trackScreen('feedContentWindow' );
 
 	var backImg = Titanium.UI.createImageView({
 		image:'backward.png',
@@ -45,8 +46,6 @@ function feedContentWindow(eventid, fullcontent) {
 	
 	function deleteCB(result, data){
 		if(result == false){
-			
-			showAlert('Error !', data);
 			Ti.API.info('Delete event false.');
 			return;
 		}
@@ -341,8 +340,7 @@ function feedContentWindow(eventid, fullcontent) {
 	function sendCommentCB(result, data){
 		forwardView.visible = false;
 		if(result == false){
-			
-			showAlert('Error !', data);
+
 			Ti.API.info('Post Comment false.');
 			return;
 		}

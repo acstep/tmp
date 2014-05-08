@@ -13,7 +13,7 @@ function HeadWindow(cropimage,mode) {
     backgroundView.layout = 'composite';
     
 	
-
+    tracker.trackScreen('HeadWindow' );
 
 	var middleView = Ti.UI.createView({
 		width:'100%',
