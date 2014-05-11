@@ -769,7 +769,7 @@ function createGroupWindow(type,gid,selfdata) {
 			top:'30dp',
 			left:'10dp',
 			borderRadius:5,
-		    image: (getFeedImgAddr()+'feedimgm/' + orginalPhotos[i]).replace('.jpg','-m.jpg')
+		    image: (getFeedImgAddr()+'feedimgsm/' + orginalPhotos[i]).replace('.jpg','-m.jpg')
 		});
 		
 		var imageobj = {'filename': orginalPhotos[i], 'image':{},'imgobj':tmpImageView};
@@ -792,7 +792,7 @@ function createGroupWindow(type,gid,selfdata) {
             "id": Ti.App.Properties.getString('userid',''),
             'token':Ti.App.Properties.getString('token','') 
         };
-		xhr = Titanium.Network.createHTTPClient();
+		var xhr = Titanium.Network.createHTTPClient({validatesSecureCertificate: false});
         xhr.open("POST",getServerAddr()+"uploadimg");
         xhr.send(data_to_send); 
         xhr.onload = function(e) {
@@ -841,7 +841,7 @@ function createGroupWindow(type,gid,selfdata) {
             "id": Ti.App.Properties.getString('userid',''),
             'token':Ti.App.Properties.getString('token','')
         };
-		xhr = Titanium.Network.createHTTPClient();
+		var xhr = Titanium.Network.createHTTPClient({validatesSecureCertificate: false});
         xhr.open("POST",getServerAddr()+"uploadheadimg");
         xhr.send(data_to_send); 
         xhr.onload = function(e) {

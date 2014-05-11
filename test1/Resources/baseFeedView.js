@@ -83,7 +83,7 @@ function createBaseFeedView(view, data){
             backgroundColor:'#ffffff'
 		});
 		
-		Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgm/' + data.info['photos'][0]).replace('.jpg','-m.jpg'));
+		Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgsm/' + data.info['photos'][0]).replace('.jpg','-m.jpg'));
 		var feedImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
 		    visible : false,
@@ -130,7 +130,7 @@ function createBaseFeedView(view, data){
 		middleView.add(imageContentView);
 		
 		
-		feedImage.image = (getFeedImgAddr()+'feedimgm/' + data.info['photos'][0]).replace('.jpg','-m.jpg');
+		feedImage.image = (getFeedImgAddr()+'feedimgsm/' + data.info['photos'][0]).replace('.jpg','-m.jpg');
 
 	}
 
@@ -262,7 +262,7 @@ function drawtemplate1Event(view, data){
             backgroundColor:'#ffffff'
 		});
 		
-		Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgm/' + data.info['photos'][0]).replace('.jpg','-m.jpg'));
+		Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgsm/' + data.info['photos'][0]).replace('.jpg','-m.jpg'));
 		var feedImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
 		    visible : false,
@@ -308,7 +308,7 @@ function drawtemplate1Event(view, data){
 
 		middleView.add(imageContentView);
 		
-		feedImage.image = (getFeedImgAddr()+'feedimgm/' + data.info['photos'][0]).replace('.jpg','-m.jpg');
+		feedImage.image = (getFeedImgAddr()+'feedimgsm/' + data.info['photos'][0]).replace('.jpg','-m.jpg');
 
 	}
 
@@ -370,6 +370,10 @@ function drawtemplate1Event(view, data){
 			source.liketextlabel.color = "#3498db";
 			source.liketextlabel.text = parseInt(source.liketextlabel.text)+1;
 			source.likeimg.image = "likeb.png";
+        }
+        else{
+        	source.liketextlabel.color = "#3498db";
+        	source.likeimg.image = "likeb.png";
         } 
 	}
 	
@@ -677,7 +681,7 @@ function drawtemplate2Event(view, data){
 		});
 		
 		
-		Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgm/' + data.info['photos'][0]).replace('.jpg','-m.jpg'));
+		Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgsm/' + data.info['photos'][0]).replace('.jpg','-m.jpg'));
 		var feedImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
 		    visible : false,
@@ -719,7 +723,7 @@ function drawtemplate2Event(view, data){
 
 		middleView.add(imageContentView);
 		
-		feedImage.image = (getFeedImgAddr()+'feedimgm/' + data.info['photos'][0]).replace('.jpg','-m.jpg');
+		feedImage.image = (getFeedImgAddr()+'feedimgsm/' + data.info['photos'][0]).replace('.jpg','-m.jpg');
 
 	}
 

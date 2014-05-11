@@ -405,7 +405,7 @@ function BasePostWindow(data) {
             "id": Ti.App.Properties.getString('userid',''),
             'token':Ti.App.Properties.getString('token','') 
         };
-		xhr = Titanium.Network.createHTTPClient();
+		var xhr = Titanium.Network.createHTTPClient({validatesSecureCertificate: false});
         xhr.open("POST",getServerAddr()+"uploadimg");
         xhr.send(data_to_send); 
         xhr.onload = function(e) {

@@ -1,6 +1,6 @@
 // network function library
 
-var timeoutms = 5000;
+var timeoutms = 10000;
 //  we will load new feed if distance is more than 500m
 var feedDistance = 20;  
 
@@ -64,14 +64,14 @@ function getHeadImg(id){
 	if(id == myid){
 		expirecache = cache;
 	}
-	return getHeadImgAddr()+'headphotos/' + id +'.jpg' + '?' + expirecache;
+	return getHeadImgAddr()+'hphotos/' + id +'.jpg' + '?' + expirecache;
 }
 
 function login(email, pass, callbackf){
 	
 	var url = getServerAddr()+'login';
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -101,7 +101,7 @@ function logout(devicetoken){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'logout?'+ 'id=' + id + '&token=' + token +'&devicetoken='+devicetoken;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
     };
@@ -117,7 +117,7 @@ function forgetpwd(email){
 
 	var url = getServerAddr()+'forgetpwd?'+ 'email=' + email ;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	showAlert('','passsend');
     	Ti.API.info('response : ' + this.responseText);
@@ -136,7 +136,7 @@ function createAccount(data, callbackf){
 	
 	var url = getServerAddr()+'createaccount';
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -166,7 +166,7 @@ function updateaccount(data, callbackf){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'updateaccount?'+ 'id=' + id + '&token=' + token  ;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -199,7 +199,7 @@ function resendVEmail(callbackf){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'resendvemail?' + 'id=' + id + '&token=' + token ;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -230,7 +230,7 @@ function createGroup(data, callbackf){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'creategroup?'+ 'id=' + id + '&token=' + token;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -259,7 +259,7 @@ function deleteGroup(gid, callbackf){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'deletegroup?'+ 'id=' + id + '&token=' + token+ '&gid=' + gid;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -288,7 +288,7 @@ function updateGroup(data, callbackf){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'updategroup?'+ 'id=' + id + '&token=' + token;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -317,7 +317,7 @@ function likegroup(gid, callbackf){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'likegroup?' + 'id=' + id + '&token=' + token + '&gid=' + gid;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -352,7 +352,7 @@ function leavegroup(gid, callbackf){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'removelikegroup?' + 'id=' + id + '&token=' + token + '&gid=' + gid;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -386,7 +386,7 @@ function querygroupnear(data, callbackf){
 
 	var url = getServerAddr()+'querygroupnear?' +'&data=' + data ;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -417,7 +417,7 @@ function querygroup(gid, callbackf){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'querygroup?'+ 'id=' + id + '&token=' + token + '&gid=' + gid ;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -447,7 +447,7 @@ function queryidgroup(data, callbackf){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'queryidgroup?'+ 'id=' + id + '&token=' + token +'&data=' + data ;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -486,7 +486,7 @@ function queryGroupevent(gid,limitcount, nexttime, callbackf){
     var datastring = JSON.stringify(data);
 	var url = getServerAddr()+'querygroupevent?' +'&data=' + datastring;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
     	
@@ -521,7 +521,7 @@ function queryGroupPpl(datastring, callbackf){
   
 	var url = getServerAddr()+'querygroupppllist?' +'&data=' + datastring;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
     	
@@ -554,7 +554,7 @@ function querymyself(callbackf){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'queryself?' + 'id=' + id + '&token=' + token ;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -584,7 +584,7 @@ function querypeople(data, callbackf){
 
 	var url = getServerAddr()+'querypeople?' + 'data=' + data ;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -614,7 +614,7 @@ function updatepos(data){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'updatepos?'+ 'id=' + id + '&token=' + token ;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
     };
@@ -632,7 +632,7 @@ function createvent(data, callbackf){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'createvent?' + 'id=' + id + '&token=' + token ;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
 
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
@@ -668,7 +668,7 @@ function deleteevent(eventid, callbackf){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'removeevent?' + 'id=' + id + '&token=' + token + '&eventid=' + eventid;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -700,7 +700,7 @@ function queryeventbyid(eventid,callbackf){
 	
 	var url = getServerAddr()+'queryeventbyid?' + 'eventid=' + eventid ;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -765,7 +765,7 @@ function queryevent(geo, distance, category, limitcount,sorttype, nexttime, next
     
     
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -803,7 +803,7 @@ function querymyevent(limitcount, nexttime, callbackf){
     var datastring = JSON.stringify(data);
 	var url = getServerAddr()+'querymyevent?' + 'id=' + id + '&token=' + token + '&data=' + datastring;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
     	
@@ -836,7 +836,7 @@ function likeevent(eventid, sourceobj, callbackf){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'likeevent?' + 'id=' + id + '&token=' + token + '&eventid=' + eventid;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -846,14 +846,19 @@ function likeevent(eventid, sourceobj, callbackf){
     		callbackf(true,result.result,sourceobj);
     	}
     	else{
-    		if(result.result == 'like duplicate'){
-    			
-    		}
-    		if(checkTokenError(result.result)){
+    		if(result.result == 'duplicate'){
+    			callbackf(false,result.result,sourceobj);
     			return;
     		}
-    		showAlert('Error !', result.result);
-    		callbackf(false,result.result,sourceobj);
+    		if(checkTokenError(result.result)){
+    			callbackf(false,result.result,sourceobj);
+    			return;
+    		}
+    		else{
+    			showAlert('Error !', result.result);
+    			callbackf(false,result.result,sourceobj);
+    		}
+    		
     	}
     };
     xhr.onerror = function(e){
@@ -871,7 +876,7 @@ function commentevt(eventid, data, callbackf){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'commentevent?' + 'id=' + id + '&token=' + token ;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -903,7 +908,7 @@ function joinevt(data, callbackf){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'joinevent?' + 'id=' + id + '&token=' + token + '&data=' + data ;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -935,7 +940,7 @@ function leaveevent(eventid, callbackf){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'leaveevent?' + 'id=' + id + '&token=' + token + '&eventid=' + eventid ;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -967,7 +972,7 @@ function queryjoinevent(eventid, callbackf){
     var token = Ti.App.Properties.getString('token','');
 	var url = getServerAddr()+'queryjoinevent?' + 'id=' + id + '&token=' + token + '&eventid=' + eventid ;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -1002,7 +1007,7 @@ function queryjoinlist(eventid, starttime, callbackf){
     }
 	
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -1028,7 +1033,7 @@ function querypplnear(data, callbackf){
 
 	var url = getServerAddr()+'querypeoplenear?' +'&data=' + data ;
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -1063,7 +1068,7 @@ function querycomment(eventid, starttime, callbackf){
     }
 	
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -1094,7 +1099,7 @@ function querynotify( starttime, limitcount, callbackf){
 
 	
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -1127,7 +1132,7 @@ function createchatroom( id, toid, check, callbackf){
 
 	
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -1162,7 +1167,7 @@ function quitchatroom( roomid, callbackf){
 
 	
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -1200,7 +1205,7 @@ function querychatroom( starttime, limitcount,onlytime ,callbackf){
 
 	
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -1233,7 +1238,7 @@ function sendmsg( roomid, msgdata ,callbackf){
 
 	
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);
@@ -1268,7 +1273,7 @@ function querymsg( roomid, starttime, limitcount ,callbackf){
 
 	
 	Ti.API.info('url : ' + url);
-	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms});
+	var xhr = Titanium.Network.createHTTPClient({ timeout : timeoutms,validatesSecureCertificate: false});
     xhr.onload = function(e) {
     	Ti.API.info('response : ' + this.responseText);
         var result =  JSON.parse(this.responseText);

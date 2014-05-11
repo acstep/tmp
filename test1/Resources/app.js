@@ -40,7 +40,7 @@ var tracker = GA.getTracker("UA-50815409-1");
 	
 	var distance = Ti.App.Properties.getInt('distance',0);
 	if(distance == 0){
-		Ti.App.Properties.setInt('distance',5);
+		Ti.App.Properties.setInt('distance',10);
 	}
 	
 	var locationsrc = Ti.App.Properties.getString('locationsrc','');
@@ -48,13 +48,13 @@ var tracker = GA.getTracker("UA-50815409-1");
 		Ti.App.Properties.setString('locationsrc','network');
 	}
 	
-	Ti.App.Properties.setString('serveraddr','http://api.nexbbs.com/api/');
+	Ti.App.Properties.setString('serveraddr','https://api.nexbbs.com/api/');
 	var serveraddr = Ti.App.Properties.getString('serveraddr','');
 
-	Ti.App.Properties.setString('feedimgaddr','https://s3-ap-southeast-1.amazonaws.com/');
+	Ti.App.Properties.setString('feedimgaddr','https://s3-us-west-1.amazonaws.com/');
 	var feedimgaddr = Ti.App.Properties.getString('feedimgaddr','');
 
-	Ti.App.Properties.setString('headimgaddr','https://s3-ap-southeast-1.amazonaws.com/');
+	Ti.App.Properties.setString('headimgaddr','https://s3-us-west-1.amazonaws.com/');
 	var headimgaddr = Ti.App.Properties.getString('headimgaddr','');
 
 	

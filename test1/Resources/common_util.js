@@ -197,6 +197,7 @@ function createNormalFeed(viewobj,category){
 	
 	function parseFeed(result, feedData,nextstarttime){
 		feedLoading = false;
+		
 		try{
 			feedRowstatus = 'none';
 			feedTableView.deleteRow(loadRow);
@@ -204,11 +205,10 @@ function createNormalFeed(viewobj,category){
 		catch(err){
 			
 		}
-
+       
 		if(result == true){
 			
 			Ti.API.info(feedData);
-			
 
 			if(feedData.length > 0){	
 				if(firstFeed == true){
@@ -815,6 +815,10 @@ function createCardBottom(feedView, data){
 			source.liketextlabel.text = parseInt(source.liketextlabel.text)+1;
 			source.likeimg.image = "likeb.png";
         } 
+        else{
+        	source.liketextlabel.color = "#3498db";
+			source.likeimg.image = "likeb.png";
+        }
 	}
 	
 	bottomLikeView.addEventListener('click',function(e) {
@@ -1510,7 +1514,7 @@ function drawInfo(viewobj, data){
 				    width:'80dp',height:'80dp',left:'10dp',
 				    name:'imagecontentview'
 				});  
-				Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgm/' + data['photos'][0]).replace('.jpg','-m.jpg'));
+				Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgsm/' + data['photos'][0]).replace('.jpg','-m.jpg'));
 				var feedImage = Titanium.UI.createImageView({
 				    backgroundColor: '#ffffff',
 				    visible : false,
@@ -1549,7 +1553,7 @@ function drawInfo(viewobj, data){
 					var FeedImageListWindow = require('imagelistWindows');
 					new FeedImageListWindow(data['photos'],this.index).open(); 
 				});
-				feedImage.image = (getFeedImgAddr()+'feedimgm/' + data['photos'][i]).replace('.jpg','-m.jpg');
+				feedImage.image = (getFeedImgAddr()+'feedimgsm/' + data['photos'][i]).replace('.jpg','-m.jpg');
 				imageContentView.add(feedImage);
 	
 				imageScrollView.add(imageContentView);

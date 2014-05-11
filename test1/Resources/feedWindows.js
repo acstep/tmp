@@ -611,7 +611,7 @@ function feedWindow() {
 	};
 	
 	
-	function parseFeed(result, feedData){
+	function parseFeed(result, feedData,nextstarttime){
 		feedLoading = false;
 		try{
 			feedRowstatus = 'none';
@@ -624,7 +624,30 @@ function feedWindow() {
 		if(result == true){
 			
 			Ti.API.info(feedData);
-			
+			if(feedData.length == 0 && firstFeed == true){
+				Ti.API.info('new area!'); 
+				var exampleData = {    
+                        "eventid":'',
+                        "ownerid":'',
+                        "photos":[],
+                        "lastupdate":(new Date().getTime()/1000),
+                        "loc" : { "type" : "Point" , "coordinates" : [ getLon(), getLat() ]},
+                        "extime":0,
+                        "title":"",
+                        "des":L('noevent'),
+                        "name":"System",
+                        "like":0,
+                        "comment":0,
+                        "category":1000,
+                        "starttime":(new Date().getTime()/1000),
+                        "joinnumber":0,
+                        "pdata":{},
+                        "gid":"",
+                        "gownerid":"",
+                        "gname":"",
+                   };
+				feedData = [exampleData];
+			}
 
 			if(feedData.length > 0){	
 				if(firstFeed == true){
@@ -663,7 +686,7 @@ function feedWindow() {
 				}   
 
 				Ti.App.Properties.setString('feed',JSON.stringify({'data':feeditem}));
-				nexttime = feedData[(feedData.length -1)]['lastupdate'];
+				nexttime = nextstarttime;
 			}
 			forwardView.visible = false;
 			
