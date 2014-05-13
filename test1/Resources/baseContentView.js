@@ -43,7 +43,7 @@ function drawBaseContnet(contentView,data){
 			new FeedImageListWindow(imageList,0).open(); 
 		});
 		imageScrollView.add(feedImage);
-		feedImage.image = (getFeedImgAddr()+'feedimgsm/' + imageList[0]).replace('.jpg','-m.jpg');
+		feedImage.image = (getFeedImgAddr()  + imageList[0]).replace('.jpg','-m.jpg');
 
 	}
 	else{
@@ -66,7 +66,7 @@ function drawBaseContnet(contentView,data){
 			    width:'130dp',height:'130dp',left:'10dp',
 			    name:'imagecontentview'
 			});  
-			Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgsm/' + imageList[0]).replace('.jpg','-m.jpg'));
+			Ti.API.info('image file : ',(getFeedImgAddr()  + imageList[0]).replace('.jpg','-m.jpg'));
 			var feedImage = Titanium.UI.createImageView({
 			    backgroundColor: '#ffffff',
 			    visible : false,
@@ -105,7 +105,7 @@ function drawBaseContnet(contentView,data){
 				var FeedImageListWindow = require('imagelistWindows');
 				new FeedImageListWindow(imageList,this.index).open(); 
 			});
-			feedImage.image = (getFeedImgAddr()+'feedimgsm/' + imageList[i]).replace('.jpg','-m.jpg');
+			feedImage.image = (getFeedImgAddr()  + imageList[i]).replace('.jpg','-m.jpg');
 			imageContentView.add(feedImage);
 
 			imageScrollView.add(imageContentView);
@@ -326,7 +326,7 @@ function drawtemplate1Contnet(contentView,data){
 			new topImageListWindow(imageList,0).open(); 
 		});
 		imageScrollView.add(feedImage);
-		feedImage.image = (getFeedImgAddr()+'feedimgsm/' + imageList[0]).replace('.jpg','-m.jpg');
+		feedImage.image = (getFeedImgAddr()  + imageList[0]).replace('.jpg','-m.jpg');
 	
 	}
 	else{
@@ -349,7 +349,7 @@ function drawtemplate1Contnet(contentView,data){
 			    width:'130dp',height:'130dp',left:'10dp',
 			    name:'imagecontentview'
 			});  
-			Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgsm/' + imageList[0]).replace('.jpg','-m.jpg'));
+			Ti.API.info('image file : ',(getFeedImgAddr()  + imageList[0]).replace('.jpg','-m.jpg'));
 			var feedImage = Titanium.UI.createImageView({
 			    backgroundColor: '#ffffff',
 			    visible : false,
@@ -389,7 +389,7 @@ function drawtemplate1Contnet(contentView,data){
 				var topImageListWindow = require('imagelistWindows');
 				new topImageListWindow(imageList,this.index).open(); 
 			});
-			feedImage.image = (getFeedImgAddr()+'feedimgsm/' + imageList[i]).replace('.jpg','-m.jpg');
+			feedImage.image = (getFeedImgAddr()  + imageList[i]).replace('.jpg','-m.jpg');
 			imageContentView.add(feedImage);
 
 			imageScrollView.add(imageContentView);
@@ -839,7 +839,7 @@ function drawtemplate2Contnet(contentView,data){
 			new FeedImageListWindow(imageList,0).open(); 
 		});
 		imageScrollView.add(feedImage);
-		feedImage.image = (getFeedImgAddr()+'feedimgsm/' + imageList[0]).replace('.jpg','-m.jpg');
+		feedImage.image = (getFeedImgAddr()  + imageList[0]).replace('.jpg','-m.jpg');
 
 	}
 	else{
@@ -862,7 +862,7 @@ function drawtemplate2Contnet(contentView,data){
 			    width:'130dp',height:'130dp',left:'10dp',
 			    name:'imagecontentview'
 			});  
-			Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgsm/' + imageList[0]).replace('.jpg','-m.jpg'));
+			Ti.API.info('image file : ',(getFeedImgAddr()  + imageList[0]).replace('.jpg','-m.jpg'));
 			var feedImage = Titanium.UI.createImageView({
 			    backgroundColor: '#ffffff',
 			    visible : false,
@@ -904,7 +904,7 @@ function drawtemplate2Contnet(contentView,data){
 				var FeedImageListWindow = require('imagelistWindows');
 				new FeedImageListWindow(imageList,this.index).open(); 
 			});
-			feedImage.image = (getFeedImgAddr()+'feedimgsm/' + imageList[i]).replace('.jpg','-m.jpg');
+			feedImage.image = (getFeedImgAddr()  + imageList[i]).replace('.jpg','-m.jpg');
 			imageContentView.add(feedImage);
 	
 			imageScrollView.add(imageContentView);

@@ -83,7 +83,7 @@ function createBaseFeedView(view, data){
             backgroundColor:'#ffffff'
 		});
 		
-		Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgsm/' + data.info['photos'][0]).replace('.jpg','-m.jpg'));
+		Ti.API.info('image file : ',(getFeedImgAddr()  + data.info['photos'][0]).replace('.jpg','-m.jpg'));
 		var feedImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
 		    visible : false,
@@ -130,7 +130,7 @@ function createBaseFeedView(view, data){
 		middleView.add(imageContentView);
 		
 		
-		feedImage.image = (getFeedImgAddr()+'feedimgsm/' + data.info['photos'][0]).replace('.jpg','-m.jpg');
+		feedImage.image = (getFeedImgAddr()  + data.info['photos'][0]).replace('.jpg','-m.jpg');
 
 	}
 
@@ -262,7 +262,7 @@ function drawtemplate1Event(view, data){
             backgroundColor:'#ffffff'
 		});
 		
-		Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgsm/' + data.info['photos'][0]).replace('.jpg','-m.jpg'));
+		Ti.API.info('image file : ',(getFeedImgAddr()  + data.info['photos'][0]).replace('.jpg','-m.jpg'));
 		var feedImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
 		    visible : false,
@@ -308,7 +308,7 @@ function drawtemplate1Event(view, data){
 
 		middleView.add(imageContentView);
 		
-		feedImage.image = (getFeedImgAddr()+'feedimgsm/' + data.info['photos'][0]).replace('.jpg','-m.jpg');
+		feedImage.image = (getFeedImgAddr()  + data.info['photos'][0]).replace('.jpg','-m.jpg');
 
 	}
 
@@ -681,7 +681,7 @@ function drawtemplate2Event(view, data){
 		});
 		
 		
-		Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgsm/' + data.info['photos'][0]).replace('.jpg','-m.jpg'));
+		Ti.API.info('image file : ',(getFeedImgAddr()  + data.info['photos'][0]).replace('.jpg','-m.jpg'));
 		var feedImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
 		    visible : false,
@@ -723,7 +723,7 @@ function drawtemplate2Event(view, data){
 
 		middleView.add(imageContentView);
 		
-		feedImage.image = (getFeedImgAddr()+'feedimgsm/' + data.info['photos'][0]).replace('.jpg','-m.jpg');
+		feedImage.image = (getFeedImgAddr()  + data.info['photos'][0]).replace('.jpg','-m.jpg');
 
 	}
 

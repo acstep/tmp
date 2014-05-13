@@ -63,7 +63,7 @@ function imageListWindow(imagelist,index) {
 
 		});
 		
-		imgView.image = getFeedImgAddr() +'feedimgsl/' + imagelist[i].replace('.jpg','-l.jpg');
+		imgView.image = getFeedImgLAddr() + imagelist[i].replace('.jpg','-l.jpg');
         imgView.vscroll = imgWrapperv;
         imgView.hscroll = imgWrapperh;
         

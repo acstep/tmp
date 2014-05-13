@@ -49,7 +49,7 @@ function clearProperty(){
 	Ti.App.Properties.setString('work','');
 	Ti.App.Properties.setInt('birthday',946656000);
 	Ti.App.Properties.setString('sorttype','time');
-	Ti.App.Properties.setInt('distance',5);
+	Ti.App.Properties.setInt('distance',10);
 	Ti.App.Properties.setString('locationsrc','network');
 	Ti.App.Properties.setString('roominfo','{}');
 	Ti.App.Properties.setString('savedChatroomData','[]');
@@ -516,6 +516,10 @@ function showAlert(title, message){
 		    titleString = L('error');
 		    msgString = L('networkerror');
 			break;
+		case 'email_exist':
+		 	titleString = L('error');
+			msgString = L('email_exist');	
+			break;		
 		case 'passempty':
 			titleString = L('error');
 			msgString = L('passempty');	
@@ -1514,7 +1518,7 @@ function drawInfo(viewobj, data){
 				    width:'80dp',height:'80dp',left:'10dp',
 				    name:'imagecontentview'
 				});  
-				Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgsm/' + data['photos'][0]).replace('.jpg','-m.jpg'));
+				Ti.API.info('image file : ',(getFeedImgAddr()  + data['photos'][0]).replace('.jpg','-m.jpg'));
 				var feedImage = Titanium.UI.createImageView({
 				    backgroundColor: '#ffffff',
 				    visible : false,
@@ -1553,7 +1557,7 @@ function drawInfo(viewobj, data){
 					var FeedImageListWindow = require('imagelistWindows');
 					new FeedImageListWindow(data['photos'],this.index).open(); 
 				});
-				feedImage.image = (getFeedImgAddr()+'feedimgsm/' + data['photos'][i]).replace('.jpg','-m.jpg');
+				feedImage.image = (getFeedImgAddr()  + data['photos'][i]).replace('.jpg','-m.jpg');
 				imageContentView.add(feedImage);
 	
 				imageScrollView.add(imageContentView);

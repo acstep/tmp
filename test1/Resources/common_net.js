@@ -18,6 +18,10 @@ function getFeedImgAddr(){
 	return Ti.App.Properties.getString('feedimgaddr','');
 }
 
+function getFeedImgLAddr(){
+	return Ti.App.Properties.getString('feedimgladdr','');
+}
+
 function getHeadImgAddr(){
 	return Ti.App.Properties.getString('headimgaddr','');
 }
@@ -64,7 +68,7 @@ function getHeadImg(id){
 	if(id == myid){
 		expirecache = cache;
 	}
-	return getHeadImgAddr()+'hphotos/' + id +'.jpg' + '?' + expirecache;
+	return getHeadImgAddr() + id +'.jpg' + '?' + expirecache;
 }
 
 function login(email, pass, callbackf){

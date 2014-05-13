@@ -51,10 +51,13 @@ var tracker = GA.getTracker("UA-50815409-1");
 	Ti.App.Properties.setString('serveraddr','https://api.nexbbs.com/api/');
 	var serveraddr = Ti.App.Properties.getString('serveraddr','');
 
-	Ti.App.Properties.setString('feedimgaddr','https://s3-us-west-1.amazonaws.com/');
+	Ti.App.Properties.setString('feedimgaddr','http://cdnfeedimgsm.nexbbs.com.s3-us-west-1.amazonaws.com/');
 	var feedimgaddr = Ti.App.Properties.getString('feedimgaddr','');
+	
+	Ti.App.Properties.setString('feedimgladdr','http://cdnfeedimgsl.nexbbs.com.s3-us-west-1.amazonaws.com/');
+	var feedimgaddr = Ti.App.Properties.getString('feedimgladdr','');
 
-	Ti.App.Properties.setString('headimgaddr','https://s3-us-west-1.amazonaws.com/');
+	Ti.App.Properties.setString('headimgaddr','http://cdnhphotos.nexbbs.com.s3-us-west-1.amazonaws.com/');
 	var headimgaddr = Ti.App.Properties.getString('headimgaddr','');
 
 	

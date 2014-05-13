@@ -859,7 +859,7 @@ function accountinfoWindow(selfdata) {
 			top:'30dp',
 			left:'10dp',
 			borderRadius:5,
-		    image: (getFeedImgAddr()+'feedimgsm/' + orginalPhotos[i]).replace('.jpg','-m.jpg')
+		    image: (getFeedImgAddr()  + orginalPhotos[i]).replace('.jpg','-m.jpg')
 		});
 		
 		var imageobj = {'filename': orginalPhotos[i], 'image':{},'imgobj':accountImage};

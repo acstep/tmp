@@ -157,4 +157,5 @@
 	<string name="goverify">我們已經寄信到您的信箱，請到您的信箱啟動帳號，才能使用全部功能</string>
 	<string name="verify_error">您的帳號尚未認證，請前往認證，才能使用全部功能</string>
 	<string name="noevent">目前您的附近沒有訊息，趕緊發布這個區域的第一則訊息吧!</string>
+	<string name="email_exist">很抱歉，這個信箱已經被使用了</string>
 </resources>

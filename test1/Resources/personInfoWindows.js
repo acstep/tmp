@@ -261,7 +261,7 @@ function personInfoWindow(id) {
 				    width:'80dp',height:'80dp',left:'10dp',
 				    name:'imagecontentview'
 				});  
-				Ti.API.info('image file : ',(getFeedImgAddr()+'feedimgsm/' + data['photos'][0]).replace('.jpg','-m.jpg'));
+				Ti.API.info('image file : ',(getFeedImgAddr()  + data['photos'][0]).replace('.jpg','-m.jpg'));
 				var feedImage = Titanium.UI.createImageView({
 				    backgroundColor: '#ffffff',
 				    visible : false,
@@ -300,7 +300,7 @@ function personInfoWindow(id) {
 					var FeedImageListWindow = require('imagelistWindows');
 					new FeedImageListWindow(data['photos'],this.index).open(); 
 				});
-				feedImage.image = (getFeedImgAddr()+'feedimgsm/' + data['photos'][i]).replace('.jpg','-m.jpg');
+				feedImage.image = (getFeedImgAddr()  + data['photos'][i]).replace('.jpg','-m.jpg');
 				imageContentView.add(feedImage);
 	
 				imageScrollView.add(imageContentView);
