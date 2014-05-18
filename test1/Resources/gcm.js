@@ -110,17 +110,59 @@
 		}
 	}
 	
-	var notification = Ti.Android.createNotification({
-		contentIntent: pintent,
-		contentTitle: titlestr,
-		contentText: messagestr,
-		tickerText: messagestr,
-		icon: Ti.App.Android.R.drawable.appicon,
-		ledARGB : 0x00FF00,
-	    ledOnMS : 100,
-	    ledOffMS : 100, 
-		flags: Ti.Android.FLAG_AUTO_CANCEL | Ti.Android.FLAG_SHOW_LIGHTS
-	});
+	
+	var gcmnotifyType = Ti.App.Properties.getString('notify','all');
+	var gcmNotify = '';
+	switch(gcmnotifyType){
+		case 'all':
+			gcmNotify = Titanium.Android.NotificationManager.DEFAULT_ALL;
+			break;
+		case 'vibrate':
+			gcmNotify = Titanium.Android.NotificationManager.DEFAULT_VIBRATE;
+			break;
+		case 'sound':
+			gcmNotify = Titanium.Android.NotificationManager.DEFAULT_SOUND;
+			break;
+		case 'none':
+			gcmNotify = '';
+			break;
+		default:
+			gcmNotify = Titanium.Android.NotificationManager.DEFAULT_ALL;
+			break;
+ 
+	} 
+	
+	var notification = {};
+	if(gcmNotify != ''){
+		notification = Ti.Android.createNotification({
+			contentIntent: pintent,
+			contentTitle: titlestr,
+			contentText: messagestr,
+			tickerText: messagestr,
+			icon: Ti.App.Android.R.drawable.appicon,
+			ledARGB : 0x00FF00,
+		    ledOnMS : 100,
+		    ledOffMS : 100, 
+			flags: Ti.Android.FLAG_AUTO_CANCEL | Ti.Android.FLAG_SHOW_LIGHTS,
+			defaults: gcmNotify
+		});
+	}
+	else{
+		notification = Ti.Android.createNotification({
+			contentIntent: pintent,
+			contentTitle: titlestr,
+			contentText: messagestr,
+			tickerText: messagestr,
+			icon: Ti.App.Android.R.drawable.appicon,
+			ledARGB : 0x00FF00,
+		    ledOnMS : 100,
+		    ledOffMS : 100, 
+			flags: Ti.Android.FLAG_AUTO_CANCEL | Ti.Android.FLAG_SHOW_LIGHTS,
+		});
+	}
+	
+	
+	
 	Ti.Android.NotificationManager.cancel(Ti.App.Properties.getString('notifyid', notificationId));
 	Ti.Android.NotificationManager.notify(notificationId, notification);
     Ti.App.Properties.setString('notifyid', notificationId);

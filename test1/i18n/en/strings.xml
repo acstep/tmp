@@ -158,4 +158,9 @@
 	<string name="verify_error">Please verify your account to enable all features.</string>
 	<string name="noevent">There is no any event in this area. Post the first event in this area?</string>
 	<string name="email_exist">Sorry, this email has been registered</string>
+	<string name="notifytype">Notification Setup</string>
+	<string name="notifytypeno">Close</string>
+	<string name="notifytypevibrate">Vibration</string>
+	<string name="notifytypesound">Sound</string>
+	<string name="notifytypeall">Vibration+Sound</string>
 </resources>

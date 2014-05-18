@@ -61,7 +61,7 @@ function clearProperty(){
 	Ti.App.Properties.setDouble('userchooselongitude',-1);
 	Ti.App.Properties.setList('photos',[]);
 	Ti.App.Properties.setString('myfeed',JSON.stringify({'data':[]}));
-
+    Ti.App.Properties.setString('notify','all');
 }
 
 function createNormalWin(title){
@@ -1527,13 +1527,9 @@ function drawInfo(viewobj, data){
 			    feedImage.index = i;
 				feedImage.addEventListener('load', function()
 				{
-					var imgwidth = this.size.width;
-					var imgheight = this.size.height;
-	                if(imgwidth == 0 || imgheight == 0){
-						var tmpimage = this.toBlob();
-						imgwidth = tmpimage.width;
-						imgheight = tmpimage.height;
-					}
+					var imgwidth = 400;
+					var imgheight = 30;
+
 					if(imgwidth < imgheight){
 						var ratio = (80 / parseFloat(imgwidth));
 						this.width = (imgwidth * ratio) ;

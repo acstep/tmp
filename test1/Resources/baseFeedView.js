@@ -96,18 +96,9 @@ function createBaseFeedView(view, data){
 			var platheight = Ti.Platform.displayCaps.platformHeight;
 			var platwidth = Ti.Platform.displayCaps.platformWidth *0.90;
 
-			var imgwidth = e.source.size.width;
-			var imgheight = e.source.size.height;
+			var imgwidth = 400;
+			var imgheight = 300;
 			
-			Ti.API.info('platheight ' + platheight);
-			Ti.API.info('platwidth ' + platwidth);
-			Ti.API.info('imgwidth ' + imgwidth);
-			Ti.API.info('imgheight ' + imgheight);
-			if(imgwidth == 0 || imgheight == 0){
-				var tmpimage = this.toBlob();
-				imgwidth = tmpimage.width;
-				imgheight = tmpimage.height;
-			}
 			if(imgwidth != 0 && imgwidth < platwidth){
 		
 				var ratio = (platwidth / parseFloat(imgwidth));
@@ -275,18 +266,9 @@ function drawtemplate1Event(view, data){
 			var platheight = Ti.Platform.displayCaps.platformHeight;
 			var platwidth = Ti.Platform.displayCaps.platformWidth *0.90;
 
-			var imgwidth = e.source.size.width;
-			var imgheight = e.source.size.height;
+			var imgwidth = 400;
+			var imgheight = 300;
 			
-			Ti.API.info('platheight ' + platheight);
-			Ti.API.info('platwidth ' + platwidth);
-			Ti.API.info('imgwidth ' + imgwidth);
-			Ti.API.info('imgheight ' + imgheight);
-			if(imgwidth == 0 || imgheight == 0){
-				var tmpimage = this.toBlob();
-				imgwidth = tmpimage.width;
-				imgheight = tmpimage.height;
-			}
 			if(imgwidth != 0 && imgwidth < platwidth){
 		
 				var ratio = (platwidth / parseFloat(imgwidth));
@@ -694,13 +676,8 @@ function drawtemplate2Event(view, data){
 			var platheight = Ti.Platform.displayCaps.platformHeight;
 			var platwidth = Ti.Platform.displayCaps.platformWidth *0.90;
 
-			var imgwidth = e.source.size.width;
-			var imgheight = e.source.size.height;
-			if(imgwidth == 0 || imgheight == 0){
-				var tmpimage = this.toBlob();
-				imgwidth = tmpimage.width;
-				imgheight = tmpimage.height;
-			}
+			var imgwidth = 400;
+			var imgheight = 300;
 		
 			if(imgwidth != 0 && imgwidth < platwidth){
 		

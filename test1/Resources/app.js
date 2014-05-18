@@ -48,16 +48,24 @@ var tracker = GA.getTracker("UA-50815409-1");
 		Ti.App.Properties.setString('locationsrc','network');
 	}
 	
+	var notification = Ti.App.Properties.getString('notify','');
+	if(notification == ''){
+		Ti.App.Properties.setString('notify','all');
+	}
+	
 	Ti.App.Properties.setString('serveraddr','https://api.nexbbs.com/api/');
 	var serveraddr = Ti.App.Properties.getString('serveraddr','');
+	
+	Ti.App.Properties.setString('imgserveraddr','https://upload.nexbbs.com/api/');
+	var imgserveraddr = Ti.App.Properties.getString('imgserveraddr','');
 
-	Ti.App.Properties.setString('feedimgaddr','http://cdnfeedimgsm.nexbbs.com.s3-us-west-1.amazonaws.com/');
+	Ti.App.Properties.setString('feedimgaddr','http://cdnfeedimgsm.nexbbs.com/');
 	var feedimgaddr = Ti.App.Properties.getString('feedimgaddr','');
 	
-	Ti.App.Properties.setString('feedimgladdr','http://cdnfeedimgsl.nexbbs.com.s3-us-west-1.amazonaws.com/');
+	Ti.App.Properties.setString('feedimgladdr','http://cdnfeedimgsl.nexbbs.com/');
 	var feedimgaddr = Ti.App.Properties.getString('feedimgladdr','');
 
-	Ti.App.Properties.setString('headimgaddr','http://cdnhphotos.nexbbs.com.s3-us-west-1.amazonaws.com/');
+	Ti.App.Properties.setString('headimgaddr','http://cdnhphotos.nexbbs.com/');
 	var headimgaddr = Ti.App.Properties.getString('headimgaddr','');
 
 	

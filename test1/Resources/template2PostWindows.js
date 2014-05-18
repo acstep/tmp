@@ -533,7 +533,7 @@ function Template2PostWindows(data) {
             'token':Ti.App.Properties.getString('token','') 
         };
 		var xhr = Titanium.Network.createHTTPClient({validatesSecureCertificate: false});
-        xhr.open("POST",getServerAddr()+"uploadimg");
+        xhr.open("POST",getImgServerAddr()+"uploadimg");
         xhr.send(data_to_send); 
         xhr.onload = function(e) {
         	currentUploadImg = currentUploadImg + 1;

@@ -14,6 +14,10 @@ function getServerAddr(){
 	return Ti.App.Properties.getString('serveraddr','');
 }
 
+function getImgServerAddr(){
+	return Ti.App.Properties.getString('imgserveraddr','');
+}
+
 function getFeedImgAddr(){
 	return Ti.App.Properties.getString('feedimgaddr','');
 }

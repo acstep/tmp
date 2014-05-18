@@ -24,13 +24,9 @@ function drawBaseContnet(contentView,data){
 			var platheight = Ti.Platform.displayCaps.platformHeight;
 			var platwidth = Ti.Platform.displayCaps.platformWidth ;
 
-			var imgwidth = this.size.width;
-			var imgheight = this.size.height;
-			if(imgwidth == 0 || imgheight == 0){
-				var tmpimage = this.toBlob();
-				imgwidth = tmpimage.width;
-				imgheight = tmpimage.height;
-			}
+			var imgwidth = 400;
+			var imgheight = 300;
+			
 			if(imgwidth < platwidth){
 				ratio = (platwidth / parseFloat(imgwidth));
 				this.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
@@ -75,13 +71,9 @@ function drawBaseContnet(contentView,data){
 		    feedImage.index = i;
 			feedImage.addEventListener('load', function()
 			{
-				var imgwidth = this.size.width;
-				var imgheight = this.size.height;
-                if(imgwidth == 0 || imgheight == 0){
-					var tmpimage = this.toBlob();
-					imgwidth = tmpimage.width;
-					imgheight = tmpimage.height;
-				}
+				var imgwidth = 400;
+				var imgheight = 300;
+                
 				if(imgwidth < imgheight){
 					ratio = (130 / parseFloat(imgwidth));
 					this.width = (imgwidth * ratio) ;
@@ -307,8 +299,8 @@ function drawtemplate1Contnet(contentView,data){
 			var platheight = Ti.Platform.displayCaps.platformHeight;
 			var platwidth = Ti.Platform.displayCaps.platformWidth ;
 
-			var imgwidth = this.size.width;
-			var imgheight = this.size.height;
+			var imgwidth = 400;
+			var imgheight = 300;
 			if(imgwidth == 0 || imgheight == 0){
 				var tmpimage = this.toBlob();
 				imgwidth = tmpimage.width;
@@ -359,13 +351,9 @@ function drawtemplate1Contnet(contentView,data){
 			feedImage.addEventListener('load', function()
 			{
 				
-				var imgwidth = this.size.width;
-				var imgheight = this.size.height;
-                if(imgwidth == 0 || imgheight == 0){
-					var tmpimage = this.toBlob();
-					imgwidth = tmpimage.width;
-					imgheight = tmpimage.height;
-				}
+				var imgwidth = 400;
+				var imgheight = 300;
+                
 				if(imgwidth < imgheight){
 					ratio = (130 / parseFloat(imgwidth));
 					this.width = (imgwidth * ratio) ;
@@ -817,15 +805,11 @@ function drawtemplate2Contnet(contentView,data){
 			var platheight = Ti.Platform.displayCaps.platformHeight;
 			var platwidth = Ti.Platform.displayCaps.platformWidth ;
 
-			var imgwidth = this.size.width;
-			var imgheight = this.size.height;
+			var imgwidth = 400;
+			var imgheight = 300;
 			Ti.API.info('222this.width ' + imgwidth);
 			Ti.API.info('222this.height ' + imgheight);
-			if(imgwidth == 0 || imgheight == 0){
-				var tmpimage = this.toBlob();
-				imgwidth = tmpimage.width;
-				imgheight = tmpimage.height;
-			}
+			
 			if(imgwidth < platwidth){
 				var ratio = (platwidth / parseFloat(imgwidth));
 				this.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
@@ -872,13 +856,9 @@ function drawtemplate2Contnet(contentView,data){
 			feedImage.addEventListener('load', function()
 			{
 
-				var imgwidth = this.size.width;
-				var imgheight = this.size.height;
-                if(imgwidth == 0 || imgheight == 0){
-					var tmpimage = this.toBlob();
-					imgwidth = tmpimage.width;
-					imgheight = tmpimage.height;
-				}
+				var imgwidth = 400;
+				var imgheight = 300;
+                
 				if(imgwidth != 0 && imgheight != 0){
 					if(imgwidth < imgheight){
 						ratio = (130 / parseFloat(imgwidth));

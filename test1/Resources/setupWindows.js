@@ -46,6 +46,7 @@ function setupWindow() {
 		{ leftImage:'human.png', title:'personalinfo' },
 		{ leftImage:'gps.png', title:'locationsrc' },
 		{ leftImage:'sortpos.png', title:'jumpandpos' },
+		{ leftImage:'notification.png', title:'notifytype'},
 		{ leftImage:'passwd.png', title:'changepass'},
 		{ leftImage:'info.png', title:'appinfo'},
 	]; 
@@ -97,39 +98,100 @@ function setupWindow() {
 	    separatorColor:'#666666'
 	});  
 	
+	////////////  setup location /////////////////
 	var locationsrc = Ti.App.Properties.getString('locationsrc','network');
-	var defaultIndex = 0;
+	var locDefaultIndex = 0;
 	if(locationsrc == 'gps'){
-		defaultIndex = 0;
+		locDefaultIndex = 0;
 	}
 	else{
-		defaultIndex = 1;
+		locDefaultIndex = 1;
 	}
-	
-	function showLocDialog(){
+
+	function createLocDlg(){
 		var locationsrcDialog = Titanium.UI.createOptionDialog({
-	        selectedIndex: defaultIndex,
-		    title: L('locationsrc'),
-		    options: [L('fromgps'),L('fromnetwork'),L('cancel')]
+        selectedIndex: locDefaultIndex,
+	    title: L('locationsrc'),
+	    options: [L('fromgps'),L('fromnetwork'),L('cancel')]
 		});
 		
 		locationsrcDialog.addEventListener('click', function(e) {
 			if(e.index == 0){
-				defaultIndex = 0;
+				locDefaultIndex = 0;
 				Ti.App.Properties.setString('locationsrc','gps');
 	            Ti.App.fireEvent('changelocationsrc');
 			}
 			else if(e.index == 1){
-				defaultIndex = 1;
+				locDefaultIndex = 1;
 				Ti.App.Properties.setString('locationsrc','network');
 	            Ti.App.fireEvent('changelocationsrc');
 			}
 			else{
 				
 			}
-		});	
-		return locationsrcDialog;
+		});
+		return 	locationsrcDialog;
 	}
+	
+	
+
+
+	////////////  setup notify /////////////////
+	var notifyType = Ti.App.Properties.getString('notify','all');
+	var notyfiDefaultIndex = 0;
+	switch(notifyType){
+		case 'all':
+			notyfiDefaultIndex = 0;
+			break;
+		case 'vibrate':
+			notyfiDefaultIndex = 1;
+			break;
+		case 'sound':
+			notyfiDefaultIndex = 2;
+			break;
+		case 'none':
+			notyfiDefaultIndex = 3;
+			break;
+		default:
+			notyfiDefaultIndex = 0;
+			break;
+ 
+	} 
+
+	function createNotDlg(){
+		var notifyDialog = Titanium.UI.createOptionDialog({
+	        selectedIndex: notyfiDefaultIndex,
+		    title: L('notifytype'),
+		    options: [L('notifytypeall'),L('notifytypevibrate'),L('notifytypesound'),L('notifytypeno')]
+		});
+		
+		notifyDialog.addEventListener('click', function(e) {
+			switch(e.index){
+				case 0:
+					notyfiDefaultIndex = 0;
+					Ti.App.Properties.setString('notify','all');
+					break;
+				case 1:
+					notyfiDefaultIndex = 1;
+					Ti.App.Properties.setString('notify','vibrate');
+					break;	
+				case 2:
+					notyfiDefaultIndex = 2;
+					Ti.App.Properties.setString('notify','sound');
+					break;	
+				case 3:
+					notyfiDefaultIndex = 3;
+					Ti.App.Properties.setString('notify','none');
+					break;	
+				default:
+					notyfiDefaultIndex = 0;
+					Ti.App.Properties.setString('notify','all');		
+			}
+		});	
+		return notifyDialog;
+	}	
+
+	
 	
 	function queryselfCallback(result, data){
 		if(result == true){
@@ -167,10 +229,9 @@ function setupWindow() {
 			case 0:
 			    forwardView.visible = true;
 			    querymyself(queryselfCallback);
-			    
 				break;		
 			case 1:
-			    var locDlg = showLocDialog();
+				var locDlg = createLocDlg();
 			    locDlg.show();
 			    break;	
 			case 2:
@@ -178,13 +239,17 @@ function setupWindow() {
 				new JumpWindow().open(); 
 				break;
 			case 3:
-			    var passWindow = require('changePassWindows');
-				new passWindow().open(); 
+			    var notDlg = createNotDlg();
+				notDlg.show();
 				break;	
 			case 4:
+				var passWindow = require('changePassWindows');
+				new passWindow().open(); 
+				break;		
+			case 5:
 				var aboutWindow = require('aboutWindows');
-					new aboutWindow().open(); 
-					break;	
+				new aboutWindow().open(); 
+				break;	
 			    	
 			default:
 					

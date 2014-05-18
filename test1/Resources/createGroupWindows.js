@@ -793,7 +793,7 @@ function createGroupWindow(type,gid,selfdata) {
             'token':Ti.App.Properties.getString('token','') 
         };
 		var xhr = Titanium.Network.createHTTPClient({validatesSecureCertificate: false});
-        xhr.open("POST",getServerAddr()+"uploadimg");
+        xhr.open("POST",getImgServerAddr()+"uploadimg");
         xhr.send(data_to_send); 
         xhr.onload = function(e) {
         	currentUploadPhoto = currentUploadPhoto + 1;
@@ -842,7 +842,7 @@ function createGroupWindow(type,gid,selfdata) {
             'token':Ti.App.Properties.getString('token','')
         };
 		var xhr = Titanium.Network.createHTTPClient({validatesSecureCertificate: false});
-        xhr.open("POST",getServerAddr()+"uploadheadimg");
+        xhr.open("POST",getImgServerAddr()+"uploadheadimg");
         xhr.send(data_to_send); 
         xhr.onload = function(e) {
             var result =  JSON.parse(this.responseText);

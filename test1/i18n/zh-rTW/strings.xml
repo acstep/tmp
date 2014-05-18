@@ -158,4 +158,9 @@
 	<string name="verify_error">您的帳號尚未認證，請前往認證，才能使用全部功能</string>
 	<string name="noevent">目前您的附近沒有訊息，趕緊發布這個區域的第一則訊息吧!</string>
 	<string name="email_exist">很抱歉，這個信箱已經被使用了</string>
+	<string name="notifytype">通知設定</string>
+	<string name="notifytypeno">關閉</string>
+	<string name="notifytypevibrate">震動</string>
+	<string name="notifytypesound">鈴聲</string>
+	<string name="notifytypeall">鈴聲+震動</string>
 </resources>

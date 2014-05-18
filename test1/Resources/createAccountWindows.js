@@ -487,7 +487,7 @@ function createAccountWindow() {
             'token':Ti.App.Properties.getString('token','')
         };
 		var xhr = Titanium.Network.createHTTPClient({validatesSecureCertificate: false});
-        xhr.open("POST",getServerAddr()+"uploadheadimg");
+        xhr.open("POST",getImgServerAddr()+"uploadheadimg");
         xhr.send(data_to_send); 
         xhr.onload = function(e) {
             var result =  JSON.parse(this.responseText);
