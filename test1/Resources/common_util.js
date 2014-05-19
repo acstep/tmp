@@ -712,7 +712,7 @@ function setPosString(latitude,longitude,tmpobj){
 
 function createMapView(mapView,data){
 	var addressText = Ti.UI.createLabel({
-		font:{fontSize:'16sp'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: '',
 		color:'#666666',
 		left:'0dp', height: Ti.UI.SIZE,
@@ -1350,7 +1350,7 @@ function drawInfo(viewobj, data){
 	
 		  
 		var nameText = Ti.UI.createLabel({
-			font:{fontSize:'20sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+			font:{fontSize:'20sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 			text: data['name'],
 			color:'#333333',left:'0dp',top:'10dp'
 		});
@@ -1372,7 +1372,7 @@ function drawInfo(viewobj, data){
 		
 		
 		var phoneNumText = Ti.UI.createLabel({
-			font:{fontSize:'18sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+			font:{fontSize:'18sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 			color:'#3498db',left:'10dp',right:'10dp',
 			text :data['phone']
 		});
@@ -1386,7 +1386,7 @@ function drawInfo(viewobj, data){
 		contentView.add(phoneNumView);
 		
 		var desText = Ti.UI.createLabel({
-			font:{fontSize:'16sp'},
+			font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 			text: data['des'],
 			color:'#666666',backgroundColor:'#ffffff',
 			top:'10dp', left:'3%', width:'94%', height:Ti.UI.SIZE,

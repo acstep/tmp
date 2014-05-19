@@ -20,7 +20,7 @@ function Template2PostWindows(data) {
 	        height:'50dp',
 	        color:'#ffffff',
 	        message:L('uploadimage'),
-	        font:{fontSize:14, fontWeight:'bold'},
+	        font:{fontSize:14,fontFamily:'Helvetica Neue', fontWeight:'bold'},
  	        top:'50dp' 
 	});
 
@@ -284,7 +284,7 @@ function Template2PostWindows(data) {
 	
     ///////    description and map /////////////
     var purposeTextField = Ti.UI.createTextField({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    hintText:L(data.titlehinttext),
@@ -298,7 +298,7 @@ function Template2PostWindows(data) {
 	});
 	
 	var placeTextField = Ti.UI.createTextField({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    hintText:L(data.placehinttext),
@@ -354,7 +354,7 @@ function Template2PostWindows(data) {
 	});
 	
 	var starttimeText = Ti.UI.createLabel({
-		font:{fontSize:'16sp'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('preferredtime') + ':',
 		color:'#3498db',
 		top:'10dp', left:'10dp',bottom:'10dp',
@@ -363,7 +363,7 @@ function Template2PostWindows(data) {
 	});
 	
 	var sDateText = Ti.UI.createLabel({
-		font:{fontSize:'16sp'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: startTime.getFullYear()+'/'+(startTime.getMonth()+1)+'/'+startTime.getDate(),
 		color:'#666666',
 		top:'10dp', left:'30dp',bottom:'10dp',
@@ -396,7 +396,7 @@ function Template2PostWindows(data) {
 	});
 	
 	var lookingText = Ti.UI.createLabel({
-		font:{fontSize:'16sp'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('preferredppl') ,
 		color:'#3498db', width:'35%',
 		left:'10dp',
@@ -416,7 +416,7 @@ function Template2PostWindows(data) {
 	});
 	
 	var peopleText = Ti.UI.createLabel({
-		font:{fontSize:'16sp'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('people') ,
 		color:'#3498db', width:'25%',
 		left:'10dp',
@@ -430,7 +430,7 @@ function Template2PostWindows(data) {
 	peopleView.add(peopleText);
     
     var desTextArea = Ti.UI.createTextArea({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    hintText:L(data.deshinttext),

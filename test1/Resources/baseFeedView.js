@@ -46,7 +46,7 @@ function createBaseFeedView(view, data){
 			data.info['title'] = data.info['title'].substr(0,50) + '...';
 		}
 		var titleText = Ti.UI.createLabel({
-			font:{fontSize:'14sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+			font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 			text: data.info['title'],textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 			color:'#2c3e50',left:'30dp',horizontalWrap:'false'
 		});
@@ -180,7 +180,7 @@ function drawtemplate1Event(view, data){
 		});
 		
 		var titlenameText = Ti.UI.createLabel({
-			font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
+			font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 			text: data.info['title'],
 			color:'#333333',
 			left:'35dp', right:'10dp',height: Ti.UI.SIZE,
@@ -565,7 +565,7 @@ function drawtemplate2Event(view, data){
 		});
 		
 		var titlenameText = Ti.UI.createLabel({
-			font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
+			font:{fontSize:'14sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 			text: data.info['title'],
 			color:'#333333',
 			left:'35dp', right:'10dp',height: Ti.UI.SIZE,
@@ -593,7 +593,7 @@ function drawtemplate2Event(view, data){
 		var socialPlaceText = Ti.UI.createLabel({
 			font:{fontSize:'14sp',fontFamily:'Helvetica Neue'},
 			text: data.info['pdata']['place'],
-			color:'#3498db',
+			color:'#333333',
 			left:'35dp', right:'10dp', height: Ti.UI.SIZE,
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});

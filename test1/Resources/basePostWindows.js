@@ -24,7 +24,7 @@ function BasePostWindow(data) {
 	        height:'50dp',
 	        color:'#ffffff',
 	        message:L('uploadimage'),
-	        font:{fontSize:14, fontWeight:'bold'},
+	        font:{fontSize:14,fontFamily:'Helvetica Neue', fontWeight:'bold'},
 	        
 	        top:'50dp' 
 	});
@@ -292,7 +292,7 @@ function BasePostWindow(data) {
     ///////    description and map /////////////
     
     var titleTextField = Ti.UI.createTextField({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    hintText:L('title'),
@@ -307,7 +307,7 @@ function BasePostWindow(data) {
 	
 	
     var desTextArea = Ti.UI.createTextArea({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    hintText:L(data.hinttext),

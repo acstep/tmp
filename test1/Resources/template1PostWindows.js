@@ -20,7 +20,7 @@ function Template1PostWindows(data) {
 	        height:'50dp',
 	        color:'#ffffff',
 	        message:L('uploadimage'),
-	        font:{fontSize:14, fontWeight:'bold'},
+	        font:{fontSize:14,fontFamily:'Helvetica Neue', fontWeight:'bold'},
  	        top:'50dp' 
 	});
 
@@ -283,7 +283,7 @@ function Template1PostWindows(data) {
 
     ///////    description and map /////////////
     var titleTextField = Ti.UI.createTextField({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    hintText:L(data.titlehinttext),
@@ -404,7 +404,7 @@ function Template1PostWindows(data) {
 	});
 	
 	var starttimeText = Ti.UI.createLabel({
-		font:{fontSize:'16sp'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('starttime') + ':',
 		color:'#3498db',
 		left:'10dp',
@@ -412,7 +412,7 @@ function Template1PostWindows(data) {
 	});
 	
 	var sDateText = Ti.UI.createLabel({
-		font:{fontSize:'16sp'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: startTime.getFullYear()+'/'+(startTime.getMonth()+1)+'/'+startTime.getDate(),
 		color:'#666666',
 		left:'130dp',
@@ -429,7 +429,7 @@ function Template1PostWindows(data) {
 		minutes = '0'+minutes;
 	}
 	var sTimeText = Ti.UI.createLabel({
-		font:{fontSize:'16sp'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: startTime.getHours()+':'+minutes,
 		color:'#666666',
 		right:'20dp',
@@ -455,7 +455,7 @@ function Template1PostWindows(data) {
 	});
 	
 	var endtimeText = Ti.UI.createLabel({
-		font:{fontSize:'16sp'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('endtime') + ':',
 		color:'#3498db',
 		left:'10dp',
@@ -463,7 +463,7 @@ function Template1PostWindows(data) {
 	});
 	
 	var eDateText = Ti.UI.createLabel({
-		font:{fontSize:'16sp'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: endTime.getFullYear()+'/'+(endTime.getMonth()+1)+'/'+endTime.getDate(),
 		color:'#666666',
 		left:'130dp',
@@ -480,7 +480,7 @@ function Template1PostWindows(data) {
 		minutes = '0'+minutes;
 	}
 	var eTimeText = Ti.UI.createLabel({
-		font:{fontSize:'16sp'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: endTime.getHours()+':'+minutes,
 		color:'#666666',
 		right:'20dp',
@@ -499,7 +499,7 @@ function Template1PostWindows(data) {
 	
     
     var desTextArea = Ti.UI.createTextArea({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    hintText:L(data.deshinttext),

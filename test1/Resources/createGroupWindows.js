@@ -226,7 +226,7 @@ function createGroupWindow(type,gid,selfdata) {
 	nameTextView.add(nameText);
 	
 	var nameTextField = Ti.UI.createTextField({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    top: '10dp',
@@ -237,7 +237,7 @@ function createGroupWindow(type,gid,selfdata) {
 	});
 	
 	var phoneTextField = Ti.UI.createTextField({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    top: '10dp',
@@ -248,7 +248,7 @@ function createGroupWindow(type,gid,selfdata) {
 	});
 	
 	var addressTextField = Ti.UI.createTextField({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    top: '10dp',
@@ -259,7 +259,7 @@ function createGroupWindow(type,gid,selfdata) {
 	});
 	
 	var weburlTextField = Ti.UI.createTextField({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    top: '10dp',bottom:'10dp',
@@ -294,7 +294,7 @@ function createGroupWindow(type,gid,selfdata) {
 	});
 	
 	var introTextArea = Ti.UI.createTextArea({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    hintText:L('inputgroupintro'),

@@ -75,7 +75,7 @@ function personInfoWindow(id) {
 	
 		  
 		var nameText = Ti.UI.createLabel({
-			font:{fontSize:'16sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+			font:{fontSize:'16sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 			text: data['name'],
 			color:'#333333',left:'0dp',top:'10dp'
 		});
@@ -110,7 +110,7 @@ function personInfoWindow(id) {
 			
 		}
 		var yearText = Ti.UI.createLabel({
-			font:{fontSize:'12sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+			font:{fontSize:'12sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 			color:'#ffffff',left:'10dp',right:'10dp',
 			text :yearString
 		});
@@ -118,7 +118,7 @@ function personInfoWindow(id) {
 		contentView.add(genderView);
 		
 		var desText = Ti.UI.createLabel({
-			font:{fontSize:'16sp'},
+			font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 			text: data['des'],
 			color:'#666666',
 			top:'10dp', left:'5%', width:'90%', height:Ti.UI.SIZE,
@@ -163,7 +163,7 @@ function personInfoWindow(id) {
 			timeString = parseInt(difftime/86400) + ' ' + L('beforeday');
 		}
 		var timeText = Ti.UI.createLabel({
-			font:{fontSize:'14sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+			font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 			text: timeString,
 			color:'#aaaaaa',left:'10dp'
 		});
@@ -310,7 +310,7 @@ function personInfoWindow(id) {
 		});
 		
 		var schoolTitleText = Ti.UI.createLabel({
-			font:{fontSize:'16sp'},
+			font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 			text: L('school') + ':',
 			color:'#2980b9',
 			top:'20dp', left:'5%',
@@ -322,7 +322,7 @@ function personInfoWindow(id) {
 			data['school'] = '---';
 		}
 		var schoolText = Ti.UI.createLabel({
-			font:{fontSize:'16sp'},
+			font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 			text: data['school'],
 			color:'#666666',
 			top:'20dp', left:'130dp',
@@ -339,7 +339,7 @@ function personInfoWindow(id) {
 		});
 		
 		var jobTitleText = Ti.UI.createLabel({
-			font:{fontSize:'16sp'},
+			font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 			text: L('work') + ':',
 			color:'#2980b9',
 			top:'20dp', left:'5%',
@@ -350,7 +350,7 @@ function personInfoWindow(id) {
 			data['job'] = '---';
 		}
 		var jobText = Ti.UI.createLabel({
-			font:{fontSize:'16sp'},
+			font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 			text: data['job'],
 			color:'#666666',
 			top:'20dp', left:'130dp',

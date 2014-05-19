@@ -39,7 +39,7 @@ function groupsWindow() {
 	});	
 	
 	var windowTitleText = Ti.UI.createLabel({
-		font:{fontSize:'20sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+		font:{fontSize:'20sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 		text: L('neargroups'),
 		color:'#ffffff'
 	});
@@ -143,7 +143,7 @@ function groupsWindow() {
 			});
 			  
 			var nameText = Ti.UI.createLabel({
-				font:{fontSize:'16sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+				font:{fontSize:'16sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 				text: listData[i]['name'],
 				color:'#333333',left:'0dp'
 			});

@@ -28,7 +28,7 @@ function joinMsgWindow(eventid,stringData) {
 	});	
 	
 	var joinMsgTitleText = Ti.UI.createLabel({
-		font:{fontSize:'20sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+		font:{fontSize:'20sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 		text: L(stringData.title),
 		color:'#ffffff'
 	});
@@ -86,7 +86,7 @@ function joinMsgWindow(eventid,stringData) {
 			
 
 			var nameText = Ti.UI.createLabel({
-				font:{fontSize:'14sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+				font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 				text: joinMsgData[i]['name'],
 				color:'#888888',left:'10dp',right:'10dp'
 			});
@@ -117,7 +117,7 @@ function joinMsgWindow(eventid,stringData) {
 				timeString = parseInt(difftime/86400) + ' ' + L('beforeday');
 			}
 			var timeText = Ti.UI.createLabel({
-				font:{fontSize:'14sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+				font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 				text: timeString,
 				color:'#aaaaaa',left:'10dp',right:'10dp'
 			});
@@ -126,7 +126,7 @@ function joinMsgWindow(eventid,stringData) {
 			contentView.add(timeView);
 			
 			var contentText = Ti.UI.createLabel({
-				font:{fontSize:'14sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+				font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 				text: joinMsgData[i]['content'],
 				color:'#333333',left:'10dp',right:'10dp'
 			});

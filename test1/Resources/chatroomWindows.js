@@ -31,7 +31,7 @@ function chatroomWindow() {
 	});	
 	
 	var chatroomTitleText = Ti.UI.createLabel({
-		font:{fontSize:'20sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+		font:{fontSize:'20sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 		text: L('chatroom'),
 		color:'#ffffff'
 	});
@@ -127,7 +127,7 @@ function chatroomWindow() {
 				leftstr = L('hasleft');
 			}
 			var nameText = Ti.UI.createLabel({
-				font:{fontSize:'14sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+				font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 				text: idData['name'] + leftstr,
 				color:'#888888',left:'10dp',right:'10dp'
 			});
@@ -138,7 +138,7 @@ function chatroomWindow() {
 				lastmsg = chatroomData[i]['lastmsg']['string'];
 			}
 			var contentText = Ti.UI.createLabel({
-				font:{fontSize:'14sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+				font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 				text: getStringlimit(lastmsg ,20,50),
 				color:'#333333',left:'10dp',right:'10dp'
 			});
@@ -169,7 +169,7 @@ function chatroomWindow() {
 				timeString = parseInt(difftime/86400) + ' ' + L('beforeday');
 			}
 			var timeText = Ti.UI.createLabel({
-				font:{fontSize:'14sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+				font:{fontSize:'14sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 				text: timeString,
 				color:'#aaaaaa',left:'10dp'
 			});
@@ -183,7 +183,7 @@ function chatroomWindow() {
 				borderRadius:3,top:'20dp',right:'20dp',visible:false
 			});
 		    var newMsgText = Ti.UI.createLabel({
-				font:{fontSize:'16sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+				font:{fontSize:'16sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 				text: '0',
 				color:'#ffffff',left:'5dp',top:'2dp',right:'5dp',bottom:'2dp',
 				

@@ -84,7 +84,7 @@ function joinWindow(data,stringData,type) {
 	titleView.add(doneButton);
 	
 	var desTextArea = Ti.UI.createTextArea({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    hintText:L('leavemsg'),

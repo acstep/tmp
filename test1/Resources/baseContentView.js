@@ -115,7 +115,7 @@ function drawBaseContnet(contentView,data){
 		
 		
 		var titleText = Ti.UI.createLabel({
-			font:{fontSize:'18sp',fontFamily:'Marker Felt',fontWeight:'bold'},
+			font:{fontSize:'18sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
 			text: data['title'],textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
 			color:'#2c3e50',horizontalWrap:'false'
 		});
@@ -407,7 +407,7 @@ function drawtemplate1Contnet(contentView,data){
 		});
 		
 		var starttimeText = Ti.UI.createLabel({
-			font:{fontSize:'20sp'},
+			font:{fontSize:'20sp',fontFamily:'Helvetica Neue'},
 			text: L('starttime') + ':',
 			color:'#f1c40f',
 			 left:'30dp',
@@ -415,7 +415,7 @@ function drawtemplate1Contnet(contentView,data){
 		});
 		
 		var sDateText = Ti.UI.createLabel({
-			font:{fontSize:'20sp'},
+			font:{fontSize:'20sp',fontFamily:'Helvetica Neue'},
 			text: startTime.getFullYear()+'/'+(startTime.getMonth()+1)+'/'+startTime.getDate(),
 			color:'#666666',
 			left:'130dp',
@@ -429,7 +429,7 @@ function drawtemplate1Contnet(contentView,data){
 			minutes = '0'+minutes;
 		}
 		var sTimeText = Ti.UI.createLabel({
-			font:{fontSize:'20sp'},
+			font:{fontSize:'20sp',fontFamily:'Helvetica Neue'},
 			text: startTime.getHours()+':'+minutes,
 			color:'#666666',
 			right:'20dp',
@@ -461,7 +461,7 @@ function drawtemplate1Contnet(contentView,data){
 		});
 		
 		var endtimeText = Ti.UI.createLabel({
-			font:{fontSize:'20sp'},
+			font:{fontSize:'20sp',fontFamily:'Helvetica Neue'},
 			text: L('endtime') + ':',
 			color:'#f1c40f',
 			left:'30dp',
@@ -469,7 +469,7 @@ function drawtemplate1Contnet(contentView,data){
 		});
 		
 		var eDateText = Ti.UI.createLabel({
-			font:{fontSize:'20sp'},
+			font:{fontSize:'20sp',fontFamily:'Helvetica Neue'},
 			text: endTime.getFullYear()+'/'+(endTime.getMonth()+1)+'/'+endTime.getDate(),
 			color:'#666666',
 			left:'130dp',
@@ -483,7 +483,7 @@ function drawtemplate1Contnet(contentView,data){
 			minutes = '0'+minutes;
 		}
 		var eTimeText = Ti.UI.createLabel({
-			font:{fontSize:'20sp'},
+			font:{fontSize:'20sp',fontFamily:'Helvetica Neue'},
 			text: endTime.getHours()+':'+minutes,
 			color:'#666666',
 			right:'20dp',
@@ -911,7 +911,7 @@ function drawtemplate2Contnet(contentView,data){
 		});
 		
 		var titlenameText = Ti.UI.createLabel({
-			font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
+			font:{fontSize:'16sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
 			text: data['title'],
 			color:'#333333',
 			left:'35dp', right:'10dp',height: Ti.UI.SIZE,
@@ -939,7 +939,7 @@ function drawtemplate2Contnet(contentView,data){
 		var socialPlaceText = Ti.UI.createLabel({
 			font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 			text: data['pdata']['place'],
-			color:'#3498db',
+			color:'#333333',
 			left:'35dp', right:'10dp', height: Ti.UI.SIZE,
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});
@@ -996,7 +996,7 @@ function drawtemplate2Contnet(contentView,data){
 		var numpplText = Ti.UI.createLabel({
 			font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 			text: L('preferredppl') + data['pdata']['numppl'] +' '+ L('people'),
-			color:'#333333',
+			color:'#9b59b6',
 			left:'35dp', right:'10dp', height: Ti.UI.SIZE,
 	  		textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		});

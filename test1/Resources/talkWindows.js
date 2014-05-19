@@ -91,7 +91,7 @@ function talkWindow(id, toid,roomdata) {
 	
 	var msgTextArea = Ti.UI.createTextArea({
 	    color: '#888',
-	    font: {fontSize:20, fontWeight:'bold'},
+	    font: {fontSize:20,fontFamily:'Helvetica Neue', fontWeight:'bold'},
 	    textAlign: 'left',backgroundColor:'#aaaaaa',
 	    hintText:L('comment'),
 		top: '10dp',

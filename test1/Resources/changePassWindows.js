@@ -131,7 +131,7 @@ function changePassWindow() {
 	
 	
 	var oldpassTextField = Ti.UI.createTextField({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    top: '10dp',
@@ -161,7 +161,7 @@ function changePassWindow() {
 	
 	
 	var newpassTextField = Ti.UI.createTextField({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    top: '10dp',
@@ -191,7 +191,7 @@ function changePassWindow() {
 	
 	
 	var vnewpassTextField = Ti.UI.createTextField({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    top: '10dp',

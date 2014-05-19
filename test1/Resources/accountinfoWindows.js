@@ -24,7 +24,7 @@ function accountinfoWindow(selfdata) {
 	        height:'50dp',
 	        color:'#ffffff',
 	        message:L('uploadimage'),
-	        font:{fontSize:14, fontWeight:'bold'},
+	        font:{fontSize:14,fontFamily:'Helvetica Neue', fontWeight:'bold'},
 	        
 	        top:'50dp' 
 	});
@@ -235,7 +235,7 @@ function accountinfoWindow(selfdata) {
 	
 	
 	var nameTextField = Ti.UI.createTextField({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    top: '10dp',
@@ -275,7 +275,7 @@ function accountinfoWindow(selfdata) {
 	});
 	
 	var birthdayText = Ti.UI.createLabel({
-		font:{fontSize:'16sp'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('birthday') + ':',
 		color:'#2980b9',
 		top:'20dp', left:'5%',
@@ -283,7 +283,7 @@ function accountinfoWindow(selfdata) {
 	});
 	
 	var bDateText = Ti.UI.createLabel({
-		font:{fontSize:'16sp'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: birthdayDate.getFullYear()+'/'+(birthdayDate.getMonth()+1)+'/'+birthdayDate.getDate(),
 		color:'#666666',
 		top:'20dp', left:'130dp',
@@ -330,7 +330,7 @@ function accountinfoWindow(selfdata) {
 	});
 	
 	var genderTitleText = Ti.UI.createLabel({
-		font:{fontSize:'16sp'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: L('gender') + ':',
 		color:'#2980b9',
 		top:'20dp', left:'5%',
@@ -346,7 +346,7 @@ function accountinfoWindow(selfdata) {
 		gnederSTring = L('girl');
 	}
 	var genderText = Ti.UI.createLabel({
-		font:{fontSize:'16sp'},
+		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text:gnederSTring,
 		color:'#666666',
 		top:'20dp', left:'130dp',
@@ -392,7 +392,7 @@ function accountinfoWindow(selfdata) {
 	});
 	
 	var schoolTextField = Ti.UI.createTextField({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    top: '10dp',
@@ -429,7 +429,7 @@ function accountinfoWindow(selfdata) {
 	});
 	
 	var workTextField = Ti.UI.createTextField({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    top: '10dp',
@@ -464,7 +464,7 @@ function accountinfoWindow(selfdata) {
 	});
 	
 	var introTextArea = Ti.UI.createTextArea({
-	    font: {fontSize:'16sp'},
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 	    color:'#333333',
 	    textAlign: 'left',
 	    hintText:L('inputintro'),
