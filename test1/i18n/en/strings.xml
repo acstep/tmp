@@ -84,7 +84,8 @@
 	<string name="raduisdes">Set the max distance of events you would like to get.</string>
 	<string name="unit">Unit</string>
 	<string name="setmap">Change Your Current Location.</string>
-	<string name="lockmap">Lock your location here. Your location will not move with the Mobile Phone.</string>
+	<string name="lockdragmarker">Long Click The Red Marker and Drop To Your Location.</string>
+	<string name="lockmap">Check the box to lock your location here. Your location will not move with the Mobile Phone.</string>
 	<string name="draganno">Long click and drag the Marker to your location</string>
 	<string name="personalinfo">Persional Info</string>
 	<string name="locationsrc">Location Source</string>

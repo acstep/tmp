@@ -84,7 +84,8 @@
 	<string name="raduisdes">設定您想接收訊息的最大距離</string>
 	<string name="unit">單位</string>
 	<string name="setmap">設定您目前的位置</string>
-	<string name="lockmap">將您的位置鎖定在此地  注意! 您的位置將不會隨著手機移動</string>
+	<string name="lockdragmarker">長按紅色標記後拖拉到您想要的位置</string>
+	<string name="lockmap">打勾之後才會將您的位置鎖定在此地  注意! 打勾之後您的位置將不會隨著手機移動</string>
 	<string name="draganno">長按後拖拉到您的位置</string>
 	<string name="personalinfo">個人資訊</string>
 	<string name="locationsrc">位置來源</string>
