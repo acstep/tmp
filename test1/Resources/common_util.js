@@ -569,12 +569,15 @@ function showAlert(title, message){
 			
 	}
 	
+	if(msgString != ''){
+		var alertDlg = Titanium.UI.createAlertDialog({
+			title:title,
+			message:msgString
+		});
+		alertDlg.show();
+	}
 	
-	var alertDlg = Titanium.UI.createAlertDialog({
-		title:title,
-		message:msgString
-	});
-	alertDlg.show();
+	
 }
 
 
