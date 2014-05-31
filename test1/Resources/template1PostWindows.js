@@ -63,7 +63,7 @@ function Template1PostWindows(data) {
 	
 	doneButton.addEventListener('click',function(e)
 	{
-		if(desTextArea.value.length == 0 || titleTextField.value.length == 0){
+		if(desTextArea.value.length == 0 && titleTextField.value.length == 0){
 			showAlert('Error !', 'fieldempty');
 			return;
 		}
@@ -512,13 +512,27 @@ function Template1PostWindows(data) {
 	    borderWidth:'1dp',
         maxLength:500
 	});
+	
+	var urlTextField = Ti.UI.createTextField({
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
+	    color:'#333333',
+	    textAlign: 'left',
+	    hintText:L('orgurl'),
+	    top: '30dp',
+	    width: '90%', 
+	    height : 'auto',
+	    left: '5%',
+	    backgroundColor:'#ffffff',
+	    borderColor:'#666666',
+	    borderWidth:'1dp',borderRadius:3,
+	});
     
     contentScrollView.add(titleTextField);
 
     contentScrollView.add(startTimeView);
     contentScrollView.add(endTimeView);
 	contentScrollView.add(desTextArea);
-     
+    contentScrollView.add(urlTextField); 
 
     ////////////   map  //////////////
     
@@ -664,6 +678,7 @@ function Template1PostWindows(data) {
 			'pos':[parseFloat(Ti.App.Properties.getDouble('userchooselongitude',0)),parseFloat(Ti.App.Properties.getDouble('userchooselatitude',0))],
 			'title':titleTextField.value,
 			'extime':extime,
+			'url':urlTextField.value,
 			'category':data.category,
 			'pdata':{
 

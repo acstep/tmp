@@ -268,6 +268,30 @@ function drawBaseContnet(contentView,data){
 	contentView.add(createHSepLine('90%','20dp','0dp'));
 	contentView.add(desView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
+	if(data['url'] != undefined && data['url'] != ''){
+		var urlView = Ti.UI.createView({
+		    backgroundColor: '#ffffff',
+		    height:'70dp',
+		    top:'0dp',left:'5%',right:'5%'
+		});
+		var urlBottomButton = Titanium.UI.createButton({
+		    title: L('goorgurl'),
+		    width:'100%', top:'20dp',
+		    backgroundColor:'#bdc3c7',borderRadius:3
+		});
+		urlBottomButton.addEventListener('click',function(e){
+			var intent = Ti.Android.createIntent({
+			    action: Ti.Android.ACTION_VIEW,
+			    data: data['url'],
+			});
+			 
+			Ti.Android.currentActivity.startActivity(intent);
+		});	
+		urlView.add(urlBottomButton);
+		contentView.add(urlView);
+		contentView.add(createHSepLine('90%','20dp','0dp'));
+	}
+	
 	contentView.add(mapView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
 	
@@ -776,6 +800,29 @@ function drawtemplate1Contnet(contentView,data){
 	contentView.add(createHSepLine('90%','20dp','0dp'));
 	contentView.add(desView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
+	if(data['url'] != undefined && data['url'] != ''){
+		var urlView = Ti.UI.createView({
+		    backgroundColor: '#ffffff',
+		    height:'70dp',
+		    top:'0dp',left:'5%',right:'5%'
+		});
+		var urlBottomButton = Titanium.UI.createButton({
+		    title: L('goorgurl'),
+		    width:'100%', top:'20dp',
+		    backgroundColor:'#bdc3c7',borderRadius:3
+		});
+		urlBottomButton.addEventListener('click',function(e){
+			var intent = Ti.Android.createIntent({
+			    action: Ti.Android.ACTION_VIEW,
+			    data: data['url'],
+			});
+			 
+			Ti.Android.currentActivity.startActivity(intent);
+		});	
+		urlView.add(urlBottomButton);
+		contentView.add(urlView);
+		contentView.add(createHSepLine('90%','20dp','0dp'));
+	}
 	contentView.add(mapView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
 	
@@ -1263,6 +1310,30 @@ function drawtemplate2Contnet(contentView,data){
 	contentView.add(createHSepLine('90%','20dp','0dp'));
 	contentView.add(desView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
+	if(data['url'] != undefined && data['url'] != ''){
+		var urlView = Ti.UI.createView({
+		    backgroundColor: '#ffffff',
+		    height:'70dp',
+		    top:'0dp',left:'5%',right:'5%'
+		});
+		var urlBottomButton = Titanium.UI.createButton({
+		    title: L('goorgurl'),
+		    width:'100%', top:'20dp',
+		    backgroundColor:'#bdc3c7',borderRadius:3
+		});
+		urlBottomButton.addEventListener('click',function(e){
+			var intent = Ti.Android.createIntent({
+			    action: Ti.Android.ACTION_VIEW,
+			    data: data['url'],
+			});
+			 
+			Ti.Android.currentActivity.startActivity(intent);
+		});	
+		urlView.add(urlBottomButton);
+		contentView.add(urlView);
+		contentView.add(createHSepLine('90%','20dp','0dp'));
+	}
+	
 	contentView.add(mapView);
 	contentView.add(createHSepLine('90%','20dp','0dp'));
 	

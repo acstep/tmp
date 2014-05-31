@@ -443,13 +443,26 @@ function Template2PostWindows(data) {
 	    borderWidth:'1dp',
         maxLength:500
 	});
+	
+	var urlTextField = Ti.UI.createTextField({
+	    font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
+	    color:'#333333',
+	    textAlign: 'left',
+	    hintText:L('orgurl'),
+	    top: '20dp',
+	    width: '90%', 
+	    height : Titanium.UI.SIZE,
+	    left: '5%',backgroundColor:'#ffffff',
+	    borderColor:'#666666',
+	    borderWidth:'1dp',borderRadius:3,
+	});
     
     contentScrollView.add(purposeTextField);
     contentScrollView.add(placeTextField);
     contentScrollView.add(startTimeView);
     contentScrollView.add(peopleView);
 	contentScrollView.add(desTextArea);
-     
+    contentScrollView.add(urlTextField); 
 
     ////////////   map  //////////////
     
@@ -601,6 +614,7 @@ function Template2PostWindows(data) {
 			'pos':[parseFloat(Ti.App.Properties.getDouble('userchooselongitude',0)),parseFloat(Ti.App.Properties.getDouble('userchooselatitude',0))],
 			'title':purposeTextField.value,
 			'extime':extime,
+			'url':urlTextField.value,
 			'category':data.category,
 			'pdata':{
 				 'place':placeTextField.value,

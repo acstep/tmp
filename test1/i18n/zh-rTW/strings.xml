@@ -164,4 +164,6 @@
 	<string name="notifytypevibrate">震動</string>
 	<string name="notifytypesound">鈴聲</string>
 	<string name="notifytypeall">鈴聲+震動</string>
+	<string name="orgurl">原始網址</string>
+	<string name="goorgurl">前往原始網址</string>
 </resources>

@@ -164,4 +164,6 @@
 	<string name="notifytypevibrate">Vibration</string>
 	<string name="notifytypesound">Sound</string>
 	<string name="notifytypeall">Vibration+Sound</string>
+	<string name="orgurl">Orginal Link</string>
+	<string name="goorgurl">GoTo Orginal Link</string>
 </resources>
