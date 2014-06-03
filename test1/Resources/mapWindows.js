@@ -52,7 +52,7 @@ function mapWindow() {
 	self.latitude = getLat();
 	self.longitude = getLon();
 	
-	
+	deleteMapCache();
 	/////   map  /////
 	var mapHintText = Ti.UI.createLabel({
 		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},

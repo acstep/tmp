@@ -38,8 +38,8 @@ var tracker = GA.getTracker("UA-50815409-1");
 		Ti.App.Properties.setString('sorttype','time');
 	}
 	
-	var distance = Ti.App.Properties.getInt('distance',0);
-	if(distance == 0){
+	var distanceIndex = Ti.App.Properties.getInt('distance',0);
+	if(distanceIndex == 0){
 		Ti.App.Properties.setInt('distance',10);
 	}
 	

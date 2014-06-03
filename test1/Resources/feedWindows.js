@@ -9,6 +9,7 @@ function feedWindow() {
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
+	var categoryChanged = false;
    
     tracker.trackScreen('feedWindow');
     
@@ -26,6 +27,10 @@ function feedWindow() {
 			animation.left = '0%';
 			animation.duration = 300;
 	        backgroundView.animate(animation);
+	        if(categoryChanged == true){
+	        	categoryChanged = false;
+	        	getNewFeed();
+	        }
 		}
 		else{
 			menuclose = false;
@@ -443,6 +448,7 @@ function feedWindow() {
 				if(tmpCategory.indexOf(this.category) == -1){
 					tmpCategory.push(this.category);
 					Ti.App.Properties.setList('category',tmpCategory);
+					categoryChanged = true;
 					Ti.API.info('change category left: ' +  tmpCategory);
 				}
 			}
@@ -450,6 +456,7 @@ function feedWindow() {
 				if(tmpCategory.indexOf(this.category) != -1){
 					tmpCategory.splice(tmpCategory.indexOf(this.category) , 1 );
 					Ti.App.Properties.setList('category',tmpCategory);
+					categoryChanged = true;
 					Ti.API.info('change category left: ' +  tmpCategory);
 				}
 			}
@@ -960,7 +967,7 @@ function feedWindow() {
 	});
 	
 
-
+    var firstOpen = false;
 
     var locationCallback = function(e) {
 	    if (!e.success || e.error) {
@@ -974,7 +981,7 @@ function feedWindow() {
 			var distance = GetDistance(oldlatitude, oldlongitude, e.coords.latitude, e.coords.longitude, 'K');
 			Ti.API.info('distance : ' + distance);
 	        // if user move than 500m update the postion to server
-	    	if(distance > 0.5){
+	    	if(distance > 0.5 || firstOpen == false){
 	    		var data = {
 					'pos':[e.coords.longitude,e.coords.latitude],
 					'geoapp':'true'
@@ -982,6 +989,7 @@ function feedWindow() {
 		    
 			    var datastring = JSON.stringify(data);
 			    Ti.API.info('datastring : ' + datastring);
+			    firstOpen = true;
 		    	updatepos(datastring);
 	    	}
 	    	

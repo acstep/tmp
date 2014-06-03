@@ -10,7 +10,8 @@ function jumpWindow() {
 	var backgroundView = self.backgroundView;
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
-
+    deleteMapCache();
+    
     tracker.trackScreen('jumpWindow' );
     
     var backImg = Titanium.UI.createImageView({

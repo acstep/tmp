@@ -1,10 +1,10 @@
 android/ATTR_PROJECT_NAME=test1
-android/abi=x86
+android/abi=armeabi-v7a
 android/distribute_path=E\:\\titanproj\\test1
 android/key_password=
 android/keystore_alias=nexbbs
 android/keystore_password=nexbbs001
 android/keystore_path=E\:\\titanproj\\test1\\nexbbs.keystore
 android/recent_output=E\:\\titanproj\\test1
-android/sdk_version=4.1.2
+android/sdk_version=4.4.2
 eclipse.preferences.version=1

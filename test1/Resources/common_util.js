@@ -2,6 +2,29 @@
 
 var raduisItems = [100,200,300,500,1000,2000,5000,10000,20000,50000,100000];
 
+
+function deleteMapCache(){
+	var appDataDir, cacheDir, dir, externalRoot;
+    if (Ti.Filesystem.isExternalStoragePresent()) {
+	    appDataDir = Ti.Filesystem.getFile('appdata://').nativePath;
+	    externalRoot = appDataDir.substring(0, appDataDir.lastIndexOf('/'));
+	    cacheDir = "" + externalRoot + "/Android/data/" + Ti.App.id + "/cache/_tmp/remote-cache/73fd4105471758a0e00cdeae517f675128ecde92.bdy";
+	    mapcachefile = Ti.Filesystem.getFile(cacheDir);
+	    if (mapcachefile.exists()) {
+	    	Ti.API.info('delete map cache file 1');
+	    	mapcachefile.deleteFile(); 
+	    }
+	    cacheDir = "" + externalRoot + "/Android/data/" + Ti.App.id + "/cache/_tmp/remote-cache/73fd4105471758a0e00cdeae517f675128ecde92.hdr";
+	    mapcachefile = Ti.Filesystem.getFile(cacheDir);
+	    if (mapcachefile.exists()) {
+	    	Ti.API.info('delete map cache file 2');
+	    	mapcachefile.deleteFile(); 
+	    }
+	} 
+	
+}
+
+
 function getUserID(){
 	return Ti.App.Properties.getString('userid','');
 }
@@ -714,6 +737,7 @@ function setPosString(latitude,longitude,tmpobj){
 }
 
 function createMapView(mapView,data){
+	deleteMapCache();
 	var addressText = Ti.UI.createLabel({
 		font:{fontSize:'16sp',fontFamily:'Helvetica Neue'},
 		text: '',
