@@ -87,6 +87,7 @@ function feedContentWindow(eventid, fullcontent) {
 		'1005': {'layouttype':'base'},
 		'1006': {'layouttype':'template2'},
 		'1007': {'layouttype':'base'},
+		'1008': {'layouttype':'base'}
 	};
     
     var drawFunction = {	   
@@ -105,6 +106,7 @@ function feedContentWindow(eventid, fullcontent) {
     	'1005':'teambuying',
     	'1006':'dating',
     	'1007':'gossip',
+    	'1008':'parttime'
     };
     
     var contentView = Ti.UI.createView({

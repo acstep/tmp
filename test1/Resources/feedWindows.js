@@ -385,7 +385,8 @@ function feedWindow() {
 		{ leftImage:'news.png', title:'news',category:1000 , 'appfunction':baseAppWindow},
 		{ leftImage:'used.png', title:'used',category:1004 , 'appfunction':baseAppWindow},
 		{ leftImage:'teambuy.png', title:'teambuying',category:1005 , 'appfunction':baseAppWindow},
-		{ leftImage:'gossip.png', title:'gossip',category:1007 , 'appfunction':baseAppWindow}
+		{ leftImage:'gossip.png', title:'gossip',category:1007 , 'appfunction':baseAppWindow},
+		{ leftImage:'parttime.png', title:'parttime',category:1008 , 'appfunction':baseAppWindow}
 	]; 
 	
 	
@@ -615,6 +616,7 @@ function feedWindow() {
 		'1005': {'layouttype':'base','title':'teambuying','color':'#9b59b6','catimage':'teambuyicon.png'},
 		'1006': {'layouttype':'template2','title':'dating','color':'#e667af','catimage':'loveicon.png'},
 		'1007': {'layouttype':'base','title':'gossip','color':'#e667af','catimage':'gossipicon.png'},
+		'1008': {'layouttype':'base','title':'parttime','color':'#1abc9c','catimage':'parttimeicon.png'}
 	};
 	
 	

@@ -16,6 +16,7 @@
 	<string name="news">News</string>
 	<string name="used">Garage Sale</string>
 	<string name="gossip">Gossip</string>
+	<string name="parttime">Part Time Jobs</string>
 	<string name="teambuying">Team Buying</string>
 	<string name="sortorder">Sorting</string>
 	<string name="postnew">Post</string>
@@ -65,6 +66,7 @@
 	<string name="addteambuycontent">Team Buy Products Description... \n\n\n\n\n\n</string>
 	<string name="addsocialcontent">Your Social or Dating Content... \n\n\n\n\n\n</string>
 	<string name="addgossipcontent">Gossip Content... \n\n\n\n\n\n</string>
+	<string name="addparttimecontent">Part Time Jobs Content... \n\n\n\n\n\n</string>
 	<string name="purpose">Title: ex. Dinner, Have A Coffee Together</string>
 	<string name="preferredtime">Preferred Time</string>
 	<string name="preferredplace">Preferred Place: ex. XXX Restaurant</string>

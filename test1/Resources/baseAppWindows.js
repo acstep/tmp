@@ -121,7 +121,16 @@ function baseAppWindow(data) {
 			    };
 			    var BasePostWindow = require('basePostWindows');
 				new BasePostWindow(tmpdata).open(); 
-				break;								
+				break;	
+			case 1008:
+			    var tmpdata = {
+			    	'title': 'parttime',
+			    	'hinttext':'addparttimecontent',
+			    	'category':1008
+			    };
+			    var BasePostWindow = require('basePostWindows');
+				new BasePostWindow(tmpdata).open(); 
+				break;									
 			default:
 				
 		}

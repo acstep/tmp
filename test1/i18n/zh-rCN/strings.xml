@@ -16,6 +16,7 @@
 	<string name="news">周边新闻</string>
 	<string name="used">二手交易</string>
 	<string name="gossip">心情闲聊</string>
+	<string name="parttime">打工兼差</string>
 	<string name="teambuying">即时合购</string>
 	<string name="sortorder">排序方式</string>
 	<string name="postnew">张贴文章</string>
@@ -65,6 +66,7 @@
 	<string name="addteambuycontent">您想要团购的物品... \n\n\n\n\n\n</string>
 	<string name="addsocialcontent">您想要交友联谊的叙述... \n\n\n\n\n\n</string>
 	<string name="addgossipcontent">您想要闲聊的内容... \n\n\n\n\n\n</string>
+	<string name="addparttimecontent">您想要发布打工的內容... \n\n\n\n\n\n</string>
 	<string name="purpose">标题:  例如  吃饭聊天,郊游</string>
 	<string name="preferredtime">首选时间</string>
 	<string name="preferredplace">首选地点: 例如  XX餐厅</string>
