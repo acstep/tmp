@@ -167,6 +167,11 @@ function LoginWindow() {
 	   
 	});	
 	
+	self.addEventListener('android:back', function(e) {
+		var activity = Titanium.Android.currentActivity;
+        activity.finish();
+	});
+	
 	backgroundView.add(titleText);
 	backgroundView.add(smalltitleText);
 	backgroundView.add(emailText);

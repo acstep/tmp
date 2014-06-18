@@ -1015,6 +1015,10 @@ function feedWindow() {
 	Titanium.Geolocation.addEventListener('location', locationCallback);
     
     self.addEventListener('android:back', function(e) {
+    	if(menuclose == true){
+    		var activity = Titanium.Android.currentActivity;
+        	activity.finish();
+    	}
 	    e.cancelBubble = true;
 	    switchBackgroundView(true);
 	    Ti.App.fireEvent('android_back_button');

@@ -2,7 +2,7 @@
 <ti:app xmlns:ti="http://ti.appcelerator.org">
     <id>com.nexbbs.nexbbs</id>
     <name>NexBBS</name>
-    <version>1.3.3</version>
+    <version>1.3.5</version>
     <publisher>nexbbs</publisher>
     <url>http://www.nexbbs.com</url>
     <description>not specified</description>
@@ -29,7 +29,7 @@
         </orientations>
     </iphone>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <manifest android:versionCode="133" android:versionName="1.3.3">
+        <manifest android:versionCode="135" android:versionName="1.3.5">
             <!-- Allows the API to download data from Google Map servers -->
             <uses-permission android:name="android.permission.INTERNET"/>
             <!-- Allows the API to cache data -->
