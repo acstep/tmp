@@ -11,6 +11,9 @@ function feedContentWindow(eventid, fullcontent) {
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
 	
+	var GA = require('analytics.google');
+	GA.localDispatchPeriod = 10;
+	var tracker = GA.getTracker("UA-50815409-1");
     tracker.trackScreen('feedContentWindow' );
 
 	var backImg = Titanium.UI.createImageView({
@@ -87,7 +90,8 @@ function feedContentWindow(eventid, fullcontent) {
 		'1005': {'layouttype':'base'},
 		'1006': {'layouttype':'template2'},
 		'1007': {'layouttype':'base'},
-		'1008': {'layouttype':'base'}
+		'1008': {'layouttype':'base'},
+		'1009': {'layouttype':'base'}
 	};
     
     var drawFunction = {	   
@@ -106,7 +110,8 @@ function feedContentWindow(eventid, fullcontent) {
     	'1005':'teambuying',
     	'1006':'dating',
     	'1007':'gossip',
-    	'1008':'parttime'
+    	'1008':'parttime',
+    	'1009':'blog'
     };
     
     var contentView = Ti.UI.createView({

@@ -13,6 +13,9 @@ function LoginWindow() {
 	backgroundView.backgroundColor = '#4aa3df';
 	backgroundView.height='80%';
 	
+	var GA = require('analytics.google');
+	GA.localDispatchPeriod = 10;
+	var tracker = GA.getTracker("UA-50815409-1");
 	tracker.trackScreen('LoginWindow' );
 	
 	var titleText = Ti.UI.createLabel({
@@ -142,7 +145,7 @@ function LoginWindow() {
 	
 	loginBotton.addEventListener('click',function(e)
 	{
-	   var emailtext = emailText.value;
+	   var emailtext = emailText.value.toLowerCase().replace(/ /g,'');
 	   var passtext = passText.value;
 	   Ti.API.info('emailtext :'+ emailtext);
 	   Ti.API.info('passtext :'+ passtext);

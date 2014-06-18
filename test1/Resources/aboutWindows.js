@@ -11,7 +11,13 @@ function aboutWindow() {
 	var titleView = self.titleView;
     backgroundView.forwardView = forwardView;
 
-    tracker.trackScreen('aboutWindow');
+    var GA = require('analytics.google');
+	GA.localDispatchPeriod = 10;
+	var tracker = GA.getTracker("UA-50815409-1");
+	tracker.trackScreen('aboutWindow');
+
+
+    
     var backImg = Titanium.UI.createImageView({
 		image:'backward.png',
 		top: '10dp', left:'15dp', height: '30dp', width: '30dp'

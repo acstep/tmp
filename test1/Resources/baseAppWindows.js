@@ -12,6 +12,9 @@ function baseAppWindow(data) {
     backgroundView.forwardView = forwardView;
     createNormalFeed(backgroundView, data.category);
     
+    var GA = require('analytics.google');
+	GA.localDispatchPeriod = 10;
+	var tracker = GA.getTracker("UA-50815409-1");
     tracker.trackScreen('baseAppWindow' + data.category);
     
     var backImg = Titanium.UI.createImageView({
@@ -130,7 +133,16 @@ function baseAppWindow(data) {
 			    };
 			    var BasePostWindow = require('basePostWindows');
 				new BasePostWindow(tmpdata).open(); 
-				break;									
+				break;	
+			case 1009:
+			    var tmpdata = {
+			    	'title': 'blog',
+			    	'hinttext':'addblogcontent',
+			    	'category':1009
+			    };
+			    var BasePostWindow = require('basePostWindows');
+				new BasePostWindow(tmpdata).open(); 
+				break;										
 			default:
 				
 		}

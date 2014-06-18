@@ -11,6 +11,9 @@ function systemADWindow(data) {
 	var titleView = self.titleView;
     backgroundView.forwardView = forwardView;
   
+    var GA = require('analytics.google');
+	GA.localDispatchPeriod = 10;
+	var tracker = GA.getTracker("UA-50815409-1");
     tracker.trackScreen('systemADWindow' + data.url);
     
     var backImg = Titanium.UI.createImageView({

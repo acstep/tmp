@@ -10,8 +10,12 @@ function feedWindow() {
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
 	var categoryChanged = false;
-   
-    tracker.trackScreen('feedWindow');
+	
+	var GA = require('analytics.google');
+	GA.localDispatchPeriod = 10;
+	var tracker = GA.getTracker("UA-50815409-1");
+  	tracker.trackScreen('feedWindow');
+
     
 	var listappImg = Titanium.UI.createImageView({
 		image:'list.png',
@@ -317,7 +321,7 @@ function feedWindow() {
 	
 	
 	var headImg = Titanium.UI.createImageView({
-		image:'head.png',borderRadius:5,backgroundImage:'headphoto.png',
+		borderRadius:5,backgroundImage:'headphoto.png',
 		left:'0dp', height: '60dp', width: '60dp'
 	});
 	
@@ -386,7 +390,8 @@ function feedWindow() {
 		{ leftImage:'used.png', title:'used',category:1004 , 'appfunction':baseAppWindow},
 		{ leftImage:'teambuy.png', title:'teambuying',category:1005 , 'appfunction':baseAppWindow},
 		{ leftImage:'gossip.png', title:'gossip',category:1007 , 'appfunction':baseAppWindow},
-		{ leftImage:'parttime.png', title:'parttime',category:1008 , 'appfunction':baseAppWindow}
+		{ leftImage:'parttime.png', title:'parttime',category:1008 , 'appfunction':baseAppWindow},
+		{ leftImage:'blog.png', title:'blog',category:1009 , 'appfunction':baseAppWindow}
 	]; 
 	
 	
@@ -616,7 +621,8 @@ function feedWindow() {
 		'1005': {'layouttype':'base','title':'teambuying','color':'#9b59b6','catimage':'teambuyicon.png'},
 		'1006': {'layouttype':'template2','title':'dating','color':'#e667af','catimage':'loveicon.png'},
 		'1007': {'layouttype':'base','title':'gossip','color':'#e667af','catimage':'gossipicon.png'},
-		'1008': {'layouttype':'base','title':'parttime','color':'#1abc9c','catimage':'parttimeicon.png'}
+		'1008': {'layouttype':'base','title':'parttime','color':'#1abc9c','catimage':'parttimeicon.png'},
+		'1009': {'layouttype':'base','title':'blog','color':'#9b59b6','catimage':'blogicon.png'}
 	};
 	
 	
@@ -837,8 +843,13 @@ function feedWindow() {
 	});
 	
 	function getNewFeed(){
-		
+
+        var GA = require('analytics.google');
+		GA.localDispatchPeriod = 10;
+		var tracker = GA.getTracker("UA-50815409-1");
 		tracker.trackEvent({category: "getNewFeed",action: "click",label: "getNewFeed main",value: 1});
+
+		
 		Ti.API.info('getNewFeed ');
 		feedtableItems = [];
 		feedTableView.data = [];

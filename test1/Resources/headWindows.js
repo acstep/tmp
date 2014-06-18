@@ -12,7 +12,9 @@ function HeadWindow(cropimage,mode) {
 	var titleView = self.titleView;
     backgroundView.layout = 'composite';
     
-	
+	var GA = require('analytics.google');
+	GA.localDispatchPeriod = 10;
+	var tracker = GA.getTracker("UA-50815409-1");
     tracker.trackScreen('HeadWindow' );
 
 	var middleView = Ti.UI.createView({

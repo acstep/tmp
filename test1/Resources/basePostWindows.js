@@ -14,6 +14,9 @@ function BasePostWindow(data) {
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
 	
+	var GA = require('analytics.google');
+	GA.localDispatchPeriod = 10;
+	var tracker = GA.getTracker("UA-50815409-1");
 	tracker.trackScreen('BasePostWindow' );
 	
 	var ind=Titanium.UI.createProgressBar({

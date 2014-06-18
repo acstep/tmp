@@ -168,4 +168,6 @@
 	<string name="notifytypeall">鈴聲+震動</string>
 	<string name="orgurl">原始網址</string>
 	<string name="goorgurl">前往原始網址</string>
+	<string name="blog">食記遊記</string>
+	<string name="addblogcontent">您想要發布食記遊記的內容... \n\n\n\n\n\n</string>
 </resources>

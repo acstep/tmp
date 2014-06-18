@@ -168,4 +168,6 @@
 	<string name="notifytypeall">Vibration+Sound</string>
 	<string name="orgurl">Orginal Link</string>
 	<string name="goorgurl">GoTo Orginal Link</string>
+	<string name="blog">Food,Travel Blog</string>
+	<string name="addblogcontent">Add Your Food or Travel Blog Content Here... \n\n\n\n\n\n</string>
 </resources>

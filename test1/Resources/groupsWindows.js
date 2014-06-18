@@ -15,6 +15,9 @@ function groupsWindow() {
 	var currentdate = new Date(); 
 	var groupType = 0;
 	
+	var GA = require('analytics.google');
+	GA.localDispatchPeriod = 10;
+	var tracker = GA.getTracker("UA-50815409-1");
 	tracker.trackScreen('groupsWindow' );
 	
 	var reqNearGroupData = {

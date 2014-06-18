@@ -9,6 +9,9 @@ function mapWindow() {
 		layout: 'vertical',
  	});
  	
+ 	var GA = require('analytics.google');
+	GA.localDispatchPeriod = 10;
+	var tracker = GA.getTracker("UA-50815409-1");
  	tracker.trackScreen('mapWindow' );
  	
  	var titleView = Ti.UI.createView({

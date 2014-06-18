@@ -12,6 +12,9 @@ function myFeedWindow() {
     backgroundView.forwardView = forwardView;
     createNormalFeed(backgroundView, 'myfeed');
     
+    var GA = require('analytics.google');
+	GA.localDispatchPeriod = 10;
+	var tracker = GA.getTracker("UA-50815409-1");
     tracker.trackScreen('myFeedWindow' );
     
     var backImg = Titanium.UI.createImageView({

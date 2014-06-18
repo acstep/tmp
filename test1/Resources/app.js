@@ -71,8 +71,17 @@ var tracker = GA.getTracker("UA-50815409-1");
 	
 	var category = Ti.App.Properties.getList('category','');
 	if(category == ''){
-		Ti.App.Properties.setList('category',[1000,1001,1002,1003,1004,1005,1006,1007,1008]);
+		Ti.App.Properties.setList('category',[1000,1001,1002,1003,1004,1005,1006,1007,1008,1009]);
 	}
+	
+	var currentVersion  = Ti.App.Properties.getString('version','');
+	if(currentVersion == ''){
+		Ti.App.Properties.setString('version',Titanium.App.version);
+	}
+	if(currentVersion != Titanium.App.version){
+		Ti.App.Properties.setList('category',[1000,1001,1002,1003,1004,1005,1006,1007,1008,1009]);
+	}
+	
 	
 	var gender = Ti.App.Properties.getInt('gender',0);
 	if(gender == 0){

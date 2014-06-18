@@ -16,6 +16,9 @@ function createGroupWindow(type,gid,selfdata) {
     var needUploadImage = [];
     var currentUploadPhoto = 0;
     
+    var GA = require('analytics.google');
+	GA.localDispatchPeriod = 10;
+	var tracker = GA.getTracker("UA-50815409-1");
     tracker.trackScreen('createGroupWindow' );
     
     if(type == 'new'){

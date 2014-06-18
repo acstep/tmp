@@ -17,6 +17,9 @@ function gFeedWindow(id) {
     backgroundView.backgroundColor = '#ffffff';
     backgroundView.drawInfoFunc = drawInfo;
     
+    var GA = require('analytics.google');
+	GA.localDispatchPeriod = 10;
+	var tracker = GA.getTracker("UA-50815409-1");
     tracker.trackScreen('gFeedWindow' );
     
     var backImg = Titanium.UI.createImageView({

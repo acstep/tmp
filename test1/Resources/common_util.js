@@ -65,7 +65,7 @@ function clearProperty(){
 	Ti.App.Properties.setString('useremail','');
 	Ti.App.Properties.setString('locklocation','false');
 	Ti.App.Properties.setInt('gender',0);
-	Ti.App.Properties.setList('category',[1000,1001,1002,1003,1004,1005,1006,1007,1008]);
+	Ti.App.Properties.setList('category',[1000,1001,1002,1003,1004,1005,1006,1007,1008,1009]);
 	Ti.App.Properties.setString('username','');
 	Ti.App.Properties.setString('school','');
 	Ti.App.Properties.setString('intro','');
@@ -215,7 +215,8 @@ function createNormalFeed(viewobj,category){
 		'1005': {'layouttype':'base','title':'teambuying','color':'#9b59b6','catimage':'teambuyicon.png'},
 		'1006': {'layouttype':'template2','title':'dating','color':'#e667af','catimage':'loveicon.png'},
 		'1007': {'layouttype':'base','title':'gossip','color':'#e667af','catimage':'gossipicon.png'},
-		'1008': {'layouttype':'base','title':'parttime','color':'#1abc9c','catimage':'parttimeicon.png'}
+		'1008': {'layouttype':'base','title':'parttime','color':'#1abc9c','catimage':'parttimeicon.png'},
+		'1009': {'layouttype':'base','title':'blog','color':'#9b59b6','catimage':'blogicon.png'}
 	};
 	
 	
@@ -1251,7 +1252,7 @@ function showPostDialog(gid){
     //title of dialog
 	    title: L('choosecategory'),
 	    //options
-	    options: [L('club'),L('sale'), L('needhelp'), L('dating'), L('news'), L('used'), L('teambuying'), L('gossip'), L('parttime')],
+	    options: [L('club'),L('sale'), L('needhelp'), L('dating'), L('news'), L('used'), L('teambuying'), L('gossip'), L('parttime'), L('blog')],
 	    //index of cancel button
 	});
 	
@@ -1347,6 +1348,16 @@ function showPostDialog(gid){
 			    	'title': 'parttime',
 			    	'hinttext':'addparttimecontent',
 			    	'category':1008,
+			    	'gid':gid
+			    };
+			    var BasePostWindow = require('basePostWindows');
+				new BasePostWindow(data).open(); 
+				break;		
+			case 9:
+			    var data = {
+			    	'title': 'blog',
+			    	'hinttext':'addblogcontent',
+			    	'category':1009,
 			    	'gid':gid
 			    };
 			    var BasePostWindow = require('basePostWindows');

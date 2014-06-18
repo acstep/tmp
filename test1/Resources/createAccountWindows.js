@@ -8,6 +8,9 @@ function createAccountWindow() {
 	var titleView = self.titleView;
 	var headphotoExist = false;
 	
+	var GA = require('analytics.google');
+	GA.localDispatchPeriod = 10;
+	var tracker = GA.getTracker("UA-50815409-1");
 	tracker.trackScreen('createAccountWindow' );
 	
     var ind=Titanium.UI.createProgressBar({
@@ -96,7 +99,7 @@ function createAccountWindow() {
 	doneButton.addEventListener('click',function(e)
 	{
 		var nametext = nameField.value; 
-	    var emailtext = emailField.value;
+	    var emailtext = emailField.value.toLowerCase().replace(/ /g,'');
 	    var passwdtext = passwdField.value;
 	    var passwdVtext = passwdVField.value;
 	    
