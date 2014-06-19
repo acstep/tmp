@@ -324,6 +324,10 @@ function feedWindow() {
      
 	});
 	
+	if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
+		mainMenu.top = 20;
+	}
+	
 	
 	var headImg = Titanium.UI.createImageView({
 		borderRadius:5,backgroundImage:'headphoto.png',
@@ -434,21 +438,38 @@ function feedWindow() {
 		});
 		
 		var checkboxView = Ti.UI.createView({
-			width:'20%',
-			height:'50dp',
 			right:'0dp'
 		});
+		
+		if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
+		}
+		else{
+			checkboxView.width = '20%';
+			checkboxView.height = '50dp'; 
+		}
+			
 		
 		var category = Ti.App.Properties.getList('category',[]);
 		var tmpExist = false;
 		if(category.indexOf(categoryMenu[i].category) != -1){
 			tmpExist = true;
 		}
-		var enableSwitch = Ti.UI.createSwitch({
-		    style: Ti.UI.Android.SWITCH_STYLE_CHECKBOX,
-		    textAlign:Ti.UI.TEXT_ALIGNMENT_CENTER,
-		    value:tmpExist,
-		});
+		
+		if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
+			var enableSwitch = Ti.UI.createSwitch({
+			    textAlign:Ti.UI.TEXT_ALIGNMENT_RIGHT,right:0,
+			    value:tmpExist,
+			});
+		}
+		else{
+			var enableSwitch = Ti.UI.createSwitch({
+			    style: Ti.UI.Android.SWITCH_STYLE_CHECKBOX,
+			    textAlign:Ti.UI.TEXT_ALIGNMENT_CENTER,
+			    value:tmpExist,
+			});
+		}
+	
+		
 		enableSwitch.category = categoryMenu[i].category;
 		
 		
@@ -491,6 +512,11 @@ function feedWindow() {
 	    width:'90%',
 	    top: '10dp'
 	});  
+	
+	if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
+		memuTableView.backgroundColor ='transparent';
+	    memuTableView.height = Titanium.UI.SIZE;
+	}
 	
 	memuTableView.addEventListener('click',function(e) {
 		categoryMenu[e.index]['appfunction'](e.index);
@@ -552,6 +578,11 @@ function feedWindow() {
 	    width:'90%',
 	    top: '10dp'
 	});  
+	
+	if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
+		memuCommandTableView.backgroundColor ='transparent';
+	    memuCommandTableView.height = Titanium.UI.SIZE;
+	}
 	
 	memuCommandTableView.addEventListener('click',function(e) {
 		switch(e.index){

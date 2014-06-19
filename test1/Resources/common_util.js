@@ -106,6 +106,10 @@ function createNormalWin(title){
 		backgroundColor:'#dddddd',
 	});
 	
+	if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
+		backgroundView.top = 20;
+	}
+	
 	var forwardView = Ti.UI.createView({
 		width:'100%',
 		height:'100%',
@@ -845,6 +849,11 @@ function createCardBottom(feedView, data){
   		left:'15dp',right:'10dp',
   		name:'text'
 	});
+	
+	if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
+		likeText.width = Ti.UI.SIZE;
+	}
+		
 	likeText.eventid = data['eventid'];
 	
 	function likeCB(result, resultText, source){

@@ -86,7 +86,7 @@ function createBaseFeedView(view, data){
 		Ti.API.info('image file : ',(getFeedImgAddr()  + data.info['photos'][0]).replace('.jpg','-m.jpg'));
 		var feedImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
-		    visible : false,
+		    visible : true,
 		    name:'image'
 		});
 		
@@ -102,12 +102,13 @@ function createBaseFeedView(view, data){
 		
 				var ratio = (platwidth / parseFloat(imgwidth));
 		
-				feedImage.source.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
-				feedImage.source.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
-				feedImage.source.visible = true;
-				feedImage.source.eventid = data['eventid'];
+				feedImage.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+				feedImage.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+				
+				feedImage.eventid = data['eventid'];
 				
 			}
+
 		}
 		else{
 			feedImage.addEventListener('load', function(e)
@@ -130,6 +131,7 @@ function createBaseFeedView(view, data){
 					e.source.eventid = data['eventid'];
 					
 				}
+				
 	
 			});
 		}
@@ -279,7 +281,7 @@ function drawtemplate1Event(view, data){
 		Ti.API.info('image file : ',(getFeedImgAddr()  + data.info['photos'][0]).replace('.jpg','-m.jpg'));
 		var feedImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
-		    visible : false,
+		    visible : true,
 		    name:'image'
 		});
 		
@@ -295,12 +297,13 @@ function drawtemplate1Event(view, data){
 		
 				var ratio = (platwidth / parseFloat(imgwidth));
 		
-				feedImage.source.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
-				feedImage.source.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
-				feedImage.source.visible = true;
-				feedImage.source.eventid = data['eventid'];
+				feedImage.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+				feedImage.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+				feedImage.visible = true;
+				feedImage.eventid = data['eventid'];
 				
 			}
+	
 		}
 		else{
 			feedImage.addEventListener('load', function(e)
@@ -323,6 +326,7 @@ function drawtemplate1Event(view, data){
 					e.source.eventid = data['eventid'];
 					
 				}
+
 	
 			});
 		}
@@ -709,7 +713,7 @@ function drawtemplate2Event(view, data){
 		Ti.API.info('image file : ',(getFeedImgAddr()  + data.info['photos'][0]).replace('.jpg','-m.jpg'));
 		var feedImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
-		    visible : false,
+		    visible : true,
 		    name:'image'
 		});
 		
@@ -725,12 +729,13 @@ function drawtemplate2Event(view, data){
 		
 				var ratio = (platwidth / parseFloat(imgwidth));
 		
-				feedImage.source.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
-				feedImage.source.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
-				feedImage.source.visible = true;
-				feedImage.source.eventid = data['eventid'];
+				feedImage.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+				feedImage.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+				feedImage.visible = true;
+				feedImage.eventid = data['eventid'];
 				
 			}
+
 		}
 		else{
 			feedImage.addEventListener('load', function(e)
@@ -753,7 +758,6 @@ function drawtemplate2Event(view, data){
 					e.source.eventid = data['eventid'];
 					
 				}
-	
 			});
 		}
 		
