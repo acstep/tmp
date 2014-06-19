@@ -138,10 +138,15 @@ function createNormalWin(title){
 	self.backgroundView = backgroundView;
 	self.forwardView = forwardView;
 	var loginIndicator = Ti.UI.createActivityIndicator({
-		  font: {fontFamily:'Helvetica Neue', fontSize:14, fontWeight:'bold'},
-		  style:Titanium.UI.ActivityIndicatorStyle.BIG,
-	
+		  font: {fontFamily:'Helvetica Neue', fontSize:14, fontWeight:'bold'}
 	});
+	
+	if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
+	
+	}
+	else{
+		loginIndicator.style = Titanium.UI.ActivityIndicatorStyle.BIG;
+	}
 	
 	forwardView.add(loginIndicator);
 	loginIndicator.show();

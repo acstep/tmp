@@ -12,10 +12,15 @@ function HeadWindow(cropimage,mode) {
 	var titleView = self.titleView;
     backgroundView.layout = 'composite';
     
-	var GA = require('analytics.google');
-	GA.localDispatchPeriod = 10;
-	var tracker = GA.getTracker("UA-50815409-1");
-    tracker.trackScreen('HeadWindow' );
+	if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
+	
+	}
+	else{
+		var GA = require('analytics.google');
+		var tracker = GA.getTracker("UA-50815409-1");
+		tracker.trackScreen('HeadWindow' );
+	}
+    
 
 	var middleView = Ti.UI.createView({
 		width:'100%',

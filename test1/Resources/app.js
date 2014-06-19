@@ -15,10 +15,14 @@ if (Ti.version < 1.8 ) {
 }
 
 ///////////  google Analytics //////////////////////
+if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
+	
+}
+else{
+	var GA = require('analytics.google');
+	var tracker = GA.getTracker("UA-50815409-1");
+}
 
-var GA = require('analytics.google');
-GA.localDispatchPeriod = 10;
-var tracker = GA.getTracker("UA-50815409-1");
 
 
 // This is a single context application with multiple windows in a stack

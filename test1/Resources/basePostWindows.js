@@ -14,10 +14,15 @@ function BasePostWindow(data) {
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
 	
-	var GA = require('analytics.google');
-	GA.localDispatchPeriod = 10;
-	var tracker = GA.getTracker("UA-50815409-1");
-	tracker.trackScreen('BasePostWindow' );
+	if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
+	
+	}
+	else{
+		var GA = require('analytics.google');
+		var tracker = GA.getTracker("UA-50815409-1");
+		tracker.trackScreen('BasePostWindow' );
+	}
+	
 	
 	var ind=Titanium.UI.createProgressBar({
 	        width:'90%',

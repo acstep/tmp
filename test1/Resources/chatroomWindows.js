@@ -16,10 +16,15 @@ function chatroomWindow() {
 	var forwardView = self.forwardView;
 	var titleView = self.titleView;
 	
-	var GA = require('analytics.google');
-	GA.localDispatchPeriod = 10;
-	var tracker = GA.getTracker("UA-50815409-1");
-	tracker.trackScreen('chatroomWindow' );
+	if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
+	
+	}
+	else{
+		var GA = require('analytics.google');
+		var tracker = GA.getTracker("UA-50815409-1");
+		tracker.trackScreen('chatroomWindow' );
+	}
+	
 	
 	var backImg = Titanium.UI.createImageView({
 		image:'backward.png',

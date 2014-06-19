@@ -90,9 +90,8 @@ function createBaseFeedView(view, data){
 		    name:'image'
 		});
 		
-		  
-		feedImage.addEventListener('load', function(e)
-		{
+		
+		if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
 			var platheight = Ti.Platform.displayCaps.platformHeight;
 			var platwidth = Ti.Platform.displayCaps.platformWidth *0.90;
 
@@ -103,16 +102,40 @@ function createBaseFeedView(view, data){
 		
 				var ratio = (platwidth / parseFloat(imgwidth));
 		
-				e.source.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
-				e.source.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
-				Ti.API.info('this.width ' + e.source.width);
-				Ti.API.info('this.height ' + e.source.height);
-				e.source.visible = true;
-				e.source.eventid = data['eventid'];
+				feedImage.source.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+				feedImage.source.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+				feedImage.source.visible = true;
+				feedImage.source.eventid = data['eventid'];
 				
 			}
-
-		});
+		}
+		else{
+			feedImage.addEventListener('load', function(e)
+			{
+				var platheight = Ti.Platform.displayCaps.platformHeight;
+				var platwidth = Ti.Platform.displayCaps.platformWidth *0.90;
+	
+				var imgwidth = 400;
+				var imgheight = 300;
+				
+				if(imgwidth != 0 && imgwidth < platwidth){
+			
+					var ratio = (platwidth / parseFloat(imgwidth));
+			
+					e.source.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+					e.source.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+					Ti.API.info('this.width ' + e.source.width);
+					Ti.API.info('this.height ' + e.source.height);
+					e.source.visible = true;
+					e.source.eventid = data['eventid'];
+					
+				}
+	
+			});
+		}
+		
+		  
+		
 		
 		tmpview.add(feedImage);
 		imageContentView.add(tmpview);
@@ -261,8 +284,7 @@ function drawtemplate1Event(view, data){
 		});
 		
 		  
-		feedImage.addEventListener('load', function(e)
-		{
+		if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
 			var platheight = Ti.Platform.displayCaps.platformHeight;
 			var platwidth = Ti.Platform.displayCaps.platformWidth *0.90;
 
@@ -273,16 +295,37 @@ function drawtemplate1Event(view, data){
 		
 				var ratio = (platwidth / parseFloat(imgwidth));
 		
-				e.source.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
-				e.source.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
-				Ti.API.info('this.width ' + e.source.width);
-				Ti.API.info('this.height ' + e.source.height);
-				e.source.visible = true;
-				e.source.eventid = data.info['eventid'];
+				feedImage.source.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+				feedImage.source.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+				feedImage.source.visible = true;
+				feedImage.source.eventid = data['eventid'];
 				
 			}
-
-		});
+		}
+		else{
+			feedImage.addEventListener('load', function(e)
+			{
+				var platheight = Ti.Platform.displayCaps.platformHeight;
+				var platwidth = Ti.Platform.displayCaps.platformWidth *0.90;
+	
+				var imgwidth = 400;
+				var imgheight = 300;
+				
+				if(imgwidth != 0 && imgwidth < platwidth){
+			
+					var ratio = (platwidth / parseFloat(imgwidth));
+			
+					e.source.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+					e.source.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+					Ti.API.info('this.width ' + e.source.width);
+					Ti.API.info('this.height ' + e.source.height);
+					e.source.visible = true;
+					e.source.eventid = data['eventid'];
+					
+				}
+	
+			});
+		}
 		
 		tmpview.add(feedImage);
 		imageContentView.add(tmpview);
@@ -671,28 +714,48 @@ function drawtemplate2Event(view, data){
 		});
 		
 		  
-		feedImage.addEventListener('load', function(e)
-		{
+		if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
 			var platheight = Ti.Platform.displayCaps.platformHeight;
 			var platwidth = Ti.Platform.displayCaps.platformWidth *0.90;
 
 			var imgwidth = 400;
 			var imgheight = 300;
-		
+			
 			if(imgwidth != 0 && imgwidth < platwidth){
 		
 				var ratio = (platwidth / parseFloat(imgwidth));
 		
-				e.source.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
-				e.source.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
-				Ti.API.info('this.width ' + e.source.width);
-				Ti.API.info('this.height ' + e.source.height);
-				e.source.visible = true;
-				e.source.eventid = data.info['eventid'];
+				feedImage.source.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+				feedImage.source.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+				feedImage.source.visible = true;
+				feedImage.source.eventid = data['eventid'];
 				
 			}
-
-		});
+		}
+		else{
+			feedImage.addEventListener('load', function(e)
+			{
+				var platheight = Ti.Platform.displayCaps.platformHeight;
+				var platwidth = Ti.Platform.displayCaps.platformWidth *0.90;
+	
+				var imgwidth = 400;
+				var imgheight = 300;
+				
+				if(imgwidth != 0 && imgwidth < platwidth){
+			
+					var ratio = (platwidth / parseFloat(imgwidth));
+			
+					e.source.width = (imgwidth * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+					e.source.height = (imgheight * ratio) / (Titanium.Platform.displayCaps.dpi / 160);
+					Ti.API.info('this.width ' + e.source.width);
+					Ti.API.info('this.height ' + e.source.height);
+					e.source.visible = true;
+					e.source.eventid = data['eventid'];
+					
+				}
+	
+			});
+		}
 		
 		tmpview.add(feedImage);
 		imageContentView.add(tmpview);

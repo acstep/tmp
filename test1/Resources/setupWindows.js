@@ -12,10 +12,15 @@ function setupWindow() {
     backgroundView.forwardView = forwardView;
     backgroundView.backgroundColor = '#ffffff';
     
-    var GA = require('analytics.google');
-	GA.localDispatchPeriod = 10;
-	var tracker = GA.getTracker("UA-50815409-1");
-    tracker.trackScreen('setupWindow' );
+    if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
+	
+	}
+	else{
+		var GA = require('analytics.google');
+		var tracker = GA.getTracker("UA-50815409-1");
+		tracker.trackScreen('setupWindow' );
+	}
+    
     
     var backImg = Titanium.UI.createImageView({
 		image:'backward.png',

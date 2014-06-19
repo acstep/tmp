@@ -11,10 +11,15 @@ function feedWindow() {
 	var titleView = self.titleView;
 	var categoryChanged = false;
 	
-	var GA = require('analytics.google');
-	GA.localDispatchPeriod = 10;
-	var tracker = GA.getTracker("UA-50815409-1");
-  	tracker.trackScreen('feedWindow');
+	if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
+	
+	}
+	else{
+		var GA = require('analytics.google');
+		var tracker = GA.getTracker("UA-50815409-1");
+		tracker.trackScreen('feedWindow');
+	}
+  	
 
     
 	var listappImg = Titanium.UI.createImageView({
@@ -844,10 +849,15 @@ function feedWindow() {
 	
 	function getNewFeed(){
 
-        var GA = require('analytics.google');
-		GA.localDispatchPeriod = 10;
-		var tracker = GA.getTracker("UA-50815409-1");
-		tracker.trackEvent({category: "getNewFeed",action: "click",label: "getNewFeed main",value: 1});
+        if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
+	
+		}
+		else{
+			var GA = require('analytics.google');
+			var tracker = GA.getTracker("UA-50815409-1");
+			tracker.trackEvent({category: "getNewFeed",action: "click",label: "getNewFeed main",value: 1});
+		}
+		
 
 		
 		Ti.API.info('getNewFeed ');
@@ -928,291 +938,296 @@ function feedWindow() {
 	
     ///////////////   scroll  update and next logic ////////////////////
 
-    
-    ///////////////// handle location ///////////////
-    
-    var locationsrc = Ti.App.Properties.getString('locationsrc','network');
-    
-    
-	var locationProvider = {};
+    if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
 	
-	if(locationsrc == 'gps'){
-		locationProvider = Ti.Geolocation.Android.createLocationProvider({
-	    	name: Ti.Geolocation.PROVIDER_GPS,
-		    minUpdateTime: 300, 
-		    minUpdateDistance: 300
-		});
 	}
 	else{
-		locationProvider = Ti.Geolocation.Android.createLocationProvider({
-	    	name: Ti.Geolocation.PROVIDER_NETWORK,
-		    minUpdateTime: 300, 
-		    minUpdateDistance: 300
-		});
-	}
-	
-	
-	Ti.Geolocation.Android.addLocationProvider(locationProvider);
-	Ti.Geolocation.Android.manualMode = true;
-
-    Ti.App.addEventListener('changelocationsrc',function(e) {
-
-    	var locationsrc = Ti.App.Properties.getString('locationsrc','network');
-    	Ti.Geolocation.Android.removeLocationProvider(locationProvider);
-    	if(locationsrc == 'gps'){
-    		Ti.API.info('receive event changegps ');
-	    	locationProvider = Ti.Geolocation.Android.createLocationProvider({
+		///////////////// handle location ///////////////
+    
+	    var locationsrc = Ti.App.Properties.getString('locationsrc','network');
+	    
+	    
+		var locationProvider = {};
+		
+		if(locationsrc == 'gps'){
+			locationProvider = Ti.Geolocation.Android.createLocationProvider({
 		    	name: Ti.Geolocation.PROVIDER_GPS,
 			    minUpdateTime: 300, 
 			    minUpdateDistance: 300
 			});
-	        Ti.Geolocation.Android.addLocationProvider(locationProvider);
-    	}
-    	else{
-    		Ti.API.info('receive event changenetwork ');
-	    	locationProvider = Ti.Geolocation.Android.createLocationProvider({
+		}
+		else{
+			locationProvider = Ti.Geolocation.Android.createLocationProvider({
 		    	name: Ti.Geolocation.PROVIDER_NETWORK,
 			    minUpdateTime: 300, 
 			    minUpdateDistance: 300
 			});
-	        Ti.Geolocation.Android.addLocationProvider(locationProvider);
-    	}
-	});
-	
-
-    var firstOpen = false;
-
-    var locationCallback = function(e) {
-	    if (!e.success || e.error) {
-	        Ti.API.info('error:' + JSON.stringify(e.error));
-	    } 
-	    else {
-	    	
-	    	var oldlatitude = Ti.App.Properties.getDouble('latitude',e.coords.latitude);
-	    	var oldlongitude = Ti.App.Properties.getDouble('longitude',e.coords.longitude);
-			Ti.API.info('lat lot : ' + oldlatitude +'  ' +e.coords.latitude+'  '+ oldlongitude +'  '+ e.coords.longitude);
-			var distance = GetDistance(oldlatitude, oldlongitude, e.coords.latitude, e.coords.longitude, 'K');
-			Ti.API.info('distance : ' + distance);
-	        // if user move than 500m update the postion to server
-	    	if(distance > 0.5 || firstOpen == false){
-	    		var data = {
-					'pos':[e.coords.longitude,e.coords.latitude],
-					'geoapp':'true'
-				};
-		    
-			    var datastring = JSON.stringify(data);
-			    Ti.API.info('datastring : ' + datastring);
-			    firstOpen = true;
-		    	updatepos(datastring);
-	    	}
-	    	
-	    	
-	    	Ti.App.Properties.setDouble('latitude',e.coords.latitude);
-			Ti.App.Properties.setDouble('longitude',e.coords.longitude);
-			Ti.API.info('coords: ' + JSON.stringify(e.coords));
 		}
-	};
-	Titanium.Geolocation.addEventListener('location', locationCallback);
-    
-    self.addEventListener('android:back', function(e) {
-    	if(menuclose == true){
-    		var activity = Titanium.Android.currentActivity;
-        	activity.finish();
-    	}
-	    e.cancelBubble = true;
-	    switchBackgroundView(true);
-	    Ti.App.fireEvent('android_back_button');
-	});
-    
-    
-    //////////////////  GCM ////////////////////////////////////////
-    function gcmUpdateCallback(result, resultmsg){
-		if(result == true){
-			Ti.API.info('update gcm success.');
-		}
-		else{
-			
-			showAlert('Error !', resultmsg);
-			Ti.API.info('update gcm false.');
-
-		}
-	};
-    
-    var gcm = require('net.iamyellow.gcmjs');
-
-	var pendingData = gcm.data;
-	if (pendingData && pendingData !== null) {
-		// if we're here is because user has clicked on the notification
-		// and we set extras for the intent 
-		// and the app WAS NOT running
-		// (don't worry, we'll see more of this later)
 		
-		var tmpdata = JSON.parse(pendingData.msg);
-		if(tmpdata.type == 'comment'){
-			
-			var FeedContentWindow = require('feedContentWindows');
-			new FeedContentWindow(tmpdata.eventid, true).open(); 
-		}
-		if(tmpdata.type == 'talk'){
-			
-		}
-		Ti.API.info('******* data (started) ' + JSON.stringify(pendingData));
-	}
+		
+		Ti.Geolocation.Android.addLocationProvider(locationProvider);
+		Ti.Geolocation.Android.manualMode = true;
 	
-	gcm.registerForPushNotifications({
-		success: function (ev) {
+	    Ti.App.addEventListener('changelocationsrc',function(e) {
+	
+	    	var locationsrc = Ti.App.Properties.getString('locationsrc','network');
+	    	Ti.Geolocation.Android.removeLocationProvider(locationProvider);
+	    	if(locationsrc == 'gps'){
+	    		Ti.API.info('receive event changegps ');
+		    	locationProvider = Ti.Geolocation.Android.createLocationProvider({
+			    	name: Ti.Geolocation.PROVIDER_GPS,
+				    minUpdateTime: 300, 
+				    minUpdateDistance: 300
+				});
+		        Ti.Geolocation.Android.addLocationProvider(locationProvider);
+	    	}
+	    	else{
+	    		Ti.API.info('receive event changenetwork ');
+		    	locationProvider = Ti.Geolocation.Android.createLocationProvider({
+			    	name: Ti.Geolocation.PROVIDER_NETWORK,
+				    minUpdateTime: 300, 
+				    minUpdateDistance: 300
+				});
+		        Ti.Geolocation.Android.addLocationProvider(locationProvider);
+	    	}
+		});
+		
+	
+	    var firstOpen = false;
+	
+	    var locationCallback = function(e) {
+		    if (!e.success || e.error) {
+		        Ti.API.info('error:' + JSON.stringify(e.error));
+		    } 
+		    else {
+		    	
+		    	var oldlatitude = Ti.App.Properties.getDouble('latitude',e.coords.latitude);
+		    	var oldlongitude = Ti.App.Properties.getDouble('longitude',e.coords.longitude);
+				Ti.API.info('lat lot : ' + oldlatitude +'  ' +e.coords.latitude+'  '+ oldlongitude +'  '+ e.coords.longitude);
+				var distance = GetDistance(oldlatitude, oldlongitude, e.coords.latitude, e.coords.longitude, 'K');
+				Ti.API.info('distance : ' + distance);
+		        // if user move than 500m update the postion to server
+		    	if(distance > 0.5 || firstOpen == false){
+		    		var data = {
+						'pos':[e.coords.longitude,e.coords.latitude],
+						'geoapp':'true'
+					};
+			    
+				    var datastring = JSON.stringify(data);
+				    Ti.API.info('datastring : ' + datastring);
+				    firstOpen = true;
+			    	updatepos(datastring);
+		    	}
+		    	
+		    	
+		    	Ti.App.Properties.setDouble('latitude',e.coords.latitude);
+				Ti.App.Properties.setDouble('longitude',e.coords.longitude);
+				Ti.API.info('coords: ' + JSON.stringify(e.coords));
+			}
+		};
+		Titanium.Geolocation.addEventListener('location', locationCallback);
+	    
+	    self.addEventListener('android:back', function(e) {
+	    	if(menuclose == true){
+	    		var activity = Titanium.Android.currentActivity;
+	        	activity.finish();
+	    	}
+		    e.cancelBubble = true;
+		    switchBackgroundView(true);
+		    Ti.App.fireEvent('android_back_button');
+		});
+	    
+	    
+	    //////////////////  GCM ////////////////////////////////////////
+	    function gcmUpdateCallback(result, resultmsg){
+			if(result == true){
+				Ti.API.info('update gcm success.');
+			}
+			else{
+				
+				showAlert('Error !', resultmsg);
+				Ti.API.info('update gcm false.');
+	
+			}
+		};
+	    
+	    var gcm = require('net.iamyellow.gcmjs');
+	
+		var pendingData = gcm.data;
+		if (pendingData && pendingData !== null) {
+			// if we're here is because user has clicked on the notification
+			// and we set extras for the intent 
+			// and the app WAS NOT running
+			// (don't worry, we'll see more of this later)
 			
-	        var oldGoogleToken = Ti.App.Properties.getString('googletoken','');
-	        if(oldGoogleToken == ev.deviceToken){
-	        	
-	        }
-	        else{
-	        	var data = {
-					'msgtoken': {'type':'a', 'token':ev.deviceToken}
-				};
-	        	var datastring = JSON.stringify(data);
-	        	Ti.App.Properties.setString('googletoken',ev.deviceToken);
-	   	    	updateaccount(datastring,gcmUpdateCallback);
-	        }
-
-			// on successful registration
-			Ti.API.info('******* success, ' + ev.deviceToken);
-		},
-		error: function (ev) {
-			// when an error occurs
-			Ti.API.info('******* error, ' + ev.error);
-		},
-		callback: function (data) {
-			
-			// when a gcm notification is received WHEN the app IS IN FOREGROUND
-			var tmpdata = JSON.parse(data.data);
+			var tmpdata = JSON.parse(pendingData.msg);
 			if(tmpdata.type == 'comment'){
-				Ti.API.info('get comment notify');
-				var notifynum = Ti.App.Properties.getInt('notifynum',0);
-				notifynum = notifynum + 1;
-				Ti.App.Properties.setInt('notifynum',notifynum);
-				if(notifynum > 0){
-					shownotifynum(notifynum);
-				}
-
+				
+				var FeedContentWindow = require('feedContentWindows');
+				new FeedContentWindow(tmpdata.eventid, true).open(); 
 			}
 			if(tmpdata.type == 'talk'){
-				var talkingRoomID = Ti.App.Properties.getString('TalkRoomID','');
-				var userid = Ti.App.Properties.getString('userid','');
-				if(talkingRoomID == tmpdata.roomid){
-					Ti.App.fireEvent('updattalk',tmpdata);
-					return;
+				
+			}
+			Ti.API.info('******* data (started) ' + JSON.stringify(pendingData));
+		}
+		
+		gcm.registerForPushNotifications({
+			success: function (ev) {
+				
+		        var oldGoogleToken = Ti.App.Properties.getString('googletoken','');
+		        if(oldGoogleToken == ev.deviceToken){
+		        	
+		        }
+		        else{
+		        	var data = {
+						'msgtoken': {'type':'a', 'token':ev.deviceToken}
+					};
+		        	var datastring = JSON.stringify(data);
+		        	Ti.App.Properties.setString('googletoken',ev.deviceToken);
+		   	    	updateaccount(datastring,gcmUpdateCallback);
+		        }
+	
+				// on successful registration
+				Ti.API.info('******* success, ' + ev.deviceToken);
+			},
+			error: function (ev) {
+				// when an error occurs
+				Ti.API.info('******* error, ' + ev.error);
+			},
+			callback: function (data) {
+				
+				// when a gcm notification is received WHEN the app IS IN FOREGROUND
+				var tmpdata = JSON.parse(data.data);
+				if(tmpdata.type == 'comment'){
+					Ti.API.info('get comment notify');
+					var notifynum = Ti.App.Properties.getInt('notifynum',0);
+					notifynum = notifynum + 1;
+					Ti.App.Properties.setInt('notifynum',notifynum);
+					if(notifynum > 0){
+						shownotifynum(notifynum);
+					}
+	
 				}
-				if(tmpdata.owner != userid){
-					var roominfo = JSON.parse(Ti.App.Properties.getString('roominfo','{}'));
-					if(typeof(roominfo[tmpdata.roomid] )== 'undefined'){
-						var currentdate = new Date(); 
-						var starttime = parseInt(currentdate.getTime()/1000);
-						roominfo[tmpdata.roomid] = {'number':1,'time':starttime};
-						Ti.API.info(' roominfo bbb' + JSON.stringify(roominfo));
+				if(tmpdata.type == 'talk'){
+					var talkingRoomID = Ti.App.Properties.getString('TalkRoomID','');
+					var userid = Ti.App.Properties.getString('userid','');
+					if(talkingRoomID == tmpdata.roomid){
+						Ti.App.fireEvent('updattalk',tmpdata);
+						return;
 					}
-					else{
-						if(tmpdata.owner != userid)
-							roominfo[tmpdata.roomid]['number'] = roominfo[tmpdata.roomid]['number'] + 1;
-						Ti.API.info(' roominfo aaa' + JSON.stringify(roominfo));
+					if(tmpdata.owner != userid){
+						var roominfo = JSON.parse(Ti.App.Properties.getString('roominfo','{}'));
+						if(typeof(roominfo[tmpdata.roomid] )== 'undefined'){
+							var currentdate = new Date(); 
+							var starttime = parseInt(currentdate.getTime()/1000);
+							roominfo[tmpdata.roomid] = {'number':1,'time':starttime};
+							Ti.API.info(' roominfo bbb' + JSON.stringify(roominfo));
+						}
+						else{
+							if(tmpdata.owner != userid)
+								roominfo[tmpdata.roomid]['number'] = roominfo[tmpdata.roomid]['number'] + 1;
+							Ti.API.info(' roominfo aaa' + JSON.stringify(roominfo));
+						}
+						Ti.App.Properties.setString('roominfo',JSON.stringify(roominfo));
+						
+						var talknum = Ti.App.Properties.getInt('talknum',0);
+						talknum = talknum + 1;
+						Ti.App.Properties.setInt('talknum',talknum);
+						if(talknum > 0){
+							showtalknum(talknum);
+						}
+	
+					 	Ti.App.fireEvent('updatechatroom',tmpdata);
 					}
-					Ti.App.Properties.setString('roominfo',JSON.stringify(roominfo));
 					
+				}
+			},
+			unregister: function (ev) {
+				// on unregister 
+				Ti.API.info('******* unregister, ' + ev.deviceToken);
+			},
+			data: function (data) {
+	
+				var tmpdata = JSON.parse(data.msg);
+	
+				if(tmpdata.type == 'comment'){
+					var notifynum = Ti.App.Properties.getInt('notifynum',0);
+					if(notifynum > 0){
+						shownotifynum(notifynum);
+					}
+				}
+				
+				if(tmpdata.type == 'talk'){
+					
+					var talkingRoomID = Ti.App.Properties.getString('TalkRoomID','');
+	
+					if(talkingRoomID == tmpdata.roomid){
+						Ti.App.fireEvent('updattalk',tmpdata);
+						return;
+					}
 					var talknum = Ti.App.Properties.getInt('talknum',0);
-					talknum = talknum + 1;
-					Ti.App.Properties.setInt('talknum',talknum);
 					if(talknum > 0){
 						showtalknum(talknum);
 					}
-
 				 	Ti.App.fireEvent('updatechatroom',tmpdata);
 				}
 				
-			}
-		},
-		unregister: function (ev) {
-			// on unregister 
-			Ti.API.info('******* unregister, ' + ev.deviceToken);
-		},
-		data: function (data) {
-
-			var tmpdata = JSON.parse(data.msg);
-
-			if(tmpdata.type == 'comment'){
-				var notifynum = Ti.App.Properties.getInt('notifynum',0);
-				if(notifynum > 0){
-					shownotifynum(notifynum);
-				}
-			}
-			
-			if(tmpdata.type == 'talk'){
 				
-				var talkingRoomID = Ti.App.Properties.getString('TalkRoomID','');
-
-				if(talkingRoomID == tmpdata.roomid){
-					Ti.App.fireEvent('updattalk',tmpdata);
-					return;
-				}
-				var talknum = Ti.App.Properties.getInt('talknum',0);
-				if(talknum > 0){
-					showtalknum(talknum);
-				}
-			 	Ti.App.fireEvent('updatechatroom',tmpdata);
+				// if we're here is because user has clicked on the notification
+				// and we set extras in the intent 
+				// and the app WAS RUNNING (=> RESUMED)
+				// (again don't worry, we'll see more of this later)
+				Ti.API.info('******* data (resumed) ' + JSON.stringify(data));
 			}
-			
-			
-			// if we're here is because user has clicked on the notification
-			// and we set extras in the intent 
-			// and the app WAS RUNNING (=> RESUMED)
-			// (again don't worry, we'll see more of this later)
-			Ti.API.info('******* data (resumed) ' + JSON.stringify(data));
-		}
-	});
-	
-    setTimeout(function(){
-	    var notifynum = Ti.App.Properties.getInt('notifynum',0);
-	    if(notifynum > 0){
-			shownotifynum(notifynum);
-		}
-
-	 	var talknum = Ti.App.Properties.getInt('talknum',0);
-		if(talknum > 0){
-			showtalknum(talknum);
-		}
+		});
 		
-	}, 5000);
-	
-	setTimeout(function(){
-	    var notifynum = Ti.App.Properties.getInt('notifynum',0);
-	    if(notifynum > 0){
-			shownotifynum(notifynum);
-		}
-
-	 	var talknum = Ti.App.Properties.getInt('talknum',0);
-		if(talknum > 0){
-			showtalknum(talknum);
-		}
-		
-	}, 1000);
-    
-    self.addEventListener('open', function(ev) {
-        self.activity.addEventListener('resume', function(e) {
-            var notifynum = Ti.App.Properties.getInt('notifynum',0);
+	    setTimeout(function(){
+		    var notifynum = Ti.App.Properties.getInt('notifynum',0);
 		    if(notifynum > 0){
 				shownotifynum(notifynum);
 			}
+	
 		 	var talknum = Ti.App.Properties.getInt('talknum',0);
 			if(talknum > 0){
 				showtalknum(talknum);
 			}
-        });
-    });
+			
+		}, 5000);
+		
+		setTimeout(function(){
+		    var notifynum = Ti.App.Properties.getInt('notifynum',0);
+		    if(notifynum > 0){
+				shownotifynum(notifynum);
+			}
+	
+		 	var talknum = Ti.App.Properties.getInt('talknum',0);
+			if(talknum > 0){
+				showtalknum(talknum);
+			}
+			
+		}, 1000);
+	    
+	    self.addEventListener('open', function(ev) {
+	        self.activity.addEventListener('resume', function(e) {
+	            var notifynum = Ti.App.Properties.getInt('notifynum',0);
+			    if(notifynum > 0){
+					shownotifynum(notifynum);
+				}
+			 	var talknum = Ti.App.Properties.getInt('talknum',0);
+				if(talknum > 0){
+					showtalknum(talknum);
+				}
+	        });
+	    });
+	}
+    
 	
 	var tmplatitude = getLat();
 	var tmplongitude = getLon();
 	if(tmplatitude == -1 || tmplongitude == -1){
 		Titanium.Geolocation.getCurrentPosition(function(e){
-		    // エラー時はコールバック関數の引數のerrorプロパティがセットされます
+
 		    if(e.error){
 		        Ti.API.error(e.error);
 		        return;

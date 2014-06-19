@@ -13,10 +13,15 @@ function LoginWindow() {
 	backgroundView.backgroundColor = '#4aa3df';
 	backgroundView.height='80%';
 	
-	var GA = require('analytics.google');
-	GA.localDispatchPeriod = 10;
-	var tracker = GA.getTracker("UA-50815409-1");
-	tracker.trackScreen('LoginWindow' );
+	if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad'){
+	
+	}
+	else{
+		var GA = require('analytics.google');
+		var tracker = GA.getTracker("UA-50815409-1");
+		tracker.trackScreen('LoginWindow' );
+	}
+	
 	
 	var titleText = Ti.UI.createLabel({
 		font:{fontSize:'50sp',fontFamily:'Helvetica Neue', fontWeight:'bold'},
