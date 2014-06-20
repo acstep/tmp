@@ -212,7 +212,7 @@ function nearPeopleWindow() {
 					}
 					var yearText = Ti.UI.createLabel({
 						font:{fontSize:'10sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
-						text: yearString,
+						text: yearString,width: Ti.UI.SIZE,
 						color:'#ffffff',left:'10dp',right:'10dp'
 					});
 					genderView.add(yearText);

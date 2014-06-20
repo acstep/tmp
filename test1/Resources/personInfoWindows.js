@@ -119,7 +119,7 @@ function personInfoWindow(id) {
 		}
 		var yearText = Ti.UI.createLabel({
 			font:{fontSize:'12sp',fontFamily:'Helvetica Neue',fontWeight:'bold'},
-			color:'#ffffff',left:'10dp',right:'10dp',
+			color:'#ffffff',left:'10dp',right:'10dp',width: Ti.UI.SIZE,
 			text :yearString
 		});
 		genderView.add(yearText);
@@ -215,7 +215,7 @@ function personInfoWindow(id) {
 		
 		var talkBottomButton = Titanium.UI.createButton({
 		    title: L('talk'),
-		    width:'60%',
+		    width:'60%', color:'#ffffff',
 		    backgroundColor:'#3498db',borderRadius:3,
 
 		});
