@@ -86,7 +86,7 @@ function createBaseFeedView(view, data){
 		Ti.API.info('image file : ',(getFeedImgAddr()  + data.info['photos'][0]).replace('.jpg','-m.jpg'));
 		var feedImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
-		    visible : true,
+		    visible : false,
 		    name:'image'
 		});
 		
@@ -108,11 +108,10 @@ function createBaseFeedView(view, data){
 				feedImage.eventid = data['eventid'];
 				
 			}
-
+            feedImage.visible = true;
 		}
 		else{
-			feedImage.addEventListener('load', function(e)
-			{
+			feedImage.addEventListener('load', function(e){
 				var platheight = Ti.Platform.displayCaps.platformHeight;
 				var platwidth = Ti.Platform.displayCaps.platformWidth *0.90;
 	
@@ -132,7 +131,7 @@ function createBaseFeedView(view, data){
 					
 				}
 				
-	
+	        	e.source.visible = true;
 			});
 		}
 		
@@ -281,7 +280,7 @@ function drawtemplate1Event(view, data){
 		Ti.API.info('image file : ',(getFeedImgAddr()  + data.info['photos'][0]).replace('.jpg','-m.jpg'));
 		var feedImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
-		    visible : true,
+		    visible : false,
 		    name:'image'
 		});
 		
@@ -303,11 +302,10 @@ function drawtemplate1Event(view, data){
 				feedImage.eventid = data['eventid'];
 				
 			}
-	
+	        feedImage.visible = true;
 		}
 		else{
-			feedImage.addEventListener('load', function(e)
-			{
+			feedImage.addEventListener('load', function(e){
 				var platheight = Ti.Platform.displayCaps.platformHeight;
 				var platwidth = Ti.Platform.displayCaps.platformWidth *0.90;
 	
@@ -326,7 +324,7 @@ function drawtemplate1Event(view, data){
 					e.source.eventid = data['eventid'];
 					
 				}
-
+                e.source.visible = true;
 	
 			});
 		}
@@ -713,7 +711,7 @@ function drawtemplate2Event(view, data){
 		Ti.API.info('image file : ',(getFeedImgAddr()  + data.info['photos'][0]).replace('.jpg','-m.jpg'));
 		var feedImage = Titanium.UI.createImageView({
 		    backgroundColor: '#ffffff',
-		    visible : true,
+		    visible : false,
 		    name:'image'
 		});
 		
@@ -735,7 +733,7 @@ function drawtemplate2Event(view, data){
 				feedImage.eventid = data['eventid'];
 				
 			}
-
+            feedImage.visible = true;
 		}
 		else{
 			feedImage.addEventListener('load', function(e)
@@ -758,6 +756,7 @@ function drawtemplate2Event(view, data){
 					e.source.eventid = data['eventid'];
 					
 				}
+				e.source.visible = true;
 			});
 		}
 		
